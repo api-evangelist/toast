@@ -1,31 +1,42 @@
 aid: toast
 name: Toast
 description: >-
-  Whether youre new to the restaurant business or a veteran, weve got the tools
-  and docs to help you. 
+  Toast is a restaurant technology platform providing tools, APIs, and documentation
+  for building restaurant management and point-of-sale integrations.
 type: Index
 position: Consumer
 access: 3rd-Party
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - API
+  - Restaurants
+  - Point of Sale
+  - Food Service
 created: '2025-02-08'
-modified: '2025-02-08'
+modified: '2026-03-16'
 url: >-
   https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/apis.yml
 specificationVersion: '0.19'
 apis:
   - aid: toast:toast
-    name: Toast
+    name: Toast API
     description: >-
-      Whether youre new to the restaurant business or a veteran, weve got the
-      tools and docs to help you. 
-    humanURL: ' https://doc.toasttab.com/doc/main/index.html'
+      Toast provides APIs for restaurant management, point-of-sale integration,
+      menu management, orders, and more.
+    humanURL: https://doc.toasttab.com/doc/main/index.html
     tags:
-      - API
+      - Restaurants
+      - Point of Sale
+      - Food Service
     properties:
       - type: Documentation
-        url: ' https://doc.toasttab.com/doc/main/index.html'
+        url: https://doc.toasttab.com/doc/main/index.html
+common:
+  - type: Website
+    url: https://pos.toasttab.com/
+  - type: Documentation
+    url: https://doc.toasttab.com/doc/main/index.html
+  - type: Sign Up
+    url: https://developers.toasttab.com/
 maintainers:
   - FN: Kin Lane
-    email: info@apievangelist.com
+    email: kin@apievangelist.com
