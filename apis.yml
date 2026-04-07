@@ -8,9 +8,9 @@ position: Consumer
 access: 3rd-Party
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - Restaurants
-  - Point of Sale
   - Food Service
+  - Point of Sale
+  - Restaurants
 created: '2025-02-08'
 modified: '2026-03-16'
 url: >-
@@ -24,9 +24,9 @@ apis:
       menu management, orders, and more.
     humanURL: https://doc.toasttab.com/doc/main/index.html
     tags:
-      - Restaurants
-      - Point of Sale
       - Food Service
+      - Point of Sale
+      - Restaurants
     properties:
       - type: Documentation
         url: https://doc.toasttab.com/doc/main/index.html
