@@ -1,0 +1,193 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Toast Restaurant Operations"
+  description: "Unified workflow capability combining Toast Orders and Labor APIs for day-to-day restaurant operations management. Enables operators to monitor orders, manage payments, and oversee staff from a single interface. Used by restaurant managers and operations teams."
+  tags:
+    - Toast
+    - Restaurant
+    - Orders
+    - Labor
+    - Point of Sale
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+binds:
+  - namespace: env
+    keys:
+      TOAST_CLIENT_ID: TOAST_CLIENT_ID
+      TOAST_CLIENT_SECRET: TOAST_CLIENT_SECRET
+      TOAST_RESTAURANT_GUID: TOAST_RESTAURANT_GUID
+      TOAST_ACCESS_TOKEN: TOAST_ACCESS_TOKEN
+
+capability:
+  consumes:
+    - import: toast-orders
+      location: ./shared/orders.yaml
+    - import: toast-labor
+      location: ./shared/labor.yaml
+
+  exposes:
+    - type: rest
+      port: 8080
+      namespace: restaurant-operations-api
+      description: "Unified REST API for Toast restaurant operations."
+      resources:
+        - path: /v1/orders
+          name: orders
+          description: "Restaurant orders"
+          operations:
+            - method: GET
+              name: list-orders
+              description: "Get multiple restaurant orders"
+              call: "toast-orders.getOrdersBulk"
+              outputParameters:
+                - type: array
+                  mapping: "$."
+
+        - path: /v1/orders/{guid}
+          name: order
+          description: "Individual restaurant order"
+          operations:
+            - method: GET
+              name: get-order
+              description: "Get a specific restaurant order"
+              call: "toast-orders.getOrder"
+              with:
+                guid: "rest.guid"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/payments
+          name: payments
+          description: "Order payments"
+          operations:
+            - method: GET
+              name: list-payments
+              description: "Get payment identifiers"
+              call: "toast-orders.getPayments"
+              outputParameters:
+                - type: array
+                  mapping: "$."
+
+        - path: /v1/employees
+          name: employees
+          description: "Restaurant employees"
+          operations:
+            - method: GET
+              name: list-employees
+              description: "List restaurant employees"
+              call: "toast-labor.listEmployees"
+              outputParameters:
+                - type: array
+                  mapping: "$."
+            - method: POST
+              name: create-employee
+              description: "Create a new employee"
+              call: "toast-labor.createEmployee"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/employees/{id}
+          name: employee
+          description: "Individual employee"
+          operations:
+            - method: GET
+              name: get-employee
+              description: "Get employee details"
+              call: "toast-labor.getEmployee"
+              with:
+                employeeId: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9090
+      namespace: restaurant-operations-mcp
+      transport: http
+      description: "MCP server for AI-assisted restaurant operations management."
+      tools:
+        - name: list-restaurant-orders
+          description: "Get multiple orders for a restaurant in a date range"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "toast-orders.getOrdersBulk"
+          outputParameters:
+            - type: array
+              mapping: "$."
+        - name: get-restaurant-order
+          description: "Get details of a specific restaurant order"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "toast-orders.getOrder"
+          with:
+            guid: "tools.guid"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-order-payments
+          description: "List payment records for a restaurant"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "toast-orders.getPayments"
+          outputParameters:
+            - type: array
+              mapping: "$."
+        - name: get-order-payment
+          description: "Get details of a specific payment"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "toast-orders.getPayment"
+          with:
+            guid: "tools.guid"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-employees
+          description: "List all employees at a restaurant location"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "toast-labor.listEmployees"
+          outputParameters:
+            - type: array
+              mapping: "$."
+        - name: get-employee
+          description: "Get a specific employee record"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "toast-labor.getEmployee"
+          with:
+            employeeId: "tools.employeeId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-employee
+          description: "Create a new employee record at a restaurant"
+          hints:
+            readOnly: false
+            openWorld: false
+          call: "toast-labor.createEmployee"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: update-employee
+          description: "Update employee information"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: true
+          call: "toast-labor.updateEmployee"
+          with:
+            employeeId: "tools.employeeId"
+          outputParameters:
+            - type: object
+              mapping: "$."

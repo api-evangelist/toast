@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/labor-shift-schema.json",
+  "title": "Shift",
+  "description": "A scheduled shift in the Toast platform used to enforce employee \nclock-in and clock outs. Shifts might be created in an external \nscheduling system and pushed to the Toast platform.\n",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/ExternalReference"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "createdDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date created, in UTC format (read-only).\n"
+        },
+        "modifiedDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date modified, in UTC format (read-only).\n"
+        },
+        "deletedDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date deleted, in UTC format (read-only).\n"
+        },
+        "deleted": {
+          "type": "boolean",
+          "description": "If the shift is deleted in the Toast platform.\n"
+        },
+        "jobReference": {
+          "type": "object",
+          "description": "External reference to the job assigned to this shift.\n",
+          "$ref": "#/definitions/ExternalReference"
+        },
+        "employeeReference": {
+          "type": "object",
+          "description": "External reference to the employee assigned to this shift.\n",
+          "$ref": "#/definitions/ExternalReference"
+        },
+        "inDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of the beginning of the shift. This is when the \nemployee can clock in. Expressed in the UTC time zone.\n"
+        },
+        "outDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of the end of the shift. This is when the \nemployee can clock out. Expressed in the UTC time zone.\n"
+        },
+        "scheduleConfig": {
+          "type": "object",
+          "description": "Grace period scheduling configuration\n",
+          "$ref": "#/definitions/ScheduleConfig"
+        }
+      }
+    }
+  ]
+}

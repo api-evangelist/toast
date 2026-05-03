@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/menus-weight-unit-of-measure-schema.json",
+  "title": "WeightUnitOfMeasure",
+  "description": "The unit of measure assigned to the `weight` value.\n    \nPossible values include:\n    \n* NONE: No unit of measurement is assigned. `weightUnitOfMeasure` can also be `null`. `NONE` and `null` are equivalent. \n* LB: Pounds\n* OZ: Ounces\n* KG: Kilograms\n* G: Grams\n",
+  "type": "string",
+  "enum": [
+    "NONE",
+    "LB",
+    "OZ",
+    "KG",
+    "G"
+  ],
+  "x-nullable": true
+}

@@ -1,0 +1,276 @@
+rules:
+  # INFO / METADATA
+  info-title-required:
+    description: Info object must have a title
+    severity: error
+    given: "$.info"
+    then:
+      field: title
+      function: truthy
+
+  info-title-toast-prefix:
+    description: API title should start with 'Toast'
+    severity: warn
+    given: "$.info.title"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^Toast"
+
+  info-description-required:
+    description: Info object must have a description
+    severity: warn
+    given: "$.info"
+    then:
+      field: description
+      function: truthy
+
+  info-version-required:
+    description: Info object must have a version
+    severity: error
+    given: "$.info"
+    then:
+      field: version
+      function: truthy
+
+  # SERVERS
+  servers-defined:
+    description: Servers array must be defined
+    severity: error
+    given: "$"
+    then:
+      field: servers
+      function: truthy
+
+  servers-https:
+    description: Server URLs must use HTTPS
+    severity: error
+    given: "$.servers[*].url"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^https://"
+
+  # PATHS - NAMING CONVENTIONS
+  paths-no-trailing-slash:
+    description: Paths must not end with a trailing slash
+    severity: warn
+    given: "$.paths[*]~"
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "/$"
+
+  paths-guid-parameters:
+    description: Path parameters for identifiers should use 'guid' naming
+    severity: info
+    given: "$.paths[*]~"
+    then:
+      function: pattern
+      functionOptions:
+        notMatch: "\\{id\\}"
+
+  # OPERATIONS
+  operation-summary-required:
+    description: Every operation must have a summary
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: summary
+      function: truthy
+
+  operation-summary-toast-prefix:
+    description: Operation summaries should start with 'Toast'
+    severity: info
+    given: "$.paths[*][get,post,put,patch,delete].summary"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^Toast"
+
+  operation-operationid-required:
+    description: Every operation must have an operationId
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: operationId
+      function: truthy
+
+  operation-operationid-camel-case:
+    description: OperationId should use camelCase
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete].operationId"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]*$"
+
+  operation-tags-required:
+    description: Every operation must have at least one tag
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: tags
+      function: truthy
+
+  operation-description-required:
+    description: Operations should have a description
+    severity: info
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: description
+      function: truthy
+
+  # PARAMETERS
+  parameter-description-required:
+    description: All parameters must have a description
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete][parameters][*]"
+    then:
+      field: description
+      function: truthy
+
+  parameter-restaurant-guid-header:
+    description: Restaurant GUID should be passed as a header named Toast-Restaurant-External-ID
+    severity: info
+    given: "$.paths[*][get,post,put,patch,delete][parameters][*][?(@.name=='restaurantGuid')]"
+    then:
+      field: in
+      function: enumeration
+      functionOptions:
+        values: ["header"]
+
+  # RESPONSES
+  response-success-required:
+    description: Operations must define at least one 2xx response
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete].responses"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          minProperties: 1
+
+  response-description-required:
+    description: All response objects must have a description
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete].responses[*]"
+    then:
+      field: description
+      function: truthy
+
+  response-401-defined:
+    description: Secured operations should define a 401 Unauthorized response
+    severity: info
+    given: "$.paths[*][get,post,put,patch,delete].responses"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          required: ["401"]
+
+  response-404-on-get-by-id:
+    description: GET by ID operations should define a 404 Not Found response
+    severity: info
+    given: "$.paths[*~*Guid*][get].responses"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          required: ["404"]
+
+  # SCHEMAS - PROPERTY NAMING
+  schema-property-camel-case:
+    description: Schema property names should use camelCase
+    severity: info
+    given: "$.definitions[*].properties[*]~"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]*$"
+
+  schema-description-required:
+    description: Top-level schemas should have a description
+    severity: info
+    given: "$.definitions[*]"
+    then:
+      field: description
+      function: truthy
+
+  schema-guid-property-format:
+    description: Properties named 'guid' should have format uuid
+    severity: info
+    given: "$.definitions[*].properties[?(@property === 'guid')]"
+    then:
+      field: format
+      function: enumeration
+      functionOptions:
+        values: ["uuid"]
+
+  # SECURITY
+  security-defined:
+    description: Security should be defined at the API level
+    given: "$"
+    severity: info
+    then:
+      field: securityDefinitions
+      function: truthy
+
+  # HTTP METHOD CONVENTIONS
+  get-no-request-body:
+    description: GET operations must not have a request body
+    severity: error
+    given: "$.paths[*].get"
+    then:
+      field: body
+      function: falsy
+
+  delete-returns-no-content:
+    description: DELETE operations should return 204 No Content
+    severity: info
+    given: "$.paths[*].delete.responses"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          required: ["204"]
+
+  # TOAST-SPECIFIC CONVENTIONS
+  toast-restaurant-guid-required:
+    description: Most Toast APIs require Toast-Restaurant-External-ID header
+    severity: info
+    given: "$.paths[*][get,post,put,patch].parameters"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: array
+          contains:
+            type: object
+            properties:
+              name:
+                enum: ["Toast-Restaurant-External-ID"]
+
+  # GENERAL QUALITY
+  no-empty-descriptions:
+    description: Description fields must not be empty
+    severity: error
+    given:
+      - "$.info.description"
+      - "$.paths[*][get,post,put,patch,delete].description"
+    then:
+      function: pattern
+      functionOptions:
+        match: "\\S"
+
+  examples-encouraged:
+    description: Schema properties should have example values
+    severity: info
+    given: "$.definitions[*].properties[*]"
+    then:
+      field: example
+      function: truthy

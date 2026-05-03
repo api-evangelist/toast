@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/labor-time-entry-break-structure.json",
+  "name": "TimeEntryBreak",
+  "description": "Information about a period of time that an employee is not\nworking during a shift. For example, an employee might take a\nbreak to eat at some time during a shift. An employee can be paid\nor unpaid for the break period.\n",
+  "type": "object",
+  "properties": {
+    "guid": {
+      "description": "The GUID maintained by the Toast platform.\n",
+      "type": "string"
+    },
+    "breakType": {
+      "type": "object",
+      "description": "Optional, Toast platform reference to the break type \nassociated with this time entry.\n",
+      "$ref": "#/definitions/ToastReference"
+    },
+    "paid": {
+      "type": "boolean",
+      "description": "Indicates whether the employee was paid for the break.\n* `true` - The break was a paid break.\n* `false` - The break was an unpaid break.\n"
+    },
+    "inDate": {
+      "type": "datetime",
+      "description": "The date and time that the employee started the break period,\nin UTC.\n"
+    },
+    "outDate": {
+      "type": "datetime",
+      "description": "The date and time that the employee ended the break period\nand returned to work, in UTC.\n"
+    },
+    "missed": {
+      "type": "boolean",
+      "description": "Indicates whether the break was a missed break.\n* `true` - The break was missed.\n* `false` - The break was taken.\n"
+    },
+    "waived": {
+      "type": "boolean",
+      "description": "Indicates whether the break was waived by the employee.\n* `true` - The break was waived.\n* `false` - The break was not waived.\n"
+    },
+    "auditResponse": {
+      "type": "boolean",
+      "description": "Indicates whether the employee was asked to take the break.\n\n* `true` - The employee was asked to take the break.\n* `false` - The employee was not asked to take the break.\n\nNull for break types that do not use break acknowledgement \ntracking or when the employee did not complete the audit \nresponse prompt.\n"
+    }
+  }
+}

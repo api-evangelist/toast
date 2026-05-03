@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/menus-time-range-structure.json",
+  "name": "TimeRange",
+  "description": "Represents a time range for when a menu or a time-specific price is available.\n",
+  "type": "object",
+  "properties": {
+    "start": {
+      "type": "string",
+      "description": "The start time of the time range. Expressed in the restaurant\u2019s local time.\n"
+    },
+    "end": {
+      "type": "string",
+      "description": "The end time of the time range. Expressed in the restaurant\u2019s local time.\n"
+    }
+  }
+}

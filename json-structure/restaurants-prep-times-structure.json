@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/restaurants-prep-times-structure.json",
+  "name": "PrepTimes",
+  "description": "Information about the scheduled availability of the dining\noptions that are provided by the restaurant.\n",
+  "type": "object",
+  "properties": {
+    "deliveryPrepTime": {
+      "type": "int32",
+      "description": "The amount of time, in minutes, that it takes to prepare an\nonline delivery order.\n"
+    },
+    "deliveryTimeAfterOpen": {
+      "type": "int32",
+      "description": "The amount of time, in minutes, that it takes for delivery\nservice to become available after the restaurant opens.\n"
+    },
+    "deliveryTimeBeforeClose": {
+      "type": "int32",
+      "description": "The amount of time, in minutes, before the restaurant closing\ntime that delivery service becomes unavailable.\n"
+    },
+    "takeoutPrepTime": {
+      "type": "int32",
+      "description": "The amount of time, in minutes, that it takes to prepare an\nonline takeout order.\n"
+    },
+    "takeoutTimeAfterOpen": {
+      "type": "int32",
+      "description": "The amount of time, in minutes, that it takes for takeout\nservice to become available after the restaurant opens.\n"
+    },
+    "takeoutTimeBeforeClose": {
+      "type": "int32",
+      "description": "The amount of time, in minutes, before the restaurant closing\ntime that takeout service becomes unavailable.\n"
+    },
+    "takeoutThrottlingTime": {
+      "type": "int32",
+      "description": "The amount of time, in minutes, that an online takeout order\nis delayed before the Toast POS fires it in the kitchen.\n"
+    },
+    "deliveryThrottlingTime": {
+      "type": "int32",
+      "description": "The amount of time, in minutes, that an online delivery order\nis delayed before the Toast POS fires it in the kitchen.\n"
+    }
+  }
+}

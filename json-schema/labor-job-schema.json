@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/labor-job-schema.json",
+  "title": "Job",
+  "description": "A restaurant job.",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/ExternalReference"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "createdDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date created, in UTC format (read-only).\n"
+        },
+        "modifiedDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date modified, in UTC format (read-only).\n"
+        },
+        "deletedDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date deleted, in UTC format (read-only).\n"
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the job.\n"
+        },
+        "deleted": {
+          "type": "boolean",
+          "description": "If the job is deleted in the Toast platform.\n"
+        },
+        "wageFrequency": {
+          "type": "string",
+          "description": "An enumerated type specifying how to interpret the \ndefault wage for this job.\n",
+          "enum": [
+            "HOURLY",
+            "SALARY"
+          ]
+        },
+        "defaultWage": {
+          "type": "number",
+          "format": "double",
+          "description": "The default wage of the job.\n"
+        },
+        "tipped": {
+          "type": "boolean",
+          "description": "Indicates whether the job receives gratuities (tips).\n"
+        },
+        "code": {
+          "type": "string",
+          "description": "A reference identifier for the job. This is an optional \nfield entered when the job is created. For example, it \ncan be used to match Toast platform jobs to jobs \nconfigured in external labor management systems.\n"
+        },
+        "excludeFromReporting": {
+          "type": "boolean",
+          "description": "Indicates whether labor summary reports should include hours and pay \nfor this job. Restaurant employees set this configuration option for a job \non the **Jobs** page of Toast Web.\n"
+        }
+      }
+    }
+  ]
+}

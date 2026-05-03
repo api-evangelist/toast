@@ -1,0 +1,221 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/menus-menu-item-structure.json",
+  "name": "MenuItem",
+  "description": "Information about a menu item configured for this restaurant.\n",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "A descriptive name for this menu item, for example, \"Caesar Salad\" or \"Turkey Sandwich\".\n\nTo avoid menu ingestion failures, if the `name` value is an empty string or `null`, the menus API updates it to the string `Missing name` in the returned menus data.\n\nNote that, while this solution allows menu ingestion to proceed without failure, it does allow a menu item with the name `Missing name` to appear in a restaurant\u2019s menu, creating potential confusion for guests and employees. Also, the menus API only updates the returned data. It does not update the menu item in the Toast database, meaning the name will still be blank when looking at the menu item in Toast Web.\n\nTo fix the issue in Toast Web, the restaurant must identify the parent menu entity for the menu item or modifier, view its details page in Toast Web, and then locate and fix the item with the blank name.\n",
+      "type": "string"
+    },
+    "kitchenName": {
+      "type": "string",
+      "description": "The name of the menu item as it appears on kitchen tickets. The `kitchenName` can include both numbers and letters. This value contains an empty string if a kitchen name has not been configured for the menu item.\n"
+    },
+    "guid": {
+      "description": "A unique identifier for this menu item, assigned by the Toast POS system.\n",
+      "type": "string"
+    },
+    "multiLocationId": {
+      "$ref": "#/definitions/MultiLocationId"
+    },
+    "masterId": {
+      "$ref": "#/definitions/MasterId"
+    },
+    "description": {
+      "description": "An optional short description of this menu item.\n",
+      "type": "string"
+    },
+    "posName": {
+      "$ref": "#/definitions/PosName"
+    },
+    "posButtonColorLight": {
+      "$ref": "#/definitions/PosButtonColorLight"
+    },
+    "posButtonColorDark": {
+      "$ref": "#/definitions/PosButtonColorDark"
+    },
+    "image": {
+      "$ref": "#/definitions/Image"
+    },
+    "visibility": {
+      "$ref": "#/definitions/Visibility"
+    },
+    "price": {
+      "type": "double",
+      "description": "The price of this menu item.\n\nIn Toast Web, menu items may have prices assigned to them individually, or they may inherit them from a parent menu group. The `price` value reflects the menu item's fully resolved pricing configuration in the following ways:\n\n  * For base prices, the `price` value is populated with the specified base price.\n  \n  * For menu-specific prices, the `price` value is resolved based on the current menu. For example, consider a menu item that is included in both Lunch and Dinner menus and is priced at $10 for the Lunch menu and $12 for the Dinner menu. In the fully resolved JSON returned by the menus API, this menu item would appear twice, once as a child of the Lunch menu with a `price` value of $10, and again as a child of the Dinner menu with a `price` value of $12.\n  \n  If this same menu item is added to a Breakfast menu but a menu-specific price is not defined for the Breakfast menu, then the `price` value for the instance of the menu item that appears in the Breakfast menu JSON is populated with the base price from the menu-specific price configuration. Menu-specific price configurations include a base price that functions as a default price when a menu-specific price cannot be resolved.\n\n  * For location-specific prices, the `price` value is resolved based on the current location. For example, consider a menu item that costs $15 in the Boston location and $20 in the New York location. When you retrieve menu data for the Boston location, this menu item's `price` value is $15. When you retrieve menu data for the New York location, the menu item's `price` value is $20.\n  \n  * For time-specific prices, the `price` value is populated with the base price that is specified as part of the time-specific price configuration. This base price functions as a default price for the menu item during times of the day when a time-specific price has not been defined. For example, consider a menu item that costs $8 from noon to 2pm and $10 during the rest of the day. The `price` value for this item would be $10. You must use the `pricingStrategy` and `pricingRules` values for this menu item to calculate the price of the item during time periods for which a time-specific price has been defined.\n  \n  * For size prices, the `price` value is null. You must use this menu item's `pricingStrategy` and `pricingRules` values to calculate the price of the item for different sizes.\n  \n  * For open prices, the `price` value is null.\n\n  \n  If the menu item is priced using a price level, the `price` value reflects the pricing strategy used for that price level, using the same logic described above. For example, consider a price level that applies a size price to the menu items it is assigned to. In this scenario, the `price` value is null and you must use the menu item's `pricingStrategy` and `pricingRules` values to calculate the price of the item for different sizes.\n\n  For more information on menu item pricing and pricing strategies, see the <a href=\"https://doc.toasttab.com/doc/platformguide/adminToastPosPricingFeatures.html\">Menu Pricing</a> section in the Toast Platform Guide.\n",
+      "x-nullable": true
+    },
+    "pricingStrategy": {
+      "type": "string",
+      "enum": [
+        "BASE_PRICE",
+        "MENU_SPECIFIC_PRICE",
+        "TIME_SPECIFIC_PRICE",
+        "SIZE_PRICE",
+        "OPEN_PRICE"
+      ],
+      "description": "A string that represents the pricing strategy used for this menu item.\n\nYou use the `pricingStrategy` value, in conjunction with the `pricingRules` value, to calculate the price for a menu item that uses the Time Specific Price or Size Price pricing strategy.\n\nIn Toast Web, menu items may have pricing strategies assigned to them individually, or they may inherit them from a parent menu group. The `pricingStrategy` value indicates the menu item's fully resolved pricing strategy. If the menu item is priced using the:\n  * Base Price pricing strategy, then the `pricingStrategy` value is BASE_PRICE.\n  * Menu Specific Price pricing strategy, then the `pricingStrategy` value is MENU_SPECIFIC_PRICE.\n  * Time Specific Price pricing strategy, then the `pricingStrategy` value is TIME_SPECIFIC_PRICE.\n  * Size Price pricing strategy, then the `pricingStrategy` value is SIZE_PRICE.\n  * Open Price pricing strategy, then the `pricingStrategy` value is OPEN_PRICE.\n\nIf the menu item is priced using the Location Specific Price pricing strategy, then the `pricingStrategy` value indicates which pricing strategy is used at the current location. For example, consider a menu item that uses a menu-specific price at the Boston location and a base price at the New York location. When you retrieve the menu data for the Boston location, the `pricingStrategy` for the menu item is MENU_SPECIFIC_PRICE. When you retrieve menu data for the New York location, the `pricingStrategy` for the menu item is BASE_PRICE.\n\nIf the menu item is priced using a price level, then the `pricingStrategy` value indicates which pricing strategy is used for that price level. For example, if the \"Draft Beer\" pricing level uses a time-specific price, then the `pricingStrategy` value for a menu item that is assigned the \"Draft Beer\" pricing level is TIME_SPECIFIC_PRICE.\n\nIf the `pricingStrategy` value is BASE_PRICE or MENU_SPECIFIC_PRICE, you can retrieve the menu item's price from its `price` value.\n\nIf the `pricingStrategy` value is TIME_SPECIFIC_PRICE or SIZE_PRICE, you must use the rules provided in _this menu item's_ `pricingRules` value to calculate the price for it.\n"
+    },
+    "pricingRules": {
+      "type": "object",
+      "description": "A `PricingRules` object with information about how to calculate the price for this menu item. You use a menu item's `pricingRules` value, in conjunction with its `pricingStrategy` value, to calculate a price for a menu item that uses a size-specific or time-specific price.\n\nThe `pricingRules` object takes different forms depending on the pricing strategy configured for the menu item. Use the `pricingStrategy` value to determine which pricing strategy has been used so that you can properly interpret the data in the `pricingRules` object. For the BASE_PRICE, and MENU_SPECIFIC_PRICE pricing strategies, the `pricingRules` object is null because you can retrieve the price from the `price` value without additional calculation. For the OPEN_PRICE pricing strategy, the `pricingRules` object is also null (the price of an open menu item is specified when it is ordered). For the TIME_SPECIFIC_PRICE and SIZE_PRICE pricing strategies, the `PricingRules` object contains additional values that you use to calculate the menu item's price.\n",
+      "items": {
+        "$ref": "#/definitions/PricingRules"
+      },
+      "x-nullable": true
+    },
+    "isDeferred": {
+      "type": "boolean",
+      "description": "Indicates whether this menu item should be considered deferred revenue.\n"
+    },
+    "isDiscountable": {
+      "type": "boolean",
+      "description": "Indicates whether this menu item can be discounted.\n\n**_Important_** The orders API _does not validate_ against the `isDiscountable` value. If you submit an order that applies a discount to a menu item whose `isDiscountable` value is FALSE, the orders API will not fail the order but it will set the discount amount on the menu item to $0.00. If you are using the menus API to build an ordering application, be sure to inspect the `isDiscountable` value of the menu items to ensure that your ordering application does not allow an item to be discounted if its `isDiscountable` value is FALSE.\n"
+    },
+    "salesCategory": {
+      "$ref": "#/definitions/SalesCategory"
+    },
+    "taxInfo": {
+      "type": "array",
+      "description": "An array of GUIDs for the tax rates that apply to this menu item.\n\nNote that a menu item's tax rates may get overridden if a modifier option is applied to it and that modifier option is configured so that it overrides its parent menu item's tax rates. See <a href=\"https://doc.toasttab.com/doc/devguide/apiUsingTaxInfoAndModifierOptionTaxInfoToCalculateTaxesForMenuItemsAndModOptions.html\">Using taxInfo and modifierOptionTaxInfo to calculate taxes for menu items and modifier options</a> in the Toast Developer Guide for more information.   \n          \nTo retrieve full configuration data for a tax rate, use the `/taxRates/{guid}` endpoint in the configuration API.\n\n_Important:_ The `taxInfo` value is intended to help you display prices but the `/prices` endpoint of the orders API is the only supported way to determine the prices of orders that you submit to the orders API. See <a href=\"https://doc.toasttab.com/doc/devguide/apiOrderPrices.html\">Order prices</a> in the Toast Developer Guide for more information.\n",
+      "items": {
+        "type": "string"
+      }
+    },
+    "taxInclusion": {
+      "type": "string",
+      "enum": [
+        "TAX_INCLUDED",
+        "TAX_NOT_INCLUDED",
+        "SMART_TAX"
+      ],
+      "description": "A string that represents the tax inclusion setting for this menu item. Possible values include:\n\n* `TAX_INCLUDED`: The menu item's price includes taxes. You should not display additional tax on top of the menu item price in your ordering UI.\n* `TAX_NOT_INCLUDED`: The menu item's price does not include taxes. You should display tax values alongside the menu item price in your ordering UI.\n* `SMART_TAX`: The menu item is using smart tax, a feature that allows a restaurant to configure menu item prices to include or not include taxes, depending on the section of the restaurant that the item is ordered in (for example, the bar or the dining room). For example, a guest can order an item at either the bar or in the main dining room. To prevent bartenders from having to handle coins, which can slow down service, and to make tipping easier, the restaurant wants the price of the item to be a whole number that includes tax when it is ordered at the bar. In the main dining room, where speed of service is less of a concern, the restaurant doesn't want the item's price to include tax, so that it doesn't lose out on the extra revenue.\n\nTypically, the smart tax setting is used for in-store workflows where the efficiency of money handling is a priority. As such, it doesn't apply to online ordering integrations. If a menu item's `taxInclusion` value is set to `SMART_TAX`, your ordering integration should treat the menu item as if tax is not included. For more information on the smart tax feature, see <a href=\"https://doc.toasttab.com/doc/platformguide/adminSmartTax.html\">Smart tax</a> in the Toast Platform Guide.\n\n_Note:_ A menu item's tax inclusion setting is inherited by any modifiers that are applied to that menu item. For more information, see <a href=\"https://doc.toasttab.com/doc/platformguide/adminTaxesOnModifiers.html#adminModifierTaxInteraction\">Tax functionality interaction</a> in the Toast Platform Guide.\n"
+    },
+    "itemTags": {
+      "type": "array",
+      "description": "An array of `ItemTag` objects that are assigned to this menu item. Item tags are used to assign identifying characteristics to a menu item, for example, vegetarian, gluten-free, or alcohol.\n",
+      "items": {
+        "$ref": "#/definitions/ItemTag"
+      }
+    },
+    "plu": {
+      "type": "string",
+      "description": "The price lookup (PLU) code for this menu item. The PLU code can include both numbers and letters. This value contains an empty string if a PLU code has not been defined.\n"
+    },
+    "sku": {
+      "type": "string",
+      "description": "The stock keeping unit (SKU) identifier for this menu item. The SKU identifier can include both numbers and letters. This value contains an empty string if a SKU has not been defined.\n"
+    },
+    "calories": {
+      "type": "int32",
+      "description": "The number of calories in this menu item. The calories value can be any positive or negative integer, or zero. This value is null if a calories amount has not been configured for the menu item.\n",
+      "x-nullable": true
+    },
+    "contentAdvisories": {
+      "$ref": "#/definitions/ContentAdvisories"
+    },
+    "unitOfMeasure": {
+      "type": "string",
+      "enum": [
+        "NONE",
+        "LB",
+        "OZ",
+        "KG",
+        "G",
+        "GAL",
+        "L",
+        "ML",
+        "FL_OZ",
+        "M",
+        "CM",
+        "FT",
+        "IN",
+        "YD"
+      ],
+      "description": "The unit of measure used to determine the price of the item. For example, $10.00 per gram.\n\nThe default is `NONE`, which means that the item is not meant to be measured during a sale.\n\nValues are:\n* `NONE` - The item is not meant to be measured.\n* `LB` - Weighed in pounds.\n* `OZ` - Weighed in ounces.\n* `KG` - Weighed in kilograms.\n* `G` - Weighed in grams.\n* `GAL` - Measured in gallons.\n* `L` - Measured in liters.\n* `ML` - Measured in milliliters.\n* `FL_OZ` - Measured in fluid ounces.\n* `M` - Measured in meters.\n* `CM` - Measured in centimeters.\n* `FT` - Measured in feet.\n* `IN` - Measured in inches.\n* `YD` - Measured in yards.\n"
+    },
+    "portions": {
+      "type": "array",
+      "description": "An array of `Portion` objects that define the portions that can be used with this menu item. For example, for a pizza menu item, you could define 1st Half and 2nd Half portions. See <a href=\"https://doc.toasttab.com/doc/platformguide/adminPortionsOverview.html\">Portions overview</a> in the Toast Platform Guide for more information on portions.\n",
+      "minItems": 0,
+      "items": {
+        "$ref": "#/definitions/Portion"
+      }
+    },
+    "prepTime": {
+      "type": "int32",
+      "description": "The amount of time, in seconds, that it takes to prepare this menu item. This value is null if a prep time has not been specified for the menu item.<br>\n<br>\n*Related topics*<br>\n<a href=\"https://doc.toasttab.com/doc/platformguide/adminFireByPrepTime.html\">Using prep times to automate item firing</a><br>\n",
+      "x-nullable": true
+    },
+    "prepStations": {
+      "type": "array",
+      "description": "An array of GUIDs for the prep stations that have been assigned to this menu item. This array is empty if no prep stations have been assigned.<br>\n<br>\n*Related topics:*<br>\n<a href=\"https://doc.toasttab.com/doc/platformguide/platformKitchenRoutingOverview.html\">Routing to prep stations</a>\n",
+      "items": {
+        "type": "string"
+      }
+    },
+    "modifierGroupReferences": {
+      "type": "array",
+      "description": "An array of `referenceId`s for `ModifierGroup` objects. These objects define the modifier groups that apply to this menu item.\n",
+      "minItems": 0,
+      "items": {
+        "type": "int32"
+      }
+    },
+    "eligiblePaymentAssistancePrograms": {
+      "type": "array",
+      "description": "An array of strings that indicate which payment assistance programs may be used to pay for this menu item. Possible values include:\n\n* `SNAP`: Supplemental Nutrition Assistance Program\n* `EBT_CASH`: Electronic Benefit Transfer Cash\n\nThe array is empty if no payment assistance programs have been assigned to the menu item.\n",
+      "items": {
+        "type": "string"
+      }
+    },
+    "allergens": {
+      "type": "array",
+      "description": "Reserved for future functionality. Not currently supported for external integrations.\n",
+      "minItems": 0,
+      "items": {
+        "$ref": "#/definitions/AllergenItem"
+      },
+      "x-nullable": true
+    },
+    "length": {
+      "$ref": "#/definitions/Length"
+    },
+    "height": {
+      "$ref": "#/definitions/Height"
+    },
+    "width": {
+      "$ref": "#/definitions/Width"
+    },
+    "dimensionUnitOfMeasure": {
+      "$ref": "#/definitions/DimensionUnitOfMeasure"
+    },
+    "weight": {
+      "$ref": "#/definitions/Weight"
+    },
+    "weightUnitOfMeasure": {
+      "$ref": "#/definitions/WeightUnitOfMeasure"
+    },
+    "images": {
+      "$ref": "#/definitions/Images"
+    },
+    "guestCount": {
+      "$ref": "#/definitions/GuestCount"
+    },
+    "sortOrder": {
+      "type": "int32",
+      "description": "A number determining the order in which this item should appear on kitchen tickets. The sort order value can be any positive or negative integer, or zero. This value is null if a sort order has not been configured for the menu item.\n",
+      "x-nullable": true
+    },
+    "catalogProductInfo": {
+      "$ref": "#/definitions/CatalogProductInfo"
+    },
+    "isComboParent": {
+      "type": "boolean",
+      "description": "Reserved for future functionality. Not currently supported for external integrations.",
+      "x-nullable": true
+    }
+  }
+}

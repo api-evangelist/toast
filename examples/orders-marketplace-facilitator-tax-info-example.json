@@ -1,0 +1,6 @@
+{
+  "facilitatorCollectAndRemitTaxOrder": false,
+  "taxes": [
+    "sample-taxes_item"
+  ]
+}

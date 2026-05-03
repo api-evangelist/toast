@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/menus-catalog-product-variant-structure.json",
+  "name": "CatalogProductVariant",
+  "description": "The specific version of the retail product that this menu item represents, defined by a unique combination of option values (for example, a T-Shirt with options `Red` and size `Small`).\n",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "uuid",
+      "description": "The unique identifier for the product variant.\n"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the variant, for example, \"T-Shirt - Small\".\n"
+    },
+    "description": {
+      "type": "string",
+      "description": "The description of the variant.\n",
+      "x-nullable": true
+    },
+    "selectedOptions": {
+      "type": "array",
+      "description": "List of selected options for the variant.\n",
+      "items": {
+        "$ref": "#/definitions/CatalogProductVariantOption"
+      }
+    }
+  }
+}

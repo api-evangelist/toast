@@ -1,0 +1,56 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "toast": "https://developer.toasttab.com/schema/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "AuthenticationRequest": "toast:AuthenticationRequest",
+    "AuthenticationResponse": "toast:AuthenticationResponse",
+    "AuthenticationToken": "toast:AuthenticationToken",
+    "accessToken": {
+      "@id": "toast:accessToken",
+      "@type": "xsd:string"
+    },
+    "clientId": {
+      "@id": "toast:clientId",
+      "@type": "xsd:string"
+    },
+    "clientSecret": {
+      "@id": "toast:clientSecret",
+      "@type": "xsd:string"
+    },
+    "expiresIn": {
+      "@id": "toast:expiresIn",
+      "@type": "xsd:integer"
+    },
+    "idToken": {
+      "@id": "toast:idToken",
+      "@type": "xsd:string"
+    },
+    "refreshToken": {
+      "@id": "toast:refreshToken",
+      "@type": "xsd:string"
+    },
+    "scope": {
+      "@id": "toast:scope",
+      "@type": "xsd:string"
+    },
+    "status": {
+      "@id": "toast:status",
+      "@type": "xsd:string"
+    },
+    "token": {
+      "@id": "toast:token",
+      "@type": "@id"
+    },
+    "tokenType": {
+      "@id": "toast:tokenType",
+      "@type": "xsd:string"
+    },
+    "userAccessType": {
+      "@id": "toast:userAccessType",
+      "@type": "xsd:string"
+    }
+  }
+}

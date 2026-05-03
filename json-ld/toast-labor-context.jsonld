@@ -1,0 +1,78 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "toast": "https://developer.toasttab.com/schema/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "Employee": "toast:Employee",
+    "ExternalReference": "toast:ExternalReference",
+    "Job": "toast:Job",
+    "JobWageOverride": "toast:JobWageOverride",
+    "ScheduleConfig": "toast:ScheduleConfig",
+    "Shift": "toast:Shift",
+    "TimeEntry": "toast:TimeEntry",
+    "TimeEntryBreak": "toast:TimeEntryBreak",
+    "ToastReference": "toast:ToastReference",
+    "auditResponse": {
+      "@id": "toast:auditResponse",
+      "@type": "xsd:boolean"
+    },
+    "breakType": {
+      "@id": "toast:breakType",
+      "@type": "@id"
+    },
+    "entityType": {
+      "@id": "toast:entityType",
+      "@type": "xsd:string"
+    },
+    "guid": {
+      "@id": "toast:guid",
+      "@type": "xsd:string"
+    },
+    "inDate": {
+      "@id": "toast:inDate",
+      "@type": "xsd:dateTime"
+    },
+    "jobReference": {
+      "@id": "toast:jobReference",
+      "@type": "@id"
+    },
+    "minAfterClockIn": {
+      "@id": "toast:minAfterClockIn",
+      "@type": "xsd:decimal"
+    },
+    "minAfterClockOut": {
+      "@id": "toast:minAfterClockOut",
+      "@type": "xsd:decimal"
+    },
+    "minBeforeClockIn": {
+      "@id": "toast:minBeforeClockIn",
+      "@type": "xsd:decimal"
+    },
+    "minBeforeClockOut": {
+      "@id": "toast:minBeforeClockOut",
+      "@type": "xsd:decimal"
+    },
+    "missed": {
+      "@id": "toast:missed",
+      "@type": "xsd:boolean"
+    },
+    "outDate": {
+      "@id": "toast:outDate",
+      "@type": "xsd:dateTime"
+    },
+    "paid": {
+      "@id": "toast:paid",
+      "@type": "xsd:boolean"
+    },
+    "wage": {
+      "@id": "toast:wage",
+      "@type": "xsd:decimal"
+    },
+    "waived": {
+      "@id": "toast:waived",
+      "@type": "xsd:boolean"
+    }
+  }
+}

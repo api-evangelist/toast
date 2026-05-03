@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/menus-menu-group-structure.json",
+  "name": "MenuGroup",
+  "description": "Information about a menu group configured for this restaurant, including an array of menu items contained in the group.\n",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "A descriptive name for this menu group, for example, \"Appetizers\" or \"Sandwiches\".\n",
+      "type": "string"
+    },
+    "guid": {
+      "description": "A unique identifier for this menu group, assigned by the Toast POS system.\n",
+      "type": "string"
+    },
+    "multiLocationId": {
+      "$ref": "#/definitions/MultiLocationId"
+    },
+    "masterId": {
+      "$ref": "#/definitions/MasterId"
+    },
+    "description": {
+      "description": "An optional short description of this menu group.\n",
+      "type": "string"
+    },
+    "posName": {
+      "$ref": "#/definitions/PosName"
+    },
+    "posButtonColorLight": {
+      "$ref": "#/definitions/PosButtonColorLight"
+    },
+    "posButtonColorDark": {
+      "$ref": "#/definitions/PosButtonColorDark"
+    },
+    "image": {
+      "$ref": "#/definitions/Image"
+    },
+    "visibility": {
+      "$ref": "#/definitions/Visibility"
+    },
+    "itemTags": {
+      "type": "array",
+      "description": "An array of `ItemTag` objects that are assigned to this menu group. Item tags are used to assign identifying characteristics, for example, vegetarian, gluten-free, or alcohol.\n",
+      "items": {
+        "$ref": "#/definitions/ItemTag"
+      }
+    },
+    "menuGroups": {
+      "type": "array",
+      "description": "An array of the `MenuGroup` objects that are children of this menu group. The array is empty if the menu group has no child menu groups.\n",
+      "minItems": 0,
+      "items": {
+        "$ref": "#/definitions/MenuGroup"
+      }
+    },
+    "menuItems": {
+      "type": "array",
+      "description": "An array of the `MenuItem` objects contained in this menu group.\n",
+      "minItems": 0,
+      "items": {
+        "$ref": "#/definitions/MenuItem"
+      }
+    }
+  }
+}

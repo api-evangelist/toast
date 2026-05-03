@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/menus-restaurant-schema.json",
+  "title": "Restaurant",
+  "description": "Information about the restaurant whose menu data has been retrieved.\n",
+  "type": "object",
+  "properties": {
+    "restaurantGuid": {
+      "description": "A unique identifier for this restaurant, assigned by the Toast POS system.\n",
+      "type": "string",
+      "format": "uuid"
+    },
+    "lastUpdated": {
+      "description": "The most recent date and time that this menu's data was published. Use this value to determine if you need to refresh your menu data. The `lastUpdated` value uses the absolute timestamp format describe in the <a href=\"https://doc.toasttab.com/doc/devguide/api_dates_and_timestamps.html\">Dates and timestamps</a> section of the Toast Developer Guide.\n",
+      "type": "string"
+    },
+    "restaurantTimeZone": {
+      "description": "The name of the restaurant's time zone in the IANA time zone database https://www.iana.org/time-zones. For example, \"America/New_York\".\n",
+      "type": "string"
+    },
+    "menus": {
+      "type": "array",
+      "description": "An array of `Menu` objects that represent the published menus used by this restaurant.\n",
+      "items": {
+        "$ref": "#/definitions/Menu"
+      }
+    },
+    "modifierGroupReferences": {
+      "description": "A map of `ModifierGroup` objects that define the modifier groups used by this restaurant. Each `ModifierGroup` object is presented as a key/value pair. A pair's key matches the `referenceId` of the object contained in the pair's value, as shown below:\n```\n  \"modifierGroupReferences\": {\n    ...\n    \"3\": {\n      \"referenceId\": 3,\n      \"name\": \"Toppings\",\n      \"guid\": \"58b79986-f88f-411d-ba18-14b1e2441e9d\",\n        ...\n      },\n      ...\n      \"modifierOptionReferences\": [\n        10,\n        11\n      ],\n      ...\n    },\n    ...\n  },\n```\n\nOther menu entities refer to modifier groups using their `referenceId`. Having a key that matches the `referenceId` allows you to locate the correct modifier group in the `modifierGroupReferences` map. For more information on the `referenceId` value, see the <a href=\"https://doc.toasttab.com/doc/devguide/apiUnderstandingGuidsEntityIdentifiersAndMultilocationIds_V2.html\">Understanding GUIDs, referenceIds, and multilocationIds</a> section of the Toast Developer Guide.\n",
+      "properties": {
+        "identifier": {
+          "type": "integer"
+        }
+      },
+      "additionalProperties": {
+        "$ref": "#/definitions/ModifierGroup"
+      }
+    },
+    "modifierOptionReferences": {
+      "description": "A map of `ModifierOption` objects that define the modifier options used by this restaurant. Each `ModifierOption` object is presented as a key/value pair. A pair's key matches the `referenceId` of the object contained in the pair's value, as shown below:\n```\n\"modifierOptionReferences\": {\n  ...\n  \"10\": {\n    \"referenceId\": 10,\n    \"name\": \"Mushrooms\",\n    \"guid\": \"fa24fee9-76c4-40ba-ae3c-7dfccafdd8d3\",\n    ...\n  },\n  \"11\": {\n    \"referenceId\": 11,\n    \"name\": \"Onions\",\n    \"guid\": \"afee6be7-8280-4c69-a170-9fdf4c76bf7b\",\n    ...\n  },\n  ...\n}\n```\n\nOther menu entities refer to modifier options using their `referenceId`. Having a key that matches the `referenceId` allows you to locate the correct modifier option in the `modifierOptionReferences` map. For more information on the `referenceId` value, see the <a href=\"https://doc.toasttab.com/doc/devguide/apiUnderstandingGuidsEntityIdentifiersAndMultilocationIds_V2.html\">Understanding GUIDs, referenceIds, and multilocationIds</a> section of the Toast Developer Guide.\n",
+      "properties": {
+        "identifier": {
+          "type": "integer"
+        }
+      },
+      "additionalProperties": {
+        "$ref": "#/definitions/ModifierOption"
+      }
+    },
+    "preModifierGroupReferences": {
+      "description": "A map of `PreModifierGroup` objects that define the premodifier groups used by this restaurant. Each `PreModifierGroup` object is presented as a key/value pair. A pair's key matches the `referenceId` of the object contained in the pair's value, as shown below:\n```\n\"preModifierGroupReferences\": {\n  \"22\": {\n    \"referenceId\": 22,\n    \"guid\": \"07a1a94d-6f7b-46d5-a916-a07fa16bb8e8\",\n    \"name\": \"PreModGroup\",\n    \"preModifiers\": [\n      {\n        \"guid\": \"ad45e697-9356-468e-b7b4-1b23f4d4b8a5\",\n        \"name\": \"EXTRA\",\n        \"fixedPrice\": 1.0,\n        \"multiplicationFactor\": null,\n        \"displayMode\": \"PREFIX\"\n      },\n      {\n        \"guid\": \"483dd4cf-acea-4373-ae76-5f7efd0d529d\",\n        \"name\": \"NO\",\n        \"fixedPrice\": 0.0,\n        \"multiplicationFactor\": null,\n        \"displayMode\": \"PREFIX\"\n      }\n    ]\n  },\n},            \n```\n\nOther menu entities refer to premodifier groups using their `referenceId`. Having a key that matches the `referenceId` allows you to locate the correct premodifier group in the `preModifierGroupReferences` map. For more information on the `referenceId` value, see the <a href=\"https://doc.toasttab.com/doc/devguide/apiUnderstandingGuidsEntityIdentifiersAndMultilocationIds_V2.html\">Understanding GUIDs, referenceIds, and multilocationIds</a> section of the Toast Developer Guide.          \n",
+      "properties": {
+        "identifier": {
+          "type": "integer"
+        }
+      },
+      "additionalProperties": {
+        "$ref": "#/definitions/PreModifierGroup"
+      }
+    }
+  }
+}

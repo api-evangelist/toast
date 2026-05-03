@@ -1,0 +1,18 @@
+{
+  "openedDate": "2025-02-07T08:00:00.000-0800",
+  "modifiedDate": "2025-02-07T08:00:00.000-0800",
+  "promisedDate": "2025-05-01T08:00:00.000-0800",
+  "channelGuid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "checks": [
+    "sample-checks_item"
+  ],
+  "source": "sample-source",
+  "duration": 7,
+  "requiredPrepTime": "sample-requiredPrepTime",
+  "estimatedFulfillmentDate": "2025-05-01T08:00:00.000-0800",
+  "numberOfGuests": 47,
+  "voided": false,
+  "voidDate": "2025-02-07T08:00:00.000-0800",
+  "voidBusinessDate": 73,
+  "paidDate": "2025-02-07T08:00:00.000-0800"
+}

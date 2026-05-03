@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/orders-void-information-structure.json",
+  "name": "VoidInformation",
+  "description": "Information about a void applied to a check or item.",
+  "type": "object",
+  "properties": {
+    "voidUser": {
+      "type": "object",
+      "description": "The user who voided the order.",
+      "$ref": "#/definitions/ExternalReference"
+    },
+    "voidApprover": {
+      "type": "object",
+      "description": "The user who approved the void.",
+      "$ref": "#/definitions/ExternalReference"
+    },
+    "voidDate": {
+      "description": "The date on which the void was made.",
+      "type": "datetime"
+    },
+    "voidBusinessDate": {
+      "x-toast-read-only": true,
+      "description": "The business date (yyyyMMdd) on which the void was made. Response only.",
+      "type": "int32"
+    },
+    "voidReason": {
+      "type": "object",
+      "description": "A reference to the configured void reason for the void.",
+      "$ref": "#/definitions/ExternalReference"
+    }
+  }
+}

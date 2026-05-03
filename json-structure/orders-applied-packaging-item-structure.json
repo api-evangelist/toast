@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/orders-applied-packaging-item-structure.json",
+  "name": "AppliedPackagingItem",
+  "description": "Indicates the guest preference for an individual packaging item in this order.\n",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/ToastReference"
+    },
+    {
+      "type": "object",
+      "required": [
+        "itemConfigId",
+        "inclusion"
+      ],
+      "properties": {
+        "itemConfigId": {
+          "type": "string",
+          "description": "The identifier GUID of the packaging preference option.\n"
+        },
+        "inclusion": {
+          "type": "string",
+          "description": "The packaging preference choice that the guest selected in your ordering interface.\n",
+          "enum": [
+            "YES",
+            "NO"
+          ]
+        },
+        "itemTypes": {
+          "x-toast-read-only": true,
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "The packaging item types relevant for this packaging item as configured by the restaurant in Toast Web. Response only.\n"
+        },
+        "guestDisplayName": {
+          "x-toast-read-only": true,
+          "type": "string",
+          "description": "The guest-facing name, configured by the restaurant in Toast Web, for this packaging item. Response only.\n"
+        }
+      }
+    }
+  ]
+}

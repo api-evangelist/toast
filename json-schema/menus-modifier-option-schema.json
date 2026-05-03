@@ -1,0 +1,199 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/menus-modifier-option-schema.json",
+  "title": "ModifierOption",
+  "description": "Information about a modifier option configured for this restaurant.\n",
+  "type": "object",
+  "properties": {
+    "referenceId": {
+      "description": "An integer identifier that is used to refer to this modifier option by modifier option groups that contain it.\n",
+      "type": "integer"
+    },
+    "name": {
+      "description": "A descriptive name for this modifier option, for example, \"Cheese\" or \"Pepperoni\".\n          \nTo avoid menu ingestion failures, if the `name` value for a modifier option is an empty string or `null`, the menus API updates it to the string `Missing name` in the returned menus data. A modifier option has a blank name if both its item reference name and its modifier override name are missing.\n\nNote that, while this solution allows menu ingestion to proceed without failure, it does allow a modifier option with the name `Missing name` to appear in a restaurant\u2019s menu, creating potential confusion for guests and employees. Also, the menus API only updates the returned data. It does not update the modifier option in the Toast database, meaning the name will still be blank when looking at the modifier option in Toast Web.\n\nTo fix the issue in Toast Web, the restaurant must identify the parent menu entity for the modifier option, view its details page in Toast Web, and then locate and fix the modifier option with the blank name.\n\nFor a detailed description of a modifier option's item reference, see <a href=\"https://doc.toasttab.com/doc/platformguide/adminPricingModifierOptions.html#adminUnderstandingAModifierOptionsItemReference\">Understanding a modifier option\u2019s item reference</a> in the Toast Platform Guide.\n",
+      "type": "string"
+    },
+    "kitchenName": {
+      "description": "The name of the modifier option as it appears on kitchen tickets. The `kitchenName` can include both numbers and letters. This value contains an empty string if a kitchen name has not been configured for the modifier option.\n",
+      "type": "string"
+    },
+    "guid": {
+      "description": "A unique identifier for this modifier option's item reference, assigned by the Toast POS system. For a detailed description of a modifier option's item reference, see <a href=\"https://doc.toasttab.com/doc/platformguide/adminPricingModifierOptions.html#adminUnderstandingAModifierOptionsItemReference\">Understanding a modifier option\u2019s item reference</a> in the Toast Platform Guide.\n",
+      "type": "string"
+    },
+    "multiLocationId": {
+      "$ref": "#/definitions/MultiLocationId"
+    },
+    "masterId": {
+      "$ref": "#/definitions/MasterId"
+    },
+    "description": {
+      "description": "An optional short description of this modifier option.\n",
+      "type": "string"
+    },
+    "posName": {
+      "$ref": "#/definitions/PosName"
+    },
+    "posButtonColorLight": {
+      "$ref": "#/definitions/PosButtonColorLight"
+    },
+    "posButtonColorDark": {
+      "$ref": "#/definitions/PosButtonColorDark"
+    },
+    "prepStations": {
+      "type": "array",
+      "description": "An array of GUIDs for the prep stations that have been assigned to this modifier option.\n\nIf a modifier option's item reference has prep stations assigned to it, then the modifier option uses those prep stations. If the modifier option's item reference *does not* have prep stations assigned to it, then the modifier option inherits the prep stations of the menu group, menu item, or modifier (in the case of nested modifiers) it is modifying.\n\nThe array is empty if no prep stations have been assigned to the modifier option.<br>\n<br>\n*Related topics:*<br>\n<a href=\"https://doc.toasttab.com/doc/platformguide/platformKitchenRoutingOverview.html\">Routing to prep stations</a>\n<a href=\"https://doc.toasttab.com/doc/platformguide/adminPricingModifierOptions.html#adminUnderstandingAModifierOptionsItemReference\">Understanding a modifier option\u2019s item reference</a>\n",
+      "items": {
+        "type": "string"
+      }
+    },
+    "image": {
+      "$ref": "#/definitions/Image"
+    },
+    "visibility": {
+      "$ref": "#/definitions/Visibility"
+    },
+    "price": {
+      "type": "number",
+      "format": "double",
+      "description": "The price of this modifier option.\n\nIn Toast Web, a modifier option may:\n  * Inherit its price from a parent modifier group.\n  * Use the price specified for its modifier option <a href=\"https://doc.toasttab.com/doc/platformguide/adminPricingModifierOptions.html#adminUnderstandingAModifierOptionsItemReference\">item reference</a>.\n  * Specify a price that overrides the price defined for its item reference.\n\nThe `price` value is populated differently depending on which of these pricing scenarios is used for the modifier option. The sections below describe how the `price` value is populated in these different scenarios.\n\n_Note:_ To determine how a modifier option has been priced, you can inspect the modifier option's `pricingStrategy` value. If it is GROUP_PRICE, then the modifier option is inheriting its price from a parent modifier group. If it is any value other than GROUP_PRICE (for example, MENU_SPECIFIC_PRICE or TIME_SPECIFIC PRICE), then the modifier option is using either the price specified for its item reference or an override price (override prices always use the BASE_PRICE strategy).\n\n_Modifier Option Inherits Its Price from a Parent Modifier Group_\n\nIf the modifier option inherits its price from a parent modifier group and that group uses the:\n  * Fixed Price pricing strategy, then the modifier option's `price` value is populated with the fixed price specified for the parent modifier group. No additional calculations are required.\n  * Size Price, Sequence Price, or Size/Sequence pricing strategy, then the modifier option's `price` value is null. You must use the _parent modifier group's_ `pricingStrategy` and `pricingRules` values to calculate the modifier option's price.\n\n_Modifier Option Specifies an Override Price_\n\nIf the modifier option specifies an override price, the `price` value is set to that override price. No additional calculations are required.\n\n_Modifier Option Uses the Price from Its Item Reference_\n\nIf a modifier option uses the price from its underlying item reference, then the `price` value is populated using the same logic as the `price` value for a `MenuItem` object:\n  * For base prices, the `price` value is populated with the specified base price.\n  * For menu-specific prices, the `price` value is resolved based on the current menu. For example, consider a modifier option that is included in both Lunch and Dinner menus and is priced at $1 for the Lunch menu and $2 for the Dinner menu. In the fully resolved JSON returned by the menus API, this modifier option would appear twice, once as a child of the Lunch menu with a `price` value of $1, and again as a child of the Dinner menu with a `price` value of $2.\n\n  If this same modifier option is added to a Breakfast menu but a menu-specific price is not defined for the Breakfast menu, then the `price` value for the instance of the modifier option that appears in the Breakfast menu JSON is populated with the base price from the menu-specific price configuration. Menu-specific price configurations include a base price that functions as a default price when a menu-specific price cannot be resolved.\n  \n  * For location-specific prices, the `price` value is resolved based on the current location. For example, consider a modifier option that costs $2 in the Boston location and $3 in the New York location. When you retrieve menu data for the Boston location, this modifier option's `price` value is $2. When you retrieve menu data for the New York location, the modifier option's `price` value is $3.\n  * For time-specific prices, the `price` value is populated with the base price that is specified as part of the time-specific price configuration. This base price functions as a default price for the modifier option during times of the day when a time-specific price has not been defined. For example, consider a modifier option that costs $1 from noon to 2pm and $2 during the rest of the day. The `price` value for this item would be $2. You must use _this modifier option's_ `pricingStrategy` and `pricingRules` values to calculate the price of the modifier option during time periods for which a time-specific price has been defined.\n  * For size prices, the `price` value is null. You must use _this modifier option's_ `pricingStrategy` and `pricingRules` values to calculate the price of the modifier option for different sizes.\n  * For open prices, the `price` value is null.\n\nIf the modifier option is priced using a price level, the `price` value reflects the pricing strategy used for the price level, using the same logic described above. For example, consider a price level that applies a size price to the modifier option it is assigned to. In this case, the `price` value for the modifier option is null and you must use this modifier option's `pricingStrategy` and `pricingRules` values to calculate the price of the modifier option for different sizes.\n_Note:_ For detailed information on modifier option pricing and pricing strategies, see the <a href=\"https://doc.toasttab.com/doc/platformguide/adminToastPosPricingFeatures.html\">Menu pricing</a> section in the Toast Platform Guide.\n",
+      "x-nullable": true
+    },
+    "pricingStrategy": {
+      "type": "string",
+      "description": "A string that indicates how this modifier option has been priced. If `pricingStrategy` is:\n  * GROUP_PRICE, then the modifier option inherits its price from a parent modifier group.\n  * Any value other than GROUP_PRICE (for example, MENU_SPECIFIC_PRICE or TIME_SPECIFIC PRICE), then the modifier option is using either the price specified for its <a href=\"https://doc.toasttab.com/doc/platformguide/adminPricingModifierOptions.html#adminUnderstandingAModifierOptionsItemReference\">item reference</a> or an override price (override prices always use the BASE_PRICE strategy).\n\nIf the modifier option is using the price of its underlying item reference, and that item reference is priced using the Location Specific Price pricing strategy, then the `pricingStrategy` value indicates which pricing strategy is used at the current location. For example, consider a modifier option that uses a menu-specific price at the Boston location and a base price at the New York location. When you retrieve the menu data for the Boston location, the `pricingStrategy` for the modifier option is MENU_SPECIFIC_PRICE. When you retrieve menu data for the New York location, the `pricingStrategy` for the modifier option is BASE_PRICE.\n\nIf the modifier option is using the price of its underlying item reference, and that item reference is priced using a price level, then the `pricingStrategy` value indicates which pricing strategy is used for that price level. For example, if the \"Special Toppings\" price level uses a time-specific price, then the `pricingStrategy` value for a modifier option that is assigned the \"Special Toppings\" price level is TIME_SPECIFIC_PRICE.\n\nIt is important to understand which `pricingRules` object to use when modifier option prices must be calculated. If the `pricingStrategy` value is:\n  * BASE_PRICE or MENU_SPECIFIC_PRICE,  then you can retrieve the modifier option's price from its `price` value. No additional calculations are required.\n  * GROUP_PRICE, then you must use the `pricingStrategy` and `pricingRules` values from _the modifier option's parent modifier group_ to calculate the modifier option's price.\n  * TIME_SPECIFIC_PRICE or SIZE_PRICE, then you must use the rules provided in _this modifier option's_ `pricingRules` value to calculate the price for the modifier option.\n"
+    },
+    "pricingRules": {
+      "type": "object",
+      "description": "A `PricingRules` object with information about how to calculate the price for this modifier option. You use a modifier option's `pricingRules` object, in conjunction with its `pricingStrategy` value, to calculate a price for the modifier option when the modifier option is _individually priced_ and its `price` value is null.\n\n_Note:_ If the modifier option is priced at the group level, you must use the `pricingRules` object of its parent modifier group to calculate its price. A modifier option is priced at the group level if its `pricingStrategy` value is GROUP_PRICE.\n\nThe `pricingRules` object takes different forms depending on the pricing strategy configured for the modifier option. Use the `pricingStrategy` value to determine which pricing strategy has been used so that you can properly interpret the data in the `pricingRules` object. For the BASE_PRICE, and MENU_SPECIFIC_PRICE pricing strategies, the `pricingRules` object is null because you can retrieve the price from the `price` value without additional calculation. For the OPEN_PRICE pricing strategy, the `pricingRules` object is also null (the price of a modifier option whose item reference uses the Open Price pricing strategy is specified at the time that the modifier option is ordered). For the TIME_SPECIFIC_PRICE and SIZE_PRICE pricing strategies, the `pricingRules` object contains additional values that you use to calculate the modifier option's price.\n",
+      "items": {
+        "$ref": "#/definitions/PricingRules"
+      },
+      "x-nullable": true
+    },
+    "salesCategory": {
+      "$ref": "#/definitions/SalesCategory"
+    },
+    "taxInfo": {
+      "type": "array",
+      "description": "The `taxInfo` value on the `ModifierOption` object has been deprecated. An upcoming release will introduce new configuration settings for the taxes on a modifier option. The `taxInfo` value will not accurately represent these additional configurations. Your integration should switch to using the `modifierOptionTaxInfo` value instead. See <a href=\"https://doc.toasttab.com/doc/devguide/apiUsingTaxInfoAndModifierOptionTaxInfoToCalculateTaxesForMenuItemsAndModOptions.html\">Using taxInfo and modifierOptionTaxInfo to calculate taxes for menu items and modifier options</a> in the Toast Developer Guide for more information. \n",
+      "items": {
+        "type": "string"
+      }
+    },
+    "modifierOptionTaxInfo": {
+      "$ref": "#/definitions/ModifierOptionTaxInfo"
+    },
+    "itemTags": {
+      "type": "array",
+      "description": "An array of `ItemTag` objects that are assigned to this modifier option. Item tags are used to assign identifying characteristics to a modifier option, for example, vegetarian, gluten-free, alcohol.\n",
+      "items": {
+        "$ref": "#/definitions/ItemTag"
+      }
+    },
+    "plu": {
+      "type": "string",
+      "description": "The price lookup (PLU) code for this modifier option. The PLU code can contain both numbers and letters. This value contains an empty string if a PLU code has not been defined.\n"
+    },
+    "sku": {
+      "type": "string",
+      "description": "The stock keeping unit (SKU) identifier for this modifier option. The SKU identifier can contain both numbers and letters. This value contains an empty string if a SKU has not been defined.\n"
+    },
+    "calories": {
+      "type": "integer",
+      "description": "The number of calories in this modifier option. The calories value can be any positive or negative integer, or zero. This value is null if a calories amount has not been configured for the modifier option.\n",
+      "x-nullable": true
+    },
+    "contentAdvisories": {
+      "$ref": "#/definitions/ContentAdvisories"
+    },
+    "unitOfMeasure": {
+      "type": "string",
+      "enum": [
+        "NONE",
+        "LB",
+        "OZ",
+        "KG",
+        "G",
+        "GAL",
+        "L",
+        "ML",
+        "FL_OZ",
+        "M",
+        "CM",
+        "FT",
+        "IN",
+        "YD"
+      ],
+      "description": "The unit of measure used to determine the price of the modifier option. For example, $10.00 per gram.\n\nThe default is `NONE`, which means that the item is not meant to be measured during a sale.\n\nValues are:\n* `NONE` - The item is not meant to be measured.\n* `LB` - Weighed in pounds.\n* `OZ` - Weighed in ounces.\n* `KG` - Weighed in kilograms.\n* `G` - Weighed in grams.\n* `GAL` - Measured in gallons.\n* `L` - Measured in liters.\n* `ML` - Measured in milliliters.\n* `FL_OZ` - Measured in fluid ounces.\n* `M` - Measured in meters.\n* `CM` - Measured in centimeters.\n* `FT` - Measured in feet.\n* `IN` - Measured in inches.\n* `YD` - Measured in yards.\n"
+    },
+    "isDefault": {
+      "type": "boolean",
+      "description": "Indicates whether this modifier option is included on the menu item by default.\n\n_Important:_ If a menu item is configured to use default modifiers and you submit an order to the orders API for that menu item but you omit those default modifiers, then the Toast POS system assumes you want to omit the default modifiers and they will not be included in the order. For example, consider a Burger menu item that has Lettuce and Tomato as default modifiers. If you submit an order to the orders API for the Burger menu item but omit the Lettuce and Tomato default modifiers in the request, the order ticket will include the Burger but not the Lettuce and Tomato modifier options.\n"
+    },
+    "allowsDuplicates": {
+      "type": "boolean",
+      "description": "Indicates whether the modifier option may be added to a menu item multiple times.\n\nIf a modifier option belongs to a modifier group whose `isMultiSelect` value is FALSE, then the Toast POS system sets the modifier option\u2019s `allowsDuplicates` value to FALSE to prevent more than one modifier option being selected for the group.\n"
+    },
+    "portions": {
+      "type": "array",
+      "description": "An array of `Portion` objects that define the portions that this modifier option can be added to. For example, for a pizza menu item, you could define 1st Half and 2nd Half portions and this modifier option could be added to either portion. See <a href=\"https://doc.toasttab.com/doc/platformguide/adminPortionsOverview.html\">Portions overview</a> in the Toast Platform Guide for more information.\n",
+      "minItems": 0,
+      "items": {
+        "$ref": "#/definitions/Portion"
+      }
+    },
+    "prepTime": {
+      "type": "integer",
+      "description": "The amount of time, in seconds, that it takes to prepare this modifier option. This value is null if a prep time has not been specified for the modifier option.<br>\n<br>\n*Related topics*<br>\n<a href=\"https://doc.toasttab.com/doc/platformguide/adminFireByPrepTime.html\">Using prep times to automate item firing</a><br>\n",
+      "format": "int32",
+      "x-nullable": true
+    },
+    "modifierGroupReferences": {
+      "type": "array",
+      "description": "An array of `referenceId`s for `ModifierGroup` objects. These objects define nested modifier groups contained in this modifier option. For example, you can have an entree that has a Sides modifier group that contains a Salad modifier option. The Salad modifier option has its own modifier group, Salad Dressing, that includes Ranch, Vinaigrette, and Blue Cheese modifier options. Salad Dressing is a nested modifier group and the individual salad dressings are nested modifier options.\n",
+      "minItems": 0,
+      "items": {
+        "type": "integer"
+      }
+    },
+    "length": {
+      "$ref": "#/definitions/Length"
+    },
+    "height": {
+      "$ref": "#/definitions/Height"
+    },
+    "width": {
+      "$ref": "#/definitions/Width"
+    },
+    "dimensionUnitOfMeasure": {
+      "$ref": "#/definitions/DimensionUnitOfMeasure"
+    },
+    "weight": {
+      "$ref": "#/definitions/Weight"
+    },
+    "weightUnitOfMeasure": {
+      "$ref": "#/definitions/WeightUnitOfMeasure"
+    },
+    "images": {
+      "$ref": "#/definitions/Images"
+    },
+    "guestCount": {
+      "$ref": "#/definitions/GuestCount"
+    },
+    "sortOrder": {
+      "type": "integer",
+      "description": "A number determining the order in which this modifier option should appear on kitchen tickets. The sort order value can be any positive or negative integer, or zero. This value is null if a sort order has not been configured for the modifier option.\n",
+      "x-nullable": true
+    },
+    "allergens": {
+      "type": "array",
+      "description": "Reserved for future functionality. Not currently supported for external integrations.\n",
+      "minItems": 0,
+      "items": {
+        "$ref": "#/definitions/AllergenItem"
+      },
+      "x-nullable": true
+    }
+  }
+}

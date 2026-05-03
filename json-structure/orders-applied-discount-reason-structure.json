@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/orders-applied-discount-reason-structure.json",
+  "name": "AppliedDiscountReason",
+  "description": "AppliedDiscountReason schema from Toast API",
+  "type": "object",
+  "required": [
+    "name"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the reason for the applied discount."
+    },
+    "description": {
+      "type": "string",
+      "description": "An optional description for the reason for the applied discount."
+    },
+    "comment": {
+      "type": "string",
+      "description": "An optional comment on the reason for the applied discount."
+    },
+    "discountReason": {
+      "type": "object",
+      "description": "A ToastReference object that contains the GUID for the discount reason configured for the discount.",
+      "$ref": "#/definitions/ToastReference"
+    }
+  }
+}

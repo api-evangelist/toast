@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/menus-availability-structure.json",
+  "name": "Availability",
+  "description": "Information about when a menu is available for use.\n",
+  "type": "object",
+  "properties": {
+    "alwaysAvailable": {
+      "type": "boolean",
+      "description": "Indicates whether this menu is available 24 hours per day, 7 days a week. If `alwaysAvailable` is FALSE, then a `schedule` value is included in the `Availability` object to define the specific times and days a menu is available. If `alwaysAvailable` is TRUE, then the `schedule` value is omitted. \n"
+    },
+    "schedule": {
+      "type": "array",
+      "description": "An array of `Schedule` objects that indicate the specific days and times a menu is available. If `alwaysAvailable` is TRUE, then the menu is available 24 hours per day, 7 days per week, and this `schedule` value is omitted from the `Availabilty` object.\n",
+      "items": {
+        "$ref": "#/definitions/Schedule"
+      }
+    }
+  }
+}

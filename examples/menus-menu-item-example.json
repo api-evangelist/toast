@@ -1,0 +1,18 @@
+{
+  "name": "Sample Name",
+  "kitchenName": "Sample Kitchenname",
+  "guid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "description": "Description of description",
+  "price": 12.33,
+  "pricingStrategy": "OPEN_PRICE",
+  "pricingRules": {},
+  "isDeferred": true,
+  "isDiscountable": false,
+  "taxInfo": [
+    "sample-taxInfo_item"
+  ],
+  "taxInclusion": "SMART_TAX",
+  "itemTags": [
+    "sample-itemTags_item"
+  ]
+}

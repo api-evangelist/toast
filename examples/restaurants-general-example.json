@@ -1,0 +1,12 @@
+{
+  "name": "Sample Name",
+  "locationName": "Sample Locationname",
+  "locationCode": "sample-locationCode",
+  "description": "Description of description",
+  "timeZone": "sample-timeZone",
+  "closeoutHour": 71,
+  "managementGroupGuid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "currencyCode": "sample-currencyCode",
+  "firstBusinessDate": 71,
+  "archived": true
+}

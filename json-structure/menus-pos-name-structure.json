@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/menus-pos-name-structure.json",
+  "name": "PosName",
+  "description": "The button label name that appears for this menu entity in the Toast POS app. `posName` contains an empty string if a `posName` has not been defined for the menu entity and the `name` value is used for the button label instead.\n",
+  "type": "string"
+}

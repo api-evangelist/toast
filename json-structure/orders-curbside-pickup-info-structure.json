@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/orders-curbside-pickup-info-structure.json",
+  "name": "CurbsidePickupInfo",
+  "description": "Information that the restaurant can use to identify a guest when they arrive\noutside the restaurant to pick up their order. `transportDescription` is a required field.\n",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/ToastReference"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "transportColor": {
+          "description": "The color of the guest's vehicle if they will arrive at the restaurant in a vehicle to pick up their order.\n",
+          "type": "string",
+          "maxLength": 20
+        },
+        "transportDescription": {
+          "description": "Information about how the guest will arrive at the restaurant to pick up their order.\n\nFor example, the make and model of the vehicle the guest will arrive in.\n",
+          "type": "string",
+          "maxLength": 100
+        },
+        "notes": {
+          "description": "Extra notes.\n",
+          "type": "string",
+          "maxLength": 100
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/authentication-authentication-token-structure.json",
+  "name": "AuthenticationToken",
+  "description": "Information about a Toast platform API session, including an\nauthentication token string that your Toast API client software can\npresent when using other Toast platform APIs.\n",
+  "type": "object",
+  "properties": {
+    "tokenType": {
+      "description": "The OAuth 2 authentication scheme used for the authentication token.\nToast API authentication uses the bearer authentication scheme.\n",
+      "type": "string",
+      "example": "Bearer"
+    },
+    "scope": {
+      "description": "The scope value in the authentication token request response is\n`null`. The `accessToken` JSON Web Token (JWT) contains the list of\n[scopes for your Toast API\nclient](https://dev.toasttab.com/doc/devguide/apiScopes.html).\n",
+      "type": "string"
+    },
+    "expiresIn": {
+      "description": "The number of seconds that the authentication token is valid. \n",
+      "type": "int32",
+      "example": 86400
+    },
+    "accessToken": {
+      "description": "A JSON Web Token (JWT) string that contains an authentication token.\nYou [present this string when you make\nrequests](https://dev.toasttab.com/doc/devguide/authentication.html#using-authentication-token)\nto other Toast API resources. The JWT includes information about your\nToast API client.\n",
+      "type": "string"
+    },
+    "idToken": {
+      "description": "For internal use only.\n",
+      "type": "string"
+    },
+    "refreshToken": {
+      "description": "For internal use only.\n",
+      "type": "string"
+    }
+  }
+}

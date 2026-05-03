@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/menus-pre-modifier-structure.json",
+  "name": "PreModifier",
+  "description": "Information about a pre-modifier configured for this restaurant.\n",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "A descriptive name for this pre-modifier, for example, \"NO\" or \"EXTRA\".\n"
+    },
+    "guid": {
+      "description": "A unique identifier for this pre-modifier group, assigned by the Toast POS system.\n",
+      "type": "string"
+    },
+    "multiLocationId": {
+      "$ref": "#/definitions/MultiLocationId"
+    },
+    "fixedPrice": {
+      "description": "An optional fixed price for this pre-modifier. The fixed price is added to the cost of the modifier option that the pre-modifier is applied to.\n\nA PreModifier object has two optional values, `fixedPrice` and `multiplicationFactor`, that both alter the price of a modifier option when the pre-modifier is applied to it. However, these values cannot be used at the same time. If you specify a `fixedPrice` value for a premodifier, then `multiplicationFactor` is null. If you specify a `multiplicationFactor` for a pre-modifier, then `fixedPrice` is null. If you choose not to assign either a fixed price or a multiplication factor to a pre-modifier, then the `fixedPrice` value is 0 and the `multiplicationFactor` is null.\n",
+      "type": "double",
+      "x-nullable": true
+    },
+    "multiplicationFactor": {
+      "description": "An optional number that specifies how much the cost of a modifier option is multiplied by when this pre-modifier is applied to it. For example, an EXTRA pre-modifier option could specify a `multiplicationFactor` of 1.5 to indicate that adding extra cheese to a menu item costs one and a half times the regular price of the cheese modifier option.\n\nA PreModifier object has two optional values, `fixedPrice` and `multiplicationFactor`, that both alter the price of a modifier option when the pre-modifier is applied to it. However, these values cannot be used at the same time. If you specify a `fixedPrice` value for a premodifier, then `multiplicationFactor` is null. If you specify a `multiplicationFactor` for a premodifier, then `fixedPrice` is null. If you choose not to assign either a fixed price or a multiplication factor to a pre-modifier, then the `fixedPrice` value is 0 and the `multiplicationFactor` is null.\n",
+      "type": "double",
+      "x-nullable": true
+    },
+    "displayMode": {
+      "description": "A string that indicates how the pre-modifier is displayed on tickets and receipts:\n  * PREFIX: The pre-modifier name is placed before the modifier option name, for example, \"EXTRA Cheese\".\n  * SUFFIX: The pre-modifier name is placed after the modifier option name, for example, \"Cheese EXTRA\".\n",
+      "type": "string",
+      "enum": [
+        "PREFIX",
+        "SUFFIX"
+      ]
+    },
+    "posName": {
+      "$ref": "#/definitions/PosName"
+    },
+    "posButtonColorLight": {
+      "$ref": "#/definitions/PosButtonColorLight"
+    },
+    "posButtonColorDark": {
+      "$ref": "#/definitions/PosButtonColorDark"
+    },
+    "chargeAsExtra": {
+      "type": "boolean",
+      "x-nullable": true,
+      "description": "When true, selecting this pre-modifier adds an additional portion of the modifier to the menu item and adds the price of the additional portion to the menu item according to the rules listed below.\n\nIf the modifier group that the modifier belongs to:\n* Uses the **No charge** option, the Toast platform uses the modifier's <a href=\"https://doc.toasttab.com/doc/platformguide/adminPricingModifierOptions.html#adminBasingModifierOptionsOnExistingMenuItems\">override price</a> or, if no override price exists, the <a href=\"https://doc.toasttab.com/doc/platformguide/adminPricingModifierOptions.html#adminUnderstandingAModifierOptionsItemReference\">item reference</a> price as the price of the additional portion.\n* Uses the **Individual** option where each modifier has its own price, the Toast platform uses the modifier's override price or, if no override price exists, the item reference price as the price of the additional portion.\n* Uses the **Group** option where all modifiers in the group share a price, the Toast platform uses the group price as the price of the additional portion.\n\nAdditionally, if the modifier group that the modifier belongs to uses:\n* <a href=\"https://doc.toasttab.com/doc/platformguide/adminSizePrice.html#adminSizePricingForModifierGroups\">Size</a> pricing, the Toast platform uses the size price that matches the size of the menu item when determining the price of the additional portion.\n* <a href=\"https://doc.toasttab.com/doc/platformguide/adminSequencePrice.html\">Sequence</a> pricing, the Toast platform treats the additional portion as the next modifier in the sequence and prices it using the sequence pricing rules that have been specified.\n* <a href=\"https://doc.toasttab.com/doc/platformguide/adminSizeSequencePrice.html\">Size/sequence</a> pricing, the Toast platform matches the size of the additional portion to the size of the menu item and then treats it as the next modifier in the sequence when determining the price of the additional portion.\n\nThe `chargeAsExtra` value is `null` if it has not been set.\n"
+    },
+    "plu": {
+      "type": "string",
+      "description": "The price lookup (PLU) code for this pre-modifier. The PLU code can contain both numbers and letters. This value contains an empty string if a PLU code has not been defined.\n"
+    }
+  }
+}

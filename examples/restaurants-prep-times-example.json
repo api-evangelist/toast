@@ -1,0 +1,10 @@
+{
+  "deliveryPrepTime": 21,
+  "deliveryTimeAfterOpen": 72,
+  "deliveryTimeBeforeClose": 83,
+  "takeoutPrepTime": 30,
+  "takeoutTimeAfterOpen": 12,
+  "takeoutTimeBeforeClose": 24,
+  "takeoutThrottlingTime": 15,
+  "deliveryThrottlingTime": 1
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/menus-visibility-structure.json",
+  "name": "Visibility",
+  "description": "An array of strings that indicate where this menu entity is visible:\n\n* POS: The menu entity is visible in the Toast POS app. \n\n* KIOSK: The menu entity is visible on a Toast kiosk. \n\n* TOAST_ONLINE_ORDERING: The menu entity is visible in the Toast online\n  ordering site for this restaurant. \n\n* ORDERING_PARTNERS: The restaurants wants this menu entity to be visible\n  on online ordering sites that integrate with the Toast POS system using the orders API. \n\n* GRUBHUB: Deprecated. The menu entity is included during a menu sync to\n  Grubhub and will be visible on the Grubhub online ordering service after a\n  menu sync has completed. _Note:_ Conceptually, the _Grubhub_ configuration\n  option that was associated with the `GRUBHUB` string in this array has\n  been replaced by the more general _Online orders: Ordering partners_\n  configuration option and restaurants that used the _Grubhub_ option have\n  been automatically migrated to the new _Online orders: Ordering partners_\n  option. This means that any menu entity that had the _Grubhub_ option set\n  to _Yes_ will now have the _Online orders: Ordering partners_ option\n  enabled and the `ORDERING_PARTNERS` enum will be present in the\n  `visibility` array for it. To support backwards compatibility, the\n  `visibility` array for these entities will also continue to contain the\n  `GRUBHUB` enum for a short period of time. See <a\n  href=\"https://doc.toasttab.com/doc/devguide/apiDeprecatedApiFunctions.html#apiMenuEntityVisibilityEnhancements\">Menu\n  Visibility Enhancements (Rolled Out)</a> for more information.\n\nThe `visibility` array is empty if the menu entity is not configured to be visible for any of the use cases listed above.\n",
+  "type": "array",
+  "items": {
+    "type": "string",
+    "enum": [
+      "POS",
+      "KIOSK",
+      "GRUBHUB",
+      "TOAST_ONLINE_ORDERING",
+      "ORDERING_PARTNERS"
+    ]
+  }
+}

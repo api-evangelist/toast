@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/labor-external-reference-schema.json",
+  "title": "ExternalReference",
+  "description": "A wrapper object with fields that allow reference to a Toast \nplatform entity by Toast GUID or an external identifier.\n",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/ToastReference"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "externalId": {
+          "description": "External identifier string that is prefixed by the naming \nauthority. You can, for example, use the labor API to \n`POST` an `externalId` for an employee and then `GET` the \nemployee with that `externalId`.\n",
+          "type": "string"
+        }
+      }
+    }
+  ]
+}

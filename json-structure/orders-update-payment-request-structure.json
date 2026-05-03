@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/orders-update-payment-request-structure.json",
+  "name": "UpdatePaymentRequest",
+  "description": "A wrapper object containing payment fields that you can update.\n",
+  "type": "object",
+  "properties": {
+    "tipAmount": {
+      "description": "The amount tipped on a payment.\n",
+      "type": "double",
+      "example": 3.25
+    }
+  }
+}

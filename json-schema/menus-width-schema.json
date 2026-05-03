@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/menus-width-schema.json",
+  "title": "Width",
+  "description": "The width of the item or modifier. Use the `dimensionUnitOfMeasure` value to determine the unit of measurement.\n\nThe `width` value is `null` if no width is specified for the item or modifier.\n\nYou can use the `length`, `height`, and `width` values to determine the overall size of the item or modifier. This information is useful, for example, when determining shipping costs or choosing the size of delivery vehicle to use.\n",
+  "type": "number",
+  "format": "float",
+  "x-nullable": true
+}

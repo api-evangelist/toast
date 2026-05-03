@@ -1,0 +1,15 @@
+{
+  "name": "Sample Name",
+  "discountAmount": 27.96,
+  "nonTaxDiscountAmount": 46.27,
+  "triggers": [
+    "sample-triggers_item"
+  ],
+  "processingState": "PENDING_APPLIED",
+  "comboItems": [
+    "sample-comboItems_item"
+  ],
+  "appliedPromoCode": "sample-appliedPromoCode",
+  "discountType": "BOGO",
+  "discountPercent": 16.21
+}

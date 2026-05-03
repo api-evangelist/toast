@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/orders-order-response-schema.json",
+  "title": "OrderResponse",
+  "description": "OrderResponse schema from Toast API",
+  "type": "object",
+  "properties": {
+    "orders": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 1,
+      "items": {
+        "$ref": "#/definitions/Order"
+      }
+    }
+  }
+}

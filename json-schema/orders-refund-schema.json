@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/orders-refund-schema.json",
+  "title": "Refund",
+  "description": "A currency amount removed from a guest payment.",
+  "type": "object",
+  "properties": {
+    "refundAmount": {
+      "type": "number",
+      "format": "double",
+      "description": "The amount of the refund, excluding the tip."
+    },
+    "tipRefundAmount": {
+      "type": "number",
+      "format": "double",
+      "description": "The amount of the tip refund."
+    },
+    "refundDate": {
+      "description": "The date and time when the refund was made.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "refundBusinessDate": {
+      "x-toast-read-only": true,
+      "description": "The business date (yyyyMMdd) on which this refund was created. Response only.",
+      "type": "integer"
+    },
+    "refundTransaction": {
+      "description": "An identifier for the refund transaction. You can use the identifier to associate items and service charges that were refunded in the same transaction.\n",
+      "type": "object",
+      "$ref": "#/definitions/RefundTransaction"
+    }
+  }
+}

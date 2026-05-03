@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/orders-toast-reference-structure.json",
+  "name": "ToastReference",
+  "description": "A wrapper object with fields that allow reference to a Toast entity by Toast GUID.",
+  "type": "object",
+  "required": [
+    "guid",
+    "entityType"
+  ],
+  "properties": {
+    "guid": {
+      "description": "The GUID maintained by the Toast platform.",
+      "type": "string"
+    },
+    "entityType": {
+      "x-toast-read-only": true,
+      "description": "The type of object this is. Response only.",
+      "type": "string"
+    }
+  }
+}

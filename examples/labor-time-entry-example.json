@@ -1,0 +1,21 @@
+{
+  "createdDate": "2025-03-15T14:30:00Z",
+  "modifiedDate": "2025-03-15T14:30:00Z",
+  "deletedDate": "2025-03-15T14:30:00Z",
+  "deleted": false,
+  "inDate": "2025-03-15T14:30:00Z",
+  "outDate": "2025-03-15T14:30:00Z",
+  "autoClockedOut": false,
+  "businessDate": "sample-businessDate",
+  "regularHours": 14.49,
+  "overtimeHours": 47.18,
+  "hourlyWage": 93.8,
+  "breaks": [
+    "sample-breaks_item"
+  ],
+  "declaredCashTips": 31.64,
+  "nonCashTips": 82.02,
+  "nonCashTipsRoundingLoss": 22.56,
+  "cashGratuityServiceCharges": 25.16,
+  "nonCashGratuityServiceCharges": 41.45
+}

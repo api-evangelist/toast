@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/orders-applied-discount-schema.json",
+  "title": "AppliedDiscount",
+  "description": "A discount applied to a check or item. The Toast platform calculates service\ncharges before it applies discounts. The system calculates tax after applying\ndiscounts.\n\nIn a `POST` request, you cannot apply open percent discounts. You can apply open amount discounts.\nYou can only apply one discount to a menu item selection. For more information, see\n[the _Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiDiscountingOrders.html).\n",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/ExternalReference"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the applied discount."
+        },
+        "discountAmount": {
+          "type": "number",
+          "format": "double",
+          "description": "The discount amount. This amount is subtracted from the check or item."
+        },
+        "nonTaxDiscountAmount": {
+          "type": "number",
+          "format": "double",
+          "description": "The amount that a discount reduces a menu item price,\nexcluding any discount amount applied to taxes.\n\nIn most cases, a discount only applies to the menu item price, and\nthe `nonTaxDiscountAmount` is the same as the `discountAmount`.\n\nIf you apply a discount to a menu item that includes tax in\nits price, the `nonTaxDiscountAmount` is less than `discountAmount`.\n"
+        },
+        "discount": {
+          "type": "object",
+          "description": "A GUID reference to the discount configured for the restaurant.",
+          "$ref": "#/definitions/ToastReference"
+        },
+        "triggers": {
+          "x-toast-read-only": true,
+          "type": "array",
+          "description": "Optional items that triggered this discount. Response only.",
+          "items": {
+            "$ref": "#/definitions/AppliedDiscountTrigger"
+          }
+        },
+        "approver": {
+          "x-toast-read-only": true,
+          "type": "object",
+          "description": "The user who approved the discount. Response only.",
+          "$ref": "#/definitions/ExternalReference"
+        },
+        "processingState": {
+          "x-toast-read-only": true,
+          "readOnly": true,
+          "type": "string",
+          "description": "Applies to loyalty program discounts only. Loyalty\nprogram reward discounts are validated and then applied,\nor redeemed, by the third-party loyalty program service\nprovider depending on the state of the Toast platform order.\n\nThis field's value is `null` if the order discount is a Toast discount.\n\nThis value indicates the state of the discount in that\nvalidation and application process. Response only.\n\nValid values:\n\n* `PENDING_APPLIED` - The loyalty program\n  service provider confirmed that the reward discount\n  is valid for the order and customer. The reward is not yet\n  redeemed, or applied to the customer's loyalty\n  account.\n* `APPLIED` - The reward discount is\n  redeemed. The reward is no longer available from the\n  customer's loyalty program account.\n* `PENDING_VOID` - The reward discount was\n  removed from the Toast platform order. The reward is not\n  available from the customer's loyalty program account\n  until the loyalty program service provider processes\n  the void operation.\n* `VOID` - The reward discount was removed\n  from the Toast platform order and the reward is available from\n  the customer's loyalty program account again.\n",
+          "enum": [
+            "PENDING_APPLIED",
+            "APPLIED",
+            "PENDING_VOID",
+            "VOID"
+          ]
+        },
+        "appliedDiscountReason": {
+          "x-toast-read-only": true,
+          "type": "object",
+          "description": "An optional reason for the applied discount. Response only.",
+          "$ref": "#/definitions/AppliedDiscountReason"
+        },
+        "loyaltyDetails": {
+          "type": "object",
+          "description": "Information about the customer loyalty program discount that is being applied to the check.",
+          "$ref": "#/definitions/LoyaltyDetails"
+        },
+        "comboItems": {
+          "x-toast-read-only": true,
+          "type": "array",
+          "description": "A list of menu item selections that this combo discount applies to. Empty for non-combo discounts. Response only.",
+          "items": {
+            "$ref": "#/definitions/ExternalReference"
+          }
+        },
+        "appliedPromoCode": {
+          "type": "string",
+          "description": "The promo code that was applied for this discount.\n\nFor a POSTed order, the Toast platform cannot validate the promo code.\n"
+        },
+        "discountType": {
+          "type": "string",
+          "description": "The behavior of this discount.\n\nValid values:\n* `BOGO` - Buy One, Get One. The guest receives a discount based on purchasing a specific item or items.\n* `PERCENT` - The guest receives a specific percentage off of the price.\n* `FIXED` - The guest receives a fixed currency amount off of the price.\n* `OPEN_PERCENT` - The guest receives a percentage off of the price. The percentage is specified when the order is placed.\n* `OPEN_FIXED` - The guest receives a currency amount off of the price. The amount is specified when the order is placed.\n* `FIXED_TOTAL` - The guest pays a specified discounted price when they purchase specific items. Also referred to as a combo discount.\n",
+          "enum": [
+            "BOGO",
+            "PERCENT",
+            "FIXED",
+            "OPEN_PERCENT",
+            "OPEN_FIXED",
+            "FIXED_TOTAL"
+          ]
+        },
+        "discountPercent": {
+          "type": "number",
+          "format": "double",
+          "description": "The percent value (0-100) of the applied discount when the `discountType` is `PERCENT` or `OPEN_PERCENT`. For other discount types, this value is `null`."
+        }
+      }
+    }
+  ]
+}

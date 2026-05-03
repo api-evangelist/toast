@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/labor-job-wage-override-schema.json",
+  "title": "JobWageOverride",
+  "description": "The overriding job wage, for an employee that has a wage that \ndiffers from the job's default wage.\n",
+  "type": "object",
+  "required": [
+    "wage",
+    "jobReference"
+  ],
+  "properties": {
+    "wage": {
+      "type": "number",
+      "format": "double",
+      "description": "Required currency value of the employee's overriding job wage.\n"
+    },
+    "jobReference": {
+      "type": "object",
+      "description": "Required external reference to the job to which this wage \napplies overridden\n",
+      "$ref": "#/definitions/ExternalReference"
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "toast": "https://developer.toasttab.com/schema/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "InventorySearchRequest": "toast:InventorySearchRequest",
+    "MenuItemInventory": "toast:MenuItemInventory",
+    "guid": {
+      "@id": "toast:guid",
+      "@type": "xsd:string"
+    },
+    "guids": {
+      "@id": "toast:guids",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "itemGuidValidity": {
+      "@id": "toast:itemGuidValidity",
+      "@type": "xsd:string"
+    },
+    "multiLocationId": {
+      "@id": "toast:multiLocationId",
+      "@type": "xsd:string"
+    },
+    "multiLocationIds": {
+      "@id": "toast:multiLocationIds",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "quantity": {
+      "@id": "toast:quantity",
+      "@type": "xsd:decimal"
+    },
+    "status": {
+      "@id": "toast:status",
+      "@type": "xsd:string"
+    },
+    "versionId": {
+      "@id": "toast:versionId",
+      "@type": "xsd:string"
+    },
+    "versionIds": {
+      "@id": "toast:versionIds",
+      "@container": "@set",
+      "@type": "xsd:string"
+    }
+  }
+}

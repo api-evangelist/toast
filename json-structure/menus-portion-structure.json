@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/menus-portion-structure.json",
+  "name": "Portion",
+  "description": "A container for the modifier groups that can be applied to a portion of a menu item.\n",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "A descriptive name for this portion, for example, \"1st Half\" or \"2nd Half\".\n",
+      "type": "string"
+    },
+    "guid": {
+      "description": "A unique identifier for this portion, assigned by the Toast POS system.\n",
+      "type": "string"
+    },
+    "modifierGroupReferences": {
+      "type": "array",
+      "description": "An array of `referenceId`s for `ModifierGroup` objects. These objects define the modifier groups that can be applied to this portion.\n",
+      "minItems": 0,
+      "items": {
+        "type": "int32"
+      }
+    },
+    "priceScaleFactor": {
+      "type": "double",
+      "description": "A multiplier that adjusts the cost of modifiers in this portion.\n",
+      "x-nullable": true
+    }
+  }
+}

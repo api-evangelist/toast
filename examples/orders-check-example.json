@@ -1,0 +1,28 @@
+{
+  "createdDate": "2025-03-15T14:30:00Z",
+  "openedDate": "2025-03-15T14:30:00Z",
+  "closedDate": "2025-03-15T14:30:00Z",
+  "modifiedDate": "2025-03-15T14:30:00Z",
+  "deletedDate": "2025-03-15T14:30:00Z",
+  "deleted": true,
+  "selections": [
+    "sample-selections_item"
+  ],
+  "taxExempt": false,
+  "displayNumber": "sample-displayNumber",
+  "appliedServiceCharges": [
+    "sample-appliedServiceCharges_item"
+  ],
+  "amount": 91.31,
+  "taxAmount": 20.81,
+  "totalAmount": 26.82,
+  "payments": [
+    "sample-payments_item"
+  ],
+  "tabName": "Sample Tabname",
+  "paymentStatus": "CLOSED",
+  "appliedDiscounts": [
+    "sample-appliedDiscounts_item"
+  ],
+  "voided": true
+}

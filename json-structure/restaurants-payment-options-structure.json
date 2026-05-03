@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/restaurants-payment-options-structure.json",
+  "name": "PaymentOptions",
+  "description": "Information about the forms of payment that the restaurant will\naccept for orders.\n",
+  "type": "object",
+  "properties": {
+    "delivery": {
+      "$ref": "#/definitions/DeliveryPaymentOptions"
+    },
+    "takeout": {
+      "$ref": "#/definitions/TakeoutPaymentOptions"
+    },
+    "ccTip": {
+      "type": "boolean",
+      "description": "enables credit card tips"
+    }
+  }
+}

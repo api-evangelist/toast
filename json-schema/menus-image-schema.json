@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/menus-image-schema.json",
+  "title": "Image",
+  "description": "The URL to an image that has been uploaded for this menu entity. This value is null if no image has been specified.\n",
+  "type": "string",
+  "x-nullable": true
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/orders-refund-details-schema.json",
+  "title": "RefundDetails",
+  "description": "Information about refunded currency amounts for an item\nselection, modifier option, or service charge. The refund\ninformation includes separate values for the pre-tax value\nbeing refunded and the tax amount being refunded.\n",
+  "type": "object",
+  "properties": {
+    "refundAmount": {
+      "description": "The value of the menu item or service charge (excluding taxes) being\nrefunded. Includes the value of any nested modifier options that\nincreased the price of the item or modifier option (an upcharge for\nthe modifier option).\n",
+      "type": "number",
+      "format": "double"
+    },
+    "taxRefundAmount": {
+      "description": "The tax amount being refunded.\n",
+      "type": "number",
+      "format": "double"
+    },
+    "refundTransaction": {
+      "description": "An identifier for the refund transaction. You can use the identifier to associate items and service charges that were refunded in the same transaction.\n",
+      "type": "object",
+      "$ref": "#/definitions/RefundTransaction"
+    }
+  }
+}

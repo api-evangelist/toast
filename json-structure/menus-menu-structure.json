@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/menus-menu-structure.json",
+  "name": "Menu",
+  "description": "Information about a menu configured for this restaurant.\n",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "A descriptive name for this menu, for example, \"Food\" or \"Drinks\".\n",
+      "type": "string"
+    },
+    "guid": {
+      "description": "A unique identifier for this menu, assigned by the Toast POS system.\n",
+      "type": "string"
+    },
+    "multiLocationId": {
+      "$ref": "#/definitions/MultiLocationId"
+    },
+    "masterId": {
+      "$ref": "#/definitions/MasterId"
+    },
+    "description": {
+      "description": "An optional short description for this menu.\n",
+      "type": "string"
+    },
+    "posName": {
+      "$ref": "#/definitions/PosName"
+    },
+    "posButtonColorLight": {
+      "$ref": "#/definitions/PosButtonColorLight"
+    },
+    "posButtonColorDark": {
+      "$ref": "#/definitions/PosButtonColorDark"
+    },
+    "highResImage": {
+      "type": "string",
+      "description": "The URL to a high resolution image that has been uploaded for this menu. The image file must be in JPG, PNG, or SVG format. The `highResImage` value is only available if the Toast Kiosk module has been enabled for this restaurant. This value is null if no high resolution image has been specified.\n",
+      "x-nullable": true
+    },
+    "image": {
+      "$ref": "#/definitions/Image"
+    },
+    "visibility": {
+      "$ref": "#/definitions/Visibility"
+    },
+    "availability": {
+      "type": "object",
+      "description": "An `Availability` object with information about the days and times this menu is available. If the menu is available 24 hours per day, 7 days per week, this `Availability` object contains a single value, `alwaysAvailable`, that is set to TRUE. If the menu is not available 24 hours per day, 7 days per week, the `alwaysAvailable` value is set to FALSE and the object will also contain a `schedule` value that provides detailed information about the specific days and times this menu is available.\n\n**_Important_**\nThe orders API does not validate against the availability settings of a menu, meaning it is possible to submit an order for an item on a menu when it is not currently available. For this reason, it is particularly important that you check a menu\u2019s `availability` value before placing an order from it.\n",
+      "items": {
+        "$ref": "#/definitions/Availability"
+      }
+    },
+    "menuGroups": {
+      "type": "array",
+      "description": "An array of the `MenuGroup` objects contained in this menu.\n",
+      "minItems": 0,
+      "items": {
+        "$ref": "#/definitions/MenuGroup"
+      }
+    }
+  }
+}

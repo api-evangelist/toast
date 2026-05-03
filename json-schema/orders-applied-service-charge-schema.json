@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/orders-applied-service-charge-schema.json",
+  "title": "AppliedServiceCharge",
+  "description": "A service charge that is added to a check. A service charge can represent an upcharge such as a gratuity or a delivery fee.\n\nWhether the upcharge is taxable is defined in the restaurant-configured `serviceCharge`.\n\nThe fields on the `AppliedServiceCharge` are calculated based on the referenced `ServiceCharge` configuration.\n",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/ExternalReference"
+    },
+    {
+      "type": "object",
+      "required": [
+        "serviceCharge"
+      ],
+      "properties": {
+        "chargeAmount": {
+          "type": "number",
+          "format": "double",
+          "description": "The final applied amount excluding tax. Required if `chargeType` is `OPEN`."
+        },
+        "serviceCharge": {
+          "description": "A reference to the restaurant-configured service charge. If a service charge is taxable, the tax amount is applied to the check.",
+          "$ref": "#/definitions/ExternalReference"
+        },
+        "chargeType": {
+          "x-toast-read-only": true,
+          "description": "The type of service charge. Response only.\n\nValid values:\n\n* `FIXED` - The service charge is for a specific currency amount.\n\n* `PERCENT` - The service charge is for a percentage of the check amount.\n\n* `OPEN` - The service charge is not configured with an amount. The amount is specified by the restaurant employee.\n",
+          "type": "string",
+          "enum": [
+            "FIXED",
+            "PERCENT",
+            "OPEN"
+          ]
+        },
+        "name": {
+          "x-toast-read-only": true,
+          "description": "The configured human readable label for the service charge. Response only.",
+          "type": "string"
+        },
+        "delivery": {
+          "x-toast-read-only": true,
+          "description": "Whether this service charge is a delivery charge. Response only.",
+          "type": "boolean"
+        },
+        "takeout": {
+          "x-toast-read-only": true,
+          "description": "Whether this service charge is a takeout charge. Response only.",
+          "type": "boolean"
+        },
+        "dineIn": {
+          "x-toast-read-only": true,
+          "description": "Whether this service charge is a dine-in charge. Response only.",
+          "type": "boolean"
+        },
+        "gratuity": {
+          "x-toast-read-only": true,
+          "description": "Whether this service charge is a gratuity. Can be used to derive required tip amount on the check. Response only.",
+          "type": "boolean"
+        },
+        "taxable": {
+          "x-toast-read-only": true,
+          "description": "Whether this service charge is taxable. Response only.",
+          "type": "boolean"
+        },
+        "appliedTaxes": {
+          "type": "array",
+          "description": "Taxes applied to the service charge.",
+          "items": {
+            "$ref": "#/definitions/AppliedTaxRate"
+          }
+        },
+        "serviceChargeCalculation": {
+          "type": "string",
+          "description": "Defines whether a `PERCENT` service charge is applied before (`PRE_DISCOUNT`) or after (`POST_DISCOUNT`) discounts.\n\nThis field is `null` for `FIXED` and `OPEN` service charges.\n",
+          "enum": [
+            "PRE_DISCOUNT",
+            "POST_DISCOUNT"
+          ]
+        },
+        "refundDetails": {
+          "description": "A `RefundDetails` object that\ncontains information about refunded payment amounts for the item.\n",
+          "type": "object",
+          "$ref": "#/definitions/RefundDetails"
+        },
+        "serviceChargeCategory": {
+          "x-toast-read-only": true,
+          "description": "The type of service charge. Default is `SERVICE_CHARGE`. Response only.\n\nValid values:\n\n* `SERVICE_CHARGE` - The default type for a service charge.\n\n* `CREDIT_CARD_SURCHARGE` - A fee assessed _only_ on payment transactions that use a credit card.\n\n* `FUNDRAISING_CAMPAIGN` - Service charge associated with fundraising.\n\n* `CASH_ROUNDING` - Adjustment to the check total to account for cash payments with minimum denominations greater than 0.01.\n",
+          "type": "string",
+          "enum": [
+            "SERVICE_CHARGE",
+            "CREDIT_CARD_SURCHARGE",
+            "FUNDRAISING_CAMPAIGN",
+            "CASH_ROUNDING"
+          ]
+        },
+        "paymentGuid": {
+          "x-toast-read-only": true,
+          "description": "The Toast platform unique identifier for the payment the fee is linked to. The `paymentGuid` value is always `null` unless the `serviceChargeCategory` object value is `CREDIT_CARD_SURCHARGE` or `CASH_ROUNDING`. Response only.",
+          "type": "string"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/orders-device-schema.json",
+  "title": "Device",
+  "description": "The *Device ID* value that the Toast platform assigns to a specific Toast POS device.\n\nThe `id` value is a unique identifier for a device.\n\nTo find the ID for a Toast POS device, from the overflow  menu (\u22ee) select *Device Status* and then select the *Device* tab.\n",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The physical id of the device"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/orders-update-payment-request-schema.json",
+  "title": "UpdatePaymentRequest",
+  "description": "A wrapper object containing payment fields that you can update.\n",
+  "type": "object",
+  "properties": {
+    "tipAmount": {
+      "description": "The amount tipped on a payment.\n",
+      "type": "number",
+      "format": "double",
+      "example": 3.25
+    }
+  }
+}

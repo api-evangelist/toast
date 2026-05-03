@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/restaurants-general-schema.json",
+  "title": "General",
+  "description": "General information about a restaurant location.\n",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The guest-facing name of the restaurant. For example, the\n`name` of a restaurant might be `Tommy's Burgers`.\n"
+    },
+    "locationName": {
+      "type": "string",
+      "description": "A name used externally to differentiate multiple locations, like Neighborhood, Square, City, or Hotel."
+    },
+    "locationCode": {
+      "type": "string",
+      "description": "A code used internally to differentiate multiple locations, typically a 3 or 4 letter code."
+    },
+    "description": {
+      "type": "string",
+      "description": "A description of the restaurant, such as information about the atmosphere and food."
+    },
+    "timeZone": {
+      "type": "string",
+      "description": "The name of the restaurant's time zone in the <a \nhref=\"https://www.iana.org/time-zones\">IANA time zone \ndatabase</a>. For example, `America/New_York`.\n"
+    },
+    "closeoutHour": {
+      "type": "integer",
+      "description": "The hour of the day that separates one business day from the\nnext, also known as the \"business day cutoff time\". This is \nin the time zone of the restaurant. The `closeoutHour` is set \nto a value from 0-12 (midnight to noon) in the Business Day \nCutoff field in Toast Web.\n"
+    },
+    "managementGroupGuid": {
+      "type": "string",
+      "description": "The unique identifier of the restaurant group for the restaurant."
+    },
+    "currencyCode": {
+      "type": "string",
+      "description": "The ISO-4217 currency code used in this restaurant"
+    },
+    "firstBusinessDate": {
+      "type": "integer",
+      "description": "The first business date (yyyyMMdd) is the day a restaurant began using the Toast platform. The\n`firstBusinessDate` is also the first day on which time entries can be created for employees.\n"
+    },
+    "archived": {
+      "type": "boolean",
+      "description": "Returns `true` if the restaurant has been archived from the Toast platform, otherwise returns `false`. A\ncommon reason for archiving a restaurant is if the restaurant was created in error.\n",
+      "default": false
+    }
+  }
+}

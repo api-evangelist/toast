@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/orders-gift-card-info-schema.json",
+  "title": "GiftCardInfo",
+  "description": "Reserved for future use.",
+  "type": "object",
+  "required": [
+    "cardNumberIdentifier",
+    "last4CardDigits"
+  ],
+  "allOf": [
+    {
+      "$ref": "#/definitions/ToastReference"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "last4CardDigits": {
+          "type": "string",
+          "description": "The last 4 digits of the gift card that was used."
+        },
+        "first5CardDigits": {
+          "x-toast-read-only": true,
+          "type": "string",
+          "description": "The first 5 digits of the gift card that was used. Response only."
+        }
+      }
+    }
+  ]
+}

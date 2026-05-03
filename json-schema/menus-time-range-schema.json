@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/menus-time-range-schema.json",
+  "title": "TimeRange",
+  "description": "Represents a time range for when a menu or a time-specific price is available.\n",
+  "type": "object",
+  "properties": {
+    "start": {
+      "type": "string",
+      "description": "The start time of the time range. Expressed in the restaurant\u2019s local time.\n"
+    },
+    "end": {
+      "type": "string",
+      "description": "The end time of the time range. Expressed in the restaurant\u2019s local time.\n"
+    }
+  }
+}

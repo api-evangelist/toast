@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/restaurants-delivery-payment-options-structure.json",
+  "name": "DeliveryPaymentOptions",
+  "description": "Information about the forms of payment that the restaurant will\naccept for delivery orders.\n",
+  "type": "object",
+  "properties": {
+    "cash": {
+      "type": "boolean",
+      "description": "Indicates whether the restaurant accepts cash payment for\ndelivery orders that are placed online.\n"
+    },
+    "ccSameDay": {
+      "type": "boolean",
+      "description": "Indicates whether the restaurant accepts online credit card\npayment for delivery orders that are delivered on the same\nday.\n"
+    },
+    "ccFuture": {
+      "type": "boolean",
+      "description": "Indicates whether the restaurant accepts online credit card\npayment for delivery orders that are to be delivered on a day\nafter the guest places the order.\n"
+    }
+  }
+}

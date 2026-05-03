@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/labor-time-entry-schema.json",
+  "title": "TimeEntry",
+  "description": "A `TimeEntry` captures the actual time an employee worked or took \na break. Typically, a time entry is one-to-one with a scheduled \nshift, but it is possible in the Toast platform for an employee \nto clock-in and clock-out without a shift.\n",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/ExternalReference"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "createdDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date created, in UTC format (read-only).\n"
+        },
+        "modifiedDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date modified, in UTC format (read-only).\n"
+        },
+        "deletedDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date deleted, in UTC format (read-only).\n"
+        },
+        "deleted": {
+          "type": "boolean",
+          "description": "If the time entry is deleted in the Toast platform.\n"
+        },
+        "jobReference": {
+          "type": "object",
+          "description": "Optional, external reference to the job the employee \nassumed when clocking into the Toast platform.\n",
+          "$ref": "#/definitions/ExternalReference"
+        },
+        "employeeReference": {
+          "type": "object",
+          "description": "External reference to the employee that created this time \nentry.\n",
+          "$ref": "#/definitions/ExternalReference"
+        },
+        "shiftReference": {
+          "type": "object",
+          "description": "Optional, external reference to the scheduled shift \nassociated with this time entry.\n",
+          "$ref": "#/definitions/ExternalReference"
+        },
+        "inDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time that an employee clocked in to a work\nshift.\n"
+        },
+        "outDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date and time that an employee closed a work shift.\nIf the employee has not closed the shift this field is\nnull.\n"
+        },
+        "autoClockedOut": {
+          "type": "boolean",
+          "description": "Indicates whether the Toast platform automatically clocked the\nemployee out of their shift at the end of the restaurant business\nday. For more information, see [the Toast platform guide section\nabout automatic clock-out and time\nentries](https://doc.toasttab.com/doc/platformguide/adminEffectOfAutoclockOutOnBreakEntries.html).\n"
+        },
+        "businessDate": {
+          "type": "string",
+          "description": "The business date of `inDate`, in the format of \n\"yyyymmdd\".\n"
+        },
+        "regularHours": {
+          "type": "number",
+          "format": "double",
+          "description": "Regular hours worked by the employee for this time entry, \nexcluding breaks.\n"
+        },
+        "overtimeHours": {
+          "type": "number",
+          "format": "double",
+          "description": "Any overtime hours taken by this employee during this \ntime entry.\n"
+        },
+        "hourlyWage": {
+          "type": "number",
+          "format": "double",
+          "description": "Optional, historical `hourlyWage`; that is, the wage in \neffect when the time entry was made. The current \n`hourlyWage` for the employee (or job) may be different. \nThis will be null if the job is `SALARY`.\n"
+        },
+        "breaks": {
+          "type": "array",
+          "description": "An optional array of time entry breaks, each break \ndefining a clock-in date, clock-out date, and whether or \nnot the break was paid.\n",
+          "minItems": 0,
+          "items": {
+            "$ref": "#/definitions/TimeEntryBreak"
+          }
+        },
+        "declaredCashTips": {
+          "type": "number",
+          "format": "double",
+          "description": "The currency amount of tips paid in cash during the time\nentry. This does not include service charges applied as\nautomatic gratuities. If the employee has not closed the\nshift, this value is not final and may change. If the\n`outDate` value is set, the `declaredCashTips` value is\nfinal.\n"
+        },
+        "nonCashTips": {
+          "type": "number",
+          "format": "double",
+          "description": "The currency amount of tips paid using non-cash tender\nduring the time entry. For example, this includes credit\ncard tips. This does not include service charges applied\nas automatic gratuities. If the employee has not closed\nthe shift, this value is not final and may change. If the\n`outDate` value is set, the `nonCashTips` value is final.\n"
+        },
+        "nonCashTipsRoundingLoss": {
+          "type": "number",
+          "format": "double",
+          "description": "The currency amount of cash added to the payout of total\ntips paid using non-cash tender and service charges\napplied as automatic gratuities to round up the total to\nthe nearest $.05. This only applies if tip rounding is\nconfigured for shift review. If the employee has not\nclosed the shift, the value should be null.\n",
+          "x-nullable": true
+        },
+        "cashGratuityServiceCharges": {
+          "type": "number",
+          "format": "double",
+          "description": "The currency amount of service charges applied as\nautomatic gratuities that were paid in cash during the\ntime entry. If the employee has not closed the shift,\nthis value is not final and may change. If the `outDate`\nvalue is set, the `cashGratuityServiceCharges` value is\nfinal.\n"
+        },
+        "nonCashGratuityServiceCharges": {
+          "type": "number",
+          "format": "double",
+          "description": "The currency amount of service charges applied as\nautomatic gratuities that were paid using non-cash tender\nduring the time entry. If the employee has not closed the\nshift, this value is not final and may change. If the\n`outDate` value is set, the\n`nonCashGratuityServiceCharges` value is final.\n"
+        },
+        "tipsWithheld": {
+          "type": "number",
+          "format": "double",
+          "description": "The currency amount withheld from the employee's credit \ncard tips during the time entry. The amount withheld is \ncalculated as a percentage of tips added to credit card \npayments. If the employee has not closed the shift (the \n`outDate` value is null), the `tipsWithheld` value is not \nfinal and may change. If the employee has closed the \nshift (the `outDate` value is set), the `tipsWithheld` \nvalue is final.\n"
+        },
+        "nonCashSales": {
+          "type": "number",
+          "format": "double",
+          "description": "The currency amount of non-cash sales during the time \nentry. The value includes the order amounts and tax.\nIt does not include tips.\n\nIf the employee has not closed the shift, this \nvalue is `0`. If the `outDate` value is set, then the \n`nonCashSales` value is final.\n"
+        },
+        "cashSales": {
+          "type": "number",
+          "format": "double",
+          "description": "The currency amount of sales paid for in cash during the \ntime entry. The value includes the order amounts and tax.\nIt does not include tips.\n\nIf the employee has not closed the shift, \nthis value is `0`. If the `outDate` value is set, \nthen the `cashSales` value is final.\n"
+        }
+      }
+    }
+  ]
+}

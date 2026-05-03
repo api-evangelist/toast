@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/menus-guest-count-schema.json",
+  "title": "GuestCount",
+  "description": "The number of guests the item or modifier is expected to serve. This value is `null` if no guest count is specified.\n",
+  "type": "number",
+  "format": "float",
+  "x-nullable": true
+}

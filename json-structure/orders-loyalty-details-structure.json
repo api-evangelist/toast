@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/orders-loyalty-details-structure.json",
+  "name": "LoyaltyDetails",
+  "description": "Information about the loyalty program discount that is applied to a check. The loyalty program account is identified in the `AppliedLoyaltyInfo` value for the check.",
+  "type": "object",
+  "required": [
+    "vendor",
+    "referenceId"
+  ],
+  "properties": {
+    "vendor": {
+      "type": "string",
+      "description": "The specific loyalty program service provider that supports the loyalty account.",
+      "enum": [
+        "TOAST",
+        "PUNCHH",
+        "PUNCHH2",
+        "PAYTRONIX",
+        "APPFRONT",
+        "INTEGRATION"
+      ]
+    },
+    "referenceId": {
+      "type": "string",
+      "description": "The identifier of the loyalty program discount that\nis recognized by the loyalty program service provider.\n\nThe Toast platform transmits the discount identifier to the service\nprovider to determine the validity and amount of the discount.\n"
+    }
+  }
+}

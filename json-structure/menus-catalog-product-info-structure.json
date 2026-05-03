@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/menus-catalog-product-info-structure.json",
+  "name": "CatalogProductInfo",
+  "description": "Contains retail catalog product information for a menu item.\n",
+  "type": "object",
+  "properties": {
+    "product": {
+      "$ref": "#/definitions/CatalogProduct"
+    },
+    "productVariant": {
+      "$ref": "#/definitions/CatalogProductVariant"
+    }
+  },
+  "x-nullable": true
+}

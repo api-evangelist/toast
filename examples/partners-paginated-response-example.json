@@ -1,0 +1,14 @@
+{
+  "currentPageNum": 12,
+  "results": [
+    "sample-results_item"
+  ],
+  "totalResultCount": 1234,
+  "pageSize": 100,
+  "currentPageToken": "cDoxLHM6MQ==",
+  "nextPageToken": "cDoyLHM6MQ==",
+  "totalCount": 1234,
+  "nextPageNum": 14,
+  "lastPageNum": 13,
+  "previousPageNum": 12
+}

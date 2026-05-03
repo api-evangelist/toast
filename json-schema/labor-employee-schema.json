@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/labor-employee-schema.json",
+  "title": "Employee",
+  "description": "A restaurant employee",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/ExternalReference"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "createdDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date created, in UTC format (read-only).\n"
+        },
+        "modifiedDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date modified, in UTC format (read-only).\n"
+        },
+        "deletedDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Date deleted, in UTC format (read-only).\n"
+        },
+        "firstName": {
+          "type": "string",
+          "description": "Optional, first name of the employee.\n"
+        },
+        "chosenName": {
+          "type": "string",
+          "description": "Optional, chosen name of the employee. To be used, when appropriate, in place of first name.\n"
+        },
+        "lastName": {
+          "type": "string",
+          "description": "Optional, last name of the employee.\n"
+        },
+        "email": {
+          "type": "string",
+          "description": "Employee's email address.\n"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "description": "Employee's phone number\n"
+        },
+        "phoneNumberCountryCode": {
+          "type": "string",
+          "description": "A numeric code corresponding to one or more countries, \nused as a telephone number prefix when making international telephone calls.\n"
+        },
+        "passcode": {
+          "type": "string",
+          "description": "An optional numeric security code that a new employee can \nuse to begin a session in a Toast POS device. The \npasscode value can only occur in `POST` requests. The \nvalue must be numeric and it must contain at least one \nand no more than eight digits. The employee can only use \nthe passcode at the restaurant specified in the `POST` \nrequest.   The response to a successful `POST` request \nwill include the passcode value in clear text. A `GET` \nrequest for the employee will not return the passcode.\n"
+        },
+        "externalEmployeeId": {
+          "type": "string",
+          "description": "Optional, employee\u2019s external ID in the Toast platform.\n"
+        },
+        "deleted": {
+          "type": "boolean",
+          "description": "If the employee is deleted in the Toast platform.\n"
+        },
+        "jobReferences": {
+          "type": "array",
+          "description": "An array of external references to jobs assigned to this \nemployee. If the job is deleted, it will be excluded from this array.\n",
+          "minItems": 0,
+          "items": {
+            "$ref": "#/definitions/ExternalReference"
+          }
+        },
+        "wageOverrides": {
+          "type": "array",
+          "description": "An optional array of per job wage overrides, where each \nelement defines a job reference and the wage override for \nthis employee when performing that job. If the underlying job\nis deleted, it will be excluded from the array.\n",
+          "minItems": 0,
+          "items": {
+            "$ref": "#/definitions/JobWageOverride"
+          }
+        },
+        "v2EmployeeGuid": {
+          "type": "string",
+          "description": "This value is included for future use. An alternate Toast \nplatform GUID for the employee that will be used in \nupcoming labor API functionality.\n"
+        }
+      }
+    }
+  ]
+}

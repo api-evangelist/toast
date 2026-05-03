@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/labor-shift-structure.json",
+  "name": "Shift",
+  "description": "A scheduled shift in the Toast platform used to enforce employee \nclock-in and clock outs. Shifts might be created in an external \nscheduling system and pushed to the Toast platform.\n",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/ExternalReference"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "createdDate": {
+          "type": "datetime",
+          "description": "Date created, in UTC format (read-only).\n"
+        },
+        "modifiedDate": {
+          "type": "datetime",
+          "description": "Date modified, in UTC format (read-only).\n"
+        },
+        "deletedDate": {
+          "type": "datetime",
+          "description": "Date deleted, in UTC format (read-only).\n"
+        },
+        "deleted": {
+          "type": "boolean",
+          "description": "If the shift is deleted in the Toast platform.\n"
+        },
+        "jobReference": {
+          "type": "object",
+          "description": "External reference to the job assigned to this shift.\n",
+          "$ref": "#/definitions/ExternalReference"
+        },
+        "employeeReference": {
+          "type": "object",
+          "description": "External reference to the employee assigned to this shift.\n",
+          "$ref": "#/definitions/ExternalReference"
+        },
+        "inDate": {
+          "type": "datetime",
+          "description": "Timestamp of the beginning of the shift. This is when the \nemployee can clock in. Expressed in the UTC time zone.\n"
+        },
+        "outDate": {
+          "type": "datetime",
+          "description": "Timestamp of the end of the shift. This is when the \nemployee can clock out. Expressed in the UTC time zone.\n"
+        },
+        "scheduleConfig": {
+          "type": "object",
+          "description": "Grace period scheduling configuration\n",
+          "$ref": "#/definitions/ScheduleConfig"
+        }
+      }
+    }
+  ]
+}

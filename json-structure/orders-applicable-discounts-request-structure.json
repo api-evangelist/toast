@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/orders-applicable-discounts-request-structure.json",
+  "name": "ApplicableDiscountsRequest",
+  "description": "A wrapper object that contains an `Order` object and an optional\npromotional code.\n\nYou include an `ApplicableDiscountsRequest`\nobject in the message body of a `POST` request to the\n`applicableDiscounts` endpoint.\n",
+  "type": "object",
+  "required": [
+    "order"
+  ],
+  "properties": {
+    "order": {
+      "type": "object",
+      "$ref": "#/definitions/Order",
+      "description": "An `Order` object that\ncontains information about the order that you want to get discounts\nfor.\n"
+    },
+    "promoCode": {
+      "description": "An optional promotional code. If you include a promotional\ncode, the `applicableDiscounts` endpoint returns only\ndiscounts that are associated with that promotional code.\n",
+      "type": "string"
+    }
+  }
+}

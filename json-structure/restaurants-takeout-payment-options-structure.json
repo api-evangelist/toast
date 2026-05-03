@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/restaurants-takeout-payment-options-structure.json",
+  "name": "TakeoutPaymentOptions",
+  "description": "Information about the forms of payment that the restaurant will\naccept for orders that a guest picks up in person.\n",
+  "type": "object",
+  "properties": {
+    "cash": {
+      "type": "boolean",
+      "description": "Indicates whether the restaurant accepts cash payment for\ntakeout orders that are placed online.\n"
+    },
+    "ccSameDay": {
+      "type": "boolean",
+      "description": "Indicates whether the restaurant accepts online credit card\npayment for takeout orders that the guest will pick up on\nthe same day.\n"
+    },
+    "ccFuture": {
+      "type": "boolean",
+      "description": "Indicates whether the restaurant accepts online credit card\npayment for takeout orders that the guest will pick up on\na day after the guest places the order.\n"
+    },
+    "ccInStore": {
+      "type": "boolean",
+      "description": "Indicates whether the restaurant accepts credit card payment\nat the time the guest picks up a takeout order.\n"
+    }
+  }
+}

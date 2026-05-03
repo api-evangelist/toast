@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/menus-modifier-option-tax-info-schema.json",
+  "title": "ModifierOptionTaxInfo",
+  "description": "Information about the tax rates and tax behavior of this modifier option.\n\n_Note:_ The `modifierOptionTaxInfo` value always reflects the parent menu item tax rate, unless Toast grants the restaurant the ability to override modifier tax rates. If this permission is not granted, then even if the restaurant configured the modifier with a different tax rate, `modifierOptionTaxInfo` reflects the parent menu item tax rate.\n\nNote that there are other tax-related features that can impact the tax of a modifier option, such as tax inclusion and smart tax, that are not returned in this `ModifierOptionTaxInfo` object. For more information, see <a href=\"https://doc.toasttab.com/doc/platformguide/adminTaxesOnModifiers.html\">Tax on modifiers</a> and <a href=\"https://doc.toasttab.com/doc/platformguide/adminTaxesOnModifiers.html#adminModifierTaxInteraction\">Tax functionality interaction</a>.\n\n_Important:_ The `ModifierOptionTaxInfo` object is intended to help you display prices but the `/prices` endpoint of the orders API is the only supported way to determine the prices of orders that you submit to the orders API. See <a href=\"https://doc.toasttab.com/doc/devguide/apiOrderPrices.html\">Order prices</a> in the Toast Developer Guide for more information.\n",
+  "type": "object",
+  "properties": {
+    "taxRateGuids": {
+      "type": "array",
+      "description": "An array of GUIDs for the tax rates that apply to this modifier option.\n\nThe `taxRateGuids` value includes different tax rate GUIDs, depending on whether the modifier option is configured in Toast Web to use its own tax rates or to inherit tax rates from a menu item it has been applied to. See <a href=\"https://doc.toasttab.com/doc/devguide/apiUsingTaxInfoAndModifierOptionTaxInfoToCalculateTaxesForMenuItemsAndModOptions.html\">Using taxInfo and modifierOptionTaxInfo to calculate taxes for menu items and modifier options</a> in the Toast Developer Guide for more information.\n                   \nTo retrieve full configuration data for a tax rate, use the `/taxRates/{guid}` endpoint in the configuration API.\n",
+      "items": {
+        "type": "string"
+      }
+    },
+    "overrideItemTaxRates": {
+      "description": "Indicates whether the tax rates configured for this modifier option override the tax rates configured for a menu item that this modifier option has been applied to. For example, if the menu item is configured for a 6.25% tax rate and the modifier option is configured for a 2.75% tax rate, when that modifier option is applied to the menu item, both are taxed at the 2.75% tax rate.\n\nNote that the menu item's tax rate is overridden only if the modifier option is added to the menu item on a Toast POS device. The modifier option may be available to apply to the menu item, but if it is not actually added to the menu item on a Toast POS device, then the menu item's tax rate is not overridden. See <a href=\"https://doc.toasttab.com/doc/devguide/apiUsingTaxInfoAndModifierOptionTaxInfoToCalculateTaxesForMenuItemsAndModOptions.html\">Using taxInfo and modifierOptionTaxInfo to calculate taxes for menu items and modifier options</a> in the Toast Developer Guide for more information.\n",
+      "type": "boolean"
+    }
+  }
+}

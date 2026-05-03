@@ -1,0 +1,6 @@
+{
+  "enabled": false,
+  "scheduling": false,
+  "specialRequests": true,
+  "specialRequestsMessage": "sample-specialRequestsMessage"
+}

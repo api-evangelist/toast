@@ -1,0 +1,19 @@
+{
+  "referenceId": 96,
+  "name": "Sample Name",
+  "kitchenName": "Sample Kitchenname",
+  "guid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "description": "Description of description",
+  "prepStations": [
+    "sample-prepStations_item"
+  ],
+  "price": 59.18,
+  "pricingStrategy": "sample-pricingStrategy",
+  "pricingRules": {},
+  "taxInfo": [
+    "sample-taxInfo_item"
+  ],
+  "itemTags": [
+    "sample-itemTags_item"
+  ]
+}

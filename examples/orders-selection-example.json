@@ -1,0 +1,17 @@
+{
+  "quantity": 89.48,
+  "seatNumber": 34,
+  "unitOfMeasure": "NONE",
+  "selectionType": "HOUSE_ACCOUNT_PAY_BALANCE",
+  "appliedDiscounts": [
+    "sample-appliedDiscounts_item"
+  ],
+  "deferred": false,
+  "preDiscountPrice": 90.05,
+  "price": 87.23,
+  "tax": 30.88,
+  "voided": true,
+  "voidDate": "2025-03-15T14:30:00Z",
+  "voidBusinessDate": 38,
+  "displayName": "Sample Displayname"
+}

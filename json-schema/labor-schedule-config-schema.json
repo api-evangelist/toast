@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/labor-schedule-config-schema.json",
+  "title": "ScheduleConfig",
+  "description": "Schedule configuration containing info about the clock in/clock out\ngrace period.\n",
+  "type": "object",
+  "properties": {
+    "guid": {
+      "description": "The GUID maintained by the Toast platform.\n",
+      "type": "string"
+    },
+    "minBeforeClockIn": {
+      "description": "Grace period minutes before clock in\n",
+      "type": "number",
+      "format": "double"
+    },
+    "minAfterClockIn": {
+      "description": "Grace period minutes after clock in\n",
+      "type": "number",
+      "format": "double"
+    },
+    "minBeforeClockOut": {
+      "description": "Grace period minutes before clock out\n",
+      "type": "number",
+      "format": "double"
+    },
+    "minAfterClockOut": {
+      "description": "Grace period minutes after clock out\n",
+      "type": "number",
+      "format": "double"
+    }
+  }
+}

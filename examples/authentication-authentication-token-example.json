@@ -1,0 +1,8 @@
+{
+  "tokenType": "Bearer",
+  "scope": "sample-scope",
+  "expiresIn": 86400,
+  "accessToken": "sample-accessToken",
+  "idToken": "ID-3829",
+  "refreshToken": "sample-refreshToken"
+}

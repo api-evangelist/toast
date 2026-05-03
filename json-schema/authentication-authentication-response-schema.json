@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/authentication-authentication-response-schema.json",
+  "title": "AuthenticationResponse",
+  "description": "A wrapper object for the response to a successful Toast API authentication\nrequest.\n",
+  "type": "object",
+  "properties": {
+    "token": {
+      "description": "An `AuthenticationToken` object containing information about a Toast\nplatform API session, including an authentication token string that\nyour Toast API client software can present when using other Toast\nplatform APIs.\n",
+      "type": "object",
+      "$ref": "#/definitions/AuthenticationToken"
+    },
+    "status": {
+      "description": "The value `SUCCESS` indicates that your authentication request was successful.",
+      "type": "string",
+      "example": "SUCCESS"
+    }
+  }
+}

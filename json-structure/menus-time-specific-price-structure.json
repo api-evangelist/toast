@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/menus-time-specific-price-structure.json",
+  "name": "TimeSpecificPrice",
+  "description": "Represents the pricing rules for a menu item that uses a time-specific price.\n",
+  "type": "object",
+  "properties": {
+    "timeSpecificPrice": {
+      "type": "double",
+      "description": "The price of the menu item during the periods of time defined by the associated `schedule` array.\n"
+    },
+    "basePrice": {
+      "type": "double",
+      "description": "The base price of the menu item, used for time periods when a time-specific price has not been defined.\n"
+    },
+    "schedule": {
+      "type": "array",
+      "description": "An array of `Schedule` objects that indicate the specific days and times that a time-specific price is available.\n",
+      "items": {
+        "$ref": "#/definitions/Schedule"
+      }
+    }
+  }
+}

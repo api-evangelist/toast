@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/orders-customer-schema.json",
+  "title": "Customer",
+  "description": "Customer schema from Toast API",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/ToastReference"
+    },
+    {
+      "type": "object",
+      "required": [
+        "firstName",
+        "lastName",
+        "email",
+        "phone"
+      ],
+      "properties": {
+        "firstName": {
+          "type": "string",
+          "description": "The first name, or given name, of the guest.\n"
+        },
+        "lastName": {
+          "type": "string",
+          "description": "The last name, or surname, of the guest.\n"
+        },
+        "phone": {
+          "type": "string",
+          "description": "The telephone number of the guest.\n"
+        },
+        "phoneCountryCode": {
+          "type": "string",
+          "description": "The international phone country code for the number of the guest.\n"
+        },
+        "email": {
+          "type": "string",
+          "description": "The email address corresponding to the guest who placed the order.\n\nThe email address is the key that identifies a unique restaurant guest. All distinct guests should have distinct email addresses.\n"
+        }
+      }
+    }
+  ]
+}

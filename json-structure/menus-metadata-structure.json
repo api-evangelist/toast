@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/menus-metadata-structure.json",
+  "name": "Metadata",
+  "description": "Information about the last date and time that this restaurant's menu data was updated.\n",
+  "type": "object",
+  "properties": {
+    "restaurantGuid": {
+      "description": "A unique identifier for this restaurant, assigned by the Toast POS system.\n",
+      "type": "uuid"
+    },
+    "lastUpdated": {
+      "description": "The most recent date and time that this menu's data was published. Use this value to determine if you need to refresh your menu data. The `lastUpdated` value uses the absolute timestamp format describe in the <a href=\"https://doc.toasttab.com/doc/devguide/api_dates_and_timestamps.html\">Dates and timestamps</a> section of the Toast Developer Guide.\n",
+      "type": "string"
+    }
+  }
+}

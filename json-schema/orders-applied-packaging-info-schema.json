@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/orders-applied-packaging-info-schema.json",
+  "title": "AppliedPackagingInfo",
+  "description": "Information describing the guest's packaging preferences for this order, for example utensils, napkins, condiments.\n\nFor more information, see [Packaging preferences](https://doc.toasttab.com/doc/devguide/apiOrdersPackagingPreferences.html)\n",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/ToastReference"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "appliedPackagingItems": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/AppliedPackagingItem"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,457 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "toast": "https://developer.toasttab.com/schema/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "Alcohol": "toast:Alcohol",
+    "AllergenItem": "toast:AllergenItem",
+    "Availability": "toast:Availability",
+    "CatalogProduct": "toast:CatalogProduct",
+    "CatalogProductInfo": "toast:CatalogProductInfo",
+    "CatalogProductOption": "toast:CatalogProductOption",
+    "CatalogProductOptionValue": "toast:CatalogProductOptionValue",
+    "CatalogProductVariant": "toast:CatalogProductVariant",
+    "CatalogProductVariantOption": "toast:CatalogProductVariantOption",
+    "ContentAdvisories": "toast:ContentAdvisories",
+    "ItemTag": "toast:ItemTag",
+    "Menu": "toast:Menu",
+    "MenuGroup": "toast:MenuGroup",
+    "MenuItem": "toast:MenuItem",
+    "Metadata": "toast:Metadata",
+    "ModifierGroup": "toast:ModifierGroup",
+    "ModifierOption": "toast:ModifierOption",
+    "ModifierOptionTaxInfo": "toast:ModifierOptionTaxInfo",
+    "Portion": "toast:Portion",
+    "PreModifier": "toast:PreModifier",
+    "PreModifierGroup": "toast:PreModifierGroup",
+    "PricingRules": "toast:PricingRules",
+    "Restaurant": "toast:Restaurant",
+    "SalesCategory": "toast:SalesCategory",
+    "Schedule": "toast:Schedule",
+    "SequencePrice": "toast:SequencePrice",
+    "SizeSequencePricingRule": "toast:SizeSequencePricingRule",
+    "TimeRange": "toast:TimeRange",
+    "TimeSpecificPrice": "toast:TimeSpecificPrice",
+    "alcohol": {
+      "@id": "toast:alcohol",
+      "@type": "xsd:string"
+    },
+    "allergens": {
+      "@id": "toast:allergens",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "allowsDuplicates": {
+      "@id": "toast:allowsDuplicates",
+      "@type": "xsd:boolean"
+    },
+    "alwaysAvailable": {
+      "@id": "toast:alwaysAvailable",
+      "@type": "xsd:boolean"
+    },
+    "availability": {
+      "@id": "toast:availability",
+      "@type": "@id"
+    },
+    "availableOptions": {
+      "@id": "toast:availableOptions",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "basePrice": {
+      "@id": "toast:basePrice",
+      "@type": "xsd:decimal"
+    },
+    "calories": {
+      "@id": "toast:calories",
+      "@type": "xsd:integer"
+    },
+    "catalogProductInfo": {
+      "@id": "toast:catalogProductInfo",
+      "@type": "xsd:string"
+    },
+    "chargeAsExtra": {
+      "@id": "toast:chargeAsExtra",
+      "@type": "xsd:boolean"
+    },
+    "code": {
+      "@id": "toast:code",
+      "@type": "xsd:string"
+    },
+    "containsAlcohol": {
+      "@id": "toast:containsAlcohol",
+      "@type": "xsd:string"
+    },
+    "contentAdvisories": {
+      "@id": "toast:contentAdvisories",
+      "@type": "xsd:string"
+    },
+    "days": {
+      "@id": "toast:days",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "defaultOptionsChargePrice": {
+      "@id": "toast:defaultOptionsChargePrice",
+      "@type": "xsd:string"
+    },
+    "defaultOptionsSubstitutionPricing": {
+      "@id": "toast:defaultOptionsSubstitutionPricing",
+      "@type": "xsd:string"
+    },
+    "description": {
+      "@id": "schema:description"
+    },
+    "dimensionUnitOfMeasure": {
+      "@id": "toast:dimensionUnitOfMeasure",
+      "@type": "xsd:string"
+    },
+    "displayMode": {
+      "@id": "toast:displayMode",
+      "@type": "xsd:string"
+    },
+    "eligiblePaymentAssistancePrograms": {
+      "@id": "toast:eligiblePaymentAssistancePrograms",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "end": {
+      "@id": "toast:end",
+      "@type": "xsd:string"
+    },
+    "fixedPrice": {
+      "@id": "toast:fixedPrice",
+      "@type": "xsd:decimal"
+    },
+    "groupCode": {
+      "@id": "toast:groupCode",
+      "@type": "xsd:string"
+    },
+    "groupGuid": {
+      "@id": "toast:groupGuid",
+      "@type": "xsd:string"
+    },
+    "guestCount": {
+      "@id": "toast:guestCount",
+      "@type": "xsd:string"
+    },
+    "guid": {
+      "@id": "toast:guid",
+      "@type": "xsd:string"
+    },
+    "height": {
+      "@id": "toast:height",
+      "@type": "xsd:string"
+    },
+    "highResImage": {
+      "@id": "toast:highResImage",
+      "@type": "xsd:string"
+    },
+    "id": {
+      "@id": "toast:id",
+      "@type": "xsd:string"
+    },
+    "image": {
+      "@id": "toast:image",
+      "@type": "xsd:string"
+    },
+    "images": {
+      "@id": "toast:images",
+      "@type": "xsd:string"
+    },
+    "isComboParent": {
+      "@id": "toast:isComboParent",
+      "@type": "xsd:boolean"
+    },
+    "isDefault": {
+      "@id": "toast:isDefault",
+      "@type": "xsd:boolean"
+    },
+    "isDeferred": {
+      "@id": "toast:isDeferred",
+      "@type": "xsd:boolean"
+    },
+    "isDiscountable": {
+      "@id": "toast:isDiscountable",
+      "@type": "xsd:boolean"
+    },
+    "isMultiSelect": {
+      "@id": "toast:isMultiSelect",
+      "@type": "xsd:boolean"
+    },
+    "itemTags": {
+      "@id": "toast:itemTags",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "kitchenName": {
+      "@id": "toast:kitchenName",
+      "@type": "xsd:string"
+    },
+    "lastUpdated": {
+      "@id": "toast:lastUpdated",
+      "@type": "xsd:string"
+    },
+    "length": {
+      "@id": "toast:length",
+      "@type": "xsd:string"
+    },
+    "masterId": {
+      "@id": "toast:masterId",
+      "@type": "xsd:string"
+    },
+    "maxSelections": {
+      "@id": "toast:maxSelections",
+      "@type": "xsd:integer"
+    },
+    "menuGroups": {
+      "@id": "toast:menuGroups",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "menuItems": {
+      "@id": "toast:menuItems",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "menus": {
+      "@id": "toast:menus",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "minSelections": {
+      "@id": "toast:minSelections",
+      "@type": "xsd:integer"
+    },
+    "modifierGroupReferences": {
+      "@id": "toast:modifierGroupReferences",
+      "@container": "@set",
+      "@type": "xsd:integer"
+    },
+    "modifierOptionReferences": {
+      "@id": "toast:modifierOptionReferences",
+      "@type": "xsd:string"
+    },
+    "modifierOptionTaxInfo": {
+      "@id": "toast:modifierOptionTaxInfo",
+      "@type": "xsd:string"
+    },
+    "multiLocationId": {
+      "@id": "toast:multiLocationId",
+      "@type": "xsd:string"
+    },
+    "multiplicationFactor": {
+      "@id": "toast:multiplicationFactor",
+      "@type": "xsd:decimal"
+    },
+    "name": {
+      "@id": "schema:name"
+    },
+    "overrideItemTaxRates": {
+      "@id": "toast:overrideItemTaxRates",
+      "@type": "xsd:boolean"
+    },
+    "plu": {
+      "@id": "toast:plu",
+      "@type": "xsd:string"
+    },
+    "portions": {
+      "@id": "toast:portions",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "posButtonColorDark": {
+      "@id": "toast:posButtonColorDark",
+      "@type": "xsd:string"
+    },
+    "posButtonColorLight": {
+      "@id": "toast:posButtonColorLight",
+      "@type": "xsd:string"
+    },
+    "posName": {
+      "@id": "toast:posName",
+      "@type": "xsd:string"
+    },
+    "preModifierGroupReference": {
+      "@id": "toast:preModifierGroupReference",
+      "@type": "xsd:integer"
+    },
+    "preModifierGroupReferences": {
+      "@id": "toast:preModifierGroupReferences",
+      "@type": "xsd:string"
+    },
+    "preModifiers": {
+      "@id": "toast:preModifiers",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "prepStations": {
+      "@id": "toast:prepStations",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "prepTime": {
+      "@id": "toast:prepTime",
+      "@type": "xsd:integer"
+    },
+    "presenceType": {
+      "@id": "toast:presenceType",
+      "@type": "xsd:string"
+    },
+    "price": {
+      "@id": "toast:price",
+      "@type": "xsd:decimal"
+    },
+    "priceScaleFactor": {
+      "@id": "toast:priceScaleFactor",
+      "@type": "xsd:decimal"
+    },
+    "pricingRules": {
+      "@id": "toast:pricingRules",
+      "@type": "@id"
+    },
+    "pricingStrategy": {
+      "@id": "toast:pricingStrategy",
+      "@type": "xsd:string"
+    },
+    "product": {
+      "@id": "toast:product",
+      "@type": "xsd:string"
+    },
+    "productVariant": {
+      "@id": "toast:productVariant",
+      "@type": "xsd:string"
+    },
+    "referenceId": {
+      "@id": "toast:referenceId",
+      "@type": "xsd:integer"
+    },
+    "requiredMode": {
+      "@id": "toast:requiredMode",
+      "@type": "xsd:string"
+    },
+    "restaurantGuid": {
+      "@id": "toast:restaurantGuid",
+      "@type": "xsd:string"
+    },
+    "restaurantTimeZone": {
+      "@id": "toast:restaurantTimeZone",
+      "@type": "xsd:string"
+    },
+    "salesCategory": {
+      "@id": "toast:salesCategory",
+      "@type": "xsd:string"
+    },
+    "schedule": {
+      "@id": "toast:schedule",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "selectedOptions": {
+      "@id": "toast:selectedOptions",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "sequence": {
+      "@id": "toast:sequence",
+      "@type": "xsd:integer"
+    },
+    "sequencePrices": {
+      "@id": "toast:sequencePrices",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "sizeGuid": {
+      "@id": "toast:sizeGuid",
+      "@type": "xsd:string"
+    },
+    "sizeName": {
+      "@id": "toast:sizeName",
+      "@type": "xsd:string"
+    },
+    "sizeSequencePricingRules": {
+      "@id": "toast:sizeSequencePricingRules",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "sizeSpecificPricingGuid": {
+      "@id": "toast:sizeSpecificPricingGuid",
+      "@type": "xsd:string"
+    },
+    "sku": {
+      "@id": "toast:sku",
+      "@type": "xsd:string"
+    },
+    "sortOrder": {
+      "@id": "toast:sortOrder",
+      "@type": "xsd:integer"
+    },
+    "start": {
+      "@id": "toast:start",
+      "@type": "xsd:string"
+    },
+    "taxInclusion": {
+      "@id": "toast:taxInclusion",
+      "@type": "xsd:string"
+    },
+    "taxInfo": {
+      "@id": "toast:taxInfo",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "taxRateGuids": {
+      "@id": "toast:taxRateGuids",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "timeRanges": {
+      "@id": "toast:timeRanges",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "timeSpecificPrice": {
+      "@id": "toast:timeSpecificPrice",
+      "@type": "xsd:decimal"
+    },
+    "timeSpecificPricingRules": {
+      "@id": "toast:timeSpecificPricingRules",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "type": {
+      "@id": "toast:type",
+      "@type": "xsd:string"
+    },
+    "unitOfMeasure": {
+      "@id": "toast:unitOfMeasure",
+      "@type": "xsd:string"
+    },
+    "value": {
+      "@id": "toast:value",
+      "@type": "xsd:string"
+    },
+    "values": {
+      "@id": "toast:values",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "visibility": {
+      "@id": "toast:visibility",
+      "@type": "xsd:string"
+    },
+    "weight": {
+      "@id": "toast:weight",
+      "@type": "xsd:string"
+    },
+    "weightUnitOfMeasure": {
+      "@id": "toast:weightUnitOfMeasure",
+      "@type": "xsd:string"
+    },
+    "width": {
+      "@id": "toast:width",
+      "@type": "xsd:string"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/menus-alcohol-structure.json",
+  "name": "Alcohol",
+  "description": "Information about whether this menu item or modifier contains alcohol and may require, \nor benefit from, additional handling. For example, a delivery partner may need \nto identify a menu item or modifier as containing alcohol to ensure that delivery drivers\nrequest identification before giving it to a customer.\n",
+  "type": "object",
+  "properties": {
+    "containsAlcohol": {
+      "type": "string",
+      "description": "A string that indicates whether the menu item or modifier contains alcohol. Possible values \ninclude:\n\n* `YES`: The menu item or modifier contains alcohol.\n* `NO`: The menu item or modifier does not contain alcohol.\n     \nThe `containsAlcohol` value may also be `null`. A `null` value indicates that the corresponding UI option in Toast Web has not been configured for this menu item or modifier.\n",
+      "enum": [
+        true,
+        false
+      ]
+    }
+  }
+}

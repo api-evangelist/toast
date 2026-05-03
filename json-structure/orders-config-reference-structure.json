@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/orders-config-reference-structure.json",
+  "name": "ConfigReference",
+  "description": "A wrapper object containing identifier values for Toast platform entities.\n",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/ToastReference"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "multiLocationId": {
+          "description": "A consistent identifier for Toast platform entities, such\nas menu items, that applies to all versions of a shared\nentity at all locations in a restaurant group.\n\nFor example, you can use the `multiLocationId` value to\nidentify menu entities that are versions of a shared menu\nentity. For more information about the menus API `multilocationId` value, see\n[the _Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiUnderstandingGuidsEntityIdentifiersAndMultilocationIds_V2.html#apiMultilocationIdValues_V2).\n",
+          "type": "string"
+        },
+        "externalId": {
+          "description": "An external identifier that is prefixed by a naming\nauthority. Deprecated for use in `ConfigReference`.\n",
+          "type": "string"
+        }
+      }
+    }
+  ]
+}

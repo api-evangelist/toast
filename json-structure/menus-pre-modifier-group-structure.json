@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/menus-pre-modifier-group-structure.json",
+  "name": "PreModifierGroup",
+  "description": "Information about a pre-modifier group configured for this restaurant, including an array of pre-modifiers contained in the group.\n",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "A descriptive name for this pre-modifier group, for example, \"Sandwich Pre-mods\".\n"
+    },
+    "guid": {
+      "description": "A unique identifier for this pre-modifier group, assigned by the Toast POS system.\n",
+      "type": "string"
+    },
+    "multiLocationId": {
+      "$ref": "#/definitions/MultiLocationId"
+    },
+    "preModifiers": {
+      "description": "An array of `PreModifier` objects that are contained in this pre-modifier group. Pre-modifiers alter the display of modifier options on receipts and tickets to satisfy guest requests such as EXTRA or ON THE SIDE for modifier options. Pre-modifiers can also be configured to modify the cost of the modifier options they are applied to, for example, by charging more for an EXTRA serving of a modifier option.\n",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/PreModifier"
+      }
+    }
+  }
+}

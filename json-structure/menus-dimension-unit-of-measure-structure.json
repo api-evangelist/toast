@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/menus-dimension-unit-of-measure-structure.json",
+  "name": "DimensionUnitOfMeasure",
+  "description": "The unit of measure assigned to the `length`, `height`, and `width` values.\n    \nPossible values include:\n    \n* IN: Inches\n* CM: Centimeters\n* FT: Feet\n* M: Meters\n* MM: Millimeters\n* YD: Yards\n    \n`dimensionUnitOfMeasure` is `null` if no unit of measurement has been specified.\n",
+  "type": "string",
+  "enum": [
+    "IN",
+    "CM",
+    "FT",
+    "M",
+    "MM",
+    "YD"
+  ],
+  "x-nullable": true
+}

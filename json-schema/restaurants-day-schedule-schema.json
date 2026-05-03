@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/restaurants-day-schedule-schema.json",
+  "title": "DaySchedule",
+  "description": "Information about the services and hours that are scheduled for a\nrestaurant during a type of day. For example, a restaurant might\nhave different services available on a type of day named\n`weekday` than it does on a type of day named `weekend`.\n",
+  "type": "object",
+  "properties": {
+    "scheduleName": {
+      "type": "string",
+      "description": "The name of the type of day. For example, `weekday`."
+    },
+    "services": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Service"
+      },
+      "description": "An array of `Service` objects that are available during the\ntype of day.\n"
+    },
+    "openTime": {
+      "type": "string",
+      "description": "The time of day that the first service for the type of day\nbegins. For example, the first service might begin at\n`06:00:00.000`.\n"
+    },
+    "closeTime": {
+      "type": "string",
+      "description": "The time of day that the last service for the type of day\nends. For example, the last service might end at\n`02:00:00.000`.\n"
+    }
+  }
+}

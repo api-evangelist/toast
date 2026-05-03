@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/restaurants-restaurant-schema.json",
+  "title": "Restaurant",
+  "description": "The Toast POS GUID for a restaurant\n",
+  "type": "object",
+  "properties": {
+    "guid": {
+      "type": "string",
+      "description": "The unique identifier that the Toast POS assigns to a\nrestaurant.\n"
+    }
+  }
+}

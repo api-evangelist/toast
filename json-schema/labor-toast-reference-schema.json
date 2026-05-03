@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/labor-toast-reference-schema.json",
+  "title": "ToastReference",
+  "description": "A wrapper object with fields that allow reference to a Toast \nplatform entity by Toast GUID.\n",
+  "type": "object",
+  "required": [
+    "guid",
+    "entityType"
+  ],
+  "properties": {
+    "guid": {
+      "description": "The GUID maintained by the Toast platform.\n",
+      "type": "string"
+    },
+    "entityType": {
+      "description": "The type of object this is.\n",
+      "type": "string"
+    }
+  }
+}

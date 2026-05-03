@@ -1,0 +1,17 @@
+{
+  "name": "Sample Name",
+  "guid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "referenceId": 92,
+  "pricingStrategy": "sample-pricingStrategy",
+  "pricingRules": {},
+  "defaultOptionsChargePrice": false,
+  "defaultOptionsSubstitutionPricing": true,
+  "minSelections": 91,
+  "maxSelections": 13,
+  "requiredMode": "OPTIONAL_FORCE_SHOW",
+  "isMultiSelect": false,
+  "preModifierGroupReference": 2,
+  "modifierOptionReferences": [
+    85
+  ]
+}

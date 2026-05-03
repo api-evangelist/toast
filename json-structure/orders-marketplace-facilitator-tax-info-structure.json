@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/orders-marketplace-facilitator-tax-info-structure.json",
+  "name": "MarketplaceFacilitatorTaxInfo",
+  "description": "Information about the taxes that a marketplace facilitator\norganization remits on behalf of a Toast platform restaurant.\n`POST` only. The orders API does not include the\n`MarketplaceFacilitatorTaxInfo` object in response data.\n\n**Note**: you can only include this information if your\nToast API client is associated with a designated\nmarketplace facilitator organization. Most Toast API\nclients do not create marketplace facilitator orders.\n",
+  "type": "object",
+  "properties": {
+    "facilitatorCollectAndRemitTaxOrder": {
+      "description": "Indicates whether a marketplace facilitator organization has\npaid the tax amounts for an order on behalf of the restaurant\nthat fulfills the order.\n\nIf you include this value, you indicate that the marketplace\nfacilitator order uses the prices and tax amounts calculated\nby the Toast platform.\n\nIf you include this value, you *must not* include the `taxes`\nvalue and you *must not* include the `externalPriceAmount`\nfor menu item selections in the order.\n",
+      "type": "boolean"
+    },
+    "taxes": {
+      "description": "An array of `AppliedTaxRate` objects that describe the tax\namounts that apply to a marketplace facilitator order.\n\nIf you include this value, you must include an `externalPriceAmount`\nfor each menu item selection in the order.\n",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/AppliedTaxRate"
+      }
+    }
+  }
+}

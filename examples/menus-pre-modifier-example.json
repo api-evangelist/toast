@@ -1,0 +1,9 @@
+{
+  "name": "Sample Name",
+  "guid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "fixedPrice": 76.26,
+  "multiplicationFactor": 76.27,
+  "displayMode": "SUFFIX",
+  "chargeAsExtra": false,
+  "plu": "sample-plu"
+}

@@ -1,0 +1,13 @@
+{
+  "address1": "sample-address1",
+  "address2": "sample-address2",
+  "city": "sample-city",
+  "stateCode": "sample-stateCode",
+  "administrativeArea": "sample-administrativeArea",
+  "zipCode": "sample-zipCode",
+  "country": "sample-country",
+  "phone": "sample-phone",
+  "phoneCountryCode": "sample-phoneCountryCode",
+  "latitude": 57.8,
+  "longitude": 70.97
+}

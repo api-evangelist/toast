@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/menus-catalog-product-structure.json",
+  "name": "CatalogProduct",
+  "description": "Retail catalog product information for a menu item.\n",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "uuid",
+      "description": "The unique identifier of the retail product in the retail product catalog. This is different from the menu item identifier.\n"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the product, for example, \"T-Shirt\".\n"
+    },
+    "description": {
+      "type": "string",
+      "description": "The description of the product.\n",
+      "x-nullable": true
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "SINGLE",
+        "OPTION",
+        "UNSPECIFIED"
+      ],
+      "description": "The type of product. Possible values include:\n\n* `SINGLE`: The product has exactly one variant and does not have any options.\n* `OPTION`: The product is an option-type product and will contain at least one variant and at least one option.\n* `UNSPECIFIED`: Product type is not specified or unknown.\n"
+    },
+    "images": {
+      "type": "array",
+      "description": "List of image URLs for the product. A product can have different images than its variants.\n",
+      "items": {
+        "type": "string"
+      }
+    },
+    "availableOptions": {
+      "type": "array",
+      "description": "List of available options for the product.\n",
+      "items": {
+        "$ref": "#/definitions/CatalogProductOption"
+      }
+    }
+  }
+}

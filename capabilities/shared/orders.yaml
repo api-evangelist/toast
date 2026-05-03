@@ -1,0 +1,178 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Toast Orders API"
+  description: "Toast Orders API for managing restaurant orders, checks, and payments."
+  tags:
+    - Toast
+    - Orders
+    - Restaurant
+    - Point of Sale
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+binds:
+  - namespace: env
+    keys:
+      TOAST_CLIENT_ID: TOAST_CLIENT_ID
+      TOAST_CLIENT_SECRET: TOAST_CLIENT_SECRET
+      TOAST_RESTAURANT_GUID: TOAST_RESTAURANT_GUID
+
+capability:
+  consumes:
+    - type: http
+      namespace: toast-orders
+      baseUri: https://ws-api.toasttab.com
+      description: "Toast Orders API"
+      authentication:
+        type: bearer
+        token: "{{TOAST_ACCESS_TOKEN}}"
+      resources:
+        - name: orders
+          path: /orders
+          description: Restaurant orders
+          operations:
+            - name: getOrder
+              method: GET
+              description: "Toast Get an Order"
+              inputParameters:
+                - name: guid
+                  in: path
+                  type: string
+                  required: true
+                  description: The GUID of the order
+                - name: Toast-Restaurant-External-ID
+                  in: header
+                  type: string
+                  required: true
+                  description: Restaurant GUID
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: getOrdersBulk
+              method: GET
+              description: "Toast Get Multiple Orders"
+              inputParameters:
+                - name: Toast-Restaurant-External-ID
+                  in: header
+                  type: string
+                  required: true
+                  description: Restaurant GUID
+                - name: startDate
+                  in: query
+                  type: string
+                  required: false
+                  description: Start date for order query
+                - name: endDate
+                  in: query
+                  type: string
+                  required: false
+                  description: End date for order query
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: array
+                  value: "$."
+
+        - name: payments
+          path: /payments
+          description: Order payments
+          operations:
+            - name: getPayments
+              method: GET
+              description: "Toast Get Payment Identifiers"
+              inputParameters:
+                - name: Toast-Restaurant-External-ID
+                  in: header
+                  type: string
+                  required: true
+                  description: Restaurant GUID
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: array
+                  value: "$."
+            - name: getPayment
+              method: GET
+              description: "Toast Get a Payment"
+              inputParameters:
+                - name: guid
+                  in: path
+                  type: string
+                  required: true
+                  description: Payment GUID
+                - name: Toast-Restaurant-External-ID
+                  in: header
+                  type: string
+                  required: true
+                  description: Restaurant GUID
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8100
+      namespace: toast-orders-rest
+      resources:
+        - path: /v1/orders/{guid}
+          name: order
+          operations:
+            - method: GET
+              name: get-order
+              description: "Get a restaurant order"
+              call: "toast-orders.getOrder"
+              with:
+                guid: "rest.guid"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/orders
+          name: orders
+          operations:
+            - method: GET
+              name: get-orders
+              description: "Get multiple orders"
+              call: "toast-orders.getOrdersBulk"
+              outputParameters:
+                - type: array
+                  mapping: "$."
+
+    - type: mcp
+      port: 9100
+      namespace: toast-orders-mcp
+      transport: http
+      tools:
+        - name: get-order
+          description: "Get a specific restaurant order by GUID"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "toast-orders.getOrder"
+          with:
+            guid: "tools.guid"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-orders-bulk
+          description: "Get multiple restaurant orders for a date range"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "toast-orders.getOrdersBulk"
+          outputParameters:
+            - type: array
+              mapping: "$."
+        - name: get-payments
+          description: "Get payment identifiers for a restaurant"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "toast-orders.getPayments"
+          outputParameters:
+            - type: array
+              mapping: "$."

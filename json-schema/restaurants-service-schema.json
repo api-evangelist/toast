@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/restaurants-service-schema.json",
+  "title": "Service",
+  "description": "A time-based division of the operation of the restaurant. For\nexample, a service might be named `lunch` and it might be\navailable between specific hours during the day.\n",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "hours": {
+      "$ref": "#/definitions/Hours"
+    },
+    "overnight": {
+      "type": "boolean",
+      "description": "Indicates whether any portion of the period of time that a\nservice is available occurs after 00:00 (midnight) and before\nthe business day cutoff time for the restaurant which is \navailable in the `closeoutHour` property. An\novernight shift spans two calendar dates but occurs during\none business day.\n"
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/orders-applied-discount-trigger-structure.json",
+  "name": "AppliedDiscountTrigger",
+  "description": "The Selection that triggered the application of this discount",
+  "type": "object",
+  "properties": {
+    "selection": {
+      "$ref": "#/definitions/ExternalReference"
+    },
+    "quantity": {
+      "type": "double",
+      "description": "The amount of the selection used to trigger the applied discount."
+    }
+  }
+}

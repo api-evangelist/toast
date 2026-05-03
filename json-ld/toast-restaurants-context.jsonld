@@ -1,0 +1,332 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "toast": "https://developer.toasttab.com/schema/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "DaySchedule": "toast:DaySchedule",
+    "Delivery": "toast:Delivery",
+    "DeliveryPaymentOptions": "toast:DeliveryPaymentOptions",
+    "General": "toast:General",
+    "Hours": "toast:Hours",
+    "Image": "toast:Image",
+    "Location": "toast:Location",
+    "OnlineOrdering": "toast:OnlineOrdering",
+    "PaymentOptions": "toast:PaymentOptions",
+    "PrepTimes": "toast:PrepTimes",
+    "Restaurant": "toast:Restaurant",
+    "RestaurantInfo": "toast:RestaurantInfo",
+    "Schedules": "toast:Schedules",
+    "Service": "toast:Service",
+    "TakeoutPaymentOptions": "toast:TakeoutPaymentOptions",
+    "URLs": "toast:URLs",
+    "WeekSchedule": "toast:WeekSchedule",
+    "address1": {
+      "@id": "toast:address1",
+      "@type": "xsd:string"
+    },
+    "address2": {
+      "@id": "toast:address2",
+      "@type": "xsd:string"
+    },
+    "administrativeArea": {
+      "@id": "toast:administrativeArea",
+      "@type": "xsd:string"
+    },
+    "archived": {
+      "@id": "toast:archived",
+      "@type": "xsd:boolean"
+    },
+    "area": {
+      "@id": "toast:area",
+      "@type": "xsd:string"
+    },
+    "cash": {
+      "@id": "toast:cash",
+      "@type": "xsd:boolean"
+    },
+    "ccFuture": {
+      "@id": "toast:ccFuture",
+      "@type": "xsd:boolean"
+    },
+    "ccInStore": {
+      "@id": "toast:ccInStore",
+      "@type": "xsd:boolean"
+    },
+    "ccSameDay": {
+      "@id": "toast:ccSameDay",
+      "@type": "xsd:boolean"
+    },
+    "ccTip": {
+      "@id": "toast:ccTip",
+      "@type": "xsd:boolean"
+    },
+    "checkGiftCard": {
+      "@id": "toast:checkGiftCard",
+      "@type": "xsd:string"
+    },
+    "city": {
+      "@id": "toast:city",
+      "@type": "xsd:string"
+    },
+    "closeTime": {
+      "@id": "toast:closeTime",
+      "@type": "xsd:string"
+    },
+    "closeoutHour": {
+      "@id": "toast:closeoutHour",
+      "@type": "xsd:integer"
+    },
+    "country": {
+      "@id": "toast:country",
+      "@type": "xsd:string"
+    },
+    "currencyCode": {
+      "@id": "toast:currencyCode",
+      "@type": "xsd:string"
+    },
+    "daySchedules": {
+      "@id": "toast:daySchedules",
+      "@type": "@id"
+    },
+    "delivery": {
+      "@id": "toast:delivery",
+      "@type": "xsd:string"
+    },
+    "deliveryPrepTime": {
+      "@id": "toast:deliveryPrepTime",
+      "@type": "xsd:integer"
+    },
+    "deliveryThrottlingTime": {
+      "@id": "toast:deliveryThrottlingTime",
+      "@type": "xsd:integer"
+    },
+    "deliveryTimeAfterOpen": {
+      "@id": "toast:deliveryTimeAfterOpen",
+      "@type": "xsd:integer"
+    },
+    "deliveryTimeBeforeClose": {
+      "@id": "toast:deliveryTimeBeforeClose",
+      "@type": "xsd:integer"
+    },
+    "description": {
+      "@id": "schema:description"
+    },
+    "enabled": {
+      "@id": "toast:enabled",
+      "@type": "xsd:boolean"
+    },
+    "endTime": {
+      "@id": "toast:endTime",
+      "@type": "xsd:string"
+    },
+    "facebook": {
+      "@id": "toast:facebook",
+      "@type": "xsd:string"
+    },
+    "firstBusinessDate": {
+      "@id": "toast:firstBusinessDate",
+      "@type": "xsd:integer"
+    },
+    "friday": {
+      "@id": "toast:friday",
+      "@type": "xsd:string"
+    },
+    "general": {
+      "@id": "toast:general",
+      "@type": "xsd:string"
+    },
+    "guid": {
+      "@id": "toast:guid",
+      "@type": "xsd:string"
+    },
+    "height": {
+      "@id": "toast:height",
+      "@type": "xsd:integer"
+    },
+    "heightWidthRatio": {
+      "@id": "toast:heightWidthRatio",
+      "@type": "xsd:decimal"
+    },
+    "hours": {
+      "@id": "toast:hours",
+      "@type": "xsd:string"
+    },
+    "latitude": {
+      "@id": "toast:latitude",
+      "@type": "xsd:decimal"
+    },
+    "location": {
+      "@id": "toast:location",
+      "@type": "xsd:string"
+    },
+    "locationCode": {
+      "@id": "toast:locationCode",
+      "@type": "xsd:string"
+    },
+    "locationName": {
+      "@id": "toast:locationName",
+      "@type": "xsd:string"
+    },
+    "longitude": {
+      "@id": "toast:longitude",
+      "@type": "xsd:decimal"
+    },
+    "managementGroupGuid": {
+      "@id": "toast:managementGroupGuid",
+      "@type": "xsd:string"
+    },
+    "minimum": {
+      "@id": "toast:minimum",
+      "@type": "xsd:decimal"
+    },
+    "monday": {
+      "@id": "toast:monday",
+      "@type": "xsd:string"
+    },
+    "name": {
+      "@id": "schema:name"
+    },
+    "onlineOrdering": {
+      "@id": "toast:onlineOrdering",
+      "@type": "xsd:string"
+    },
+    "openTime": {
+      "@id": "toast:openTime",
+      "@type": "xsd:string"
+    },
+    "orderOnline": {
+      "@id": "toast:orderOnline",
+      "@type": "xsd:string"
+    },
+    "overnight": {
+      "@id": "toast:overnight",
+      "@type": "xsd:boolean"
+    },
+    "paymentOptions": {
+      "@id": "toast:paymentOptions",
+      "@type": "xsd:string"
+    },
+    "phone": {
+      "@id": "toast:phone",
+      "@type": "xsd:string"
+    },
+    "phoneCountryCode": {
+      "@id": "toast:phoneCountryCode",
+      "@type": "xsd:string"
+    },
+    "prepTimes": {
+      "@id": "toast:prepTimes",
+      "@type": "xsd:string"
+    },
+    "purchaseGiftCard": {
+      "@id": "toast:purchaseGiftCard",
+      "@type": "xsd:string"
+    },
+    "saturday": {
+      "@id": "toast:saturday",
+      "@type": "xsd:string"
+    },
+    "scheduleName": {
+      "@id": "toast:scheduleName",
+      "@type": "xsd:string"
+    },
+    "schedules": {
+      "@id": "toast:schedules",
+      "@type": "xsd:string"
+    },
+    "scheduling": {
+      "@id": "toast:scheduling",
+      "@type": "xsd:boolean"
+    },
+    "services": {
+      "@id": "toast:services",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "specialRequests": {
+      "@id": "toast:specialRequests",
+      "@type": "xsd:boolean"
+    },
+    "specialRequestsMessage": {
+      "@id": "toast:specialRequestsMessage",
+      "@type": "xsd:string"
+    },
+    "startTime": {
+      "@id": "toast:startTime",
+      "@type": "xsd:string"
+    },
+    "stateCode": {
+      "@id": "toast:stateCode",
+      "@type": "xsd:string"
+    },
+    "sunday": {
+      "@id": "toast:sunday",
+      "@type": "xsd:string"
+    },
+    "takeout": {
+      "@id": "toast:takeout",
+      "@type": "xsd:string"
+    },
+    "takeoutPrepTime": {
+      "@id": "toast:takeoutPrepTime",
+      "@type": "xsd:integer"
+    },
+    "takeoutThrottlingTime": {
+      "@id": "toast:takeoutThrottlingTime",
+      "@type": "xsd:integer"
+    },
+    "takeoutTimeAfterOpen": {
+      "@id": "toast:takeoutTimeAfterOpen",
+      "@type": "xsd:integer"
+    },
+    "takeoutTimeBeforeClose": {
+      "@id": "toast:takeoutTimeBeforeClose",
+      "@type": "xsd:integer"
+    },
+    "thursday": {
+      "@id": "toast:thursday",
+      "@type": "xsd:string"
+    },
+    "timeZone": {
+      "@id": "toast:timeZone",
+      "@type": "xsd:string"
+    },
+    "tuesday": {
+      "@id": "toast:tuesday",
+      "@type": "xsd:string"
+    },
+    "twitter": {
+      "@id": "toast:twitter",
+      "@type": "xsd:string"
+    },
+    "url": {
+      "@id": "schema:url"
+    },
+    "urls": {
+      "@id": "toast:urls",
+      "@type": "xsd:string"
+    },
+    "website": {
+      "@id": "toast:website",
+      "@type": "xsd:string"
+    },
+    "wednesday": {
+      "@id": "toast:wednesday",
+      "@type": "xsd:string"
+    },
+    "weekSchedule": {
+      "@id": "toast:weekSchedule",
+      "@type": "xsd:string"
+    },
+    "width": {
+      "@id": "toast:width",
+      "@type": "xsd:integer"
+    },
+    "zipCode": {
+      "@id": "toast:zipCode",
+      "@type": "xsd:string"
+    }
+  }
+}

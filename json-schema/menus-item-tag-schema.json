@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/menus-item-tag-schema.json",
+  "title": "ItemTag",
+  "description": "A descriptive term that identifies a characteristic of a menu item or menu group, for example, vegetarian, gluten-free, or alcohol.\n",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "A descriptive name for this item tag, for example, \"Vegetarian\" or \"Alcohol\".\n",
+      "type": "string"
+    },
+    "guid": {
+      "description": "A unique identifier for this item tag category, assigned by the Toast POS system.\n",
+      "type": "string"
+    }
+  }
+}

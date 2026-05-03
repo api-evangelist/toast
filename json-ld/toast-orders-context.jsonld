@@ -1,0 +1,226 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "toast": "https://developer.toasttab.com/schema/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "ApplicableDiscount": "toast:ApplicableDiscount",
+    "ApplicableDiscountsRequest": "toast:ApplicableDiscountsRequest",
+    "AppliedDiscount": "toast:AppliedDiscount",
+    "AppliedDiscountReason": "toast:AppliedDiscountReason",
+    "AppliedDiscountTrigger": "toast:AppliedDiscountTrigger",
+    "AppliedLoyaltyInfo": "toast:AppliedLoyaltyInfo",
+    "AppliedPackagingInfo": "toast:AppliedPackagingInfo",
+    "AppliedPackagingItem": "toast:AppliedPackagingItem",
+    "AppliedServiceCharge": "toast:AppliedServiceCharge",
+    "AppliedTaxRate": "toast:AppliedTaxRate",
+    "Check": "toast:Check",
+    "ConfigReference": "toast:ConfigReference",
+    "CurbsidePickupInfo": "toast:CurbsidePickupInfo",
+    "Customer": "toast:Customer",
+    "DeliveryInfo": "toast:DeliveryInfo",
+    "DeliveryServiceInfo": "toast:DeliveryServiceInfo",
+    "Device": "toast:Device",
+    "ExternalReference": "toast:ExternalReference",
+    "Fulfillment": "toast:Fulfillment",
+    "GiftCardInfo": "toast:GiftCardInfo",
+    "LoyaltyDetails": "toast:LoyaltyDetails",
+    "MarketplaceFacilitatorTaxInfo": "toast:MarketplaceFacilitatorTaxInfo",
+    "Order": "toast:Order",
+    "OrderResponse": "toast:OrderResponse",
+    "Payment": "toast:Payment",
+    "Refund": "toast:Refund",
+    "RefundDetails": "toast:RefundDetails",
+    "Selection": "toast:Selection",
+    "ToastReference": "toast:ToastReference",
+    "UpdatePaymentRequest": "toast:UpdatePaymentRequest",
+    "VoidInformation": "toast:VoidInformation",
+    "address1": {
+      "@id": "toast:address1",
+      "@type": "xsd:string"
+    },
+    "address2": {
+      "@id": "toast:address2",
+      "@type": "xsd:string"
+    },
+    "administrativeArea": {
+      "@id": "toast:administrativeArea",
+      "@type": "xsd:string"
+    },
+    "applicableChecks": {
+      "@id": "toast:applicableChecks",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "applicableSelections": {
+      "@id": "toast:applicableSelections",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "city": {
+      "@id": "toast:city",
+      "@type": "xsd:string"
+    },
+    "comment": {
+      "@id": "toast:comment",
+      "@type": "xsd:string"
+    },
+    "country": {
+      "@id": "toast:country",
+      "@type": "xsd:string"
+    },
+    "deliveredDate": {
+      "@id": "toast:deliveredDate",
+      "@type": "xsd:dateTime"
+    },
+    "deliveryEmployee": {
+      "@id": "toast:deliveryEmployee",
+      "@type": "@id"
+    },
+    "deliveryState": {
+      "@id": "toast:deliveryState",
+      "@type": "xsd:string"
+    },
+    "description": {
+      "@id": "schema:description"
+    },
+    "discount": {
+      "@id": "toast:discount",
+      "@type": "@id"
+    },
+    "discountReason": {
+      "@id": "toast:discountReason",
+      "@type": "@id"
+    },
+    "dispatchedDate": {
+      "@id": "toast:dispatchedDate",
+      "@type": "xsd:dateTime"
+    },
+    "entityType": {
+      "@id": "toast:entityType",
+      "@type": "xsd:string"
+    },
+    "facilitatorCollectAndRemitTaxOrder": {
+      "@id": "toast:facilitatorCollectAndRemitTaxOrder",
+      "@type": "xsd:boolean"
+    },
+    "guid": {
+      "@id": "toast:guid",
+      "@type": "xsd:string"
+    },
+    "id": {
+      "@id": "toast:id",
+      "@type": "xsd:string"
+    },
+    "latitude": {
+      "@id": "toast:latitude",
+      "@type": "xsd:decimal"
+    },
+    "longitude": {
+      "@id": "toast:longitude",
+      "@type": "xsd:decimal"
+    },
+    "name": {
+      "@id": "schema:name"
+    },
+    "notes": {
+      "@id": "toast:notes",
+      "@type": "xsd:string"
+    },
+    "order": {
+      "@id": "toast:order",
+      "@type": "@id"
+    },
+    "orders": {
+      "@id": "toast:orders",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "promoCode": {
+      "@id": "toast:promoCode",
+      "@type": "xsd:string"
+    },
+    "quantity": {
+      "@id": "toast:quantity",
+      "@type": "xsd:decimal"
+    },
+    "referenceId": {
+      "@id": "toast:referenceId",
+      "@type": "xsd:string"
+    },
+    "refundAmount": {
+      "@id": "toast:refundAmount",
+      "@type": "xsd:decimal"
+    },
+    "refundBusinessDate": {
+      "@id": "toast:refundBusinessDate",
+      "@type": "xsd:integer"
+    },
+    "refundDate": {
+      "@id": "toast:refundDate",
+      "@type": "xsd:dateTime"
+    },
+    "refundTransaction": {
+      "@id": "toast:refundTransaction",
+      "@type": "@id"
+    },
+    "selection": {
+      "@id": "toast:selection",
+      "@type": "xsd:string"
+    },
+    "state": {
+      "@id": "toast:state",
+      "@type": "xsd:string"
+    },
+    "taxRefundAmount": {
+      "@id": "toast:taxRefundAmount",
+      "@type": "xsd:decimal"
+    },
+    "taxes": {
+      "@id": "toast:taxes",
+      "@container": "@set",
+      "@type": "xsd:string"
+    },
+    "tipAmount": {
+      "@id": "toast:tipAmount",
+      "@type": "xsd:decimal"
+    },
+    "tipRefundAmount": {
+      "@id": "toast:tipRefundAmount",
+      "@type": "xsd:decimal"
+    },
+    "unit": {
+      "@id": "toast:unit",
+      "@type": "xsd:string"
+    },
+    "vendor": {
+      "@id": "toast:vendor",
+      "@type": "xsd:string"
+    },
+    "voidApprover": {
+      "@id": "toast:voidApprover",
+      "@type": "@id"
+    },
+    "voidBusinessDate": {
+      "@id": "toast:voidBusinessDate",
+      "@type": "xsd:integer"
+    },
+    "voidDate": {
+      "@id": "toast:voidDate",
+      "@type": "xsd:dateTime"
+    },
+    "voidReason": {
+      "@id": "toast:voidReason",
+      "@type": "@id"
+    },
+    "voidUser": {
+      "@id": "toast:voidUser",
+      "@type": "@id"
+    },
+    "zipCode": {
+      "@id": "toast:zipCode",
+      "@type": "xsd:string"
+    }
+  }
+}

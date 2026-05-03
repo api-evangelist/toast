@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/restaurants-delivery-structure.json",
+  "name": "Delivery",
+  "description": "Information about delivery service provided by the restaurant.",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": "boolean",
+      "description": "Indicates whether the restaurant provides delivery service\nand has enabled the delivery configuration in Toast Web.\n"
+    },
+    "minimum": {
+      "type": "double",
+      "description": "The minimum order price that is qualified for delivery. For\nexample, a restaurant might not deliver orders that cost less\nthan $25.00.\n"
+    },
+    "area": {
+      "type": "string",
+      "description": "The geographic area in which the restaurant provides delivery\nservice. The delivery area is represented by an encoded set\nof latitude and longitude coordinates that describe a polygon\narea on a map. The coordinates are encoded using the Google\nmaps encoded polyline algorithm format. See [more information\nabout the way that the encoded polyline algorithm format\nencodes location coordinates]\n(https://developers.google.com/maps/documentation/utilities/polylinealgorithm).\nYou can decode the coordinates of the delivery area using any\nsoftware that supports the encoded polyline algorithm format.\nFor example, you can decode the coordinates using [the Mapline\nPolyline decoding program]\n(https://github.com/mapbox/polyline). The delivery area\ncoordinates are a JSON array of decimal degree latitude and\nlongitude pairs. For example,\n`[[42.36083,-71.14798],[42.34028,-71.15673],[42.3272,-71.14386]]`.\n"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/authentication-authentication-request-structure.json",
+  "name": "AuthenticationRequest",
+  "description": "Authentication credentials for your Toast API integration client software.\n",
+  "type": "object",
+  "properties": {
+    "clientId": {
+      "description": "The identifier string for your Toast API client. You receive the\nidentifier string from the Toast integrations team.\n",
+      "type": "string",
+      "example": "VKuhk4NaLedOcjZpJM8grvdrsFi3MlcM"
+    },
+    "clientSecret": {
+      "description": "The secret string that corresponds to your Toast API client. You\nreceive the secret string from the Toast integrations team.\n",
+      "type": "string",
+      "example": "eS960aiKdvgbSDcLUCk68HR2CJKwwHNO2HKfgxjCWxoj27KIp6jFAi2XOOc_oCuv"
+    },
+    "userAccessType": {
+      "description": "Always include the `userAccessType` value and set it to\n`TOAST_MACHINE_CLIENT`.\n",
+      "type": "string",
+      "example": "TOAST_MACHINE_CLIENT"
+    }
+  }
+}

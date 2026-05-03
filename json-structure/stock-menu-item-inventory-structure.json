@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/stock-menu-item-inventory-structure.json",
+  "name": "MenuItemInventory",
+  "description": "Contains the stock status and quantity information for a menu item.",
+  "type": "object",
+  "properties": {
+    "guid": {
+      "type": "uuid",
+      "description": "The unique GUID assigned to the menu item by the Toast platform.\n"
+    },
+    "itemGuidValidity": {
+      "type": "string",
+      "description": "Indicates whether a menu item identifier that you included in your request is valid or not.\n\n`INVALID` indicates the stock API did not find a matching menu item for the  identifier you supplied in the search or update request. This means either the menu item does not exist at the location being queried or it has been archived.\n            \n`VALID` indicates that the item in the API response is a valid item at the restaurant location.\n\nFor more information, see <a\nhref=\"https://doc.toasttab.com/doc/devguide/apiUsingTheStockApi.html\">Getting stock information using the stock API</a> and <a\nhref=\"https://doc.toasttab.com/doc/devguide/apiUpdatingInventoryInformation.html\">Updating stock API</a>.          \n",
+      "readOnly": true,
+      "enum": [
+        "VALID",
+        "INVALID"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "description": "The inventory status of the menu item. The `status` value can be:\n\n* `IN_STOCK` - The menu item is in stock in the restaurant.\n\n* `QUANTITY` - The menu item is in limited supply. The amount\nof remaining items is indicated by the `quantity` value.\n\n* `OUT_OF_STOCK` - The menu item is no longer in stock and cannot\nbe selected for an order.\n",
+      "enum": [
+        "IN_STOCK",
+        "QUANTITY",
+        "OUT_OF_STOCK"
+      ]
+    },
+    "quantity": {
+      "type": "double",
+      "nullable": true,
+      "description": "Contains the amount of stock remaining when the menu item\n`status` is `QUANTITY`.\n\nThis value is `null` for menu items\nthat have a stock staus of `IN_STOCK` or `OUT_OF_STOCK`.\n"
+    },
+    "multiLocationId": {
+      "type": "string",
+      "description": "A consistent identifier that applies to all versions of a menu item\nthat is shared across locations.\n\nSee <a\nhref=\"https://doc.toasttab.com/doc/devguide/portalToastIdentifiers.html\">Toast\nidentifiers</a> for more information.\n"
+    },
+    "versionId": {
+      "type": "uuid",
+      "description": "For future use.\n"
+    }
+  }
+}

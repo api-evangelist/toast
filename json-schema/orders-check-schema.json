@@ -1,0 +1,165 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/orders-check-schema.json",
+  "title": "Check",
+  "description": "Represents a single check within an order.\n\nThe `externalId` value for a check must be unique. If you submit a check\nwith an `externalId` that already exists for another check, the request\nwill fail. You can use this behavior to implement idempotent check\nsubmission by always providing a consistent `externalId` for each unique\ncheck attempt.\n",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/ExternalReference"
+    },
+    {
+      "type": "object",
+      "required": [
+        "selections"
+      ],
+      "properties": {
+        "createdDate": {
+          "description": "The date and time that the Toast platform received the check.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "openedDate": {
+          "description": "The date on which this check was opened. If not specified, it is set to the current system time.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "closedDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The most recent date on which this check's payment status was set to `CLOSED`."
+        },
+        "modifiedDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The most recent date on which this check was modified."
+        },
+        "deletedDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date on which this check was deleted.\n\n`deletedDate` is only applicable when `deleted` is true.\n\nIf `deleted` is false, then `deletedDate` is set to the UNIX epoch, `1970-01-01T00:00:00.000+0000`.\n"
+        },
+        "deleted": {
+          "type": "boolean",
+          "description": "Set to `true` if this check was deleted."
+        },
+        "selections": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Selection"
+          }
+        },
+        "customer": {
+          "description": "A `Customer` object\nthat holds information about a restaurant guest\nthat is associated with the check.\n\nRequired for `POST` requests for orders that use the\ntakeout or delivery dining options.\n\nFor checks that apply or accrue Toast loyalty points, a\n`GET` request returns a `Customer` object\neven when restaurant employees do not enter guest\ninformation for a check. In this case, the `Customer` object\ncontains only the Toast platform GUID of the guest.\nAll other values are `null`.\n",
+          "$ref": "#/definitions/Customer"
+        },
+        "appliedLoyaltyInfo": {
+          "description": "Information about the customer loyalty program account associated with the check. Used to accrue loyalty program benefits and to redeem loyalty program discounts.",
+          "$ref": "#/definitions/AppliedLoyaltyInfo"
+        },
+        "taxExempt": {
+          "type": "boolean",
+          "default": false,
+          "description": "Set to `true` if this check is tax exempt."
+        },
+        "displayNumber": {
+          "type": "string",
+          "description": "Generally starts at one each day and counts up. The Toast platform fills this in if it is not specified when the order is POSTed. Not guaranteed to be unique."
+        },
+        "appliedServiceCharges": {
+          "type": "array",
+          "description": "Any restaurant-configured service charges that applied to this check.",
+          "items": {
+            "$ref": "#/definitions/AppliedServiceCharge"
+          }
+        },
+        "amount": {
+          "x-toast-read-only": true,
+          "type": "number",
+          "format": "double",
+          "description": "The total calculated price of the check including discounts and service charges. The `amount` does not include gratuity or taxes. Response only."
+        },
+        "taxAmount": {
+          "x-toast-read-only": true,
+          "type": "number",
+          "format": "double",
+          "description": "The calculated tax amount. Includes service charge and item level taxes. Response only."
+        },
+        "totalAmount": {
+          "type": "number",
+          "format": "double",
+          "description": "The total calculated price of this check including discounts and taxes. Not affected by refunds."
+        },
+        "payments": {
+          "type": "array",
+          "description": "Payments made on this check.",
+          "minItems": 0,
+          "items": {
+            "$ref": "#/definitions/Payment"
+          }
+        },
+        "tabName": {
+          "type": "string",
+          "description": "The name of the tab on this check. This displays on the KDS (Kitchen Display System) for pending orders.\n\nThe `tabName` value can contain up to 255 characters.\n"
+        },
+        "paymentStatus": {
+          "x-toast-read-only": true,
+          "type": "string",
+          "description": "The payment status of this check.\n\nValid values:\n\n* `OPEN` - There is an outstanding balance.\n\n* `PAID` - A credit card payment was applied, but the tip has not been adjusted.\n\n* `CLOSED`  - There is no remaining amount due on this check. For credit card payments, the payment has been adjusted to reflect the tip. Toast does not prevent a `CLOSED` check from transitioning back to `OPEN` or `PAID`.\n\nResponse only.\n",
+          "enum": [
+            "OPEN",
+            "PAID",
+            "CLOSED"
+          ]
+        },
+        "appliedDiscounts": {
+          "type": "array",
+          "description": "The discounts applied to this check. In a `POST` request, only one `appliedDiscount` is allowed per check.",
+          "minItems": 0,
+          "items": {
+            "$ref": "#/definitions/AppliedDiscount"
+          }
+        },
+        "voided": {
+          "x-toast-read-only": true,
+          "type": "boolean",
+          "description": "True if this check is voided. Response only."
+        },
+        "voidDate": {
+          "x-toast-read-only": true,
+          "type": "string",
+          "format": "date-time",
+          "description": "The date when this check was voided. Response only."
+        },
+        "voidBusinessDate": {
+          "x-toast-read-only": true,
+          "type": "integer",
+          "description": "The business date (yyyyMMdd) on which this check was voided. Response only."
+        },
+        "paidDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The most recent date when this check received payment. If not specified when `POST`ing, it is set to the current system time."
+        },
+        "createdDevice": {
+          "description": "The Toast POS device that created the check. This value is `null` if the check was not created using a Toast POS device.",
+          "$ref": "#/definitions/Device"
+        },
+        "lastModifiedDevice": {
+          "description": "The Toast POS device that modified the check most recently. This value is `null` if the check was never modified using a Toast POS device.\n\nIf the check is modified but the modification was not made using a Toast POS device, then this value does not change.\n",
+          "type": "object",
+          "$ref": "#/definitions/Device"
+        },
+        "duration": {
+          "x-toast-read-only": true,
+          "type": "integer",
+          "description": "The number of seconds between creation and payment. Response only."
+        },
+        "openedBy": {
+          "description": "The restaurant employee, or server, who opened the check.",
+          "$ref": "#/definitions/ExternalReference"
+        }
+      }
+    }
+  ]
+}

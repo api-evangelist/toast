@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/orders-applicable-discount-schema.json",
+  "title": "ApplicableDiscount",
+  "description": "A wrapper object that contains information about a discount that you\ncan apply to an order, and which checks or menu item selections\nyou can apply it to.\n",
+  "type": "object",
+  "required": [
+    "discount"
+  ],
+  "properties": {
+    "discount": {
+      "x-toast-read-only": true,
+      "description": "A `ToastReference` object containing the identifiers of the discount.\nResponse only.\n",
+      "type": "object",
+      "$ref": "#/definitions/ToastReference"
+    },
+    "applicableChecks": {
+      "description": "If the discount is applicable to a check, this value holds an\narray of `ExternalReference` objects containing the identifiers of the checks.\n",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ExternalReference"
+      }
+    },
+    "applicableSelections": {
+      "description": "If the discount is applicable to a menu item selection, this\nvalue holds an array of `ExternalReference` objects containing\nthe identifiers of the menu items.\n",
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/ExternalReference"
+      }
+    }
+  }
+}

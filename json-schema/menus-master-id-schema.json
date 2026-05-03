@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/menus-master-id-schema.json",
+  "title": "MasterId",
+  "description": "This value is deprecated. Instead of `masterId`, use `multiLocationId`.\n\nAn identifier that is used to identify and consolidate menu entities that are versions of each other.\n",
+  "type": "integer",
+  "format": "int64"
+}

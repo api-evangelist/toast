@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/orders-applied-loyalty-info-structure.json",
+  "name": "AppliedLoyaltyInfo",
+  "description": "Information about the customer loyalty program account associated with a check.",
+  "type": "object",
+  "required": [
+    "loyaltyIdentifier",
+    "vendor"
+  ],
+  "allOf": [
+    {
+      "$ref": "#/definitions/ToastReference"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "loyaltyIdentifier": {
+          "type": "string",
+          "description": "An identifier for the loyalty program account. For `POST` orders, this identifier is transmitted to the loyalty program service provider to associate the check with the loyalty account."
+        },
+        "maskedLoyaltyIdentifier": {
+          "type": "string",
+          "description": "A representation of the identifier of the loyalty program\naccount that can be displayed securely. For example:\n`************1234`. The Toast POS displays this string to\nrestaurant employees and guests.\n\nYou can optionally include this\nvalue when you `POST` an order. It is\navailable in response data when you `GET` the order.\n\nIf you do not provide a `maskedLoyaltyIdentifier` when you\n`POST` an order, this value is `null` in response data.\n\nThe Toast POS app displays a masked representation of the\n`loyaltyIdentifier`. All characters except the last four\nare hidden.\n"
+        },
+        "vendor": {
+          "type": "string",
+          "description": "The specific loyalty program service provider that supports the loyalty account.",
+          "enum": [
+            "TOAST",
+            "PUNCHH",
+            "PUNCHH2",
+            "PAYTRONIX",
+            "APPFRONT",
+            "INTEGRATION"
+          ]
+        },
+        "accrualFamilyGuid": {
+          "x-toast-read-only": true,
+          "type": "string",
+          "description": "Response only. An internal Toast platform identifier for loyalty\nprogram transactions.\n\nThis is not returned from the initial\n`POST` order request and is available at a later time.\n"
+        },
+        "accrualText": {
+          "x-toast-read-only": true,
+          "type": "string",
+          "description": "Response only. A description of the loyalty program transaction\nto print on the customer's receipt. For example,\n\"Earned 27 points.\"\n\nThe maximum length of the description string\nis 255 characters.\n\nThis is not returned from the initial\n`POST` order request and is available at a later time.\n"
+        }
+      }
+    }
+  ]
+}

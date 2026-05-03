@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/orders-delivery-info-schema.json",
+  "title": "DeliveryInfo",
+  "description": "Information related to delivery orders. Required if the dining option behavior is `DELIVERY`.",
+  "type": "object",
+  "required": [
+    "address1",
+    "city",
+    "state",
+    "zipCode"
+  ],
+  "properties": {
+    "address1": {
+      "type": "string",
+      "description": "The first line of the street address of the delivery destination.\n"
+    },
+    "address2": {
+      "type": "string",
+      "description": "The second line of the street address of the delivery destination.\n"
+    },
+    "city": {
+      "type": "string",
+      "description": "The name of the city or town of the delivery destination.\n"
+    },
+    "administrativeArea": {
+      "type": "string",
+      "description": "The geographic or government division, larger than a city/town, for\nthe delivery destination. For example, the name of a province, county,\nregion, or state might be the `administrativeArea` value for a\ndelivery address. This value is optional, not all delivery addresses\ninclude a regional area name other than a `city`. If you include the \n`state` value, you would typically _not_ include an `administrativeArea`.\n"
+    },
+    "state": {
+      "type": "string",
+      "format": "ISO 3166-2",
+      "description": "The postal abbreviation of the state or province of the\ndelivery destination.\n\nThe abbreviation must be in ISO 3166-2\nformat (two capital letters).\n"
+    },
+    "zipCode": {
+      "type": "string",
+      "description": "The postal or zip code of the delivery destination.\n"
+    },
+    "country": {
+      "type": "string",
+      "description": "The two-digit ISO-3166-2 country code of the delivery destination.\n"
+    },
+    "latitude": {
+      "type": "number",
+      "format": "double",
+      "description": "The north/south geographic coordinate of the delivery\ndestination, in decimal format.\n"
+    },
+    "longitude": {
+      "type": "number",
+      "format": "double",
+      "description": "The east/west geographic coordinate of the delivery\ndestination, in decimal format.\n"
+    },
+    "notes": {
+      "description": "Additional instructions or information about the delivery.\n",
+      "type": "string"
+    },
+    "deliveredDate": {
+      "x-toast-read-only": true,
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time that the delivery employee indicated in the Toast POS app that\nthe order was delivered. Response only.\n\nThis value is only set when the dining option for the order is\n`DELIVERY`. For other dining options, the value is `null`.\n",
+      "example": "2025-02-07T08:00:00.000-0800"
+    },
+    "dispatchedDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time that the restaurant indicated in the Toast POS app that the\norder was available for delivery and assigned to a delivery\nemployee.\n\nThis value is only set when the\ndining option for the order is `DELIVERY`. For other dining\noptions, the value is `null`.\n",
+      "example": "2025-02-07T08:00:00.000-0800"
+    },
+    "deliveryEmployee": {
+      "description": "The Toast GUID of the employee who delivers the order.\n",
+      "type": "object",
+      "$ref": "#/definitions/ExternalReference"
+    },
+    "deliveryState": {
+      "description": "An internal representation of the state of a delivery order.\n\nValid values:\n\n* `PENDING` - The delivery is not dispatched. This corresponds to the **Unassigned** tab of\nthe Delivery screen of the Toast POS app.\n\n* `IN_PROGRESS` - The order is on the way to the destination. This corresponds to \nthe **En Route** tab of the Delivery screen of the Toast POS app.\n\n* `PICKED_UP` - The employee who delivers the order has picked up the order from the\nrestaurant.\n\n* `DELIVERED` - The order was delivered. This corresponds to the **Delivered** tab of the\nDelivery screen of the Toast POS app.\n",
+      "type": "string",
+      "enum": [
+        "PENDING",
+        "IN_PROGRESS",
+        "PICKED_UP",
+        "DELIVERED"
+      ]
+    }
+  }
+}

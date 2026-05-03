@@ -1,0 +1,8 @@
+{
+  "scheduleName": "Sample Schedulename",
+  "services": [
+    "sample-services_item"
+  ],
+  "openTime": "sample-openTime",
+  "closeTime": "sample-closeTime"
+}

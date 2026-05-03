@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/menus-sequence-price-structure.json",
+  "name": "SequencePrice",
+  "description": "Defines the size, sequence, or size/sequence prices for modifier options contained in a modifier group that uses the Size Price, Sequence Price, or Size/Sequence Price pricing strategy.\n",
+  "type": "object",
+  "properties": {
+    "sequence": {
+      "type": "int32",
+      "description": "Specifies the order of the prices.\n\nFor modifier groups that use the Size Price pricing strategy, the `sequence` is always 1 because only one price is defined per size for that strategy.\n\nFor modifier groups that use the Sequence Price or Size/Sequence Price pricing strategy, this value starts at 1 and increases with each successive price in the sequence. For example, in the JSON snippet below, `\"sequence\":1` defines the first price in the sequence and `\"sequence\":2` defines the second price in the sequence.\n```\n\"sequencePrices\": [\n          {\n            \"sequence\": 1,\n            \"price\": 3\n          },\n          {\n            \"sequence\": 2,\n            \"price\": 4\n          }\n        ]\n```\n"
+    },
+    "price": {
+      "type": "double",
+      "description": "The price for a modifier option when it is ordered at the specified point in the sequence.\n"
+    }
+  }
+}

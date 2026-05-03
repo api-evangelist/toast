@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/menus-catalog-product-option-structure.json",
+  "name": "CatalogProductOption",
+  "description": "An option for a retail product.\n",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "uuid",
+      "description": "The unique identifier for the product option.\n"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the product option, for example, \"size\".\n"
+    },
+    "sortOrder": {
+      "type": "int32",
+      "description": "The sort order of the product option.\n"
+    },
+    "values": {
+      "type": "array",
+      "description": "List of values for the product option.\n",
+      "items": {
+        "$ref": "#/definitions/CatalogProductOptionValue"
+      }
+    }
+  }
+}

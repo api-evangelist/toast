@@ -1,0 +1,21 @@
+{
+  "createdDate": "2025-03-15T14:30:00Z",
+  "modifiedDate": "2025-03-15T14:30:00Z",
+  "deletedDate": "2025-03-15T14:30:00Z",
+  "firstName": "Sample Firstname",
+  "chosenName": "Sample Chosenname",
+  "lastName": "Sample Lastname",
+  "email": "sample-email",
+  "phoneNumber": "sample-phoneNumber",
+  "phoneNumberCountryCode": "sample-phoneNumberCountryCode",
+  "passcode": "sample-passcode",
+  "externalEmployeeId": "ID-7535",
+  "deleted": false,
+  "jobReferences": [
+    "sample-jobReferences_item"
+  ],
+  "wageOverrides": [
+    "ID-7971"
+  ],
+  "v2EmployeeGuid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+}

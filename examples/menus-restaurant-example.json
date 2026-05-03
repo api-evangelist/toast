@@ -1,0 +1,11 @@
+{
+  "restaurantGuid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "lastUpdated": "sample-lastUpdated",
+  "restaurantTimeZone": "sample-restaurantTimeZone",
+  "menus": [
+    "sample-menus_item"
+  ],
+  "modifierGroupReferences": "sample-modifierGroupReferences",
+  "modifierOptionReferences": "sample-modifierOptionReferences",
+  "preModifierGroupReferences": "sample-preModifierGroupReferences"
+}

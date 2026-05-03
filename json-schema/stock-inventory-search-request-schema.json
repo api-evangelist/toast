@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/stock-inventory-search-request-schema.json",
+  "title": "InventorySearchRequest",
+  "description": "Contains search parameters for retrieving menu item inventory information.",
+  "type": "object",
+  "properties": {
+    "guids": {
+      "type": "array",
+      "description": "An array of menu item GUIDs. The `/inventory/search` endpoint tries to\nfind menu items with matching GUIDs.\n",
+      "items": {
+        "type": "string",
+        "format": "uuid"
+      }
+    },
+    "multiLocationIds": {
+      "type": "array",
+      "description": "An array of menu item multi-location IDs. The `/inventory/search` endpoint\ntries to find menu items with matching multi-location IDs.\n\nSee <a\nhref=\"https://doc.toasttab.com/doc/devguide/portalToastIdentifiers.html\">Toast\nidentifiers</a> for more information on multi-location IDs.\n",
+      "items": {
+        "type": "string"
+      }
+    },
+    "versionIds": {
+      "type": "array",
+      "description": "For future use.",
+      "items": {
+        "type": "string",
+        "format": "uuid"
+      }
+    }
+  }
+}

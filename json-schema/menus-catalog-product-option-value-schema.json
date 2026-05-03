@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/menus-catalog-product-option-value-schema.json",
+  "title": "CatalogProductOptionValue",
+  "description": "A value within a catalog product option.\n",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "The unique identifier for the product option value.\n"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the product option value, for example, \"small\".\n"
+    },
+    "sortOrder": {
+      "type": "integer",
+      "description": "The sort order of the product option value.\n"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/menus-images-structure.json",
+  "name": "Images",
+  "description": "An array of strings that contain URLs for images that have been uploaded for this item or modifier. The array is empty if no images have been uploaded.\n    \n_Note:_ The `images` array contains multiple URLs for multiple images for the same item or modifier. The older `image` value contains a single URL for a single image.\n",
+  "type": "array",
+  "items": {
+    "type": "string"
+  }
+}

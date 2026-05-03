@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/restaurants-restaurant-info-schema.json",
+  "title": "RestaurantInfo",
+  "description": "Information about the configuration of a restaurant in the Toast\nPOS.\n",
+  "type": "object",
+  "properties": {
+    "guid": {
+      "type": "string"
+    },
+    "general": {
+      "$ref": "#/definitions/General"
+    },
+    "urls": {
+      "$ref": "#/definitions/URLs"
+    },
+    "location": {
+      "$ref": "#/definitions/Location"
+    },
+    "schedules": {
+      "$ref": "#/definitions/Schedules"
+    },
+    "delivery": {
+      "$ref": "#/definitions/Delivery"
+    },
+    "onlineOrdering": {
+      "$ref": "#/definitions/OnlineOrdering"
+    },
+    "prepTimes": {
+      "$ref": "#/definitions/PrepTimes"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/orders-applied-discount-trigger-schema.json",
+  "title": "AppliedDiscountTrigger",
+  "description": "The Selection that triggered the application of this discount",
+  "type": "object",
+  "properties": {
+    "selection": {
+      "$ref": "#/definitions/ExternalReference"
+    },
+    "quantity": {
+      "type": "number",
+      "format": "double",
+      "description": "The amount of the selection used to trigger the applied discount."
+    }
+  }
+}

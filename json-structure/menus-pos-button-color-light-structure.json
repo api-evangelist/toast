@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/menus-pos-button-color-light-structure.json",
+  "name": "PosButtonColorLight",
+  "description": "The color of the menu entity's button on the Toast POS app, when the app is running in light mode.\n     \nWhen an employee configures a POS button's color, they select a color pairing that consists of two colors, one for light mode and one for dark mode. `posButtonColorLight` contains the HEX code for the light mode color.\n\n`posButtonColorLight` defaults to `#f7f7f7`, the HEX code when the `WHITE` color pairing is chosen.\n\nThe following list shows the possible HEX codes for `posButtonColorLight`, with the associated color pairing in parentheses.\n\n* #f7f7f7 (WHITE)\n* #ffe6e9 (TERRACOTTA_1)\n* #efa49f (TERRACOTTA_2)\n* #f07166 (TERRACOTTA_3)\n* #e45a4e (TERRACOTTA_4)\n* #fbd9b6 (ORANGE_1)\n* #f7be6e (ORANGE_2)\n* #f98c1f (ORANGE_3)\n* #e56f1a (ORANGE_4)    \n* #fbf5b6 (YELLOW_1)\n* #fed850 (YELLOW_2)\n* #e9b10c (YELLOW_3)\n* #c78605 (YELLOW_4)      \n* #e8f7d4 (GRASS_1)\n* #afe26c (GRASS_2)\n* #71b314 (GRASS_3)\n* #32a206 (GRASS_4)      \n* #e3f0fb (SKY_1)\n* #9fc5f0 (SKY_2)\n* #77a5e4 (SKY_3)\n* #558edd (SKY_4)      \n* #f1e3fd (LAVENDER_1)\n* #dab2f7 (LAVENDER_2)\n* #b26ee2 (LAVENDER_3)\n* #a270db (LAVENDER_4)      \n* #d0d0d0 (GRAY_1)\n* #c3c3c3 (GRAY_2)\n* #b1b1b1 (GRAY_3)\n* #989898 (GRAY_4)\n",
+  "type": "string"
+}

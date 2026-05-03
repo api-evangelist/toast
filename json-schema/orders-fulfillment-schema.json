@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/orders-fulfillment-schema.json",
+  "title": "Fulfillment",
+  "description": "Information about the fulfillment requirements for a menu item selection.\n",
+  "type": "object",
+  "properties": {
+    "quantity": {
+      "type": "number",
+      "format": "double",
+      "description": "The quantity required for fulfillment."
+    },
+    "unit": {
+      "type": "string",
+      "description": "The unit of measure for the fulfillment quantity."
+    }
+  }
+}

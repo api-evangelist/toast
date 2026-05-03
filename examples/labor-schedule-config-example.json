@@ -1,0 +1,7 @@
+{
+  "guid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+  "minBeforeClockIn": 92.54,
+  "minAfterClockIn": 80.99,
+  "minBeforeClockOut": 80.68,
+  "minAfterClockOut": 76.44
+}

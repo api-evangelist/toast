@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/menus-catalog-product-variant-option-structure.json",
+  "name": "CatalogProductVariantOption",
+  "description": "A selected option for a retail product variant.\n",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "uuid",
+      "description": "The unique identifier for the product variant option.\n"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the product variant option, for example, \"size\".\n"
+    },
+    "sortOrder": {
+      "type": "int32",
+      "description": "The sort order of the product variant option.\n"
+    },
+    "value": {
+      "$ref": "#/definitions/CatalogProductOptionValue"
+    }
+  }
+}

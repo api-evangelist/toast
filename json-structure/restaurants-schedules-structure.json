@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/restaurants-schedules-structure.json",
+  "name": "Schedules",
+  "description": "Describes the types of service and hours of operation for the\nrestaurant over a one week period. The schedules object contains\nservice and hour schedules for types of days and the types of\ndays for each day of the calendar week.\n",
+  "type": "object",
+  "properties": {
+    "daySchedules": {
+      "type": "object",
+      "description": "A map of `DaySchedule` objects.\nThe value names in this object are key identifiers that are\nused to associate a day schedule with a day of the week in\nthe `weekSchedule` value.\n",
+      "properties": {
+        "identifier": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {
+        "$ref": "#/definitions/DaySchedule"
+      }
+    },
+    "weekSchedule": {
+      "$ref": "#/definitions/WeekSchedule"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/restaurants-ur-ls-structure.json",
+  "name": "URLs",
+  "description": "Web addresses for the restaurant.",
+  "type": "object",
+  "properties": {
+    "website": {
+      "type": "string",
+      "description": "The primary website for the restaurant."
+    },
+    "facebook": {
+      "type": "string",
+      "description": "A Facebook\u2122 page for the restaurant."
+    },
+    "twitter": {
+      "type": "string",
+      "description": "A Twitter\u2122 handle for the restaurant."
+    },
+    "orderOnline": {
+      "type": "string",
+      "description": "A URL for the online ordering site for the restaurant."
+    },
+    "purchaseGiftCard": {
+      "type": "string",
+      "description": "A URL for the gift card purchasing site for the restaurant."
+    },
+    "checkGiftCard": {
+      "type": "string",
+      "description": "A URL for a site at which guests can find balances and other information about gift cards."
+    }
+  }
+}

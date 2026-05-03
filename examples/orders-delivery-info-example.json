@@ -1,0 +1,15 @@
+{
+  "address1": "sample-address1",
+  "address2": "sample-address2",
+  "city": "sample-city",
+  "administrativeArea": "sample-administrativeArea",
+  "state": "sample-state",
+  "zipCode": "sample-zipCode",
+  "country": "sample-country",
+  "latitude": 72.73,
+  "longitude": 56.54,
+  "notes": "sample-notes",
+  "deliveredDate": "2025-02-07T08:00:00.000-0800",
+  "dispatchedDate": "2025-02-07T08:00:00.000-0800",
+  "deliveryState": "PENDING"
+}

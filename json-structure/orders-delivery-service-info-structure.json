@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/orders-delivery-service-info-structure.json",
+  "name": "DeliveryServiceInfo",
+  "description": "Reserved for future use.\n",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/ToastReference"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "providerId": {
+          "description": "Reserved for future use.\n",
+          "type": "string",
+          "maxLength": 255
+        },
+        "providerName": {
+          "description": "Reserved for future use.\n",
+          "type": "string",
+          "maxLength": 36
+        },
+        "driverName": {
+          "description": "Reserved for future use.\n",
+          "type": "string",
+          "maxLength": 255
+        },
+        "driverPhoneNumber": {
+          "description": "Reserved for future use.\n",
+          "type": "string",
+          "maxLength": 30
+        },
+        "providerInfo": {
+          "description": "Reserved for future use.\n",
+          "type": "string",
+          "format": "byte"
+        },
+        "originalQuotedDeliveryDate": {
+          "description": "Reserved for future use.\n",
+          "type": "string",
+          "format": "ISO-8601"
+        }
+      }
+    }
+  ]
+}

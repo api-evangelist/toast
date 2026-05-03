@@ -1,8 +1,15 @@
 aid: toast
 name: Toast
 description: >-
-  Toast is a restaurant technology platform providing tools, APIs, and documentation
-  for building restaurant management and point-of-sale integrations.
+  Toast is a restaurant technology platform providing cloud-based point-of-sale,
+  payment processing, and business management tools for the restaurant industry.
+  The Toast platform exposes REST APIs enabling technology partners to build
+  integrations for orders, menus, labor management, restaurant configuration,
+  inventory/stock management, authentication, and partner ecosystem access.
+  APIs use OAuth 2.0 client credentials authentication with GUIDs for resource
+  identification. Toast serves 120,000+ restaurant locations and offers both
+  partner integrations (requiring formal partnership) and custom integrations
+  via the developer portal.
 type: Index
 position: Consumer
 access: 3rd-Party
@@ -11,32 +18,191 @@ tags:
   - Food Service
   - Point of Sale
   - Restaurants
+  - Hospitality
 created: '2025-02-08'
-modified: '2026-03-16'
+modified: '2026-05-03'
 url: >-
   https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/apis.yml
 specificationVersion: '0.19'
 apis:
-  - aid: toast:toast
-    name: Toast API
+  - aid: toast:toast-orders
+    name: Toast Orders API
     description: >-
-      Toast provides APIs for restaurant management, point-of-sale integration,
-      menu management, orders, and more.
-    humanURL: https://doc.toasttab.com/doc/main/index.html
+      The Toast Orders API enables retrieval of restaurant orders, checks, and
+      payment information. Supports bulk order queries by date range and
+      individual order retrieval by GUID. Used for building order management,
+      reporting, and delivery integrations.
+    humanURL: https://doc.toasttab.com/openapi/orders/overview/
     tags:
-      - Food Service
+      - Orders
+      - Payments
       - Point of Sale
-      - Restaurants
     properties:
       - type: Documentation
-        url: https://doc.toasttab.com/doc/main/index.html
+        url: https://doc.toasttab.com/openapi/orders/overview/
+      - type: OpenAPI
+        url: openapi/toast-orders-openapi.yaml
+
+  - aid: toast:toast-menus
+    name: Toast Menus API
+    description: >-
+      The Toast Menus API provides complete menu data retrieval including items,
+      modifiers, prices, and availability. Enables POS-synchronized menu display
+      for online ordering and third-party menu management integrations.
+    humanURL: https://doc.toasttab.com/openapi/menus/overview/
+    tags:
+      - Menus
+      - Food Service
+    properties:
+      - type: Documentation
+        url: https://doc.toasttab.com/openapi/menus/overview/
+      - type: OpenAPI
+        url: openapi/toast-menus-openapi.yaml
+
+  - aid: toast:toast-labor
+    name: Toast Labor API
+    description: >-
+      The Toast Labor API manages employee records, schedules, and shift data
+      for restaurant locations. Supports employee CRUD operations, time entry
+      management, and payroll integration workflows.
+    humanURL: https://doc.toasttab.com/openapi/labor/overview/
+    tags:
+      - Labor
+      - Employees
+      - Scheduling
+    properties:
+      - type: Documentation
+        url: https://doc.toasttab.com/openapi/labor/overview/
+      - type: OpenAPI
+        url: openapi/toast-labor-openapi.yaml
+
+  - aid: toast:toast-restaurants
+    name: Toast Restaurants API
+    description: >-
+      The Toast Restaurants API provides location configuration data including
+      restaurant settings, hours, payment options, and management group
+      restaurant discovery for multi-location operations.
+    humanURL: https://doc.toasttab.com/openapi/restaurants/overview/
+    tags:
+      - Restaurants
+      - Configuration
+    properties:
+      - type: Documentation
+        url: https://doc.toasttab.com/openapi/restaurants/overview/
+      - type: OpenAPI
+        url: openapi/toast-restaurants-openapi.yaml
+
+  - aid: toast:toast-stock
+    name: Toast Stock API
+    description: >-
+      The Toast Stock API manages inventory for menu items and modifiers,
+      allowing integration with inventory management systems to track stock
+      levels and trigger restocking alerts for restaurant operations.
+    humanURL: https://doc.toasttab.com/openapi/stock/overview/
+    tags:
+      - Stock
+      - Inventory
+    properties:
+      - type: Documentation
+        url: https://doc.toasttab.com/openapi/stock/overview/
+      - type: OpenAPI
+        url: openapi/toast-stock-openapi.yaml
+
+  - aid: toast:toast-partners
+    name: Toast Partners API
+    description: >-
+      The Toast Partners API provides partner accounts with access to list
+      connected restaurants, enabling multi-restaurant management and
+      partner-level operations across restaurant locations.
+    humanURL: https://doc.toasttab.com/openapi/partners/overview/
+    tags:
+      - Partners
+      - Multi-Location
+    properties:
+      - type: Documentation
+        url: https://doc.toasttab.com/openapi/partners/overview/
+      - type: OpenAPI
+        url: openapi/toast-partners-openapi.yaml
+
+  - aid: toast:toast-authentication
+    name: Toast Authentication API
+    description: >-
+      The Toast Authentication API implements OAuth 2.0 client credentials
+      flow for obtaining access tokens used across all Toast platform APIs.
+      Tokens are scoped to restaurant GUIDs and expire after a configurable
+      period.
+    humanURL: https://doc.toasttab.com/openapi/authentication/overview/
+    tags:
+      - Authentication
+      - OAuth
+    properties:
+      - type: Documentation
+        url: https://doc.toasttab.com/openapi/authentication/overview/
+      - type: OpenAPI
+        url: openapi/toast-authentication-openapi.yaml
+
 common:
   - type: Website
     url: https://pos.toasttab.com/
   - type: Documentation
-    url: https://doc.toasttab.com/doc/main/index.html
-  - type: Sign Up
+    url: https://doc.toasttab.com/doc/devguide/index.html
+  - type: Portal
+    url: https://doc.toasttab.com/openapi/
+  - type: SignUp
     url: https://developers.toasttab.com/
+  - type: GitHubOrganization
+    url: https://github.com/toasttab
+  - type: SpectralRules
+    url: rules/toast-spectral-rules.yml
+  - type: Vocabulary
+    url: vocabulary/toast-vocabulary.yaml
+  - type: NaftikoCapability
+    url: capabilities/restaurant-operations.yaml
+    name: Restaurant Operations
+  - type: Features
+    data:
+      - name: Orders API
+        description: Retrieve restaurant orders, checks, and payment data by GUID or bulk date queries.
+      - name: Menus API
+        description: Full menu data retrieval including items, modifiers, prices, and availability.
+      - name: Labor Management API
+        description: Employee CRUD operations, shift management, and payroll integration support.
+      - name: Restaurant Configuration API
+        description: Location settings, payment options, and management group restaurant discovery.
+      - name: Stock and Inventory API
+        description: Inventory management for menu items and modifiers with stock level tracking.
+      - name: OAuth 2.0 Authentication
+        description: Client credentials OAuth flow with GUID-scoped tokens for secure API access.
+      - name: Partner Integration Program
+        description: Formal partner program enabling multi-restaurant access and ecosystem integrations.
+      - name: Webhook Support
+        description: Outbound integration webhooks for real-time event delivery (gift cards, loyalty, tender).
+  - type: UseCases
+    data:
+      - name: Online Ordering Integration
+        description: Connect third-party online ordering platforms to Toast POS for order injection and menu sync.
+      - name: Payroll and Labor Integration
+        description: Sync Toast employee and shift data with payroll systems using the Labor API.
+      - name: Reporting and Analytics
+        description: Pull order and payment data via bulk orders API for custom reporting and business intelligence.
+      - name: Inventory Management
+        description: Integrate restaurant inventory systems with Toast Stock API for real-time stock tracking.
+      - name: Loyalty and Gift Cards
+        description: Build loyalty program and gift card integrations using Toast outbound webhook APIs.
+      - name: Multi-Location Management
+        description: Partner integrations managing hundreds of restaurant locations via Partners API.
+  - type: Integrations
+    data:
+      - name: DoorDash
+        description: Third-party delivery platform integrated with Toast for order injection.
+      - name: UberEats
+        description: Delivery platform integration for menu sync and order management.
+      - name: QuickBooks
+        description: Accounting integration for restaurant financial data via Toast reporting APIs.
+      - name: ADP
+        description: Payroll platform integration using Toast Labor API data.
+      - name: OpenTable
+        description: Reservation system integration with Toast for guest management.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

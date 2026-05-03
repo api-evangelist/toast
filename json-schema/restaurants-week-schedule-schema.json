@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/restaurants-week-schedule-schema.json",
+  "title": "WeekSchedule",
+  "description": "The day schedule used for each day of the week. A day schedule is \nthe set of services (for example, \"lunch\") that a restaurant \noffers and the hours that it offers each one. If a day of the \nweek value in this object is `null`, the restaurant is closed on \nthat day. Values for each day of the week are identifiers for day \nschedules in the map of `DaySchedule` objects in the \n`daySchedules` value of the `Schedules` object.\n",
+  "type": "object",
+  "properties": {
+    "monday": {
+      "type": "string",
+      "description": "A key identifier for the `DaySchedule` object\nthat represents the services and hours for the restaurant on\nthis day of the week.\n"
+    },
+    "tuesday": {
+      "type": "string",
+      "description": "A key identifier for the `DaySchedule` object\nthat represents the services and hours for the restaurant on\nthis day of the week.\n"
+    },
+    "wednesday": {
+      "type": "string",
+      "description": "A key identifier for the `DaySchedule` object\nthat represents the services and hours for the restaurant on\nthis day of the week.\n"
+    },
+    "thursday": {
+      "type": "string",
+      "description": "A key identifier for the `DaySchedule` object\nthat represents the services and hours for the restaurant on\nthis day of the week.\n"
+    },
+    "friday": {
+      "type": "string",
+      "description": "A key identifier for the `DaySchedule` object\nthat represents the services and hours for the restaurant on\nthis day of the week.\n"
+    },
+    "saturday": {
+      "type": "string",
+      "description": "A key identifier for the `DaySchedule` object\nthat represents the services and hours for the restaurant on\nthis day of the week.\n"
+    },
+    "sunday": {
+      "type": "string",
+      "description": "A key identifier for the `DaySchedule` object\nthat represents the services and hours for the restaurant on\nthis day of the week.\n"
+    }
+  }
+}

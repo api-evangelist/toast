@@ -1,0 +1,11 @@
+{
+  "entityType": "STANDARD",
+  "name": "Sample Name",
+  "rate": 38.4,
+  "taxAmount": 70.92,
+  "type": "NONE",
+  "facilitatorCollectAndRemitTax": false,
+  "displayName": "Sample Displayname",
+  "jurisdiction": "sample-jurisdiction",
+  "jurisdictionType": "STANDARD"
+}

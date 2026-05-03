@@ -1,0 +1,192 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Toast Labor API"
+  description: "Toast Labor API for managing restaurant employees, shifts, and scheduling."
+  tags:
+    - Toast
+    - Labor
+    - Employees
+    - Restaurant
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+binds:
+  - namespace: env
+    keys:
+      TOAST_CLIENT_ID: TOAST_CLIENT_ID
+      TOAST_CLIENT_SECRET: TOAST_CLIENT_SECRET
+      TOAST_RESTAURANT_GUID: TOAST_RESTAURANT_GUID
+
+capability:
+  consumes:
+    - type: http
+      namespace: toast-labor
+      baseUri: https://ws-api.toasttab.com
+      description: "Toast Labor API"
+      authentication:
+        type: bearer
+        token: "{{TOAST_ACCESS_TOKEN}}"
+      resources:
+        - name: employees
+          path: /employees
+          description: Restaurant employees
+          operations:
+            - name: listEmployees
+              method: GET
+              description: "Toast List Employees"
+              inputParameters:
+                - name: Toast-Restaurant-External-ID
+                  in: header
+                  type: string
+                  required: true
+                  description: Restaurant GUID
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: array
+                  value: "$."
+            - name: createEmployee
+              method: POST
+              description: "Toast Create an Employee"
+              inputParameters:
+                - name: Toast-Restaurant-External-ID
+                  in: header
+                  type: string
+                  required: true
+                  description: Restaurant GUID
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+              body:
+                type: json
+                data:
+                  firstName: "{{tools.firstName}}"
+                  lastName: "{{tools.lastName}}"
+                  email: "{{tools.email}}"
+            - name: getEmployee
+              method: GET
+              description: "Toast Get an Employee"
+              inputParameters:
+                - name: employeeId
+                  in: path
+                  type: string
+                  required: true
+                  description: Employee identifier
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: updateEmployee
+              method: PATCH
+              description: "Toast Update an Employee"
+              inputParameters:
+                - name: employeeId
+                  in: path
+                  type: string
+                  required: true
+                  description: Employee identifier
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: deleteEmployee
+              method: DELETE
+              description: "Toast Delete an Employee"
+              inputParameters:
+                - name: employeeId
+                  in: path
+                  type: string
+                  required: true
+                  description: Employee identifier
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8101
+      namespace: toast-labor-rest
+      resources:
+        - path: /v1/employees
+          name: employees
+          operations:
+            - method: GET
+              name: list-employees
+              description: "List restaurant employees"
+              call: "toast-labor.listEmployees"
+              outputParameters:
+                - type: array
+                  mapping: "$."
+            - method: POST
+              name: create-employee
+              description: "Create a new employee"
+              call: "toast-labor.createEmployee"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/employees/{id}
+          name: employee
+          operations:
+            - method: GET
+              name: get-employee
+              description: "Get a specific employee"
+              call: "toast-labor.getEmployee"
+              with:
+                employeeId: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9101
+      namespace: toast-labor-mcp
+      transport: http
+      tools:
+        - name: list-employees
+          description: "List all employees at a restaurant location"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "toast-labor.listEmployees"
+          outputParameters:
+            - type: array
+              mapping: "$."
+        - name: get-employee
+          description: "Get a specific employee record by ID"
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "toast-labor.getEmployee"
+          with:
+            employeeId: "tools.employeeId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-employee
+          description: "Create a new employee record"
+          hints:
+            readOnly: false
+            openWorld: false
+          call: "toast-labor.createEmployee"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: update-employee
+          description: "Update an employee record"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: true
+          call: "toast-labor.updateEmployee"
+          with:
+            employeeId: "tools.employeeId"
+          outputParameters:
+            - type: object
+              mapping: "$."

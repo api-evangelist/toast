@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/restaurants-hours-structure.json",
+  "name": "Hours",
+  "description": "The period of time that the restaurant offers a service. For\nexample, a service might be named \"lunch\" and it might be offered\nbetween `10:00:00.000` and `16:00:00.000`.\n",
+  "type": "object",
+  "properties": {
+    "startTime": {
+      "type": "string",
+      "description": "The time of day that the service begins."
+    },
+    "endTime": {
+      "type": "string",
+      "description": "The time of day that the service ends."
+    }
+  }
+}

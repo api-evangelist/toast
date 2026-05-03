@@ -1,0 +1,6 @@
+{
+  "cash": false,
+  "ccSameDay": true,
+  "ccFuture": true,
+  "ccInStore": false
+}

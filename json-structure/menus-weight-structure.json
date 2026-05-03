@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/menus-weight-structure.json",
+  "name": "Weight",
+  "description": "The weight of the item or modifier. Use the `weightUnitOfMeasure` value to determine the unit of measurement.\n\nTh `weight` value is `null` if no weight is specified for the item or modifier.\n    \nYou can use the `weight` value when determining shipping costs or choosing a delivery vehicle to use.\n",
+  "type": "float",
+  "x-nullable": true
+}

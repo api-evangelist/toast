@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/restaurants-payment-options-schema.json",
+  "title": "PaymentOptions",
+  "description": "Information about the forms of payment that the restaurant will\naccept for orders.\n",
+  "type": "object",
+  "properties": {
+    "delivery": {
+      "$ref": "#/definitions/DeliveryPaymentOptions"
+    },
+    "takeout": {
+      "$ref": "#/definitions/TakeoutPaymentOptions"
+    },
+    "ccTip": {
+      "type": "boolean",
+      "description": "enables credit card tips"
+    }
+  }
+}

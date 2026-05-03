@@ -1,0 +1,14 @@
+{
+  "restaurantGuid": "e728cd53-2fa7-4e63-8f8f-93e78ea66b03",
+  "managementGroupGuid": "bdfda703-2a83-4e0f-9b8a-8ea0ee6cab79",
+  "deleted": true,
+  "restaurantName": "Main Street Cafe",
+  "locationName": "123 Main Street",
+  "createdByEmailAddress": "clefebvre@mainstreetcafe.com",
+  "externalGroupRef": "sample-externalGroupRef",
+  "externalRestaurantRef": "sample-externalRestaurantRef",
+  "modifiedDate": 1678846869551,
+  "createdDate": 1643858534451,
+  "isoModifiedDate": "2023-03-12 08:32:34.008000+00:00",
+  "isoCreatedDate": "2022-05-17 10:21:38.008000+00:00"
+}

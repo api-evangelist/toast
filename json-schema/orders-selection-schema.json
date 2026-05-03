@@ -1,0 +1,251 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/orders-selection-schema.json",
+  "title": "Selection",
+  "description": "A `Selection` object can represent either a primary item (for example,\n`Check.selections`) or a modifier (`Selection.modifiers`) selection.\nQuantity defaults to `1`.\n\nFor a `POST` operation, all selections must have valid `item` and\n`itemGroup` fields. The `item` and `itemGroup` values can be `null` for\n`GET` requests. For example, they are `null` for gift cards and on special\nrequests.\n\nTo specify a modifier selection, add it to the `modifiers` list of\nanother selection. Each modifier selection must have its `optionGroup` field\nset correctly, because a `MenuItem` can be included in multiple\n`MenuOptionGroups`, potentially with different prices or sizing.\n\nThe `externalId` value for a selection must be unique. If you submit a\nselection with an `externalId` that already exists for another selection,\nthe request will fail. You can use this behavior to implement idempotent\nselection submission by always providing a consistent `externalId` for\neach unique selection attempt.\n",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/ExternalReference"
+    },
+    {
+      "type": "object",
+      "required": [
+        "item",
+        "quantity"
+      ],
+      "properties": {
+        "item": {
+          "type": "object",
+          "description": "A reference to the selected menu item.",
+          "$ref": "#/definitions/ConfigReference"
+        },
+        "itemGroup": {
+          "type": "object",
+          "description": "A reference to the menu group from which the item was selected.",
+          "$ref": "#/definitions/ConfigReference"
+        },
+        "optionGroup": {
+          "type": "object",
+          "description": "A reference to the modifier group from which the menu item was selected. Only applies if this is a modifier selection.",
+          "$ref": "#/definitions/ConfigReference"
+        },
+        "preModifier": {
+          "type": "object",
+          "description": "A reference to the selected pre-modifier.",
+          "$ref": "#/definitions/ConfigReference"
+        },
+        "quantity": {
+          "type": "number",
+          "format": "double",
+          "description": "Quantity ordered. For items sold by weight, a decimal number. For discrete items, a counting number."
+        },
+        "seatNumber": {
+          "x-toast-read-only": true,
+          "type": "integer",
+          "description": "Indicates which guest seat at a restaurant table ordered\na menu item selection. Restaurant employees can choose the\nseat number when they add a menu item to a guest check.\n\n* A positive integer value indicates the seat number for\n  the menu item.\n\n* `0` - Indicates that the menu item is shared by\n  multiple guests.\n\n* `-1` - Indicates that the restaurant employee did not\n  select a seat for the menu item.\n\nResponse only.\n"
+        },
+        "unitOfMeasure": {
+          "type": "string",
+          "description": "The unit of measure used to weigh, determine size, or otherwise\nquantify the item.\n\nThe default is `NONE`, which means that the item is not meant to\nbe measured during a sale.\n\nValues are:\n* `NONE` - The item is not meant to be measured.\n* `LB` - Weighed in pounds.\n* `OZ` - Weighed in ounces.\n* `KG` - Weighed in kilograms.\n* `G` - Weighed in grams.\n* `GAL` - Measured in gallons.\n* `L` - Measured in liters.\n* `ML` - Measured in milliliters.\n* `FL_OZ` - Measured in fluid ounces.\n* `M` - Measured in meters.\n* `CM` - Measured in centimeters.\n* `FT` - Measured in feet.\n* `IN` - Measured in inches.\n* `YD` - Measured in yards.\n",
+          "enum": [
+            "NONE",
+            "LB",
+            "OZ",
+            "KG",
+            "G",
+            "GAL",
+            "L",
+            "ML",
+            "FL_OZ",
+            "M",
+            "CM",
+            "FT",
+            "IN",
+            "YD"
+          ]
+        },
+        "selectionType": {
+          "type": "string",
+          "description": "Specifies whether this selection is a special request or other off-menu sale.\n\nIf `null` or `NONE`, describes a normal modifier or item selection.\n\n`TOAST_CARD_SELL` and `TOAST_CARD_RELOAD` are currently response-only.\n",
+          "enum": [
+            "NONE",
+            "OPEN_ITEM",
+            "SPECIAL_REQUEST",
+            "PORTION",
+            "HOUSE_ACCOUNT_PAY_BALANCE",
+            "TOAST_CARD_SELL",
+            "TOAST_CARD_RELOAD"
+          ]
+        },
+        "salesCategory": {
+          "x-toast-read-only": true,
+          "type": "object",
+          "description": "A reference to the sales category of the item. Response only.",
+          "$ref": "#/definitions/ConfigReference"
+        },
+        "appliedDiscounts": {
+          "x-toast-read-only": true,
+          "type": "array",
+          "description": "The itemized discounts that are applied to this item. Response only.",
+          "minItems": 0,
+          "items": {
+            "$ref": "#/definitions/AppliedDiscount"
+          }
+        },
+        "deferred": {
+          "type": "boolean",
+          "description": "Whether this selection is a deferred revenue transaction, such as a gift card sale."
+        },
+        "preDiscountPrice": {
+          "x-toast-read-only": true,
+          "type": "number",
+          "description": "Gross sale price for this selection. Excludes tax. Response only.",
+          "format": "double"
+        },
+        "price": {
+          "x-toast-read-only": true,
+          "type": "number",
+          "format": "double",
+          "description": "Net price for this selection. The final price of the item after considering discounts (including discounts at the check level), quantity adjustments, and modifier prices at the time the item was selected for purchase. Response only."
+        },
+        "tax": {
+          "x-toast-read-only": true,
+          "type": "number",
+          "format": "double",
+          "description": "The total tax amount for this selection. Response only."
+        },
+        "voided": {
+          "x-toast-read-only": true,
+          "type": "boolean",
+          "description": "Set to `true` if this selection is voided. Response only."
+        },
+        "voidDate": {
+          "x-toast-read-only": true,
+          "type": "string",
+          "format": "date-time",
+          "description": "The date on which this selection was voided. Response only."
+        },
+        "voidBusinessDate": {
+          "x-toast-read-only": true,
+          "type": "integer",
+          "description": "The business date (yyyyMMdd) on which this selection was voided. Response only."
+        },
+        "voidReason": {
+          "x-toast-read-only": true,
+          "type": "object",
+          "description": "If `voided` is `true`, a reference to the void reason. Response only.",
+          "$ref": "#/definitions/ExternalReference"
+        },
+        "refundDetails": {
+          "description": "A `RefundDetails` object that\ncontains information about refunded payment amounts for the item.\n",
+          "type": "object",
+          "$ref": "#/definitions/RefundDetails"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The display name of the selection.\n\nCan be used to set a special request value.\n\nOtherwise, it is generated from this selection's item property.\n"
+        },
+        "plu": {
+          "x-toast-read-only": true,
+          "type": "string",
+          "description": "The price look-up (PLU) code for the menu item selection used for pricing and inventory management."
+        },
+        "premodifierPlu": {
+          "x-toast-read-only": true,
+          "type": "string",
+          "description": "The Price Look-Up (PLU) code for the premodifier associated with this menu item selection. This is a unique identifier used for pricing and inventory management purposes. Currently this field is read only."
+        },
+        "createdDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date on which this selection was created. If not specified, defaults to the current time."
+        },
+        "modifiedDate": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The date on which this selection was last modified. If not specified, defaults to the current time."
+        },
+        "modifiers": {
+          "type": "array",
+          "description": "A list of modifiers that apply to this selection.",
+          "items": {
+            "$ref": "#/definitions/Selection"
+          }
+        },
+        "fulfillmentStatus": {
+          "x-toast-read-only": true,
+          "type": "string",
+          "default": "NEW",
+          "description": "Indicates the stage of the preparation workflow that the\nmenu item selection is in.\n\nThe `fulfillmentStatus` of a\nmenu item selection changes as restaurant employees move\nthe item through the functions of the Toast POS, for\nexample order entry and the kitchen display system (KDS).\nResponse only.\n\nValid values:\n\n* `NEW` - The menu item selection was added to a\n  check but is not yet sent to the KDS for\n  preparation.\n\n* `HOLD` - A restaurant employee paused the menu\n  item selection so that it does not appear in the\n  KDS for preparation.\n\n* `SENT` - The menu item selection was fired and\n  appears in the KDS for preparation.\n\n* `READY` - Preparation is complete. The menu item\n  selection is fulfilled and no longer appears in\n  the KDS. If your restaurant does not use the Toast platform\n  KDS, then order items do not reach the `READY`\n  status.\n",
+          "enum": [
+            "NEW",
+            "HOLD",
+            "SENT",
+            "READY"
+          ]
+        },
+        "fulfillment": {
+          "x-toast-read-only": true,
+          "type": "object",
+          "description": "Information about the fulfillment requirements for this menu item selection. Response only.\n",
+          "$ref": "#/definitions/Fulfillment"
+        },
+        "taxInclusion": {
+          "type": "string",
+          "description": "Indicates whether the menu item price includes one or more tax\namounts. If the menu item is a modifier for another menu item\nselection, it always inherits the tax inclusion behavior of the menu\nitem that it applies to.\n\nValid values:\n* `INCLUDED` - The menu item price includes one or more tax amounts.\n* `NOT_INCLUDED` - The menu item price does not include any tax\n  amounts.\n* `INHERITED` - The menu item is a modifier for another menu item\n  selection in the check. The `taxInclusion` value of the parent menu\n  item selection applies to the modifier. If a menu item selection\n  *that is not a modifier* inherits tax inclusion behavior from a\n  menu or menu group, the `taxInclusion` value is either\n  `INCLUDED` or `NOT_INCLUDED`.\n",
+          "enum": [
+            "INCLUDED",
+            "NOT_INCLUDED",
+            "INHERITED"
+          ]
+        },
+        "appliedTaxes": {
+          "x-toast-read-only": true,
+          "type": "array",
+          "description": "An array of `AppliedTaxRate` objects that contain information about tax payments made for the selection. Response only.",
+          "items": {
+            "$ref": "#/definitions/AppliedTaxRate"
+          }
+        },
+        "diningOption": {
+          "x-toast-read-only": true,
+          "description": "A reference to the setting or method that a restaurant uses to fulfill orders. For example, dine-in, takeout, or delivery might be dining options.\n\nRestaurants configure the dining options that they fulfill orders in.\n\nResponse only.\n",
+          "type": "object",
+          "$ref": "#/definitions/ExternalReference"
+        },
+        "openPriceAmount": {
+          "description": "A non-negative currency amount that sets the price of a\nmenu item that is configured to use the *Open Price*\npricing strategy. If you do not supply an\n`openPriceAmount` value for an open price menu item, the\norders API sets the price to 0.00.\n\nIf a menu item is configured to use tax-inclusive\npricing, the orders API calculates the base price and tax\namount based on the open price that you specify. _The\nopen-price amount includes both the base-price and\ninclusive tax amount._\n\n`POST` only. The `openPriceAmount` value is not\npresent in orders API return data. It is used to\npopulate `receiptLinePrice`.\n",
+          "type": "number",
+          "format": "double"
+        },
+        "receiptLinePrice": {
+          "type": "number",
+          "format": "double",
+          "description": "The price of the menu item selection without any quantity, taxes, \ndiscounts, and modifier adjustments. If the menu item has taxes included, the `receiptLinePrice` value shows the original price, including taxes.\n\nFor example, if the menu item selection is for two orders of fries, \n`receiptLinePrice` is the price of one order of fries. If a menu item selection \nis for three large drinks, receiptLinePrice is the price of one large drink.\n\nPopulated based on the menu configuration, or using the value provided in \n`externalPriceAmount` or `openPriceAmount`.\n"
+        },
+        "optionGroupPricingMode": {
+          "type": "string",
+          "description": "Information about how the modifier group affects the pricing of its parent item.",
+          "enum": [
+            "INCLUDED",
+            "FIXED_PRICE",
+            "ADJUSTS_PRICE",
+            "REPLACES_PRICE",
+            "LOCATION_SPECIFIC_PRICE"
+          ]
+        },
+        "externalPriceAmount": {
+          "description": "The menu item price that was calculated by the\nmarketplace facilitator organization that created the\norder.\n\n`POST` only. The orders API does not include the\n`externalPriceAmount` value in return data. It is\nused to populate `receiptLinePrice`.\n\n**Note**: you can only include this information if your\nToast API client is associated with a designated\nmarketplace facilitator organization. Most Toast API\nclients do not create marketplace facilitator orders.\n",
+          "type": "number",
+          "format": "double"
+        },
+        "splitOrigin": {
+          "description": "Reserved for future use.\n",
+          "type": "object",
+          "$ref": "#/definitions/ExternalReference"
+        }
+      }
+    }
+  ]
+}

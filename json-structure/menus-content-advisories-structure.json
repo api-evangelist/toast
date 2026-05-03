@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/menus-content-advisories-structure.json",
+  "name": "ContentAdvisories",
+  "description": "Information about the contents of this menu item or modifier, for example, whether it contains alcohol.\n",
+  "type": "object",
+  "properties": {
+    "alcohol": {
+      "$ref": "#/definitions/Alcohol"
+    }
+  }
+}

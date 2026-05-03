@@ -1,0 +1,372 @@
+openapi: 3.0.1
+info:
+  title: Stock API
+  description: |2
+
+    The stock API lets you retrieve and update inventory information for a
+    restaurant's menu items and modifiers.
+
+    _*Note:*_ Modifiers are supported by an underlying menu item, called the
+    modifier's item reference. In this reference, the term "menu item" is used
+    to generically refer to both standalone menu items and modifier item
+    references, because the same data is used for both. For more information,
+    see <a
+    href="https://doc.toasttab.com/doc/platformguide/adminPricingModifierOptions.html#adminUnderstandingAModifierOptionsItemReference">Understanding
+    a modifier option's item reference</a>.
+
+    You can use the stock API to:
+
+    * Get all inventory information for a restaurant.
+    * Get inventory information for a list of menu items.
+    * Get inventory information for a specific status
+      of the menu items (such as all menu items that are out
+      of stock).
+    * Update inventory information for a list of menu items.
+  contact:
+    name: Toast developer support
+  version: 1.0.0
+servers:
+- url: https://toast-api-server/stock
+paths:
+  /v1/inventory:
+    get:
+      tags:
+      - Stock
+      summary: Toast Get Menu Item Inventory for a Restaurant
+      description: |
+        Returns inventory information for all menu items that have an
+        `OUT_OF_STOCK` or `QUANTITY` status.
+
+        Inventory information is not returned for menu items with an `IN_STOCK`
+        status, because they are not considered at risk for going out of stock.
+
+        To restrict the menu items in the response to either `OUT_OF_STOCK` or
+        `QUANTITY` stock status, use the `status` query parameter.
+      operationId: getInventory
+      parameters:
+      - name: Toast-Restaurant-External-ID
+        in: header
+        description: |
+          The Toast GUID of the restaurant queried for inventory information.
+        required: true
+        schema:
+          type: string
+      - name: status
+        in: query
+        description: |
+          Limits the items in the response to those items with the specified
+          stock status. Values are:
+
+          * `OUT_OF_STOCK`- Returns all menu items that have the
+            `OUT_OF_STOCK` stock status.
+
+          * `QUANTITY` - Returns all menu items that have the
+            `QUANTITY` stock status.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MenuItemInventory'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/ErrorMessage'
+      security:
+      - oauth2:
+        - stock:read
+  /v1/inventory/search:
+    post:
+      tags:
+      - Stock
+      summary: Toast Get Inventory Information for Specific Menu Items
+      description: |
+        Returns inventory information for a list of menu items.
+
+        The request must include a message body that contains an
+        `InventorySearchRequest` object with one or both of these values:
+
+        * A`multiLocationIds` value that contains an array of menu item
+          multi-location IDs to search for.
+
+        * A `guids` value that contains an array of menu item GUIDs to search
+          for.
+
+        For information on these two identifier types, see <a
+        href="https://doc.toasttab.com/doc/devguide/portalToastIdentifiers.html">Toast
+        identifiers</a>.
+      operationId: postInventorySearch
+      parameters:
+      - name: Toast-Restaurant-External-ID
+        in: header
+        description: |
+          The Toast GUID of the restaurant queried for inventory information.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: |
+          An `InventorySearchRequest` object containing identifiers for the
+          menu items to include in the search.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InventorySearchRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MenuItemInventory'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/ErrorMessage'
+      security:
+      - oauth2:
+        - stock:read
+  /v1/inventory/update:
+    put:
+      tags:
+      - Stock
+      summary: Toast Update Inventory Information for Specific Menu Items
+      description: |
+        Updates inventory information for a list of menu items.
+      operationId: updateInventory
+      parameters:
+      - name: Toast-Restaurant-External-ID
+        in: header
+        description: |
+          The Toast GUID of the restaurant whose inventory information will be updated.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: |
+          An array of `MenuItemInventory` objects for the menu items to be
+          updated, with the following values:
+
+          * An identifier for the menu item to be updated. This may be either the
+            menu item's `multiLocationId` or its `guid`. See <a
+            href="https://doc.toasttab.com/doc/devguide/portalToastIdentifiers.html">Toast
+            identifiers</a> for more information on these two identifier types.
+
+          * The `status` for the menu item. Must be one of the following:
+            * `IN_STOCK`
+            * `OUT_OF_STOCK`
+            * `QUANTITY`
+
+          * For menu items with a status of `QUANTITY`, you must also provide a
+            `quantity` value that is a double greater than 0 (such as 0.5, 7.0, or
+            10.75). Do not include a `quantity` value for menu items with a
+            `status` of `IN_STOCK` or `OUT_OF_STOCK`.
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/MenuItemInventory'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MenuItemInventory'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/ErrorMessage'
+      security:
+      - oauth2:
+        - stock:write
+components:
+  schemas:
+    InventorySearchRequest:
+      type: object
+      properties:
+        guids:
+          type: array
+          description: |
+            An array of menu item GUIDs. The `/inventory/search` endpoint tries to
+            find menu items with matching GUIDs.
+          items:
+            type: string
+            format: uuid
+        multiLocationIds:
+          type: array
+          description: |
+            An array of menu item multi-location IDs. The `/inventory/search` endpoint
+            tries to find menu items with matching multi-location IDs.
+
+            See <a
+            href="https://doc.toasttab.com/doc/devguide/portalToastIdentifiers.html">Toast
+            identifiers</a> for more information on multi-location IDs.
+          items:
+            type: string
+        versionIds:
+          type: array
+          description: For future use.
+          items:
+            type: string
+            format: uuid
+      description: Contains search parameters for retrieving menu item inventory information.
+    MenuItemInventory:
+      type: object
+      properties:
+        guid:
+          type: string
+          description: |
+            The unique GUID assigned to the menu item by the Toast platform.
+          format: uuid
+        itemGuidValidity:
+          type: string
+          description: |
+            Indicates whether a menu item identifier that you included in your request is valid or not.
+
+            `INVALID` indicates the stock API did not find a matching menu item for the  identifier you supplied in the search or update request. This means either the menu item does not exist at the location being queried or it has been archived.
+                        
+            `VALID` indicates that the item in the API response is a valid item at the restaurant location.
+
+            For more information, see <a
+            href="https://doc.toasttab.com/doc/devguide/apiUsingTheStockApi.html">Getting stock information using the stock API</a> and <a
+            href="https://doc.toasttab.com/doc/devguide/apiUpdatingInventoryInformation.html">Updating stock API</a>.          
+          readOnly: true
+          enum:
+          - VALID
+          - INVALID
+        status:
+          type: string
+          description: |
+            The inventory status of the menu item. The `status` value can be:
+
+            * `IN_STOCK` - The menu item is in stock in the restaurant.
+
+            * `QUANTITY` - The menu item is in limited supply. The amount
+            of remaining items is indicated by the `quantity` value.
+
+            * `OUT_OF_STOCK` - The menu item is no longer in stock and cannot
+            be selected for an order.
+          enum:
+          - IN_STOCK
+          - QUANTITY
+          - OUT_OF_STOCK
+        quantity:
+          type: number
+          nullable: true
+          description: |
+            Contains the amount of stock remaining when the menu item
+            `status` is `QUANTITY`.
+
+            This value is `null` for menu items
+            that have a stock staus of `IN_STOCK` or `OUT_OF_STOCK`.
+          format: double
+        multiLocationId:
+          type: string
+          description: |
+            A consistent identifier that applies to all versions of a menu item
+            that is shared across locations.
+
+            See <a
+            href="https://doc.toasttab.com/doc/devguide/portalToastIdentifiers.html">Toast
+            identifiers</a> for more information.
+        versionId:
+          type: string
+          description: |
+            For future use.
+          format: uuid
+      description: Contains the stock status and quantity information for a menu item.
+    ErrorMessage:
+      type: object
+      description: |
+        An object that contains information about one or more errors that the
+        Toast platform encountered when processing your API request. For more
+        information, see [API responses and errors in the _Toast Developer
+        Guide_](https://doc.toasttab.com/doc/devguide/apiResponsesAndErrors.html).
+      properties:
+        status:
+          type: integer
+          format: int32
+          description: |
+            The HTTP status code of the response.
+        code:
+          type: integer
+          format: int32
+          description: |
+            A numeric identifier for the error condition.
+        message:
+          type: string
+          description: |
+            A description of the error condition.
+        messageKey:
+          type: string
+          description: |
+            Reserved for future use.
+        fieldName:
+          type: string
+          description: |
+            Reserved for future use.
+        link:
+          type: string
+          description: |
+            The URL of a resource that provides more information about the error
+            condition.
+        requestId:
+          type: string
+          description: |
+            The unique identifier of the HTTP request that your client sent to
+            the Toast API.
+        developerMessage:
+          type: string
+          description: |
+            Additional detail about the error condition, if it is available.
+        errors:
+          type: array
+          description: |
+            A JSON array of `ErrorMessage` objects.
+          items:
+            $ref: '#/components/schemas/ErrorMessage'
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      description: |
+        Access to Toast APIs, specific endpoints, 
+        and specific API endpoint operations is 
+        controlled by the scopes that are associated 
+        with your API account. 
+
+        A full reference for Toast API scopes and 
+        their capabilities can be found in the
+        [_Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html).
+      flows:
+        clientCredentials:
+          tokenUrl: https://toast-api-server/authentication/v1/authentication/login
+          scopes:
+            stock:read: |
+              Allows reading from the stock API.
+            stock:write: |
+              Allows updating stock status for menu items (and modifier option item references) using the stock API.

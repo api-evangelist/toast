@@ -1,0 +1,214 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/orders-order-structure.json",
+  "name": "Order",
+  "description": "A Toast platform order is composed of one or more checks. Each check has \none or more menu item selections.\n\nThe `externalId` value for an order must be unique. If you submit an order\nwith an `externalId` that already exists for another order, the request\nwill fail. You can use this behavior to implement idempotent order\nsubmission by always providing a consistent `externalId` for each unique\norder attempt.\n",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/ExternalReference"
+    },
+    {
+      "type": "object",
+      "required": [
+        "diningOption",
+        "checks"
+      ],
+      "properties": {
+        "openedDate": {
+          "description": "The business date of the order.\n\nFor dine-in and as soon as possible (ASAP) orders, `openedDate` should match `createdDate`.\n\nFor scheduled orders, `openedDate` should match `promisedDate`.\n\nIf you do not provide a value for \n`openedDate` value when you `POST` a new order, the\nbusiness date of the order is set to the restaurant\nbusiness day that corresponds to the current date and\ntime.\n\nThe business date of an order is affected by the\nbusiness date cutoff time for a restaurant, which is\navailable from the restaurants API in the `closeoutHour` property.\n",
+          "type": "datetime",
+          "example": "2025-02-07T08:00:00.000-0800"
+        },
+        "modifiedDate": {
+          "type": "datetime",
+          "description": "The most recent date that the order, or a check or menu item selection in the order, was modified.",
+          "example": "2025-02-07T08:00:00.000-0800"
+        },
+        "promisedDate": {
+          "description": "For scheduled orders, the date and time that the order is scheduled to be fulfilled.\n\nFor dine-in and as soon as possible (ASAP) orders, `promisedDate` is `null`.\n",
+          "type": "datetime",
+          "example": "2025-05-01T08:00:00.000-0800"
+        },
+        "channelGuid": {
+          "description": "Reserved for future use.\n",
+          "type": "uuid"
+        },
+        "diningOption": {
+          "description": "The restaurant-configured dining option that applies to this order.",
+          "$ref": "#/definitions/ExternalReference"
+        },
+        "checks": {
+          "type": "array",
+          "description": "The checks for this order. Most orders have one check.\n\nIf the check is split, then there are multiple checks.\n",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/definitions/Check"
+          }
+        },
+        "table": {
+          "type": "object",
+          "description": "The restaurant table at which this order was placed.\n",
+          "$ref": "#/definitions/ExternalReference"
+        },
+        "serviceArea": {
+          "x-toast-read-only": true,
+          "type": "object",
+          "description": "The service area. Response only.",
+          "$ref": "#/definitions/ExternalReference"
+        },
+        "restaurantService": {
+          "x-toast-read-only": true,
+          "type": "object",
+          "description": "The applicable meal service. For example, lunch or dinner. Response only.",
+          "$ref": "#/definitions/ExternalReference"
+        },
+        "revenueCenter": {
+          "type": "object",
+          "description": "The division or section of a restaurant that the order is\nfulfilled in.\n\nYou use revenue centers to analyze financial reporting information.\n",
+          "$ref": "#/definitions/ExternalReference"
+        },
+        "source": {
+          "x-toast-read-only": true,
+          "type": "string",
+          "description": "Indicates the way that the order was placed.\n\nValid values:\n\n* `In Store`\n* `Online`\n* `Order-and-Pay-at-Table`\n* `API`\n* `Kiosk`\n* `Caller Id`\n* `Google`\n* `Invoice`\n* `Toast Pickup App`\n* `Toast Local`\n* `Toast Pay`\n* `Branded Online Ordering`\n* `Catering`\n* `Catering Online Ordering`\n* `Toast Tables`\n* `eCommerce Online ordering`\n* `Branded Mobile App`\n* `Grubhub` (deprecated)\n\nResponse only.\n"
+        },
+        "duration": {
+          "x-toast-read-only": true,
+          "type": "int32",
+          "description": "The number of seconds between creation and payment. Response only."
+        },
+        "deliveryInfo": {
+          "description": "Delivery information related to orders with a `DELIVERY` dining option.",
+          "$ref": "#/definitions/DeliveryInfo"
+        },
+        "requiredPrepTime": {
+          "type": "string",
+          "format": "ISO-8601",
+          "description": "The amount of time that it will take to prepare the order. This value overrides the \ndefault `deliveryPrepTime` or `takeoutPrepTime` that normally controls auto-firing for scheduled orders.\n\nYou can use `requiredPrepTime` to handle atypical orders that will take more time than usual for a restaurant to prepare.\n\nExpress the required preparation time in ISO-8601 duration format. Must be greater than zero and be an \nincrement of five minutes. For example, the value \"PT15M\" sets the required preparation time for the order to 15 minutes.\n"
+        },
+        "estimatedFulfillmentDate": {
+          "x-toast-read-only": true,
+          "type": "datetime",
+          "description": "The date and time that the order is expected to be ready for pickup or to be delivered.\n\nThis value is only set when the order dining option uses the `DELIVERY` or `TAKE_OUT` dining behavior. For other dining options, the value is `null`.\n\nResponse only.\n",
+          "example": "2025-05-01T08:00:00.000-0800"
+        },
+        "numberOfGuests": {
+          "type": "int32",
+          "description": "The number of restaurant guests that are associated with the\norder. For example, for a dine-in order, this might be the\nnumber of guests at a table.\n"
+        },
+        "voided": {
+          "x-toast-read-only": true,
+          "type": "boolean",
+          "description": "Set to `true` if this order was voided. Response only."
+        },
+        "voidDate": {
+          "x-toast-read-only": true,
+          "type": "datetime",
+          "description": "The date on which this order was voided. Response only.",
+          "example": "2025-02-07T08:00:00.000-0800"
+        },
+        "voidBusinessDate": {
+          "x-toast-read-only": true,
+          "type": "int32",
+          "description": "The business date (yyyyMMdd) on which this order was voided. Response only."
+        },
+        "paidDate": {
+          "type": "datetime",
+          "description": "The most recent date on which this order received payment. If not specified when `POST`ing, it is set to the current system time.",
+          "example": "2025-02-07T08:00:00.000-0800"
+        },
+        "closedDate": {
+          "type": "datetime",
+          "description": "The most recent date on which the order payment status changed to `CLOSED`.\n\nThis status is not returned for the order. The order is simply `CLOSED` when all of the checks on the order are `CLOSED`.\n",
+          "example": "2025-02-07T08:00:00.000-0800"
+        },
+        "deletedDate": {
+          "type": "datetime",
+          "description": "The date and time when the order was deleted.\n\nThe `deletedDate` value only\napplies when the `deleted` value is `true`.\n\nIf `deleted` is `false`, the value\nof `deletedDate` is the UNIX epoch, `1970-01-01T00:00:00.000+0000`.\n",
+          "example": "2025-02-07T08:00:00.000-0800"
+        },
+        "deleted": {
+          "x-toast-read-only": true,
+          "type": "boolean",
+          "description": "Set to `true` if this order is deleted. Response only.\n\nFor example, if you combine a\ncheck into another order, the original order for the check is deleted.\n"
+        },
+        "businessDate": {
+          "x-toast-read-only": true,
+          "type": "int32",
+          "description": "The business date (yyyyMMdd) on which the order was fulfilled. Response only."
+        },
+        "server": {
+          "description": "The restaurant employee, or server, who is assigned to the order.",
+          "$ref": "#/definitions/ExternalReference"
+        },
+        "pricingFeatures": {
+          "type": "array",
+          "description": "Pricing features that this order is using.",
+          "items": {
+            "type": "string",
+            "description": "A specific pricing feature used to price out the order.",
+            "enum": [
+              "TAXESV2",
+              "TAXESV3"
+            ]
+          }
+        },
+        "approvalStatus": {
+          "x-toast-read-only": true,
+          "type": "string",
+          "description": "The current state of the order in the restaurant order\nfulfillment process. For example, the `approvalStatus`\ncan indicate that an order is waiting for a restaurant\nemployee to approve it or that the order is in a\nrestaurant kitchen being fulfilled. Response only.\n\nValid values:\n\n* `NEEDS_APPROVAL` - The order is created but will\nnot be fulfilled by the restaurant until an employee\napproves it.\n\n* `APPROVED` - The order is being fulfilled by the\nrestaurant or it was fulfilled in the past. Orders\nremain in this state indefinitely after they are\nfulfilled.\n\n* `FUTURE` - The order is expected to be fulfilled by the\nrestaurant at a future date and time. Restaurant\nemployees will receive information about the order at the\ndate and time that it is ready to be fulfilled.\n\n* `NOT_APPROVED` - Restaurant employees received\ninformation about the order but did not approve it for\nfulfillment. An order enters this state after a period of\ntime passes without a restaurant employee approving it.\n",
+          "enum": [
+            "NEEDS_APPROVAL",
+            "APPROVED",
+            "FUTURE",
+            "NOT_APPROVED"
+          ]
+        },
+        "createdDevice": {
+          "description": "The Toast POS device that created the order. This value is `null` if the order was not created using a Toast POS device.",
+          "$ref": "#/definitions/Device"
+        },
+        "createdDate": {
+          "description": "The date and time that the Toast platform received the order.",
+          "type": "datetime",
+          "example": "2025-02-07T08:00:00.000-0800"
+        },
+        "lastModifiedDevice": {
+          "description": "The Toast POS device that modified the order most recently. This value is `null` if the order was never modified using a Toast POS device.\n\nIf the order is modified but the modification was not made using a Toast POS device, this value does not change.\n",
+          "type": "object",
+          "$ref": "#/definitions/Device"
+        },
+        "curbsidePickupInfo": {
+          "description": "Information that the restaurant can use to identify a guest when they arrive outside the restaurant to pick up their order.\n",
+          "type": "object",
+          "$ref": "#/definitions/CurbsidePickupInfo"
+        },
+        "marketplaceFacilitatorTaxInfo": {
+          "description": "Information about the taxes that a marketplace\nfacilitator organization remits on behalf of a Toast\nplatform restaurant.\n\n`POST` only. The orders API does not\ninclude the `marketplaceFacilitatorTaxInfo` value in\nresponse data.\n\n**Note**: you can only include this information if your\nToast API client is associated with a designated\nmarketplace facilitator organization. Most Toast API\nclients do not create marketplace facilitator orders.\n",
+          "type": "object",
+          "$ref": "#/definitions/MarketplaceFacilitatorTaxInfo"
+        },
+        "createdInTestMode": {
+          "type": "boolean",
+          "description": "Indicates whether the order was created while the restaurant was\nin test mode.\n\nFor more information, see [this _Toast Central_\narticle](https://central.toasttab.com/s/article/Test-Mode-Enable-and-Disable-1492802389999)\n"
+        },
+        "appliedPackagingInfo": {
+          "description": "Information describing the guest's packaging preferences for this order, for example utensils, napkins, condiments.\n\nFor more information, see [Packaging preferences](https://doc.toasttab.com/doc/devguide/apiOrdersPackagingPreferences.html)\n",
+          "type": "object",
+          "$ref": "#/definitions/AppliedPackagingInfo"
+        },
+        "excessFood": {
+          "x-toast-read-only": true,
+          "type": "boolean",
+          "description": "Indicates whether the order was created to track excess food (for example, food waste) rather than a \nstandard guest order. Response only.\n\nFor more information on the differences between guest orders and excess food orders, see \n[Daily order for tracking excess food](https://doc.toasttab.com/doc/devguide/apiDailyOrderForTrackingExcessFood.html).\n"
+        },
+        "displayNumber": {
+          "x-toast-read-only": true,
+          "type": "string",
+          "description": "Response only. Generally starts at one each day and counts up. Not guaranteed to be unique, can be empty if unset."
+        }
+      }
+    }
+  ]
+}

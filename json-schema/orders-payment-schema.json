@@ -1,0 +1,223 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/orders-payment-schema.json",
+  "title": "Payment",
+  "description": "Defines a payment.",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/definitions/ExternalReference"
+    },
+    {
+      "type": "object",
+      "required": [
+        "type",
+        "amount",
+        "tipAmount"
+      ],
+      "properties": {
+        "paidDate": {
+          "description": "The date on which the payment was made.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "paidBusinessDate": {
+          "x-toast-read-only": true,
+          "description": "The business date (yyyyMMdd) on which this payment was first applied. Response only.",
+          "type": "integer"
+        },
+        "type": {
+          "type": "string",
+          "description": "The payment method.\n\nWhen `POST`ing, only `OTHER` and `CREDIT` payment types are supported. For cash payments, you create an external cash payment type in Other Payment Options.\n\nAll other types are response only.\n\nValid values:\n\n* `CASH` - The guest paid in cash.\n* `CREDIT` - The guest used a credit card.\n* `GIFTCARD` - The guest used a gift card.\n* `HOUSE_ACCOUNT` - The guest used funds from their house account.\n* `REWARDCARD` - The guest used the available balance on a rewards card.\n* `LEVELUP` - The guest used the LevelUp app.\n* `TOAST_SV` - The guest used their Toast Cash stored value.\n* `OTHER` - The payment type is a custom type configured by the restaurant.\n* `UNDETERMINED` - The payment type cannot be determined.\n",
+          "enum": [
+            "CASH",
+            "CREDIT",
+            "GIFTCARD",
+            "HOUSE_ACCOUNT",
+            "REWARDCARD",
+            "LEVELUP",
+            "TOAST_SV",
+            "OTHER",
+            "UNDETERMINED"
+          ]
+        },
+        "cardEntryMode": {
+          "x-toast-read-only": true,
+          "type": "string",
+          "description": "Indicates how credit card data was obtained. Response only.\n\nValid values:\n\n* `SWIPED` - The credit card was swiped through a card reader.\n* `KEYED` - The restaurant employee typed the card number into a device.\n* `ONLINE` - The credit card information was entered online.\n* `EMV_CHIP_SIGN` - The credit card was inserted into a chip reader.\n* `TOKENIZED` - The credit card number is tokenized, meaning that it is replaced by a series of randomly generated numbers. The authorizer is able to use the token to authorize the actual credit card.\n* `PRE_AUTHED` - The credit card was pre-authorized for an initial amount. An example of pre-authorization is swiping a credit card to start a bar tab. The final payment is authorized when the order is complete.\n* `SAVED_CARD` - The credit card information was retrieved from the guest's account.\n* `FUTURE_ORDER` - The credit card payment was included on a scheduled order.\n* `CONTACTLESS` - The guest used a contactless payment option to provide the credit card number.\n* `APPLE_PAY_CNP` - The guest used the Apple Pay app to make the payment.\n* `GOOGLE_PAY_CNP` - The guest used the Google Pay app to make the payment.\n* `INCREMENTAL_PRE_AUTHED` - An additional payment was added to a pre-authorized card. For example, a guest uses a credit card to open a bar tab. As they continue to order more drinks, the pre-authorized amount is updated. The final payment is authorized when the order is complete.\n* `PARTNER_ECOM_COF` - The restaurant has the credit card on file.\n* `CLICK_TO_PAY_CNP` - The guest used Click to Pay to make the payment.\n",
+          "enum": [
+            "SWIPED",
+            "KEYED",
+            "ONLINE",
+            "EMV_CHIP_SIGN",
+            "TOKENIZED",
+            "PRE_AUTHED",
+            "SAVED_CARD",
+            "FUTURE_ORDER",
+            "CONTACTLESS",
+            "APPLE_PAY_CNP",
+            "GOOGLE_PAY_CNP",
+            "INCREMENTAL_PRE_AUTHED",
+            "PARTNER_ECOM_COF",
+            "CLICK_TO_PAY_CNP"
+          ]
+        },
+        "amount": {
+          "type": "number",
+          "format": "double",
+          "description": "The amount of this payment, excluding tips."
+        },
+        "tipAmount": {
+          "type": "number",
+          "format": "double",
+          "description": "The amount tipped on this payment."
+        },
+        "amountTendered": {
+          "type": "number",
+          "format": "double",
+          "description": "The amount tendered for this payment. The amount tendered does not include the tip."
+        },
+        "cardType": {
+          "x-toast-read-only": true,
+          "type": "string",
+          "description": "The type of credit card that was used. Response only.",
+          "enum": [
+            "VISA",
+            "MASTERCARD",
+            "AMEX",
+            "DISCOVER",
+            "JCB",
+            "DINERS",
+            "CIT",
+            "MAESTRO",
+            "LASER",
+            "SOLO",
+            "INTERAC",
+            "EFTPOS",
+            "WRIGHT_EXPRESS",
+            "VOYAGER",
+            "UNKNOWN"
+          ]
+        },
+        "first6Digits": {
+          "x-toast-read-only": true,
+          "type": "string",
+          "description": "The first 6 digits of the card that was used. Response only."
+        },
+        "last4Digits": {
+          "x-toast-read-only": true,
+          "type": "string",
+          "description": "The last 4 digits of the credit card that was used. Response only."
+        },
+        "originalProcessingFee": {
+          "x-toast-read-only": true,
+          "type": "number",
+          "format": "double",
+          "description": "The original processing fee for this payment. Populated after the payment is captured. Response only."
+        },
+        "server": {
+          "x-toast-read-only": true,
+          "description": "The restaurant employee, or server, who is associated with the payment. Response only.",
+          "$ref": "#/definitions/ExternalReference"
+        },
+        "cashDrawer": {
+          "x-toast-read-only": true,
+          "type": "object",
+          "description": "A reference to the `cashDrawer` used to receive this payment. Response only.",
+          "$ref": "#/definitions/ExternalReference"
+        },
+        "refundStatus": {
+          "x-toast-read-only": true,
+          "type": "string",
+          "description": "Indicates whether the payment was refunded. Response only.\n\nValid values:\n* `NONE` - The payment was not refunded.\n* `PARTIAL` - The payment was partially refunded.\n* `FULL` - The payment was refunded in full.\n",
+          "enum": [
+            "NONE",
+            "PARTIAL",
+            "FULL"
+          ]
+        },
+        "refund": {
+          "x-toast-read-only": true,
+          "type": "object",
+          "description": "Response only.",
+          "$ref": "#/definitions/Refund"
+        },
+        "paymentStatus": {
+          "x-toast-read-only": true,
+          "type": "string",
+          "description": "The status of this payment when the type is `CREDIT`. Response only.\n\nValid values:\n\n* `OPEN` - The payment has not been presented for processing.\n* `PROCESSING` - The payment is being processed.\n* `AUTHORIZED_AT_RISK` - (DEPRECATED) This value is no longer used.\n* `AUTHORIZED` - The payment is approved but not yet captured. The card is valid and the funds are available.\n* `ERROR` - An error occurred during the payment processing.\n* `ERROR_NETWORK` - Unable to connect to the payment authorizer.\n* `DENIED` - The payment request was denied. For example, the provided credit card is over its limit.\n* `PROCESSING_VOID` - A void request for the payment is being processed.\n* `VOIDED_AT_RISK` - This value is no longer used.\n* `CANCELLED` - The payment is canceled.\n* `CAPTURE_IN_PROGRESS` - The payment is in the process of being captured.\n* `CAPTURED` - The payment has been captured. When the payment is captured, the guest account is charged for the transaction amount.\n* `VOIDED` - The payment is voided.\n",
+          "enum": [
+            "OPEN",
+            "PROCESSING",
+            "AUTHORIZED_AT_RISK",
+            "AUTHORIZED",
+            "ERROR",
+            "ERROR_NETWORK",
+            "DENIED",
+            "PROCESSING_VOID",
+            "VOIDED_AT_RISK",
+            "CANCELLED",
+            "CAPTURE_IN_PROGRESS",
+            "CAPTURED",
+            "VOIDED"
+          ]
+        },
+        "voidInfo": {
+          "x-toast-read-only": true,
+          "type": "object",
+          "description": "If the payment was voided, this contains information about who did it and when. Response only.",
+          "$ref": "#/definitions/VoidInformation"
+        },
+        "houseAccount": {
+          "x-toast-read-only": true,
+          "type": "object",
+          "description": "A reference to the house account, if any, that is associated with this payment. Response only.",
+          "$ref": "#/definitions/ExternalReference"
+        },
+        "otherPayment": {
+          "description": "Required when the payment type is `OTHER`. A reference to an alternative payment method that was configured by the restaurant.",
+          "$ref": "#/definitions/ExternalReference"
+        },
+        "createdDevice": {
+          "description": "The Toast POS device that created the payment. This value is `null` if the payment was not created using a Toast POS device.",
+          "$ref": "#/definitions/Device"
+        },
+        "lastModifiedDevice": {
+          "description": "The Toast POS device that modified the payment most recently. This value is `null` if the payment was never modified using a Toast POS device.\n\nIf the payment is modified but the modification was not made using a Toast POS device, then this value does not change.\n",
+          "type": "object",
+          "$ref": "#/definitions/Device"
+        },
+        "mcaRepaymentAmount": {
+          "x-toast-read-only": true,
+          "description": "The total currency amount withheld as payments or repayments that\napply to your business. For example, the `mcaRepaymentAmount` might include:\n\n* Toast Capital payments\n* Marketplace facilitator tax\n* Toast Delivery Services costs\n* Instant deposits\n\nThe MCA repayment amount is set at the time the payment is\ncaptured, which is typically hours after the actual restaurant\nguest payment.\n\nUntil the `mcaRepaymentAmount` is set, this value is `null`.\n\nThe `mcaRepaymentAmount` _might_ be updated when the payment is\nsettled, which is typically one or more days after the actual\nguest payment. Response only.\n\nYou can use the following resources to find more specific\ninformation about the payment and repayment amounts that are\nincluded in `mcaRepaymentAmount`.\n\n* [Toast Capital payments](https://www.toasttab.com/restaurants/admin/capital/)\n* [Marketplace facilitator tax](https://www.toasttab.com/restaurants/admin/reports/home#sales-summary)\n* [Marketplace facilitator tax in API data](https://doc.toasttab.com/openapi/orders/tag/Data-definitions/schema/MarketplaceFacilitatorTaxInfo/)\n* [Instant deposits](https://www.toasttab.com/restaurants/admin/instant-deposit)\n* [Toast Delivery Services fees and tips](https://www.toasttab.com/restaurants/admin/reports/home#sales-summary)\n* [Toast Delivery Services fees and tips description](https://www.toasttab.com/restaurants/admin/reports/home#sales-summary)\n\n_Important_: Some of the resources listed here require access to\nToast products as a restaurant employee or operator. If your\norganization provides an integration service you might not have\naccess to the Toast products used by the restaurants you integrate\nwith. Toast support cannot provide access to Toast product\ninformation. That information is only available to direct Toast\nproduct users.\n",
+          "type": "number",
+          "format": "double"
+        },
+        "cardPaymentId": {
+          "x-toast-read-only": true,
+          "type": "string",
+          "description": "**Note:** this value is in limited release. Your orders API\nintegration might not include the `cardPaymentId` value.\n\nA unique identifier for the credit card used for a\n`CREDIT` type payment. The identifier string is generated\nby the Toast platform and _does not include any\ninformation related to or associated with the actual\ncredit card account._ The identifier is unique within\nyour restaurant management group.\n\nThe value is `null` for the following payment types:\n\n* Payment types other than `CREDIT`\n* Credit card payments entered using EMV (chip cards)\n* Credit card payments entered by keying in card numbers\n\nResponse only.\n"
+        },
+        "orderGuid": {
+          "x-toast-read-only": true,
+          "type": "string",
+          "description": "The Toast platform identifier for the order that contains the payment. Response only."
+        },
+        "checkGuid": {
+          "x-toast-read-only": true,
+          "type": "string",
+          "description": "The Toast platform identifier for the check that contains the payment. Response only."
+        },
+        "tenderTransactionGuid": {
+          "type": "string",
+          "description": "For internal use only."
+        },
+        "networkTransactionIdentifier": {
+          "x-toast-read-only": true,
+          "type": "string",
+          "description": "Card network identifier for transactions. Response only.\n\nFor more information, see [networkTransactionIdentifier in order payments](https://doc.toasttab.com/doc/apiordersdraftdoc/apiOrdersPaymentNetworkTransactionIdentifier.html).\n"
+        }
+      }
+    }
+  ]
+}

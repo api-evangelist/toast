@@ -1,0 +1,16 @@
+{
+  "chargeAmount": 45.18,
+  "chargeType": "PERCENT",
+  "name": "Sample Name",
+  "delivery": false,
+  "takeout": false,
+  "dineIn": false,
+  "gratuity": false,
+  "taxable": false,
+  "appliedTaxes": [
+    "sample-appliedTaxes_item"
+  ],
+  "serviceChargeCalculation": "POST_DISCOUNT",
+  "serviceChargeCategory": "CASH_ROUNDING",
+  "paymentGuid": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+}

@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/partners-partner-access-external-rep-schema.json",
+  "title": "PartnerAccessExternalRep",
+  "description": "Information about a Toast platform restaurant.\n",
+  "type": "object",
+  "properties": {
+    "restaurantGuid": {
+      "type": "string",
+      "format": "uuid",
+      "description": "The unique Toast POS identifier for the restaurant.\n",
+      "example": "e728cd53-2fa7-4e63-8f8f-93e78ea66b03"
+    },
+    "managementGroupGuid": {
+      "type": "string",
+      "format": "uuid",
+      "description": "The guid of the management group containing the restaurant.\n",
+      "example": "bdfda703-2a83-4e0f-9b8a-8ea0ee6cab79"
+    },
+    "deleted": {
+      "type": "boolean",
+      "description": "Indicates whether the restaurant is actively using the Toast \nplatform. For example, if a restaurant is no longer operating, \nor is no longer using the Toast platform, this value is `true`.\n"
+    },
+    "restaurantName": {
+      "type": "string",
+      "description": "The human-readable name of the restaurant location.\n",
+      "example": "Main Street Cafe"
+    },
+    "locationName": {
+      "type": "string",
+      "description": "The identifier of a specific restaurant location, set on the \n*Restaurant Info* page of Toast Web. \nFor example, a restaurant group might assign a location code \nsuch as #1234 to a specific location.\n",
+      "example": "123 Main Street"
+    },
+    "createdByEmailAddress": {
+      "type": "string",
+      "description": "The email address of the restaurant employee who connected the\nrestaurant to your integrated partner service, or who edited the\nconnection details.\n",
+      "example": "clefebvre@mainstreetcafe.com"
+    },
+    "externalGroupRef": {
+      "type": "string",
+      "description": "An identifier for the restaurant group that is recognized by your\nintegrated partner service. This information is entered by the\nrestaurant administrator. If you need information about the restaurant\ngroup in this data string, you instruct the restaurant administrator\nto enter it in the Toast platform configuration for the integration\npartner connection.\n"
+    },
+    "externalRestaurantRef": {
+      "type": "string",
+      "description": "An identifier for the restaurant location that is recognized by your\nintegrated partner service. This information is entered by the\nrestaurant administrator. If you need information about the restaurant\nlocation in this data string, you instruct the restaurant\nadministrator to enter it in the Toast platform configuration for the\nintegration partner connection.\n"
+    },
+    "modifiedDate": {
+      "type": "integer",
+      "format": "int64",
+      "description": "The most recent date and time that the partner connection\nwas edited in epoch time (milliseconds since 1970-01-01 00:00:00).\n",
+      "example": 1678846869551
+    },
+    "createdDate": {
+      "type": "integer",
+      "format": "int64",
+      "description": "The date and time that the partner connection was created in epoch\ntime (milliseconds since 1970-01-01 00:00:00).\n",
+      "example": 1643858534451
+    },
+    "isoModifiedDate": {
+      "type": "string",
+      "description": "The most recent date and time that the partner connection\nwas edited in ISO8601 format.\n",
+      "example": "2023-03-12 08:32:34.008000+00:00"
+    },
+    "isoCreatedDate": {
+      "type": "string",
+      "description": "The date and time that the partner connection was created in ISO8601\nformat.\n",
+      "example": "2022-05-17 10:21:38.008000+00:00"
+    }
+  }
+}

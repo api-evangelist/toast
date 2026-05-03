@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/restaurants-location-structure.json",
+  "name": "Location",
+  "description": "Information about the physical location of a restaurant.",
+  "type": "object",
+  "properties": {
+    "address1": {
+      "type": "string",
+      "description": "The first line of the street address of the restaurant."
+    },
+    "address2": {
+      "type": "string",
+      "description": "The second line of the street address of the restaurant."
+    },
+    "city": {
+      "type": "string",
+      "description": "The city or town of the restaurant. restaurant."
+    },
+    "stateCode": {
+      "type": "string",
+      "description": "Deprecated. Get the state or province of a restaurant in the\n`administrativeArea` value.\n\nThe abbreviation of the state or province of the restaurant.\n"
+    },
+    "administrativeArea": {
+      "type": "string",
+      "description": "The name of the geographical division (for example, state, province,\nor county) that the restaurant is located in.\n"
+    },
+    "zipCode": {
+      "type": "string",
+      "description": "The ZIP or postal code of the restaurant."
+    },
+    "country": {
+      "type": "string",
+      "description": "The nation of the restaurant."
+    },
+    "phone": {
+      "type": "string"
+    },
+    "phoneCountryCode": {
+      "type": "string",
+      "description": "A numeric code corresponding to one or more countries,\nused as a telephone number prefix when making \ninternational telephone calls.\n"
+    },
+    "latitude": {
+      "type": "double",
+      "description": "The north/south geographic coordinate of the restaurant, in decimal degrees."
+    },
+    "longitude": {
+      "type": "double",
+      "description": "The east/west geographic coordinate of the restaurant, in decimal degrees."
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-schema/menus-catalog-product-variant-option-schema.json",
+  "title": "CatalogProductVariantOption",
+  "description": "A selected option for a retail product variant.\n",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "The unique identifier for the product variant option.\n"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the product variant option, for example, \"size\".\n"
+    },
+    "sortOrder": {
+      "type": "integer",
+      "description": "The sort order of the product variant option.\n"
+    },
+    "value": {
+      "$ref": "#/definitions/CatalogProductOptionValue"
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "paidDate": "2025-03-15T14:30:00Z",
+  "paidBusinessDate": 48,
+  "type": "GIFTCARD",
+  "cardEntryMode": "SAVED_CARD",
+  "amount": 61.54,
+  "tipAmount": 18.57,
+  "amountTendered": 29.68,
+  "cardType": "WRIGHT_EXPRESS",
+  "first6Digits": "sample-first6Digits",
+  "last4Digits": "sample-last4Digits",
+  "originalProcessingFee": 16.65,
+  "refundStatus": "FULL",
+  "paymentStatus": "ERROR_NETWORK"
+}

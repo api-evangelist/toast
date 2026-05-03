@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/orders-refund-transaction-structure.json",
+  "name": "RefundTransaction",
+  "description": "RefundTransaction schema from Toast API",
+  "allOf": [
+    {
+      "$ref": "#/definitions/ToastReference"
+    },
+    {
+      "type": "object",
+      "description": "An identifier for the refund transaction. You can use the identifier to associate items and service charges that were refunded in the same transaction.\n"
+    }
+  ]
+}

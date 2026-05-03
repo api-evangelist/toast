@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/json-structure/partners-paginated-response-structure.json",
+  "name": "PaginatedResponse",
+  "description": "A wrapper object containing paginated sets of response data. The `results`\nvalue is an array of `PartnerAccessExternalRep` objects, which hold\ninformation about Toast platform restaurants. Also includes pagination\ndetails such as how many pages are included in the response, or the total\nnumber of objects in the `results` array.\n",
+  "type": "object",
+  "example": {
+    "currentPageNum": 1,
+    "results": [
+      {
+        "restaurantGuid": "7ab295f6-8dc8-4cb6-8cdb-072b83e84184",
+        "managementGroupGuid": "75063706-dd6e-4da6-8bb6-3a99e218e686",
+        "restaurantName": "Main Street Cafe",
+        "locationName": "123 Main Street",
+        "createdByEmailAddress": "clefebvre@mainstreetcafe.com",
+        "externalGroupRef": "",
+        "externalRestaurantRef": "",
+        "modifiedDate": 1678823073353,
+        "createdDate": 1678823073353,
+        "isoModifiedDate": "2023-03-14T19:44:33.353Z",
+        "isoCreatedDate": "2023-03-14T19:44:33.353Z"
+      }
+    ],
+    "totalResultCount": 3222,
+    "pageSize": 1,
+    "currentPageToken": "cDoxLHM6MQ==",
+    "nextPageToken": "cDoyLHM6MQ==",
+    "totalCount": 3222,
+    "nextPageNum": 2,
+    "lastPageNum": 3222
+  },
+  "properties": {
+    "currentPageNum": {
+      "type": "int32",
+      "description": "The active page within all repsonse pages. You can see the total amount of pages at the end of the response in the `lastPageNum` field.\n",
+      "example": 12
+    },
+    "results": {
+      "type": "array",
+      "description": "An array of `PartnerAccessExternalRep` objects that include\ninformation about Toast platform restaurants.\n",
+      "items": {
+        "$ref": "#/definitions/PartnerAccessExternalRep"
+      }
+    },
+    "totalResultCount": {
+      "type": "int32",
+      "description": "The total number of records returned.\n",
+      "example": 1234
+    },
+    "pageSize": {
+      "type": "int32",
+      "description": "The number of restaurants returned in each page of response data.\n",
+      "example": 100
+    },
+    "currentPageToken": {
+      "type": "string",
+      "description": "A string that identifies the current page of response data.\n",
+      "example": "cDoxLHM6MQ=="
+    },
+    "nextPageToken": {
+      "type": "string",
+      "description": "A string that identifies the following page of response data.\n",
+      "example": "cDoyLHM6MQ=="
+    },
+    "totalCount": {
+      "type": "int32",
+      "description": "The total number of results within the response record.\n",
+      "example": 1234
+    },
+    "nextPageNum": {
+      "type": "int32",
+      "description": "The next available page in the data. `Null` if the current page of\nresults is the last available page.\n",
+      "example": 14
+    },
+    "lastPageNum": {
+      "type": "int32",
+      "description": "The last page number in the response data.\n",
+      "example": 13
+    },
+    "previousPageNum": {
+      "type": "int32",
+      "description": "The page number for the page previous to your current page in\nsequential order. `Null` if there are no pages previous to your\ncurrent page.\n",
+      "example": 12
+    }
+  }
+}
