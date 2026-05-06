@@ -1,5 +1,6 @@
 specification: FinOps Framework
 specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
 alignedWith:
   framework: FinOps Foundation Framework
   frameworkUrl: https://www.finops.org/framework/
@@ -8,167 +9,80 @@ alignedWith:
   dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
 provider: Toast
 providerId: toast
-publisherName: Toast
-serviceCategory: API
+publisherName: Toast, Inc.
+serviceCategory: Restaurant POS & Payments
 created: '2026-05-04'
-modified: '2026-05-04'
+modified: '2026-05-05'
+reconciled: false
 tags:
   - Food Service
   - Point of Sale
   - Restaurants
   - Hospitality
   - FinOps
-  - Cost Management
   - FOCUS
-description: FinOps framework definition for the Toast API surface. Provides a FOCUS-aligned mapping for
-  cost allocation, usage measurement, and unit-economics reporting across the provider's APIs.
-principles:
-  - name: Visibility
-    description: Make API consumption costs visible to engineering, product, and finance teams in near
-      real-time.
-  - name: Allocation
-    description: Tag every chargeable API call with the consuming team, environment, application, and
-      feature so cost can be allocated.
-  - name: Optimization
-    description: Continuously evaluate request patterns, caching, batching, and tier selection to reduce
-      cost per useful unit of work.
-  - name: Accountability
-    description: Establish budget owners and chargeback or showback flows for each consuming team.
-domains:
-  - name: Understand Usage and Cost
-    capabilities:
-      - Data Ingestion
-      - Allocation
-      - Reporting and Analytics
-      - Anomaly Management
-  - name: Quantify Business Value
-    capabilities:
-      - Planning and Estimating
-      - Forecasting
-      - Budgeting
-      - Benchmarking
-      - Unit Economics
-  - name: Optimize Usage and Cost
-    capabilities:
-      - Architecting for Cloud
-      - Rate Optimization
-      - Workload Optimization
-      - Cloud Sustainability
-      - Licensing and SaaS
-  - name: Manage the FinOps Practice
-    capabilities:
-      - FinOps Practice Operations
-      - FinOps Education and Enablement
-      - Invoicing and Chargeback
-      - Onboarding Workloads
-      - Intersecting Disciplines
+description: 'FinOps shape for Toast: a hybrid POS subscription + payment processing take-rate + hardware
+  purchase model, with API access bundled into the partner relationship. Specific dollar amounts and meter
+  rates are sales-led and not exposed publicly, so this artifact captures the structure rather than reconciled
+  rates.'
+sources:
+  - https://pos.toasttab.com/
+notes: Public pricing pages returned 403 to WebFetch; rates and per-meter prices are not reconcilable
+  without a Toast quote. Meters described here are structural (what Toast bills on), not priced.
 billingModel:
-  pricingCategory: Usage-Based
+  pricingCategory: Subscription + Take Rate + Hardware
   billingFrequency: Monthly
   billingCurrency: USD
   chargeCategories:
     - Usage
     - Purchase
     - Tax
-    - Credit
     - Adjustment
-  chargeFrequency: Recurring
+    - Refund
 focusColumns:
   ServiceName: Toast
-  ServiceCategory: Developer Tools / API
+  ServiceCategory: Restaurant POS & Payments
   ProviderName: Toast
-  PublisherName: Toast
-  InvoiceIssuerName: Toast
-  PricingCategory: Usage-Based
-  PricingUnit: request
+  PublisherName: Toast, Inc.
+  InvoiceIssuerName: Toast, Inc.
   BillingCurrency: USD
-  ChargeCategory: Usage
 meters:
-  - name: api_requests
-    description: Count of billable API requests
-    unit: request
+  - name: pos_software_subscription
+    description: Per-restaurant Toast POS software subscription billed monthly.
+    unit: location-month
     aggregation: sum
     dimensions:
-      - api
-      - endpoint
-      - tier
-      - region
-      - consumer
-  - name: data_egress
-    description: Bytes returned over the network in API responses
-    unit: GB
+      - location
+      - package
+  - name: card_transactions
+    description: Card-present and card-not-present transactions processed through Toast Payments. Take
+      rate is configured per merchant.
+    unit: transaction
     aggregation: sum
     dimensions:
-      - api
-      - region
-      - consumer
-  - name: compute_seconds
-    description: Server-side compute consumed by the request, where applicable
-    unit: second
-    aggregation: sum
+      - location
+      - card_present
+      - card_brand
+  - name: hardware_purchase
+    description: One-time purchase of POS hardware (terminals, KDS, handhelds, peripherals).
+    unit: device
+    aggregation: count
     dimensions:
-      - api
-      - endpoint
-      - tier
-apis:
-  - name: Toast Orders API
-    baseURL: ''
-    tags:
-      - Orders
-      - Payments
-      - Point of Sale
-    serviceName: Toast Orders API
-    serviceCategory: API
-  - name: Toast Menus API
-    baseURL: ''
-    tags:
-      - Menus
-      - Food Service
-    serviceName: Toast Menus API
-    serviceCategory: API
-  - name: Toast Labor API
-    baseURL: ''
-    tags:
-      - Labor
-      - Employees
-      - Scheduling
-    serviceName: Toast Labor API
-    serviceCategory: API
-  - name: Toast Restaurants API
-    baseURL: ''
-    tags:
-      - Restaurants
-      - Configuration
-    serviceName: Toast Restaurants API
-    serviceCategory: API
-  - name: Toast Stock API
-    baseURL: ''
-    tags:
-      - Stock
-      - Inventory
-    serviceName: Toast Stock API
-    serviceCategory: API
-  - name: Toast Partners API
-    baseURL: ''
-    tags:
-      - Partners
-      - Multi-Location
-    serviceName: Toast Partners API
-    serviceCategory: API
-  - name: Toast Authentication API
-    baseURL: ''
-    tags:
-      - Authentication
-      - OAuth
-    serviceName: Toast Authentication API
-    serviceCategory: API
-unitEconomics:
-  - name: Cost per 1K Requests
-    metric: billed_cost / (api_requests / 1000)
-    target: TBD
-  - name: Cost per Active Consumer
-    metric: billed_cost / active_consumers
-    target: TBD
+      - device_type
+      - location
+principles:
+  - name: Visibility
+    description: Pull the Toast invoice and Sales Summary reports per location; reconcile software fees,
+      processing fees, and hardware lines separately because they have different optimization levers.
+  - name: Allocation
+    description: Allocate fees to the operating restaurant location; multi-location operators can roll
+      up by brand or region using Toast's multi-location reporting.
+  - name: Optimization
+    description: Negotiate processing rates at scale, right-size hardware fleets per location, and audit
+      software add-ons (online ordering, marketing) against active usage at each renewal.
+  - name: Accountability
+    description: GM or operations director per location owns the Toast bill; corporate finance owns the
+      processing-rate negotiation for multi-location operators.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
