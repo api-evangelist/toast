@@ -1,0 +1,237 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Toast Labor API — Jobs
+  description: 'Toast Labor API — Jobs. 4 operations. Lead operation: Toast Get Jobs. Self-contained Naftiko capability covering
+    one Toast business surface.'
+  tags:
+  - Toast
+  - Jobs
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TOAST_API_KEY: TOAST_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: labor-jobs
+    baseUri: https://toast-api-server/labor/v1
+    description: Toast Labor API — Jobs business capability. Self-contained, no shared references.
+    resources:
+    - name: jobs
+      path: /jobs
+      operations:
+      - name: jobsget
+        method: GET
+        description: Toast Get Jobs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Toast-Restaurant-External-ID
+          in: header
+          type: string
+          description: 'The Toast platform GUID of the restaurant that is the '
+          required: true
+        - name: jobIds
+          in: query
+          type: array
+          description: 'An optional array of one or more job identifiers, either '
+    - name: jobs-jobId
+      path: /jobs/{jobId}
+      operations:
+      - name: jobsjobidget
+        method: GET
+        description: Toast Get One Job
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Toast-Restaurant-External-ID
+          in: header
+          type: string
+          description: 'The Toast platform GUID of the restaurant that is the '
+          required: true
+        - name: jobId
+          in: path
+          type: string
+          description: 'The Toast platform GUID or an external identifier for the '
+          required: true
+    - name: jobs-jobId-externalId
+      path: /jobs/{jobId}/externalId
+      operations:
+      - name: jobsjobidexternalidpost
+        method: POST
+        description: Toast Add an External Identifier
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Toast-Restaurant-External-ID
+          in: header
+          type: string
+          description: 'The Toast platform GUID of the restaurant that is the '
+          required: true
+        - name: Content-Type
+          in: header
+          type: string
+          description: 'The Internet Assigned Numbers Authority (IANA) media type '
+          required: true
+        - name: body
+          in: body
+          type: string
+          description: 'The JSON string value of the `externalId` for the job '
+          required: true
+      - name: jobsjobidexternalidput
+        method: PUT
+        description: Toast Add or Replace an External Identifier
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Toast-Restaurant-External-ID
+          in: header
+          type: string
+          description: 'The Toast platform GUID of the restaurant that is the '
+          required: true
+        - name: Content-Type
+          in: header
+          type: string
+          description: 'The Internet Assigned Numbers Authority (IANA) media type '
+          required: true
+        - name: body
+          in: body
+          type: string
+          description: 'The JSON string value of the `externalId` for the job '
+          required: true
+  exposes:
+  - type: rest
+    namespace: labor-jobs-rest
+    port: 8080
+    description: REST adapter for Toast Labor API — Jobs. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/jobs
+      name: jobs
+      description: REST surface for jobs.
+      operations:
+      - method: GET
+        name: jobsget
+        description: Toast Get Jobs
+        call: labor-jobs.jobsget
+        with:
+          Toast-Restaurant-External-ID: rest.Toast-Restaurant-External-ID
+          jobIds: rest.jobIds
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/jobs/{jobid}
+      name: jobs-jobid
+      description: REST surface for jobs-jobId.
+      operations:
+      - method: GET
+        name: jobsjobidget
+        description: Toast Get One Job
+        call: labor-jobs.jobsjobidget
+        with:
+          Toast-Restaurant-External-ID: rest.Toast-Restaurant-External-ID
+          jobId: rest.jobId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/jobs/{jobid}/externalid
+      name: jobs-jobid-externalid
+      description: REST surface for jobs-jobId-externalId.
+      operations:
+      - method: POST
+        name: jobsjobidexternalidpost
+        description: Toast Add an External Identifier
+        call: labor-jobs.jobsjobidexternalidpost
+        with:
+          Toast-Restaurant-External-ID: rest.Toast-Restaurant-External-ID
+          Content-Type: rest.Content-Type
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: jobsjobidexternalidput
+        description: Toast Add or Replace an External Identifier
+        call: labor-jobs.jobsjobidexternalidput
+        with:
+          Toast-Restaurant-External-ID: rest.Toast-Restaurant-External-ID
+          Content-Type: rest.Content-Type
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: labor-jobs-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Toast Labor API — Jobs. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: toast-get-jobs
+      description: Toast Get Jobs
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: labor-jobs.jobsget
+      with:
+        Toast-Restaurant-External-ID: tools.Toast-Restaurant-External-ID
+        jobIds: tools.jobIds
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: toast-get-one-job
+      description: Toast Get One Job
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: labor-jobs.jobsjobidget
+      with:
+        Toast-Restaurant-External-ID: tools.Toast-Restaurant-External-ID
+        jobId: tools.jobId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: toast-add-external-identifier
+      description: Toast Add an External Identifier
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: labor-jobs.jobsjobidexternalidpost
+      with:
+        Toast-Restaurant-External-ID: tools.Toast-Restaurant-External-ID
+        Content-Type: tools.Content-Type
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: toast-add-replace-external-identifier
+      description: Toast Add or Replace an External Identifier
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: labor-jobs.jobsjobidexternalidput
+      with:
+        Toast-Restaurant-External-ID: tools.Toast-Restaurant-External-ID
+        Content-Type: tools.Content-Type
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

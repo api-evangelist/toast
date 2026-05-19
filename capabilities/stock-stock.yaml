@@ -1,0 +1,184 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Stock API — Stock
+  description: 'Stock API — Stock. 3 operations. Lead operation: Toast Get Menu Item Inventory for a Restaurant. Self-contained
+    Naftiko capability covering one Toast business surface.'
+  tags:
+  - Toast
+  - Stock
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    TOAST_API_KEY: TOAST_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: stock-stock
+    baseUri: https://toast-api-server/stock
+    description: Stock API — Stock business capability. Self-contained, no shared references.
+    resources:
+    - name: v1-inventory
+      path: /v1/inventory
+      operations:
+      - name: getinventory
+        method: GET
+        description: Toast Get Menu Item Inventory for a Restaurant
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Toast-Restaurant-External-ID
+          in: header
+          type: string
+          description: The Toast GUID of the restaurant queried for inventory information.
+          required: true
+        - name: status
+          in: query
+          type: string
+          description: Limits the items in the response to those items with the specified
+    - name: v1-inventory-search
+      path: /v1/inventory/search
+      operations:
+      - name: postinventorysearch
+        method: POST
+        description: Toast Get Inventory Information for Specific Menu Items
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Toast-Restaurant-External-ID
+          in: header
+          type: string
+          description: The Toast GUID of the restaurant queried for inventory information.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v1-inventory-update
+      path: /v1/inventory/update
+      operations:
+      - name: updateinventory
+        method: PUT
+        description: Toast Update Inventory Information for Specific Menu Items
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Toast-Restaurant-External-ID
+          in: header
+          type: string
+          description: The Toast GUID of the restaurant whose inventory information will be updated.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.TOAST_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: stock-stock-rest
+    port: 8080
+    description: REST adapter for Stock API — Stock. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/v1/inventory
+      name: v1-inventory
+      description: REST surface for v1-inventory.
+      operations:
+      - method: GET
+        name: getinventory
+        description: Toast Get Menu Item Inventory for a Restaurant
+        call: stock-stock.getinventory
+        with:
+          Toast-Restaurant-External-ID: rest.Toast-Restaurant-External-ID
+          status: rest.status
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/inventory/search
+      name: v1-inventory-search
+      description: REST surface for v1-inventory-search.
+      operations:
+      - method: POST
+        name: postinventorysearch
+        description: Toast Get Inventory Information for Specific Menu Items
+        call: stock-stock.postinventorysearch
+        with:
+          Toast-Restaurant-External-ID: rest.Toast-Restaurant-External-ID
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/inventory/update
+      name: v1-inventory-update
+      description: REST surface for v1-inventory-update.
+      operations:
+      - method: PUT
+        name: updateinventory
+        description: Toast Update Inventory Information for Specific Menu Items
+        call: stock-stock.updateinventory
+        with:
+          Toast-Restaurant-External-ID: rest.Toast-Restaurant-External-ID
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: stock-stock-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Stock API — Stock. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: toast-get-menu-item-inventory
+      description: Toast Get Menu Item Inventory for a Restaurant
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: stock-stock.getinventory
+      with:
+        Toast-Restaurant-External-ID: tools.Toast-Restaurant-External-ID
+        status: tools.status
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: toast-get-inventory-information-specific
+      description: Toast Get Inventory Information for Specific Menu Items
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: stock-stock.postinventorysearch
+      with:
+        Toast-Restaurant-External-ID: tools.Toast-Restaurant-External-ID
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: toast-update-inventory-information-specific
+      description: Toast Update Inventory Information for Specific Menu Items
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: stock-stock.updateinventory
+      with:
+        Toast-Restaurant-External-ID: tools.Toast-Restaurant-External-ID
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
