@@ -1,0 +1,146 @@
+{
+  "provider": "Toast",
+  "providerId": "toast",
+  "kind": "json-structure",
+  "description": "Structural overview of the Toast API surface; extracted from openapi/.",
+  "schemaCount": 0,
+  "operationCount": 15,
+  "schemas": [],
+  "operations": [
+    {
+      "method": "GET",
+      "path": "/payments",
+      "operationId": "paymentsGet",
+      "summary": "Toast Get Payment Identifiers",
+      "tags": [
+        "Payments"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/payments/{guid}",
+      "operationId": "paymentsGuidGet",
+      "summary": "Toast Get a Payment",
+      "tags": [
+        "Payments"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/prices",
+      "operationId": "pricesPost",
+      "summary": "Toast Get Order Prices",
+      "tags": [
+        "Orders"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/orders/{guid}",
+      "operationId": "ordersGuidGet",
+      "summary": "Toast Get an Order",
+      "tags": [
+        "Orders"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/ordersBulk",
+      "operationId": "ordersBulkGet",
+      "summary": "Toast Get Multiple Orders",
+      "tags": [
+        "Orders"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/orders/{orderGuid}/checks/{checkGuid}/payments",
+      "operationId": "ordersChecksPaymentsPost",
+      "summary": "Toast Post Payments",
+      "tags": [
+        "Payments"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/orders/{orderGuid}/checks/{checkGuid}/payments/{paymentGuid}",
+      "operationId": "ordersOrderGuidChecksCheckGuidPaymentsPaymentGuidPatch",
+      "summary": "Toast Update a Tip Amount",
+      "tags": [
+        "Payments"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/orders/{orderGuid}/checks/{checkGuid}/selections",
+      "operationId": "ordersOrderGuidChecksCheckGuidSelectionsPost",
+      "summary": "Toast Add Items to a Check",
+      "tags": [
+        "Orders"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/orders/{orderGuid}/checks/{checkGuid}/appliedDiscounts",
+      "operationId": "ordersChecksAppliedDiscountsPost",
+      "summary": "Toast Add Check-level Discounts",
+      "tags": [
+        "Discounts"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/orders/{orderGuid}/checks/{checkGuid}/selections/{selectionGuid}/appliedDiscounts",
+      "operationId": "ordersChecksSelectionsAppliedDiscountsPost",
+      "summary": "Toast Add Item-level Discounts",
+      "tags": [
+        "Discounts"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/orders/{orderGuid}/deliveryInfo",
+      "operationId": "ordersOrderGuidDeliveryInfoPatch",
+      "summary": "Toast Update Delivery Information",
+      "tags": [
+        "Orders"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/orders/{orderGuid}/void",
+      "operationId": "voidOrder",
+      "summary": "Toast Void an Order",
+      "tags": [
+        "Orders"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/orders",
+      "operationId": "ordersGet",
+      "summary": "Toast Get Order Identifiers (deprecated)",
+      "tags": [
+        "Orders"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/orders",
+      "operationId": "ordersPost",
+      "summary": "Toast Post an Order",
+      "tags": [
+        "Orders"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/applicableDiscounts",
+      "operationId": "applicableDiscountsPost",
+      "summary": "Toast Get Applicable Discounts",
+      "tags": [
+        "Discounts"
+      ]
+    }
+  ]
+}

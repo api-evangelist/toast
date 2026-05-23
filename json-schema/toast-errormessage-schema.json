@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ErrorMessage",
+  "title": "ErrorMessage",
+  "type": "object",
+  "description": "An object that contains information about one or more errors that the\nToast platform encountered when processing your API request. For more\ninformation, see [API responses and errors in the _Toast Developer\nGuide_](https://doc.toasttab.com/doc/devguide/apiResponsesAndErrors.html).\n",
+  "properties": {
+    "status": {
+      "type": "integer",
+      "format": "int32",
+      "description": "The HTTP status code of the response.\n"
+    },
+    "code": {
+      "type": "integer",
+      "format": "int32",
+      "description": "A numeric identifier for the error condition.\n"
+    },
+    "message": {
+      "type": "string",
+      "description": "A description of the error condition.\n"
+    },
+    "messageKey": {
+      "type": "string",
+      "description": "Reserved for future use.\n"
+    },
+    "fieldName": {
+      "type": "string",
+      "description": "Reserved for future use.\n"
+    },
+    "link": {
+      "type": "string",
+      "description": "The URL of a resource that provides more information about the error\ncondition.\n"
+    },
+    "requestId": {
+      "type": "string",
+      "description": "The unique identifier of the HTTP request that your client sent to\nthe Toast API.\n"
+    },
+    "developerMessage": {
+      "type": "string",
+      "description": "Additional detail about the error condition, if it is available.\n"
+    },
+    "errors": {
+      "type": "array",
+      "description": "A JSON array of `ErrorMessage` objects.\n",
+      "items": {
+        "$ref": "#/components/schemas/ErrorMessage"
+      }
+    }
+  }
+}
