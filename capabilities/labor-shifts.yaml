@@ -1,0 +1,317 @@
+naftiko: "1.0.0-alpha2"
+
+info:
+  label: "Toast Labor API — Shifts"
+  description: >-
+    Shifts — 5 operations. Lead operation: Toast Get Shifts.
+    Self-contained Naftiko capability covering one Toast business surface.
+  tags:
+    - Toast
+    - Labor
+    - Shifts
+  created: "2026-06-03"
+  modified: "2026-06-03"
+
+binds:
+  - namespace: env
+    keys:
+      TOAST_ACCESS_TOKEN: TOAST_ACCESS_TOKEN
+
+capability:
+
+  consumes:
+    - type: http
+      namespace: "labor-shifts"
+      baseUri: "https://ws-api.toasttab.com/labor/v1"
+      description: "Toast Labor API — Shifts business capability. Self-contained, no shared references."
+      authentication:
+        type: bearer
+        token: "{{env.TOAST_ACCESS_TOKEN}}"
+      resources:
+        - name: "shifts"
+          path: "/shifts"
+          operations:
+            - name: "shiftsGet"
+              method: GET
+              description: "Toast Get Shifts"
+              inputParameters:
+                - name: "Toast-Restaurant-External-ID"
+                  in: header
+                  type: string
+                  required: true
+                  description: "The Toast platform GUID of the restaurant that is the"
+                - name: "shiftIds"
+                  in: query
+                  type: string
+                  required: false
+                  description: "An optional identifier that filters return values for a"
+                - name: "startDate"
+                  in: query
+                  type: string
+                  required: false
+                  description: "Optional start date and time of time period to match"
+                - name: "endDate"
+                  in: query
+                  type: string
+                  required: false
+                  description: "Optional end date and time of time period to match shifts."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: "shifts"
+          path: "/shifts"
+          operations:
+            - name: "shiftsPost"
+              method: POST
+              description: "Toast Create a Shift"
+              inputParameters:
+                - name: "Toast-Restaurant-External-ID"
+                  in: header
+                  type: string
+                  required: true
+                  description: "The Toast platform GUID of the restaurant that is the"
+                - name: "Content-Type"
+                  in: header
+                  type: string
+                  required: true
+                  description: "The Internet Assigned Numbers Authority (IANA) media type"
+                - name: "body"
+                  in: body
+                  type: string
+                  required: true
+                  description: "A `Shift` object containing information about the shift,"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: "shifts-shiftid"
+          path: "/shifts/{shiftId}"
+          operations:
+            - name: "shiftsShiftIdGet"
+              method: GET
+              description: "Toast Get a Shift"
+              inputParameters:
+                - name: "Toast-Restaurant-External-ID"
+                  in: header
+                  type: string
+                  required: true
+                  description: "The Toast platform GUID of the restaurant that is the"
+                - name: "shiftId"
+                  in: path
+                  type: string
+                  required: true
+                  description: "The Toast platform GUID or an external identifier for the"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: "shifts-shiftid"
+          path: "/shifts/{shiftId}"
+          operations:
+            - name: "shiftsShiftIdPut"
+              method: PUT
+              description: "Toast Update a Shift"
+              inputParameters:
+                - name: "Toast-Restaurant-External-ID"
+                  in: header
+                  type: string
+                  required: true
+                  description: "The Toast platform GUID of the restaurant that is the"
+                - name: "shiftId"
+                  in: path
+                  type: string
+                  required: true
+                  description: "The shift identifier, either the Toast platform GUID or an"
+                - name: "body"
+                  in: body
+                  type: string
+                  required: true
+                  description: "The shift information. The `externalId` identifier is not"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: "shifts-shiftid"
+          path: "/shifts/{shiftId}"
+          operations:
+            - name: "shiftsShiftIdDelete"
+              method: DELETE
+              description: "Toast Delete a Shift"
+              inputParameters:
+                - name: "Toast-Restaurant-External-ID"
+                  in: header
+                  type: string
+                  required: true
+                  description: "The Toast platform GUID of the restaurant that is the"
+                - name: "shiftId"
+                  in: path
+                  type: string
+                  required: true
+                  description: "The shift identifier, either the Toast platform GUID or an"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      namespace: "labor-shifts-rest"
+      port: 8080
+      description: "REST adapter for Toast Labor API — Shifts. One Spectral-compliant resource per consumed operation, prefixed with /v1."
+      resources:
+        - path: "/v1/shifts"
+          name: "shifts"
+          description: "REST surface for shifts."
+          operations:
+            - method: GET
+              name: "shiftsGet"
+              description: "Toast Get Shifts"
+              call: "labor-shifts.shiftsGet"
+              with:
+                "Toast-Restaurant-External-ID": "rest.Toast-Restaurant-External-ID"
+                "shiftIds": "rest.shiftIds"
+                "startDate": "rest.startDate"
+                "endDate": "rest.endDate"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: "/v1/shifts"
+          name: "shifts"
+          description: "REST surface for shifts."
+          operations:
+            - method: POST
+              name: "shiftsPost"
+              description: "Toast Create a Shift"
+              call: "labor-shifts.shiftsPost"
+              with:
+                "Toast-Restaurant-External-ID": "rest.Toast-Restaurant-External-ID"
+                "Content-Type": "rest.Content-Type"
+                "body": "rest.body"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: "/v1/shifts-shiftid"
+          name: "shifts-shiftid"
+          description: "REST surface for shifts-shiftid."
+          operations:
+            - method: GET
+              name: "shiftsShiftIdGet"
+              description: "Toast Get a Shift"
+              call: "labor-shifts.shiftsShiftIdGet"
+              with:
+                "Toast-Restaurant-External-ID": "rest.Toast-Restaurant-External-ID"
+                "shiftId": "rest.shiftId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: "/v1/shifts-shiftid"
+          name: "shifts-shiftid"
+          description: "REST surface for shifts-shiftid."
+          operations:
+            - method: PUT
+              name: "shiftsShiftIdPut"
+              description: "Toast Update a Shift"
+              call: "labor-shifts.shiftsShiftIdPut"
+              with:
+                "Toast-Restaurant-External-ID": "rest.Toast-Restaurant-External-ID"
+                "shiftId": "rest.shiftId"
+                "body": "rest.body"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: "/v1/shifts-shiftid"
+          name: "shifts-shiftid"
+          description: "REST surface for shifts-shiftid."
+          operations:
+            - method: DELETE
+              name: "shiftsShiftIdDelete"
+              description: "Toast Delete a Shift"
+              call: "labor-shifts.shiftsShiftIdDelete"
+              with:
+                "Toast-Restaurant-External-ID": "rest.Toast-Restaurant-External-ID"
+                "shiftId": "rest.shiftId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+    - type: mcp
+      namespace: "labor-shifts-mcp"
+      port: 9090
+      transport: http
+      description: "MCP adapter for Toast Labor API — Shifts. One tool per consumed operation, routed inline through this capability consumes block."
+      tools:
+        - name: "get-shifts"
+          description: "Toast Get Shifts"
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "labor-shifts.shiftsGet"
+          with:
+            "Toast-Restaurant-External-ID": "tools.Toast-Restaurant-External-ID"
+            "shiftIds": "tools.shiftIds"
+            "startDate": "tools.startDate"
+            "endDate": "tools.endDate"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: "create-shift"
+          description: "Toast Create a Shift"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "labor-shifts.shiftsPost"
+          with:
+            "Toast-Restaurant-External-ID": "tools.Toast-Restaurant-External-ID"
+            "Content-Type": "tools.Content-Type"
+            "body": "tools.body"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: "get-shift"
+          description: "Toast Get a Shift"
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "labor-shifts.shiftsShiftIdGet"
+          with:
+            "Toast-Restaurant-External-ID": "tools.Toast-Restaurant-External-ID"
+            "shiftId": "tools.shiftId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: "update-shift"
+          description: "Toast Update a Shift"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: true
+          call: "labor-shifts.shiftsShiftIdPut"
+          with:
+            "Toast-Restaurant-External-ID": "tools.Toast-Restaurant-External-ID"
+            "shiftId": "tools.shiftId"
+            "body": "tools.body"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: "delete-shift"
+          description: "Toast Delete a Shift"
+          hints:
+            readOnly: false
+            destructive: true
+            idempotent: true
+          call: "labor-shifts.shiftsShiftIdDelete"
+          with:
+            "Toast-Restaurant-External-ID": "tools.Toast-Restaurant-External-ID"
+            "shiftId": "tools.shiftId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+

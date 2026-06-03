@@ -1,0 +1,205 @@
+naftiko: "1.0.0-alpha2"
+
+info:
+  label: "Toast Labor API — Time entries"
+  description: >-
+    Time entries — 2 operations. Lead operation: Toast Get Time Entries.
+    Self-contained Naftiko capability covering one Toast business surface.
+  tags:
+    - Toast
+    - Labor
+    - Time entries
+  created: "2026-06-03"
+  modified: "2026-06-03"
+
+binds:
+  - namespace: env
+    keys:
+      TOAST_ACCESS_TOKEN: TOAST_ACCESS_TOKEN
+
+capability:
+
+  consumes:
+    - type: http
+      namespace: "labor-time-entries"
+      baseUri: "https://ws-api.toasttab.com/labor/v1"
+      description: "Toast Labor API — Time entries business capability. Self-contained, no shared references."
+      authentication:
+        type: bearer
+        token: "{{env.TOAST_ACCESS_TOKEN}}"
+      resources:
+        - name: "timeentries"
+          path: "/timeEntries"
+          operations:
+            - name: "timeEntriesGet"
+              method: GET
+              description: "Toast Get Time Entries"
+              inputParameters:
+                - name: "Toast-Restaurant-External-ID"
+                  in: header
+                  type: string
+                  required: true
+                  description: "The Toast platform GUID of the restaurant that is the"
+                - name: "timeEntryIds"
+                  in: query
+                  type: string
+                  required: false
+                  description: "Optional array of one or more time entry identifiers,"
+                - name: "startDate"
+                  in: query
+                  type: string
+                  required: false
+                  description: "Optional start date and time of time period to match time"
+                - name: "endDate"
+                  in: query
+                  type: string
+                  required: false
+                  description: "Optional end date and time of time period to match time"
+                - name: "modifiedStartDate"
+                  in: query
+                  type: string
+                  required: false
+                  description: "Start date and time of the time period to match modified"
+                - name: "modifiedEndDate"
+                  in: query
+                  type: string
+                  required: false
+                  description: "End date and time of the time period to match modified time"
+                - name: "businessDate"
+                  in: query
+                  type: string
+                  required: false
+                  description: "Optional date to match time entries. A time entry matches"
+                - name: "includeMissedBreaks"
+                  in: query
+                  type: string
+                  required: false
+                  description: "Optional flag to indicate whether missed breaks should be"
+                - name: "includeArchived"
+                  in: query
+                  type: string
+                  required: false
+                  description: "Controls whether the response includes archived time entries, when"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: "timeentries-timeentryid"
+          path: "/timeEntries/{timeEntryId}"
+          operations:
+            - name: "timeEntriesTimeEntryIdGet"
+              method: GET
+              description: "Toast Get One Time Entry"
+              inputParameters:
+                - name: "Toast-Restaurant-External-ID"
+                  in: header
+                  type: string
+                  required: true
+                  description: "The Toast platform GUID of the restaurant that is the"
+                - name: "timeEntryId"
+                  in: path
+                  type: string
+                  required: true
+                  description: "The Toast platform GUID or an external identifier for the"
+                - name: "includeMissedBreaks"
+                  in: query
+                  type: string
+                  required: false
+                  description: "Optional flag to indicate whether missed breaks should be"
+                - name: "includeArchived"
+                  in: query
+                  type: string
+                  required: false
+                  description: "Controls whether the response includes an archived time entry."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      namespace: "labor-time-entries-rest"
+      port: 8080
+      description: "REST adapter for Toast Labor API — Time entries. One Spectral-compliant resource per consumed operation, prefixed with /v1."
+      resources:
+        - path: "/v1/timeentries"
+          name: "timeentries"
+          description: "REST surface for timeentries."
+          operations:
+            - method: GET
+              name: "timeEntriesGet"
+              description: "Toast Get Time Entries"
+              call: "labor-time-entries.timeEntriesGet"
+              with:
+                "Toast-Restaurant-External-ID": "rest.Toast-Restaurant-External-ID"
+                "timeEntryIds": "rest.timeEntryIds"
+                "startDate": "rest.startDate"
+                "endDate": "rest.endDate"
+                "modifiedStartDate": "rest.modifiedStartDate"
+                "modifiedEndDate": "rest.modifiedEndDate"
+                "businessDate": "rest.businessDate"
+                "includeMissedBreaks": "rest.includeMissedBreaks"
+                "includeArchived": "rest.includeArchived"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: "/v1/timeentries-timeentryid"
+          name: "timeentries-timeentryid"
+          description: "REST surface for timeentries-timeentryid."
+          operations:
+            - method: GET
+              name: "timeEntriesTimeEntryIdGet"
+              description: "Toast Get One Time Entry"
+              call: "labor-time-entries.timeEntriesTimeEntryIdGet"
+              with:
+                "Toast-Restaurant-External-ID": "rest.Toast-Restaurant-External-ID"
+                "timeEntryId": "rest.timeEntryId"
+                "includeMissedBreaks": "rest.includeMissedBreaks"
+                "includeArchived": "rest.includeArchived"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+    - type: mcp
+      namespace: "labor-time-entries-mcp"
+      port: 9090
+      transport: http
+      description: "MCP adapter for Toast Labor API — Time entries. One tool per consumed operation, routed inline through this capability consumes block."
+      tools:
+        - name: "get-time-entries"
+          description: "Toast Get Time Entries"
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "labor-time-entries.timeEntriesGet"
+          with:
+            "Toast-Restaurant-External-ID": "tools.Toast-Restaurant-External-ID"
+            "timeEntryIds": "tools.timeEntryIds"
+            "startDate": "tools.startDate"
+            "endDate": "tools.endDate"
+            "modifiedStartDate": "tools.modifiedStartDate"
+            "modifiedEndDate": "tools.modifiedEndDate"
+            "businessDate": "tools.businessDate"
+            "includeMissedBreaks": "tools.includeMissedBreaks"
+            "includeArchived": "tools.includeArchived"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: "get-one-time-entry"
+          description: "Toast Get One Time Entry"
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "labor-time-entries.timeEntriesTimeEntryIdGet"
+          with:
+            "Toast-Restaurant-External-ID": "tools.Toast-Restaurant-External-ID"
+            "timeEntryId": "tools.timeEntryId"
+            "includeMissedBreaks": "tools.includeMissedBreaks"
+            "includeArchived": "tools.includeArchived"
+          outputParameters:
+            - type: object
+              mapping: "$."
+

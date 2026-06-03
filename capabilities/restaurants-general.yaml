@@ -1,0 +1,148 @@
+naftiko: "1.0.0-alpha2"
+
+info:
+  label: "Restaurants API — General"
+  description: >-
+    General — 2 operations. Lead operation: Toast Get Restaurant Configuration Information.
+    Self-contained Naftiko capability covering one Toast business surface.
+  tags:
+    - Toast
+    - Restaurants
+  created: "2026-06-03"
+  modified: "2026-06-03"
+
+binds:
+  - namespace: env
+    keys:
+      TOAST_ACCESS_TOKEN: TOAST_ACCESS_TOKEN
+
+capability:
+
+  consumes:
+    - type: http
+      namespace: "restaurants-general"
+      baseUri: "https://ws-api.toasttab.com/restaurants/v1"
+      description: "Restaurants API — General business capability. Self-contained, no shared references."
+      authentication:
+        type: bearer
+        token: "{{env.TOAST_ACCESS_TOKEN}}"
+      resources:
+        - name: "restaurants-restaurantguid"
+          path: "/restaurants/{restaurantGUID}"
+          operations:
+            - name: "restaurantsRestaurantGuidGet"
+              method: GET
+              description: "Toast Get Restaurant Configuration Information"
+              inputParameters:
+                - name: "restaurantGUID"
+                  in: path
+                  type: string
+                  required: true
+                  description: "The Toast GUID of the restaurant that you want to get"
+                - name: "Toast-Restaurant-External-ID"
+                  in: header
+                  type: string
+                  required: true
+                  description: "The Toast GUID of the restaurant that you want to get"
+                - name: "includeArchived"
+                  in: query
+                  type: string
+                  required: false
+                  description: "Set `includeArchived` to `true` if the API should return information"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: "groups-managementgroupguid-restaurants"
+          path: "/groups/{managementGroupGUID}/restaurants"
+          operations:
+            - name: "groupsManagementGroupGuidRestaurantsGet"
+              method: GET
+              description: "Toast Get Restaurants in a Management Group"
+              inputParameters:
+                - name: "managementGroupGUID"
+                  in: path
+                  type: string
+                  required: true
+                  description: "The GUID of the restaurant management group."
+                - name: "Toast-Restaurant-External-ID"
+                  in: header
+                  type: string
+                  required: true
+                  description: "The Toast GUID of one restaurant location in the management"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      namespace: "restaurants-general-rest"
+      port: 8080
+      description: "REST adapter for Restaurants API — General. One Spectral-compliant resource per consumed operation, prefixed with /v1."
+      resources:
+        - path: "/v1/restaurants-restaurantguid"
+          name: "restaurants-restaurantguid"
+          description: "REST surface for restaurants-restaurantguid."
+          operations:
+            - method: GET
+              name: "restaurantsRestaurantGuidGet"
+              description: "Toast Get Restaurant Configuration Information"
+              call: "restaurants-general.restaurantsRestaurantGuidGet"
+              with:
+                "restaurantGUID": "rest.restaurantGUID"
+                "Toast-Restaurant-External-ID": "rest.Toast-Restaurant-External-ID"
+                "includeArchived": "rest.includeArchived"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: "/v1/groups-managementgroupguid-restaurants"
+          name: "groups-managementgroupguid-restaurants"
+          description: "REST surface for groups-managementgroupguid-restaurants."
+          operations:
+            - method: GET
+              name: "groupsManagementGroupGuidRestaurantsGet"
+              description: "Toast Get Restaurants in a Management Group"
+              call: "restaurants-general.groupsManagementGroupGuidRestaurantsGet"
+              with:
+                "managementGroupGUID": "rest.managementGroupGUID"
+                "Toast-Restaurant-External-ID": "rest.Toast-Restaurant-External-ID"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+    - type: mcp
+      namespace: "restaurants-general-mcp"
+      port: 9090
+      transport: http
+      description: "MCP adapter for Restaurants API — General. One tool per consumed operation, routed inline through this capability consumes block."
+      tools:
+        - name: "get-restaurant-configuration-information"
+          description: "Toast Get Restaurant Configuration Information"
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "restaurants-general.restaurantsRestaurantGuidGet"
+          with:
+            "restaurantGUID": "tools.restaurantGUID"
+            "Toast-Restaurant-External-ID": "tools.Toast-Restaurant-External-ID"
+            "includeArchived": "tools.includeArchived"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: "get-restaurants-management-group"
+          description: "Toast Get Restaurants in a Management Group"
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "restaurants-general.groupsManagementGroupGuidRestaurantsGet"
+          with:
+            "managementGroupGUID": "tools.managementGroupGUID"
+            "Toast-Restaurant-External-ID": "tools.Toast-Restaurant-External-ID"
+          outputParameters:
+            - type: object
+              mapping: "$."
+

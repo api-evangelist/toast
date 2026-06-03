@@ -1,0 +1,191 @@
+naftiko: "1.0.0-alpha2"
+
+info:
+  label: "Stock API — Stock"
+  description: >-
+    Stock — 3 operations. Lead operation: Toast Get Menu Item Inventory for a Restaurant.
+    Self-contained Naftiko capability covering one Toast business surface.
+  tags:
+    - Toast
+    - Stock
+    - Stock
+  created: "2026-06-03"
+  modified: "2026-06-03"
+
+binds:
+  - namespace: env
+    keys:
+      TOAST_ACCESS_TOKEN: TOAST_ACCESS_TOKEN
+
+capability:
+
+  consumes:
+    - type: http
+      namespace: "stock-stock"
+      baseUri: "https://ws-api.toasttab.com/stock"
+      description: "Stock API — Stock business capability. Self-contained, no shared references."
+      authentication:
+        type: bearer
+        token: "{{env.TOAST_ACCESS_TOKEN}}"
+      resources:
+        - name: "v1-inventory"
+          path: "/v1/inventory"
+          operations:
+            - name: "getInventory"
+              method: GET
+              description: "Toast Get Menu Item Inventory for a Restaurant"
+              inputParameters:
+                - name: "Toast-Restaurant-External-ID"
+                  in: header
+                  type: string
+                  required: true
+                  description: "The Toast GUID of the restaurant queried for inventory information."
+                - name: "status"
+                  in: query
+                  type: string
+                  required: false
+                  description: "Limits the items in the response to those items with the specified"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: "v1-inventory-search"
+          path: "/v1/inventory/search"
+          operations:
+            - name: "postInventorySearch"
+              method: POST
+              description: "Toast Get Inventory Information for Specific Menu Items"
+              inputParameters:
+                - name: "Toast-Restaurant-External-ID"
+                  in: header
+                  type: string
+                  required: true
+                  description: "The Toast GUID of the restaurant queried for inventory information."
+                - name: "body"
+                  in: body
+                  type: object
+                  required: true
+                  description: "An `InventorySearchRequest` object containing identifiers for the"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: "v1-inventory-update"
+          path: "/v1/inventory/update"
+          operations:
+            - name: "updateInventory"
+              method: PUT
+              description: "Toast Update Inventory Information for Specific Menu Items"
+              inputParameters:
+                - name: "Toast-Restaurant-External-ID"
+                  in: header
+                  type: string
+                  required: true
+                  description: "The Toast GUID of the restaurant whose inventory information will be updated."
+                - name: "body"
+                  in: body
+                  type: object
+                  required: true
+                  description: "An array of `MenuItemInventory` objects for the menu items to be"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      namespace: "stock-stock-rest"
+      port: 8080
+      description: "REST adapter for Stock API — Stock. One Spectral-compliant resource per consumed operation, prefixed with /v1."
+      resources:
+        - path: "/v1/inventory"
+          name: "inventory"
+          description: "REST surface for inventory."
+          operations:
+            - method: GET
+              name: "getInventory"
+              description: "Toast Get Menu Item Inventory for a Restaurant"
+              call: "stock-stock.getInventory"
+              with:
+                "Toast-Restaurant-External-ID": "rest.Toast-Restaurant-External-ID"
+                "status": "rest.status"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: "/v1/inventory-search"
+          name: "inventory-search"
+          description: "REST surface for inventory-search."
+          operations:
+            - method: POST
+              name: "postInventorySearch"
+              description: "Toast Get Inventory Information for Specific Menu Items"
+              call: "stock-stock.postInventorySearch"
+              with:
+                "Toast-Restaurant-External-ID": "rest.Toast-Restaurant-External-ID"
+                "body": "rest.body"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: "/v1/inventory-update"
+          name: "inventory-update"
+          description: "REST surface for inventory-update."
+          operations:
+            - method: PUT
+              name: "updateInventory"
+              description: "Toast Update Inventory Information for Specific Menu Items"
+              call: "stock-stock.updateInventory"
+              with:
+                "Toast-Restaurant-External-ID": "rest.Toast-Restaurant-External-ID"
+                "body": "rest.body"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+    - type: mcp
+      namespace: "stock-stock-mcp"
+      port: 9090
+      transport: http
+      description: "MCP adapter for Stock API — Stock. One tool per consumed operation, routed inline through this capability consumes block."
+      tools:
+        - name: "get-menu-item-inventory-restaurant"
+          description: "Toast Get Menu Item Inventory for a Restaurant"
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "stock-stock.getInventory"
+          with:
+            "Toast-Restaurant-External-ID": "tools.Toast-Restaurant-External-ID"
+            "status": "tools.status"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: "get-inventory-information-specific-menu-items"
+          description: "Toast Get Inventory Information for Specific Menu Items"
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: false
+          call: "stock-stock.postInventorySearch"
+          with:
+            "Toast-Restaurant-External-ID": "tools.Toast-Restaurant-External-ID"
+            "body": "tools.body"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: "update-inventory-information-specific-menu-items"
+          description: "Toast Update Inventory Information for Specific Menu Items"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: true
+          call: "stock-stock.updateInventory"
+          with:
+            "Toast-Restaurant-External-ID": "tools.Toast-Restaurant-External-ID"
+            "body": "tools.body"
+          outputParameters:
+            - type: object
+              mapping: "$."
+

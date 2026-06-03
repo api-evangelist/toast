@@ -1,0 +1,505 @@
+naftiko: "1.0.0-alpha2"
+
+info:
+  label: "Toast Orders API — Orders"
+  description: >-
+    Orders — 8 operations. Lead operation: Toast Get Order Prices.
+    Self-contained Naftiko capability covering one Toast business surface.
+  tags:
+    - Toast
+    - Orders
+    - Orders
+  created: "2026-06-03"
+  modified: "2026-06-03"
+
+binds:
+  - namespace: env
+    keys:
+      TOAST_ACCESS_TOKEN: TOAST_ACCESS_TOKEN
+
+capability:
+
+  consumes:
+    - type: http
+      namespace: "orders-orders"
+      baseUri: "https://ws-api.toasttab.com/orders/v2"
+      description: "Toast Orders API — Orders business capability. Self-contained, no shared references."
+      authentication:
+        type: bearer
+        token: "{{env.TOAST_ACCESS_TOKEN}}"
+      resources:
+        - name: "prices"
+          path: "/prices"
+          operations:
+            - name: "pricesPost"
+              method: POST
+              description: "Toast Get Order Prices"
+              inputParameters:
+                - name: "Toast-Restaurant-External-ID"
+                  in: header
+                  type: string
+                  required: true
+                  description: "The identifier of the restaurant to be used for this price"
+                - name: "body"
+                  in: body
+                  type: string
+                  required: true
+                  description: "A _required_ JSON `Order` object containing information about"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: "orders-guid"
+          path: "/orders/{guid}"
+          operations:
+            - name: "ordersGuidGet"
+              method: GET
+              description: "Toast Get an Order"
+              inputParameters:
+                - name: "Toast-Restaurant-External-ID"
+                  in: header
+                  type: string
+                  required: true
+                  description: "The identifier of the restaurant where this order was placed."
+                - name: "guid"
+                  in: path
+                  type: string
+                  required: true
+                  description: "The GUID for the order to be returned."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: "ordersbulk"
+          path: "/ordersBulk"
+          operations:
+            - name: "ordersBulkGet"
+              method: GET
+              description: "Toast Get Multiple Orders"
+              inputParameters:
+                - name: "Toast-Restaurant-External-ID"
+                  in: header
+                  type: string
+                  required: true
+                  description: "The identifier for the restaurant that processed the orders."
+                - name: "startDate"
+                  in: query
+                  type: string
+                  required: false
+                  description: "The inclusive start date and time. The results include orders with a modified"
+                - name: "endDate"
+                  in: query
+                  type: string
+                  required: false
+                  description: "The exclusive end date and time. The results exclude any orders that have"
+                - name: "businessDate"
+                  in: query
+                  type: string
+                  required: false
+                  description: "The business date that same-day orders opened or that"
+                - name: "pageSize"
+                  in: query
+                  type: string
+                  required: false
+                  description: "The maximum number of objects to return in the array. If the"
+                - name: "page"
+                  in: query
+                  type: string
+                  required: false
+                  description: "The sequence number of the set of objects to return in"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: "orders-orderguid-checks-checkguid-selections"
+          path: "/orders/{orderGuid}/checks/{checkGuid}/selections"
+          operations:
+            - name: "ordersOrderGuidChecksCheckGuidSelectionsPost"
+              method: POST
+              description: "Toast Add Items to a Check"
+              inputParameters:
+                - name: "Toast-Restaurant-External-ID"
+                  in: header
+                  type: string
+                  required: true
+                  description: "The identifier of the restaurant."
+                - name: "orderGuid"
+                  in: path
+                  type: string
+                  required: true
+                  description: "The Toast platform identifier of the order that you are"
+                - name: "checkGuid"
+                  in: path
+                  type: string
+                  required: true
+                  description: "The Toast platform identifier of the check that you are"
+                - name: "body"
+                  in: body
+                  type: array
+                  required: true
+                  description: "An array of JSON `Selection` objects that identify the menu items you are adding."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: "orders-orderguid-deliveryinfo"
+          path: "/orders/{orderGuid}/deliveryInfo"
+          operations:
+            - name: "ordersOrderGuidDeliveryInfoPatch"
+              method: PATCH
+              description: "Toast Update Delivery Information"
+              inputParameters:
+                - name: "Toast-Restaurant-External-ID"
+                  in: header
+                  type: string
+                  required: true
+                  description: "The identifier of the restaurant."
+                - name: "orderGuid"
+                  in: path
+                  type: string
+                  required: true
+                  description: "The Toast platform identifier of the order that you are"
+                - name: "body"
+                  in: body
+                  type: object
+                  required: true
+                  description: "A JSON `DeliveryInfo` object"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: "orders-orderguid-void"
+          path: "/orders/{orderGuid}/void"
+          operations:
+            - name: "voidOrder"
+              method: POST
+              description: "Toast Void an Order"
+              inputParameters:
+                - name: "Toast-Restaurant-External-ID"
+                  in: header
+                  type: string
+                  required: true
+                  description: "The identifier of the restaurant."
+                - name: "orderGuid"
+                  in: path
+                  type: string
+                  required: true
+                  description: "The GUID of the order to be voided."
+                - name: "body"
+                  in: body
+                  type: object
+                  required: false
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: "orders"
+          path: "/orders"
+          operations:
+            - name: "ordersPost"
+              method: POST
+              description: "Toast Post an Order"
+              inputParameters:
+                - name: "Toast-Restaurant-External-ID"
+                  in: header
+                  type: string
+                  required: true
+                  description: "The identifier for the restaurant where this order was placed."
+                - name: "body"
+                  in: body
+                  type: string
+                  required: true
+                  description: "A JSON object containing information about an order."
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: "orders"
+          path: "/orders"
+          operations:
+            - name: "ordersGet"
+              method: GET
+              description: "Toast Get Order Identifiers (deprecated)"
+              inputParameters:
+                - name: "Toast-Restaurant-External-ID"
+                  in: header
+                  type: string
+                  required: true
+                  description: "The identifier for the restaurant to retrieve orders from."
+                - name: "startDate"
+                  in: query
+                  type: string
+                  required: false
+                  description: "\\"
+                - name: "endDate"
+                  in: query
+                  type: string
+                  required: false
+                  description: "The exclusive end date and time. The results exclude orders with an equal"
+                - name: "businessDate"
+                  in: query
+                  type: string
+                  required: false
+                  description: "The business date that same-day orders opened or that"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      namespace: "orders-orders-rest"
+      port: 8080
+      description: "REST adapter for Toast Orders API — Orders. One Spectral-compliant resource per consumed operation, prefixed with /v1."
+      resources:
+        - path: "/v1/prices"
+          name: "prices"
+          description: "REST surface for prices."
+          operations:
+            - method: POST
+              name: "pricesPost"
+              description: "Toast Get Order Prices"
+              call: "orders-orders.pricesPost"
+              with:
+                "Toast-Restaurant-External-ID": "rest.Toast-Restaurant-External-ID"
+                "body": "rest.body"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: "/v1/orders-guid"
+          name: "orders-guid"
+          description: "REST surface for orders-guid."
+          operations:
+            - method: GET
+              name: "ordersGuidGet"
+              description: "Toast Get an Order"
+              call: "orders-orders.ordersGuidGet"
+              with:
+                "Toast-Restaurant-External-ID": "rest.Toast-Restaurant-External-ID"
+                "guid": "rest.guid"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: "/v1/ordersbulk"
+          name: "ordersbulk"
+          description: "REST surface for ordersbulk."
+          operations:
+            - method: GET
+              name: "ordersBulkGet"
+              description: "Toast Get Multiple Orders"
+              call: "orders-orders.ordersBulkGet"
+              with:
+                "Toast-Restaurant-External-ID": "rest.Toast-Restaurant-External-ID"
+                "startDate": "rest.startDate"
+                "endDate": "rest.endDate"
+                "businessDate": "rest.businessDate"
+                "pageSize": "rest.pageSize"
+                "page": "rest.page"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: "/v1/orders-orderguid-checks-checkguid-selections"
+          name: "orders-orderguid-checks-checkguid-selections"
+          description: "REST surface for orders-orderguid-checks-checkguid-selections."
+          operations:
+            - method: POST
+              name: "ordersOrderGuidChecksCheckGuidSelectionsPost"
+              description: "Toast Add Items to a Check"
+              call: "orders-orders.ordersOrderGuidChecksCheckGuidSelectionsPost"
+              with:
+                "Toast-Restaurant-External-ID": "rest.Toast-Restaurant-External-ID"
+                "orderGuid": "rest.orderGuid"
+                "checkGuid": "rest.checkGuid"
+                "body": "rest.body"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: "/v1/orders-orderguid-deliveryinfo"
+          name: "orders-orderguid-deliveryinfo"
+          description: "REST surface for orders-orderguid-deliveryinfo."
+          operations:
+            - method: PATCH
+              name: "ordersOrderGuidDeliveryInfoPatch"
+              description: "Toast Update Delivery Information"
+              call: "orders-orders.ordersOrderGuidDeliveryInfoPatch"
+              with:
+                "Toast-Restaurant-External-ID": "rest.Toast-Restaurant-External-ID"
+                "orderGuid": "rest.orderGuid"
+                "body": "rest.body"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: "/v1/orders-orderguid-void"
+          name: "orders-orderguid-void"
+          description: "REST surface for orders-orderguid-void."
+          operations:
+            - method: POST
+              name: "voidOrder"
+              description: "Toast Void an Order"
+              call: "orders-orders.voidOrder"
+              with:
+                "Toast-Restaurant-External-ID": "rest.Toast-Restaurant-External-ID"
+                "orderGuid": "rest.orderGuid"
+                "body": "rest.body"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: "/v1/orders"
+          name: "orders"
+          description: "REST surface for orders."
+          operations:
+            - method: POST
+              name: "ordersPost"
+              description: "Toast Post an Order"
+              call: "orders-orders.ordersPost"
+              with:
+                "Toast-Restaurant-External-ID": "rest.Toast-Restaurant-External-ID"
+                "body": "rest.body"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: "/v1/orders"
+          name: "orders"
+          description: "REST surface for orders."
+          operations:
+            - method: GET
+              name: "ordersGet"
+              description: "Toast Get Order Identifiers (deprecated)"
+              call: "orders-orders.ordersGet"
+              with:
+                "Toast-Restaurant-External-ID": "rest.Toast-Restaurant-External-ID"
+                "startDate": "rest.startDate"
+                "endDate": "rest.endDate"
+                "businessDate": "rest.businessDate"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+    - type: mcp
+      namespace: "orders-orders-mcp"
+      port: 9090
+      transport: http
+      description: "MCP adapter for Toast Orders API — Orders. One tool per consumed operation, routed inline through this capability consumes block."
+      tools:
+        - name: "get-order-prices"
+          description: "Toast Get Order Prices"
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: false
+          call: "orders-orders.pricesPost"
+          with:
+            "Toast-Restaurant-External-ID": "tools.Toast-Restaurant-External-ID"
+            "body": "tools.body"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: "get-order"
+          description: "Toast Get an Order"
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "orders-orders.ordersGuidGet"
+          with:
+            "Toast-Restaurant-External-ID": "tools.Toast-Restaurant-External-ID"
+            "guid": "tools.guid"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: "get-multiple-orders"
+          description: "Toast Get Multiple Orders"
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "orders-orders.ordersBulkGet"
+          with:
+            "Toast-Restaurant-External-ID": "tools.Toast-Restaurant-External-ID"
+            "startDate": "tools.startDate"
+            "endDate": "tools.endDate"
+            "businessDate": "tools.businessDate"
+            "pageSize": "tools.pageSize"
+            "page": "tools.page"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: "add-items-check"
+          description: "Toast Add Items to a Check"
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: false
+          call: "orders-orders.ordersOrderGuidChecksCheckGuidSelectionsPost"
+          with:
+            "Toast-Restaurant-External-ID": "tools.Toast-Restaurant-External-ID"
+            "orderGuid": "tools.orderGuid"
+            "checkGuid": "tools.checkGuid"
+            "body": "tools.body"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: "update-delivery-information"
+          description: "Toast Update Delivery Information"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: true
+          call: "orders-orders.ordersOrderGuidDeliveryInfoPatch"
+          with:
+            "Toast-Restaurant-External-ID": "tools.Toast-Restaurant-External-ID"
+            "orderGuid": "tools.orderGuid"
+            "body": "tools.body"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: "void-order"
+          description: "Toast Void an Order"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "orders-orders.voidOrder"
+          with:
+            "Toast-Restaurant-External-ID": "tools.Toast-Restaurant-External-ID"
+            "orderGuid": "tools.orderGuid"
+            "body": "tools.body"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: "post-order"
+          description: "Toast Post an Order"
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "orders-orders.ordersPost"
+          with:
+            "Toast-Restaurant-External-ID": "tools.Toast-Restaurant-External-ID"
+            "body": "tools.body"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: "get-order-identifiers"
+          description: "Toast Get Order Identifiers (deprecated)"
+          hints:
+            readOnly: true
+            destructive: false
+            idempotent: true
+          call: "orders-orders.ordersGet"
+          with:
+            "Toast-Restaurant-External-ID": "tools.Toast-Restaurant-External-ID"
+            "startDate": "tools.startDate"
+            "endDate": "tools.endDate"
+            "businessDate": "tools.businessDate"
+          outputParameters:
+            - type: object
+              mapping: "$."
+

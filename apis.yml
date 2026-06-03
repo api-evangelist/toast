@@ -16,7 +16,7 @@ tags:
   - Restaurants
   - Hospitality
 created: '2025-02-08'
-modified: '2026-05-19'
+modified: '2026-06-03'
 url: https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/apis.yml
 specificationVersion: '0.19'
 apis:
@@ -55,7 +55,7 @@ apis:
     - type: OpenAPI
       url: openapi/toast-menus-openapi.yaml
     - type: NaftikoCapability
-      url: capabilities/menus.yaml
+      url: capabilities/menus-general.yaml
   - aid: toast:toast-labor
     name: Toast Labor API
     description: The Toast Labor API manages employee records, schedules, and shift data for restaurant locations. Supports
@@ -92,7 +92,7 @@ apis:
     - type: OpenAPI
       url: openapi/toast-restaurants-openapi.yaml
     - type: NaftikoCapability
-      url: capabilities/restaurants.yaml
+      url: capabilities/restaurants-general.yaml
   - aid: toast:toast-stock
     name: Toast Stock API
     description: The Toast Stock API manages inventory for menu items and modifiers, allowing integration with inventory management
@@ -122,7 +122,7 @@ apis:
     - type: OpenAPI
       url: openapi/toast-partners-openapi.yaml
     - type: NaftikoCapability
-      url: capabilities/partners.yaml
+      url: capabilities/partners-general.yaml
   - aid: toast:toast-authentication
     name: Toast Authentication API
     description: The Toast Authentication API implements OAuth 2.0 client credentials flow for obtaining access tokens used
@@ -138,6 +138,111 @@ apis:
       url: openapi/toast-authentication-openapi.yaml
     - type: NaftikoCapability
       url: capabilities/authentication-authentication.yaml
+  - aid: toast:toast-configuration
+    name: Toast Configuration API
+    description: The Toast Configuration API returns information about the configuration of a restaurant and its menus, such
+      as menu items and alternate payment types, plus physical configuration including cash drawers, dining options, revenue
+      centers, service areas, tables, and tax rates. Archived or removed entities are excluded from results.
+    humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+    tags:
+    - Configuration
+    - Restaurants
+    properties:
+    - type: Documentation
+      url: https://doc.toasttab.com/openapi/configuration/overview/
+  - aid: toast:toast-analytics
+    name: Toast Analytics API
+    description: The Toast Analytics API provides an enterprise reporting and analytics service with operations that retrieve
+      data for all or a subset of restaurants in a management group, create requests for reporting data, and retrieve the
+      results. Reporting data includes aggregated sales, check, labor, and guest reporting data.
+    humanURL: https://doc.toasttab.com/openapi/analytics/overview/
+    tags:
+    - Analytics
+    - Reporting
+    properties:
+    - type: Documentation
+      url: https://doc.toasttab.com/openapi/analytics/overview/
+  - aid: toast:toast-cash-management
+    name: Toast Cash Management API
+    description: The Toast Cash Management API provides information about cash operations that add cash to or remove cash from
+      a restaurant cash drawer, separately from cash transaction payments.
+    humanURL: https://doc.toasttab.com/openapi/cashmanagement/overview/
+    tags:
+    - Cash Management
+    - Payments
+    properties:
+    - type: Documentation
+      url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - aid: toast:toast-kitchen
+    name: Toast Kitchen API
+    description: The Toast Kitchen API returns information about kitchen operations for a restaurant, supporting kitchen display
+      and fulfillment workflow integrations.
+    humanURL: https://doc.toasttab.com/openapi/kitchen/overview/
+    tags:
+    - Kitchen
+    - Food Service
+    properties:
+    - type: Documentation
+      url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - aid: toast:toast-credit-cards
+    name: Toast Credit Cards API
+    description: The Toast Credit Cards API is a simple, single-request, synchronous API to authorize credit card transactions
+      associated with a Toast Orders API order.
+    humanURL: https://doc.toasttab.com/openapi/creditcards/overview/
+    tags:
+    - Credit Cards
+    - Payments
+    properties:
+    - type: Documentation
+      url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - aid: toast:toast-menus-v3
+    name: Toast Menus V3 API
+    description: The Toast Menus V3 API is the next-generation menu retrieval API, returning structured menu, item, modifier,
+      and pricing data for a restaurant in an updated catalog-oriented model alongside the existing Menus V2 surface.
+    humanURL: https://doc.toasttab.com/openapi/menusv3/overview/
+    tags:
+    - Menus
+    - Food Service
+    properties:
+    - type: Documentation
+      url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - aid: toast:toast-gift-cards-integration
+    name: Toast Gift Cards Integration API
+    description: The Toast Gift Cards integration specification is an outbound API. The partner hosts an HTTPS endpoint that
+      accepts POST requests from the Toast platform to process gift card transactions (balance inquiry, activation, redemption,
+      reload) for restaurants using a third-party gift card provider.
+    humanURL: https://doc.toasttab.com/openapi/giftcards/overview/
+    tags:
+    - Gift Cards
+    - Webhooks
+    properties:
+    - type: Documentation
+      url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - aid: toast:toast-loyalty-integration
+    name: Toast Loyalty Integration API
+    description: The Toast Loyalty integration specification is an outbound API. The partner hosts an HTTPS endpoint that accepts
+      POST requests from the Toast platform to handle loyalty program transactions (accrual, redemption, inquiry) for restaurants
+      using a third-party loyalty provider.
+    humanURL: https://doc.toasttab.com/openapi/loyalty/overview/
+    tags:
+    - Loyalty
+    - Webhooks
+    properties:
+    - type: Documentation
+      url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - aid: toast:toast-tender-integration
+    name: Toast Tender Integration API
+    description: The Toast Tender integration specification is an outbound API. The partner hosts an HTTPS endpoint that accepts
+      POST requests from the Toast platform to receive tender transaction data for alternate or third-party payment tender
+      types processed at the restaurant.
+    humanURL: https://doc.toasttab.com/openapi/tender/overview/
+    tags:
+    - Tender
+    - Payments
+    - Webhooks
+    properties:
+    - type: Documentation
+      url: https://doc.toasttab.com/openapi/tender/overview/
 common:
   - type: LinkedIn
     url: https://www.linkedin.com/company/toast-inc
