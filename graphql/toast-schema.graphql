@@ -1,0 +1,927 @@
+"""
+Toast GraphQL Schema
+Conceptual schema derived from the Toast REST API platform.
+Source: https://doc.toasttab.com/api/
+GitHub: https://github.com/toasttab
+"""
+
+# ─────────────────────────────────────────
+# Scalars
+# ─────────────────────────────────────────
+
+scalar DateTime
+scalar UUID
+scalar JSON
+
+# ─────────────────────────────────────────
+# Enums
+# ─────────────────────────────────────────
+
+enum PaymentStatusEnum {
+  OPEN
+  CLOSED
+  VOIDED
+  AUTHORIZED
+  CAPTURED
+  DECLINED
+  ERROR
+}
+
+enum OrderStatusEnum {
+  OPEN
+  CLOSED
+  DELETED
+  FUTURE
+}
+
+enum DiningOptionBehavior {
+  DINE_IN
+  TAKE_OUT
+  DELIVERY
+  DRIVE_THRU
+}
+
+enum ShiftStatusEnum {
+  OPEN
+  CLOSED
+  DELETED
+}
+
+enum EmployeeStatusEnum {
+  ACTIVE
+  INACTIVE
+  DELETED
+}
+
+enum DiscountType {
+  PERCENT
+  FIXED
+  OPEN_PERCENT
+  OPEN_FIXED
+  BOGO
+}
+
+enum ServiceChargeType {
+  PERCENT
+  FIXED
+}
+
+enum TipType {
+  PERCENT
+  FIXED
+  NO_TIP
+}
+
+enum WebhookEventType {
+  ORDER_CREATED
+  ORDER_UPDATED
+  ORDER_CLOSED
+  PAYMENT_CREATED
+  MENU_PUBLISHED
+  EMPLOYEE_CREATED
+  EMPLOYEE_UPDATED
+  LABOR_SHIFT_CLOSED
+  GIFT_CARD_ACTIVATED
+  GIFT_CARD_REDEEMED
+  LOYALTY_ACCRUAL
+  LOYALTY_REDEMPTION
+  TENDER_TRANSACTION
+}
+
+enum PricingStrategy {
+  FIXED
+  SIZE
+  SEQUENCE
+  OVERRIDE
+}
+
+# ─────────────────────────────────────────
+# Restaurant Management
+# ─────────────────────────────────────────
+
+"""A restaurant management group containing multiple restaurant locations."""
+type RestaurantGroup {
+  guid: UUID!
+  name: String!
+  description: String
+  restaurants: [Restaurant!]!
+  created: DateTime
+  modified: DateTime
+}
+
+"""A single restaurant location on the Toast platform."""
+type Restaurant {
+  guid: UUID!
+  name: String!
+  info: RestaurantInfo!
+  config: RestaurantConfig!
+  group: RestaurantGroup
+  sections: [Section!]!
+  serviceAreas: [ServiceArea!]!
+  tables: [Table!]!
+  menus: [Menu!]!
+  employees: [Employee!]!
+  onlineOrdering: OnlineOrdering
+  supportedPayments: [SupportedPayment!]!
+  webhooks: [Webhook!]!
+  created: DateTime
+  modified: DateTime
+}
+
+"""Basic metadata and contact information for a restaurant."""
+type RestaurantInfo {
+  guid: UUID!
+  name: String!
+  locationName: String
+  description: String
+  address1: String
+  address2: String
+  city: String
+  state: String
+  zip: String
+  country: String
+  phone: String
+  website: String
+  timeZone: String
+  currency: String
+}
+
+"""Full configuration settings for a restaurant."""
+type RestaurantConfig {
+  guid: UUID!
+  restaurantGuid: UUID!
+  onlineOrderingEnabled: Boolean!
+  deliveryEnabled: Boolean!
+  loyaltyEnabled: Boolean!
+  giftCardsEnabled: Boolean!
+  taxesInclusiveInPrice: Boolean!
+  defaultOrderType: OrderType
+  diningOptions: [DiningOption!]!
+  taxRates: [TaxRate!]!
+  serviceCharges: [ServiceCharge!]!
+  altPayments: [AltPayment!]!
+  modified: DateTime
+}
+
+"""A dining section within a restaurant (e.g., Patio, Bar)."""
+type Section {
+  guid: UUID!
+  name: String!
+  description: String
+  serviceArea: ServiceArea
+  tables: [Table!]!
+}
+
+"""A service area grouping sections and tables."""
+type ServiceArea {
+  guid: UUID!
+  name: String!
+  description: String
+  sections: [Section!]!
+  tables: [Table!]!
+}
+
+"""An individual table within a restaurant."""
+type Table {
+  guid: UUID!
+  name: String!
+  section: Section
+  serviceArea: ServiceArea
+  capacity: Int
+  isActive: Boolean!
+}
+
+# ─────────────────────────────────────────
+# Menu and Catalog
+# ─────────────────────────────────────────
+
+"""Top-level menu container for a restaurant."""
+type Menu {
+  guid: UUID!
+  restaurantGuid: UUID!
+  name: String!
+  description: String
+  orderablePeriod: JSON
+  isDefault: Boolean!
+  menuGroups: [MenuGroup!]!
+  visibility: String
+  images: [String!]!
+  modified: DateTime
+}
+
+"""A group of menu pages within a menu."""
+type MenuGroup {
+  guid: UUID!
+  name: String!
+  description: String
+  menuPages: [MenuPage!]!
+  images: [String!]!
+  modified: DateTime
+}
+
+"""A page (category) within a menu group containing menu items."""
+type MenuPage {
+  guid: UUID!
+  name: String!
+  description: String
+  items: [MenuItem!]!
+  images: [String!]!
+  modified: DateTime
+}
+
+"""An individual menu item available for ordering."""
+type MenuItem {
+  guid: UUID!
+  name: String!
+  description: String
+  sku: String
+  price: Float
+  prices: [Price!]!
+  optionGroups: [OptionGroup!]!
+  images: [String!]!
+  taxInclusion: String
+  visibility: String
+  isAlcohol: Boolean!
+  calories: Int
+  unitOfMeasure: String
+  calories_per_unit: Int
+  modified: DateTime
+}
+
+"""An option associated with a menu item (e.g., size, preparation)."""
+type MenuOption {
+  guid: UUID!
+  name: String!
+  description: String
+  price: Float
+  menuItem: MenuItem
+  optionGroup: OptionGroup
+  isDefault: Boolean!
+  modified: DateTime
+}
+
+"""A group of modifier options for a menu item."""
+type OptionGroup {
+  guid: UUID!
+  name: String!
+  description: String
+  required: Boolean!
+  allowMultiple: Boolean!
+  minSelections: Int
+  maxSelections: Int
+  modifiers: [Modifier!]!
+  modified: DateTime
+}
+
+"""A modifier (add-on or customization) for a menu item."""
+type Modifier {
+  guid: UUID!
+  name: String!
+  description: String
+  price: Float
+  prices: [Price!]!
+  optionGroup: OptionGroup
+  isDefault: Boolean!
+  calories: Int
+  images: [String!]!
+  modified: DateTime
+}
+
+"""A price definition for a menu item or modifier."""
+type Price {
+  guid: UUID!
+  name: String
+  price: Float!
+  pricingStrategy: PricingStrategy!
+  pricingRules: [PriceModifier!]!
+  sequence: Int
+  size: String
+}
+
+"""A rule that modifies pricing under specific conditions."""
+type PriceModifier {
+  guid: UUID!
+  name: String
+  modifierType: String!
+  modifierValue: Float!
+  conditions: JSON
+}
+
+# ─────────────────────────────────────────
+# Orders and Checks
+# ─────────────────────────────────────────
+
+"""A restaurant order, the primary transaction container."""
+type Order {
+  guid: UUID!
+  restaurantGuid: UUID!
+  entityType: String
+  externalId: String
+  openedDate: DateTime!
+  closedDate: DateTime
+  modifiedDate: DateTime
+  promisedDate: DateTime
+  diningOption: DiningOption
+  orderType: OrderType
+  table: Table
+  server: Employee
+  serviceArea: ServiceArea
+  checks: [Check!]!
+  status: OrderStatusEnum!
+  source: String
+  appliedPackagingInfo: JSON
+  createdInTestMode: Boolean!
+  deliveryInfo: JSON
+  requiredPrepTime: String
+  estimatedFulfillmentDate: DateTime
+  numberOfGuests: Int
+  revenueCenter: JSON
+  marketplaceFacilitatedTaxInfo: JSON
+}
+
+"""A line item within an order (legacy or injected order item)."""
+type OrderItem {
+  guid: UUID!
+  orderId: UUID!
+  menuItem: MenuItem
+  displayName: String!
+  quantity: Int!
+  price: Float!
+  selections: [Selection!]!
+  specialRequest: String
+  fulfillmentStatus: String
+  externalId: String
+}
+
+"""The type of an order (dine-in, takeout, delivery, etc.)."""
+type OrderType {
+  guid: UUID!
+  name: String!
+  behavior: DiningOptionBehavior!
+  taxable: Boolean!
+}
+
+"""A check or bill attached to an order, with payments and line items."""
+type Check {
+  guid: UUID!
+  orderId: UUID!
+  entityType: String
+  externalId: String
+  openedDate: DateTime!
+  closedDate: DateTime
+  modifiedDate: DateTime
+  tabName: String
+  paymentStatus: PaymentStatusEnum!
+  appliedDiscounts: [AppliedDiscount!]!
+  appliedServiceCharges: [AppliedServiceCharge!]!
+  selections: [Selection!]!
+  payments: [Payment!]!
+  taxAmount: Float!
+  totalAmount: Float!
+  subTotal: Float!
+  displayNumber: String
+  customer: Customer
+  loyaltyAccount: LoyaltyAccount
+  voided: Boolean!
+  voidDate: DateTime
+  voidReason: String
+}
+
+"""A selection (ordered item) on a check."""
+type Selection {
+  guid: UUID!
+  entityType: String
+  externalId: String
+  itemId: UUID
+  item: MenuItem
+  displayName: String!
+  quantity: Float!
+  preModifier: String
+  modifiers: [Modifier!]!
+  appliedDiscounts: [AppliedDiscount!]!
+  price: Float!
+  tax: Float!
+  voided: Boolean!
+  voidDate: DateTime
+  voidReason: String
+  fulfillmentStatus: String
+  deferred: Boolean!
+  unitOfMeasure: String
+  receiptLinePrice: Float
+  taxInclusion: String
+  optionGroupPricingMode: String
+  splitEvenlyBetweenChecks: Boolean
+  appliedPosDiscount: JSON
+}
+
+"""A dining option (e.g., dine-in, to-go) applied to an order."""
+type DiningOption {
+  guid: UUID!
+  name: String!
+  behavior: DiningOptionBehavior!
+  curbside: Boolean!
+  delivery: Boolean!
+  grubhub: Boolean!
+}
+
+# ─────────────────────────────────────────
+# Payments
+# ─────────────────────────────────────────
+
+"""A payment record associated with a check."""
+type Payment {
+  guid: UUID!
+  entityType: String
+  externalId: String
+  checkId: UUID!
+  orderId: UUID!
+  paidDate: DateTime
+  closedDate: DateTime
+  cardEntryMode: String
+  amount: Float!
+  tipAmount: TipAmount
+  amountTendered: Float
+  type: String!
+  paymentStatus: PaymentStatus!
+  cashPayment: CashPayment
+  cardPayment: CardPayment
+  giftCardPayment: GiftCardPayment
+  houseAccountPayment: HouseAccountPayment
+  nonCash: NonCash
+  refundStatus: String
+  refund: Refund
+  voided: Boolean!
+  voidDate: DateTime
+  voidReason: String
+  voidUser: Employee
+  houseAccount: JSON
+  otherPayment: JSON
+  isProcessedOffline: Boolean!
+  mcaRepaymentAmount: Float
+}
+
+"""Status details for a payment transaction."""
+type PaymentStatus {
+  paymentStatus: PaymentStatusEnum!
+  voidInfo: JSON
+  refundInfo: JSON
+}
+
+"""A cash tender payment."""
+type CashPayment {
+  guid: UUID!
+  amount: Float!
+  amountTendered: Float!
+  changeGiven: Float!
+}
+
+"""A credit or debit card payment."""
+type CardPayment {
+  guid: UUID!
+  amount: Float!
+  cardType: String
+  last4: String
+  cardholderFirstName: String
+  cardholderLastName: String
+  entryMode: String
+  authorizationCode: String
+  paymentDataSource: String
+  cardPaymentId: String
+}
+
+"""A gift card tender payment."""
+type GiftCardPayment {
+  guid: UUID!
+  amount: Float!
+  giftCardGuid: UUID
+  giftCardNumber: String
+  remainingBalance: Float
+}
+
+"""A house account tender payment."""
+type HouseAccountPayment {
+  guid: UUID!
+  amount: Float!
+  accountNumber: String
+  accountName: String
+}
+
+"""A non-cash alternate tender payment."""
+type NonCash {
+  guid: UUID!
+  type: String!
+  amount: Float!
+  note: String
+}
+
+"""An alternate payment type configured for a restaurant."""
+type AltPayment {
+  guid: UUID!
+  name: String!
+  active: Boolean!
+}
+
+"""A payment method supported by the restaurant."""
+type SupportedPayment {
+  guid: UUID!
+  name: String!
+  type: String!
+  active: Boolean!
+}
+
+# ─────────────────────────────────────────
+# Financials
+# ─────────────────────────────────────────
+
+"""A discount definition available at a restaurant."""
+type Discount {
+  guid: UUID!
+  name: String!
+  type: DiscountType!
+  value: Float
+  percentage: Float
+  active: Boolean!
+  requireApproval: Boolean!
+  selectionType: String
+  modified: DateTime
+}
+
+"""A discount applied to a check or selection."""
+type AppliedDiscount {
+  guid: UUID!
+  name: String!
+  discount: Discount
+  type: DiscountType!
+  percentage: Float
+  value: Float!
+  processingState: String
+  loyaltyDetails: JSON
+  comboItems: JSON
+  appliedPromoCode: String
+  discountAmount: Float!
+  triggers: JSON
+  approver: Employee
+  checkId: UUID
+  selectionGuid: UUID
+}
+
+"""A tax charge applied to a check."""
+type Tax {
+  guid: UUID!
+  name: String!
+  rate: TaxRate!
+  amount: Float!
+  taxRate: Float!
+  type: String
+}
+
+"""A tax rate definition configured for a restaurant."""
+type TaxRate {
+  guid: UUID!
+  name: String!
+  rate: Float!
+  type: String
+  inclusive: Boolean!
+}
+
+"""A service charge definition (e.g., gratuity, delivery fee)."""
+type ServiceCharge {
+  guid: UUID!
+  name: String!
+  type: ServiceChargeType!
+  value: Float!
+  taxable: Boolean!
+  gratuity: Boolean!
+  delivery: Boolean!
+  active: Boolean!
+}
+
+"""A service charge applied to a check."""
+type AppliedServiceCharge {
+  guid: UUID!
+  name: String!
+  serviceCharge: ServiceCharge
+  chargeAmount: Float!
+  chargeType: ServiceChargeType!
+  gratuity: Boolean!
+  delivery: Boolean!
+  taxAmount: Float
+}
+
+"""A tip amount on a payment."""
+type TipAmount {
+  amount: Float!
+  tipType: TipType!
+  percentage: Float
+}
+
+"""A refund record for a payment."""
+type Refund {
+  guid: UUID!
+  paymentGuid: UUID!
+  orderId: UUID!
+  checkId: UUID!
+  refundDate: DateTime!
+  refundAmount: Float!
+  refundBusinessDate: Int
+  refundTipAmount: Float
+  refundedByEmployee: Employee
+  refundStatus: String!
+  taxRefundAmount: Float
+  taxRefundInfo: JSON
+}
+
+# ─────────────────────────────────────────
+# Labor and Employees
+# ─────────────────────────────────────────
+
+"""A restaurant employee record."""
+type Employee {
+  guid: UUID!
+  externalId: String
+  firstName: String!
+  lastName: String!
+  email: String
+  phoneNumber: String
+  status: EmployeeStatusEnum!
+  roles: [EmployeeRole!]!
+  shifts: [Shift!]!
+  timeClocks: [TimeClock!]!
+  wageBand: JSON
+  restaurantGuid: UUID!
+  created: DateTime
+  modified: DateTime
+  deleted: Boolean!
+  deletedDate: DateTime
+}
+
+"""A role or job classification assigned to an employee."""
+type EmployeeRole {
+  guid: UUID!
+  name: String!
+  description: String
+  permissions: [String!]!
+  wage: Float
+  payRate: String
+}
+
+"""A labor record for reporting and payroll purposes."""
+type Labor {
+  guid: UUID!
+  restaurantGuid: UUID!
+  businessDate: Int!
+  totalHours: Float!
+  totalWages: Float!
+  employee: Employee!
+  role: EmployeeRole
+  shifts: [Shift!]!
+}
+
+"""An employee shift record."""
+type Shift {
+  guid: UUID!
+  employeeGuid: UUID!
+  restaurantGuid: UUID!
+  jobReference: JSON
+  inDate: DateTime!
+  outDate: DateTime
+  status: ShiftStatusEnum!
+  wage: Float
+  declaredCashTips: Float
+  nonCashTips: Float
+  cashGratuityServiceCharges: Float
+  nonCashGratuityServiceCharges: Float
+  totalGratuityServiceCharges: Float
+  breaks: JSON
+  createdDate: DateTime!
+  modifiedDate: DateTime
+  deletedDate: DateTime
+}
+
+"""A time clock entry recording an employee punch in or out."""
+type TimeClock {
+  guid: UUID!
+  employeeGuid: UUID!
+  restaurantGuid: UUID!
+  inDate: DateTime!
+  outDate: DateTime
+  duration: Float
+  shiftReference: Shift
+  jobReference: JSON
+}
+
+# ─────────────────────────────────────────
+# Customer and Loyalty
+# ─────────────────────────────────────────
+
+"""A CRM record for a restaurant guest."""
+type CustomerCRM {
+  guid: UUID!
+  restaurantGuid: UUID!
+  customer: Customer!
+  firstVisitDate: DateTime
+  lastVisitDate: DateTime
+  totalVisits: Int
+  totalSpend: Float
+  averageSpend: Float
+  loyaltyAccount: LoyaltyAccount
+  notes: String
+  marketingOptIn: Boolean
+  created: DateTime
+  modified: DateTime
+}
+
+"""A customer identity record."""
+type Customer {
+  guid: UUID!
+  firstName: String
+  lastName: String
+  email: String
+  phone: String
+  birthday: String
+  loyaltyAccount: LoyaltyAccount
+}
+
+"""A loyalty account associated with a customer."""
+type LoyaltyAccount {
+  guid: UUID!
+  customerId: UUID
+  programId: UUID
+  loyaltyProgram: LoyaltyProgram
+  pointBalance: Float
+  rewardBalance: Float
+  externalId: String
+  status: String
+  created: DateTime
+  modified: DateTime
+}
+
+"""A loyalty program configured for a restaurant or group."""
+type LoyaltyProgram {
+  guid: UUID!
+  name: String!
+  description: String
+  pointsPerDollar: Float
+  dollarPerPoint: Float
+  active: Boolean!
+  vendorName: String
+  programType: String
+  created: DateTime
+  modified: DateTime
+}
+
+# ─────────────────────────────────────────
+# Online Ordering
+# ─────────────────────────────────────────
+
+"""Online ordering configuration for a restaurant."""
+type OnlineOrdering {
+  guid: UUID!
+  restaurantGuid: UUID!
+  enabled: Boolean!
+  schedulingEnabled: Boolean!
+  preorderEnabled: Boolean!
+  deliveryEnabled: Boolean!
+  takeoutEnabled: Boolean!
+  minimumOrderAmount: Float
+  maxOrderAmount: Float
+  estimatedPickupTime: Int
+  estimatedDeliveryTime: Int
+  deliveryMinimum: Float
+  deliveryFee: Float
+  supportedPayments: [SupportedPayment!]!
+  preorderTimes: [PreorderTime!]!
+  specialInstructions: Boolean!
+  modified: DateTime
+}
+
+"""A pre-order scheduling time slot for online ordering."""
+type PreorderTime {
+  guid: UUID!
+  dayOfWeek: String!
+  startTime: String!
+  endTime: String!
+  orderTypeGuid: UUID
+  leadTime: Int
+  available: Boolean!
+}
+
+# ─────────────────────────────────────────
+# Reservations
+# ─────────────────────────────────────────
+
+"""A reservation record from OpenTable or integrated reservation systems."""
+type OpenTable {
+  guid: UUID!
+  restaurantGuid: UUID!
+  reservationId: String!
+  confirmationNumber: String
+  guestName: String!
+  guestEmail: String
+  guestPhone: String
+  partySize: Int!
+  reservationDate: DateTime!
+  table: Table
+  section: Section
+  specialRequests: String
+  status: String!
+  created: DateTime
+  modified: DateTime
+}
+
+# ─────────────────────────────────────────
+# Webhooks and Integration
+# ─────────────────────────────────────────
+
+"""A webhook configuration for receiving outbound Toast events."""
+type Webhook {
+  guid: UUID!
+  restaurantGuid: UUID
+  name: String!
+  url: String!
+  active: Boolean!
+  eventTypes: [WebhookEventType!]!
+  secret: String
+  retryEnabled: Boolean!
+  created: DateTime
+  modified: DateTime
+}
+
+# ─────────────────────────────────────────
+# Query Root
+# ─────────────────────────────────────────
+
+type Query {
+  """Get a restaurant by GUID."""
+  restaurant(guid: UUID!): Restaurant
+
+  """List restaurants in a management group."""
+  restaurantGroup(guid: UUID!): RestaurantGroup
+
+  """Get restaurant info for a location."""
+  restaurantInfo(restaurantGuid: UUID!): RestaurantInfo
+
+  """Get full restaurant configuration."""
+  restaurantConfig(restaurantGuid: UUID!): RestaurantConfig
+
+  """Get a menu by GUID."""
+  menu(guid: UUID!, restaurantGuid: UUID!): Menu
+
+  """List menus for a restaurant."""
+  menus(restaurantGuid: UUID!): [Menu!]!
+
+  """Get a menu item by GUID."""
+  menuItem(guid: UUID!, restaurantGuid: UUID!): MenuItem
+
+  """Get an order by GUID."""
+  order(guid: UUID!, restaurantGuid: UUID!): Order
+
+  """List orders for a restaurant within a date range."""
+  orders(
+    restaurantGuid: UUID!
+    startDate: DateTime!
+    endDate: DateTime!
+    pageSize: Int
+    page: Int
+  ): [Order!]!
+
+  """Get a check by GUID."""
+  check(guid: UUID!, restaurantGuid: UUID!): Check
+
+  """Get a payment by GUID."""
+  payment(guid: UUID!, restaurantGuid: UUID!): Payment
+
+  """Get an employee by GUID."""
+  employee(guid: UUID!, restaurantGuid: UUID!): Employee
+
+  """List employees for a restaurant."""
+  employees(restaurantGuid: UUID!, status: EmployeeStatusEnum): [Employee!]!
+
+  """List shifts for a restaurant within a date range."""
+  shifts(
+    restaurantGuid: UUID!
+    startDate: DateTime!
+    endDate: DateTime!
+  ): [Shift!]!
+
+  """Get a customer by GUID."""
+  customer(guid: UUID!, restaurantGuid: UUID!): Customer
+
+  """Get a loyalty account by GUID."""
+  loyaltyAccount(guid: UUID!, restaurantGuid: UUID!): LoyaltyAccount
+
+  """List webhooks for a restaurant."""
+  webhooks(restaurantGuid: UUID!): [Webhook!]!
+
+  """Get online ordering configuration for a restaurant."""
+  onlineOrdering(restaurantGuid: UUID!): OnlineOrdering
+
+  """List service areas for a restaurant."""
+  serviceAreas(restaurantGuid: UUID!): [ServiceArea!]!
+
+  """List tables for a restaurant."""
+  tables(restaurantGuid: UUID!): [Table!]!
+
+  """Get a refund by GUID."""
+  refund(guid: UUID!, restaurantGuid: UUID!): Refund
+}
