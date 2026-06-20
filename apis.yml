@@ -11,7 +11,7 @@ description: Toast is a restaurant technology platform providing cloud-based poi
 type: Index
 position: Consumer
 access: 3rd-Party
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
 - Food Service
 - Point of Sale
