@@ -247,7 +247,7 @@ common:
   url: https://doc.toasttab.com/doc/devguide/index.html
 - type: Portal
   url: https://doc.toasttab.com/openapi/
-- type: SignUp
+- type: Signup
   url: https://developers.toasttab.com/
 - type: GitHubOrganization
   url: https://github.com/toasttab
