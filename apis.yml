@@ -239,6 +239,10 @@ apis:
   - type: Documentation
     url: https://doc.toasttab.com/openapi/tender/overview/
 common:
+- type: VulnerabilityDisclosure
+  url: security/toast-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/toast-domain-security.yml
 - type: Authentication
   url: authentication/toast-authentication.yml
 - type: OAuthScopes
