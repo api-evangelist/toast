@@ -1,0 +1,203 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/toast-labor-openapi.yaml, openapi/toast-menus-openapi.yaml, openapi/toast-orders-openapi.yaml,
+  openapi/toast-partners-openapi.yaml, openapi/toast-restaurants-openapi.yaml, openapi/toast-stock-openapi.yaml
+schemes:
+- name: oauth2
+  source: openapi/toast-labor-openapi.yaml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://toast-api-server/authentication/v1/authentication/login
+  description: "Access to Toast APIs, specific endpoints, \nand specific API endpoint operations\
+    \ is \ncontrolled by the scopes that are associated \nwith your API account. \nA full reference\
+    \ for Toast API scopes and \ntheir capabilities can be found in the\n[_Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html)."
+- name: oauth2
+  source: openapi/toast-menus-openapi.yaml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://toast-api-server/authentication/v1/authentication/login
+  description: "Access to Toast APIs, specific endpoints, \nand specific API endpoint operations\
+    \ is \ncontrolled by the scopes that are associated \nwith your API account. \n\nA full\
+    \ reference for Toast API scopes and \ntheir capabilities can be found in the\n[_Toast Developer\
+    \ Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html)."
+- name: oauth2
+  source: openapi/toast-orders-openapi.yaml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://toast-api-server/authentication/v1/authentication/login
+  description: "Access to Toast APIs, specific endpoints, \nand specific API endpoint operations\
+    \ is \ncontrolled by the scopes that are associated \nwith your API account. \n\nA full\
+    \ reference for Toast API scopes and \ntheir capabilities can be found in the\n[_Toast Developer\
+    \ Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html)."
+- name: oauth2
+  source: openapi/toast-partners-openapi.yaml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://toast-api-server/authentication/v1/authentication/login
+  description: "Access to Toast APIs, specific endpoints, \nand specific API endpoint operations\
+    \ is \ncontrolled by the scopes that are associated \nwith your API account. \nA full reference\
+    \ for Toast API scopes and \ntheir capabilities can be found in the\n[_Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html)."
+- name: oauth2
+  source: openapi/toast-restaurants-openapi.yaml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://toast-api-server/authentication/v1/authentication/login
+  description: "Access to Toast APIs, specific endpoints, \nand specific API endpoint operations\
+    \ is \ncontrolled by the scopes that are associated \nwith your API account. \nA full reference\
+    \ for Toast API scopes and \ntheir capabilities can be found in the\n[_Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html)."
+- name: oauth2
+  source: openapi/toast-stock-openapi.yaml
+  flows:
+  - flow: clientCredentials
+    tokenUrl: https://toast-api-server/authentication/v1/authentication/login
+  description: "Access to Toast APIs, specific endpoints, \nand specific API endpoint operations\
+    \ is \ncontrolled by the scopes that are associated \nwith your API account. \n\nA full\
+    \ reference for Toast API scopes and \ntheir capabilities can be found in the\n[_Toast Developer\
+    \ Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html)."
+scopes:
+- scope: delivery_info.address:read
+  description: |-
+    Allows reading guest delivery address information from the orders API.
+    Optionally used in conjunction with the `orders:read` scope to return
+    the `deliveredDate`, `dispatchedDate`, `deliveryEmployee`, and `deliveryState`
+    fields as part of the `deliveryInfo` field on the Order object.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/toast-orders-openapi.yaml
+- scope: employees.tax-identifier-masked:read
+  description: |-
+    Allows reading masked tax identifier (SSN) information for employees via
+    expand parameter.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/toast-labor-openapi.yaml
+- scope: employees.tax-identifier-unmasked:read
+  description: |-
+    Allows reading full unmasked tax identifier (SSN) information for employees
+    via expand parameter.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/toast-labor-openapi.yaml
+- scope: guest.pi:read
+  description: |-
+    Allows reading guest and curbside pickup information from the orders API.
+    Optionally used in conjunction with the `orders:read` scope to return the
+    `email` and `phone` fields as part of the `checks[].customer` object.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/toast-orders-openapi.yaml
+- scope: labor.employees:read
+  description: Allows reading employee information from the labor API.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/toast-labor-openapi.yaml
+- scope: labor.employees:write
+  description: Allows updating employee information in the labor API.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/toast-labor-openapi.yaml
+- scope: labor.jobs:write
+  description: Allows updating job information in the labor API.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/toast-labor-openapi.yaml
+- scope: labor.shifts:write
+  description: Allows updating shift information in the labor API.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/toast-labor-openapi.yaml
+- scope: labor:read
+  description: Allows reading all data except employees from the labor API.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/toast-labor-openapi.yaml
+- scope: menus:read
+  description: Allows reading from menus API V2.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/toast-menus-openapi.yaml
+- scope: orders.channel:read
+  description: |-
+    Allows API clients that submit orders to the Toast platform to read from the orders API.
+
+    To read orders, the API client must have both the orders:read scope and the orders.channel:read scope.
+
+    API clients that have the orders.channel:read scope can only read the orders that they submitted. They cannot
+    read orders from any other source.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/toast-orders-openapi.yaml
+- scope: orders.channel:void
+  sources:
+  - openapi/toast-orders-openapi.yaml
+- scope: orders.delivery_info:write
+  description: Allows updating delivery information from the orders API.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/toast-orders-openapi.yaml
+- scope: orders.discounts:write
+  description: Allows adding discounts to orders using the orders API.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/toast-orders-openapi.yaml
+- scope: orders.items:write
+  description: Allows adding items to orders using the orders API.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/toast-orders-openapi.yaml
+- scope: orders.orders:write
+  description: Allows posting orders orders using the orders API.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/toast-orders-openapi.yaml
+- scope: orders.payments:write
+  description: Allows adding payments and tips to existing orders using the orders API.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/toast-orders-openapi.yaml
+- scope: orders:read
+  description: "Allows reading from the orders API with the exception of guest information.\n\
+    \nIf your API client creates orders, then to read orders, it must have both the orders:read\
+    \ scope and the \norders.channel:read scope."
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/toast-orders-openapi.yaml
+- scope: orders:void
+  sources:
+  - openapi/toast-orders-openapi.yaml
+- scope: restaurants:read
+  description: Allows reading from the restaurants API.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/toast-restaurants-openapi.yaml
+- scope: stock:read
+  description: Allows reading from the stock API.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/toast-stock-openapi.yaml
+- scope: stock:write
+  description: Allows updating stock status for menu items (and modifier option item references)
+    using the stock API.
+  flows:
+  - clientCredentials
+  sources:
+  - openapi/toast-stock-openapi.yaml
