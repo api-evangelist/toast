@@ -1,0 +1,741 @@
+generated: '2026-07-15'
+method: generated
+source: openapi/toast-authentication-openapi.yaml, openapi/toast-labor-openapi.yaml, openapi/toast-menus-openapi.yaml,
+  openapi/toast-orders-openapi.yaml, openapi/toast-partners-openapi.yaml, openapi/toast-restaurants-openapi.yaml,
+  openapi/toast-stock-openapi.yaml
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 46
+  by_action_class:
+    acting: 26
+    connected: 20
+  by_consequence:
+    write: 16
+    read: 20
+    safety-critical: 1
+    physical: 9
+  human_in_the_loop_required: 1
+operations:
+- path: /authentication/login
+  method: post
+  operationId: authenticationLoginPost
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /employees
+  method: get
+  operationId: employeesGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - labor.employees:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /employees
+  method: post
+  operationId: employeesPost
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - labor.employees:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /employees/{employeeId}
+  method: get
+  operationId: employeesEmployeeIdGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - labor.employees:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /employees/{employeeId}
+  method: delete
+  operationId: employeesEmployeeIdDelete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - labor.employees:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /employees/{employeeId}
+  method: patch
+  operationId: employeesEmployeeIdPatch
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - labor.employees:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /employees/{employeeId}/externalId
+  method: post
+  operationId: employeesEmployeeIdExternalIdPost
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - labor.employees:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /employees/{employeeId}/externalId
+  method: put
+  operationId: employeesEmployeeIdExternalIdPut
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - labor.employees:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /employees/{employeeId}/unarchive
+  method: put
+  operationId: employeesEmployeeIdUnarchivePut
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - labor.employees:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /employees/{employeeId}/jobs
+  method: put
+  operationId: employeesEmployeeIdJobsPut
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - labor.employees:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /employees/{employeeId}/wageOverrides
+  method: put
+  operationId: employeesEmployeeIdWageOverridesPut
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    scope:
+    - labor.employees:write
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
+- path: /shifts
+  method: get
+  operationId: shiftsGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - labor:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /shifts
+  method: post
+  operationId: shiftsPost
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - labor.shifts:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /shifts/{shiftId}
+  method: get
+  operationId: shiftsShiftIdGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - labor:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /shifts/{shiftId}
+  method: put
+  operationId: shiftsShiftIdPut
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - labor.shifts:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /shifts/{shiftId}
+  method: delete
+  operationId: shiftsShiftIdDelete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - labor.shifts:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /jobs
+  method: get
+  operationId: jobsGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - labor:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /jobs/{jobId}
+  method: get
+  operationId: jobsJobIdGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - labor:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /jobs/{jobId}/externalId
+  method: post
+  operationId: jobsJobIdExternalIdPost
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - labor.jobs:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /jobs/{jobId}/externalId
+  method: put
+  operationId: jobsJobIdExternalIdPut
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - labor.jobs:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /timeEntries
+  method: get
+  operationId: timeEntriesGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - labor:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /timeEntries/{timeEntryId}
+  method: get
+  operationId: timeEntriesTimeEntryIdGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - labor:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /menus
+  method: get
+  operationId: menusGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - menus:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /metadata
+  method: get
+  operationId: metadataGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - menus:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /payments
+  method: get
+  operationId: paymentsGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - orders:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /payments/{guid}
+  method: get
+  operationId: paymentsGuidGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - orders:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /prices
+  method: post
+  operationId: pricesPost
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - orders.orders:write
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /orders/{guid}
+  method: get
+  operationId: ordersGuidGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - orders:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /ordersBulk
+  method: get
+  operationId: ordersBulkGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - orders:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /orders/{orderGuid}/checks/{checkGuid}/payments
+  method: post
+  operationId: ordersChecksPaymentsPost
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - orders.payments:write
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /orders/{orderGuid}/checks/{checkGuid}/payments/{paymentGuid}
+  method: patch
+  operationId: ordersOrderGuidChecksCheckGuidPaymentsPaymentGuidPatch
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - orders.payments:write
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /orders/{orderGuid}/checks/{checkGuid}/selections
+  method: post
+  operationId: ordersOrderGuidChecksCheckGuidSelectionsPost
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - orders.items:write
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /orders/{orderGuid}/checks/{checkGuid}/appliedDiscounts
+  method: post
+  operationId: ordersChecksAppliedDiscountsPost
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - orders.discounts:write
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /orders/{orderGuid}/checks/{checkGuid}/selections/{selectionGuid}/appliedDiscounts
+  method: post
+  operationId: ordersChecksSelectionsAppliedDiscountsPost
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - orders.discounts:write
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /orders/{orderGuid}/deliveryInfo
+  method: patch
+  operationId: ordersOrderGuidDeliveryInfoPatch
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - orders.delivery_info:write
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /orders/{orderGuid}/void
+  method: post
+  operationId: voidOrder
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - orders.channel:void
+    - orders:void
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /orders
+  method: post
+  operationId: ordersPost
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - orders.orders:write
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /orders
+  method: get
+  operationId: ordersGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - orders:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /applicableDiscounts
+  method: post
+  operationId: applicableDiscountsPost
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - orders.orders:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /restaurants
+  method: get
+  operationId: restaurantsGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /connectedRestaurants
+  method: get
+  operationId: connectedRestaurantsGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /restaurants/{restaurantGUID}
+  method: get
+  operationId: restaurantsRestaurantGuidGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - restaurants:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /groups/{managementGroupGUID}/restaurants
+  method: get
+  operationId: groupsManagementGroupGuidRestaurantsGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - restaurants:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/inventory
+  method: get
+  operationId: getInventory
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - stock:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/inventory/search
+  method: post
+  operationId: postInventorySearch
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - stock:read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/inventory/update
+  method: put
+  operationId: updateInventory
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - stock:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
