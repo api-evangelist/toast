@@ -1,0 +1,272 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Toast Authentication Jobs API
+  description: 'The authentication API returns an authentication token that you can present
+
+    when your integration client software uses other Toast APIs. For more
+
+    information about authentication, see [the Toast Developer
+
+    Guide](https://doc.toasttab.com/doc/devguide/authentication.html).
+
+    '
+  termsOfService: https://pos.toasttab.com/api-terms-of-use
+  contact:
+    name: Toast developer support
+host: toast-api-server
+basePath: /authentication/v1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: Jobs
+paths:
+  /jobs:
+    get:
+      tags:
+      - Jobs
+      summary: Toast Get Jobs
+      description: "Returns an array of `Job` objects containing information about \nthe employee jobs configured at a restaurant. By default, if no\njob IDs are provided in the request, deleted jobs will be excluded\nfrom the array.\n"
+      operationId: jobsGet
+      produces:
+      - application/json
+      parameters:
+      - name: Toast-Restaurant-External-ID
+        description: "The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n"
+        in: header
+        type: string
+        format: string
+        required: true
+      - name: jobIds
+        description: "An optional array of one or more job identifiers, either \nthe Toast platform GUID or an external identifier assigned \nby the client. 100 max. If not provided, all jobs known to \nthe Toast platform for this restaurant will be returned.\n"
+        in: query
+        type: array
+        items:
+          type: string
+      responses:
+        '200':
+          description: 'Returns the specified jobs.
+
+            '
+          schema:
+            title: Response
+            type: array
+            items:
+              $ref: '#/definitions/Job'
+        '500':
+          description: "An unexpected internal error occurred. There is a \n`requestId` attached to this error that can be referenced \nby Toast support.\n"
+      security:
+      - oauth2:
+        - labor:read
+  /jobs/{jobId}:
+    get:
+      tags:
+      - Jobs
+      summary: Toast Get One Job
+      description: "Returns a `Job` object containing information about one \nemployee job at a restaurant.\n"
+      operationId: jobsJobIdGet
+      produces:
+      - application/json
+      parameters:
+      - name: Toast-Restaurant-External-ID
+        description: "The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n"
+        in: header
+        type: string
+        format: string
+        required: true
+      - name: jobId
+        description: "The Toast platform GUID or an external identifier for the \njob.\n"
+        in: path
+        type: string
+        format: string
+        required: true
+      responses:
+        '200':
+          description: 'Returns the specified job.
+
+            '
+          schema:
+            $ref: '#/definitions/Job'
+        '400':
+          description: "The Toast platform GUID or external identifier was \nmalformed.\n"
+        '500':
+          description: "An unexpected internal error occurred. There is a \n`requestId` attached to this error that can be referenced \nby Toast support.\n"
+      security:
+      - oauth2:
+        - labor:read
+  /jobs/{jobId}/externalId:
+    parameters:
+    - name: jobId
+      description: "The Toast platform GUID or external identifier of the job \nrecord.\n"
+      in: path
+      type: string
+      required: true
+    post:
+      tags:
+      - Jobs
+      summary: Toast Add an External Identifier
+      description: "Adds an external identifier for an existing job. Include the \nstring value of the new external identifier in the message \nbody.\n\nYou cannot change an existing external identifier with another \n`POST` request. The Toast platform uses this external \nidentifier as one of the unique, persistent identifiers for a \njob record.\n"
+      operationId: jobsJobIdExternalIdPost
+      produces:
+      - application/json
+      parameters:
+      - name: Toast-Restaurant-External-ID
+        description: "The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n"
+        in: header
+        type: string
+        format: string
+        required: true
+      - name: Content-Type
+        description: "The Internet Assigned Numbers Authority (IANA) media type \nof the message body data. The value must be \n`application/json`.\n"
+        in: header
+        type: string
+        format: string
+        required: true
+      - name: body
+        description: "The JSON string value of the `externalId` for the job \nrecord. Wrap the value in double quotation marks to make it \nvalid JSON syntax.\n"
+        in: body
+        required: true
+        schema:
+          type: string
+          example: MyToastNamingAuthority:9876543210
+      responses:
+        '200':
+          description: 'Returns the updated job record.
+
+            '
+          schema:
+            $ref: '#/definitions/Job'
+      security:
+      - oauth2:
+        - labor.jobs:write
+    put:
+      tags:
+      - Jobs
+      summary: Toast Add or Replace an External Identifier
+      description: "Adds or replaces the external identifier for an existing job. \nInclude the string value of the new external identifier in the \nmessage body.\n\nThe Toast platform uses this external identifier as one of the \nunique, persistent identifiers for a job record. _Changing the \nexternal identifier for an existing job might affect reporting \nand other Toast platform functions that select jobs using the \n`externalId` value._\n"
+      operationId: jobsJobIdExternalIdPut
+      produces:
+      - application/json
+      parameters:
+      - name: Toast-Restaurant-External-ID
+        description: "The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n"
+        in: header
+        type: string
+        format: string
+        required: true
+      - name: Content-Type
+        description: "The Internet Assigned Numbers Authority (IANA) media type \nof the message body data. The value must be \n`application/json`.\n"
+        in: header
+        type: string
+        format: string
+        required: true
+      - name: body
+        description: "The JSON string value of the `externalId` for the job \nrecord. Wrap the value in double quotation marks to make it \nvalid JSON syntax.\n"
+        in: body
+        required: true
+        schema:
+          type: string
+          example: MyToastNamingAuthority:9876543210
+      responses:
+        '200':
+          description: 'Returns the updated job record.
+
+            '
+          schema:
+            $ref: '#/definitions/Job'
+      security:
+      - oauth2:
+        - labor.jobs:write
+definitions:
+  ExternalReference:
+    type: object
+    description: "A wrapper object with fields that allow reference to a Toast \nplatform entity by Toast GUID or an external identifier.\n"
+    allOf:
+    - $ref: '#/definitions/ToastReference'
+    - type: object
+      properties:
+        externalId:
+          description: "External identifier string that is prefixed by the naming \nauthority. You can, for example, use the labor API to \n`POST` an `externalId` for an employee and then `GET` the \nemployee with that `externalId`.\n"
+          type: string
+  ToastReference:
+    type: object
+    description: "A wrapper object with fields that allow reference to a Toast \nplatform entity by Toast GUID.\n"
+    required:
+    - guid
+    - entityType
+    properties:
+      guid:
+        description: 'The GUID maintained by the Toast platform.
+
+          '
+        type: string
+      entityType:
+        description: 'The type of object this is.
+
+          '
+        type: string
+  Job:
+    type: object
+    description: A restaurant job.
+    allOf:
+    - $ref: '#/definitions/ExternalReference'
+    - type: object
+      properties:
+        createdDate:
+          type: string
+          format: date-time
+          description: 'Date created, in UTC format (read-only).
+
+            '
+        modifiedDate:
+          type: string
+          format: date-time
+          description: 'Date modified, in UTC format (read-only).
+
+            '
+        deletedDate:
+          type: string
+          format: date-time
+          description: 'Date deleted, in UTC format (read-only).
+
+            '
+        title:
+          type: string
+          description: 'Title of the job.
+
+            '
+        deleted:
+          type: boolean
+          description: 'If the job is deleted in the Toast platform.
+
+            '
+        wageFrequency:
+          type: string
+          description: "An enumerated type specifying how to interpret the \ndefault wage for this job.\n"
+          enum:
+          - HOURLY
+          - SALARY
+        defaultWage:
+          type: number
+          format: double
+          description: 'The default wage of the job.
+
+            '
+        tipped:
+          type: boolean
+          description: 'Indicates whether the job receives gratuities (tips).
+
+            '
+        code:
+          type: string
+          description: "A reference identifier for the job. This is an optional \nfield entered when the job is created. For example, it \ncan be used to match Toast platform jobs to jobs \nconfigured in external labor management systems.\n"
+        excludeFromReporting:
+          type: boolean
+          description: "Indicates whether labor summary reports should include hours and pay \nfor this job. Restaurant employees set this configuration option for a job \non the **Jobs** page of Toast Web.\n"
+externalDocs:
+  description: Authentication developer guide
+  url: https://doc.toasttab.com/doc/devguide/authentication.html

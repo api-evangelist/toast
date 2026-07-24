@@ -1,0 +1,628 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Toast Authentication Employees API
+  description: 'The authentication API returns an authentication token that you can present
+
+    when your integration client software uses other Toast APIs. For more
+
+    information about authentication, see [the Toast Developer
+
+    Guide](https://doc.toasttab.com/doc/devguide/authentication.html).
+
+    '
+  termsOfService: https://pos.toasttab.com/api-terms-of-use
+  contact:
+    name: Toast developer support
+host: toast-api-server
+basePath: /authentication/v1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: Employees
+paths:
+  /employees:
+    get:
+      tags:
+      - Employees
+      summary: Toast Get Employees
+      description: "Returns an array of `Employee` objects containing information \nabout restaurant employees.\n"
+      operationId: employeesGet
+      produces:
+      - application/json
+      parameters:
+      - name: Toast-Restaurant-External-ID
+        description: "The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n"
+        in: header
+        type: string
+        format: string
+        required: true
+      - name: employeeIds
+        description: "An optional identifier that filters return values for a \nspecific employee. The identifier can be a Toast platform \nGUID or an external identifier. If present, the `employees` \nresource will only return the employees you specify. You \ncan include multiple `employeeIds` query parameters \n(maximum 100). If not present, the resource returns each \nemployee for the restaurant.\n"
+        in: query
+        type: string
+        format: string
+      responses:
+        '200':
+          description: 'JSON objects for all employees in the restaurant
+
+            '
+          schema:
+            title: Response
+            type: array
+            items:
+              $ref: '#/definitions/Employee'
+        '500':
+          description: "An unexpected internal error occurred. There is a \n`requestId` attached to this error that can be referenced \nby Toast support.\n"
+      security:
+      - oauth2:
+        - labor.employees:read
+    post:
+      tags:
+      - Employees
+      summary: Toast Add an Employee
+      description: 'Creates a restaurant employee record.
+
+        '
+      operationId: employeesPost
+      produces:
+      - application/json
+      parameters:
+      - name: Toast-Restaurant-External-ID
+        description: "The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n"
+        in: header
+        type: string
+        format: string
+        required: true
+      - name: Content-Type
+        description: "The Internet Assigned Numbers Authority (IANA) media type \nof the message body data. The value must be \n`application/json`.\n"
+        in: header
+        type: string
+        format: string
+        required: true
+      - name: body
+        description: "An `Employee` object containing information about the \nemployee, including the employee's name and email address.\n"
+        in: body
+        required: true
+        schema:
+          type: string
+          example:
+            entityType: RestaurantUser
+            email: email
+            firstName: first name
+            chosenName: optional chosen name
+            lastName: last name
+            externalId: optional external ID
+            externalEmployeeId: optional external employee ID
+            jobReferences":
+            - guid: f290a951-2042-4f3d-b861-d89e9e583876
+              entityType: RestaurantJob
+            wageOverrides:
+            - jobReference:
+                guid: f290a951-2042-4f3d-b861-d89e9e583876
+                entityType: RestaurantJob
+              wage: 10
+      responses:
+        '200':
+          description: Returns the created employee.
+          schema:
+            $ref: '#/definitions/Employee'
+        '400':
+          description: "The request contains data that is not supported by the \ncurrent version of the API as described.\n"
+        '415':
+          description: "The request did not have \"application/json\" in the \nContent-Type header.\n"
+        '500':
+          description: "An unexpected internal error occurred. There is a requestId \nattached to this error that can be referenced by Toast \nsupport.\n"
+      security:
+      - oauth2:
+        - labor.employees:write
+  /employees/{employeeId}:
+    get:
+      tags:
+      - Employees
+      summary: Toast Get Information About One Employee
+      description: "Returns an `Employee` object containing information about one \nrestaurant employee.\n"
+      operationId: employeesEmployeeIdGet
+      produces:
+      - application/json
+      parameters:
+      - name: Toast-Restaurant-External-ID
+        description: "The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n"
+        in: header
+        type: string
+        format: string
+        required: true
+      - name: employeeId
+        description: 'The Toast platform GUID or external identifier for the
+
+          employee to be returned.
+
+          '
+        in: path
+        type: string
+        required: true
+      responses:
+        '200':
+          description: 'Returns the employee information.
+
+            '
+          schema:
+            $ref: '#/definitions/Employee'
+        '400':
+          description: 'The GUID or external identifier was malformed.
+
+            '
+        '401':
+          description: 'Unauthorized - Missing or invalid authentication.
+
+
+            **Cause:** No valid OAuth token provided in Authorization header.
+
+            '
+        '403':
+          description: 'Forbidden - Insufficient permissions.
+
+            '
+        '404':
+          description: "The GUID or external identifier does not match any \nemployees at the current restaurant.\n"
+        '500':
+          description: "An unexpected internal error occurred. There is a \n`requestId` attached to this error that can be referenced \nby Toast support.\n"
+      security:
+      - oauth2:
+        - labor.employees:read
+    delete:
+      tags:
+      - Employees
+      summary: Toast Delete an Employee
+      description: "Deletes a restaurant employee record by marking the record as \ndeleted. A deleted employee cannot log in at the restaurant or \nopen new time entries.\n\nIf you `GET` an employee record that has been deleted, its \n`deleted` value is `true` and its `deletedDate` value contains \nthe date and time the record was deleted. \n\nIf you delete an employee that has already been deleted then \nthe result is successful (200) and no change is made.\n\nThe deleted record appears in the list of deleted employees for \nthe restaurant in Toast Web. From the \nlist of deleted employees, you can enable a deleted record so \nthat the employee can use it again. Information about deleted \nemployees remains available in reports.\n\nYou cannot delete employees who have open time entries (time \nentries that do not have an out date value).\n"
+      operationId: employeesEmployeeIdDelete
+      produces:
+      - application/json
+      parameters:
+      - name: Toast-Restaurant-External-ID
+        description: "The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n"
+        in: header
+        type: string
+        format: string
+        required: true
+      - name: employeeId
+        description: "The Toast platform GUID or external identifier for the \nemployee to be deleted.\n"
+        in: path
+        type: string
+        required: true
+      responses:
+        '200':
+          description: "The employee has been deleted. Returns an `Employee` object \ncontaining information about the deleted restaurant \nemployee.\n"
+          schema:
+            $ref: '#/definitions/Employee'
+        '400':
+          description: 'The GUID or external identifier was malformed.
+
+            '
+        '404':
+          description: 'The GUID or external identifier does not match any
+
+            employees at the current restaurant.
+
+            '
+        '500':
+          description: "An unexpected internal error occurred. There is a \n`requestId` attached to this error that can be referenced \nby Toast support.\n"
+      security:
+      - oauth2:
+        - labor.employees:write
+    patch:
+      tags:
+      - Employees
+      summary: Toast Update Employee Information
+      description: "Updates the first name, chosen name, last name, external employee ID, and/or \npasscode of a restaurant employee. The `PATCH` operation cannot \nupdate any other employee information.\n"
+      operationId: employeesEmployeeIdPatch
+      produces:
+      - application/json
+      parameters:
+      - name: Toast-Restaurant-External-ID
+        description: "The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n"
+        in: header
+        type: string
+        format: string
+        required: true
+      - name: Content-Type
+        description: "The Internet Assigned Numbers Authority (IANA) media type \nof the message body data. The value must be \n`application/json`.\n"
+        in: header
+        type: string
+        format: string
+        required: true
+      - name: employeeId
+        description: "The Toast platform GUID or external identifier for the \nemployee to be returned.\n"
+        in: path
+        type: string
+        required: true
+      - name: body
+        description: "A JSON object containing the employee information that you \nare updating. You can update an employee's:\n\n* `firstName` - First name.\n\n* `chosenName` - Chosen name.\n\n* `lastName` - Last name.\n\n* `externalEmployeeId` - External employee identifier.\n\n* `passcode` - The passcode for access to Toast POS devices.\n\nAll values are optional. You must include at least one \nvalue. Each value that you include must contain information \n(not null). If you include the `passcode` value to update \nan employee's passcode you must include the employee's \ncurrent passcode in the `currentPasscode` value.\n"
+        in: body
+        required: true
+        schema:
+          type: string
+          example:
+            firstName: Mynewfirstname
+            chosenName: Mynewchosenname
+            lastName: Mynewlastname
+            externalEmployeeId: '1234567890'
+            passcode: '1234'
+            currentPasscode: '1111'
+      responses:
+        '200':
+          description: 'Returns the updated Toast platform employee record.
+
+            '
+          schema:
+            $ref: '#/definitions/Employee'
+        '400':
+          description: "The Toast platform GUID or external identifier was \nmalformed, or the body of the request was malformed.\n"
+        '404':
+          description: "The Toast platform GUID or external identifier does not \nmatch any employees at the current restaurant.\n"
+        '500':
+          description: "An unexpected internal error occurred. There is a \n`requestId` attached to this error that can be referenced \nby Toast support.\n"
+      security:
+      - oauth2:
+        - labor.employees:write
+  /employees/{employeeId}/externalId:
+    parameters:
+    - name: employeeId
+      description: 'The Toast platform GUID of the employee record.
+
+        '
+      in: path
+      type: string
+      required: true
+    post:
+      tags:
+      - Employees
+      summary: Toast Add an External Identifier
+      description: "Adds an external identifier for an existing employee. Include \nthe string value of the new external identifier in the message \nbody.\n\nYou cannot change an existing external identifier with another \n`POST` request; use `PUT` instead. The Toast platform uses this \nexternal identifier as one of the unique, persistent \nidentifiers for an employee record.\n"
+      operationId: employeesEmployeeIdExternalIdPost
+      produces:
+      - application/json
+      parameters:
+      - name: Toast-Restaurant-External-ID
+        description: "The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n"
+        in: header
+        type: string
+        format: string
+        required: true
+      - name: Content-Type
+        description: "The Internet Assigned Numbers Authority (IANA) media type \nof the message body data. The value must be \n`application/json`.\n"
+        in: header
+        type: string
+        format: string
+        required: true
+      - name: body
+        description: "The JSON string value of the `externalId` for the employee \nrecord. Wrap the value in double quotation marks to make it \nvalid JSON syntax.\n"
+        in: body
+        required: true
+        schema:
+          type: string
+          example: MyToastNamingAuthority:9876543210
+      responses:
+        '200':
+          description: 'Returns the updated employee record.
+
+            '
+          schema:
+            $ref: '#/definitions/Employee'
+      security:
+      - oauth2:
+        - labor.employees:write
+    put:
+      tags:
+      - Employees
+      summary: Toast Add or Replace an External Identifier
+      description: "Adds or replaces the external identifier for an\nexisting employee. Include the string value of the new external\nidentifier in the message body.\n\nThe Toast platform uses this external identifier as one of the \nunique, persistent identifiers for an employee record. \n_Changing the external identifier for an existing employee \nmight affect reporting and other Toast platform functions that \nselect employees using the `externalId` value._\n"
+      operationId: employeesEmployeeIdExternalIdPut
+      produces:
+      - application/json
+      parameters:
+      - name: Toast-Restaurant-External-ID
+        description: "The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n"
+        in: header
+        type: string
+        format: string
+        required: true
+      - name: Content-Type
+        description: "The Internet Assigned Numbers Authority (IANA) media type \nof the message body data. The value must be \n`application/json`.\n"
+        in: header
+        type: string
+        format: string
+        required: true
+      - name: body
+        description: "The JSON string value of the `externalId` for the employee \nrecord. Wrap the value in double quotation marks to make it \nvalid JSON syntax.\n"
+        in: body
+        required: true
+        schema:
+          type: string
+          example: MyToastNamingAuthority:9876543210
+      responses:
+        '200':
+          description: 'Returns the updated employee record.
+
+            '
+          schema:
+            $ref: '#/definitions/Employee'
+      security:
+      - oauth2:
+        - labor.employees:write
+  /employees/{employeeId}/unarchive:
+    parameters:
+    - name: employeeId
+      description: 'The Toast platform GUID of the employee record.
+
+        '
+      in: path
+      type: string
+      required: true
+    put:
+      tags:
+      - Employees
+      summary: Toast Unarchive an Employee
+      description: "Unarchives an employee record that was previously archived.\n\n* Unarchived employees can sign into the Toast POS.\n* Unarchived employees can sign in to Toast Web. \n* When you unarchive an employee, the employee has all \n  jobs that were previously assigned to them.\n* If an employee had a swipe card for signing into the \n  Toast POS, the swipe card _is not_ re-associated with \n  the employee when you unarchive them.\n\nIf you unarchive an employee who will take a different \nrole than the one they had when they were archived, you \nmust update the employee's jobs list and verify that the \nemployee should continue to sign into Toast Web.\n"
+      operationId: employeesEmployeeIdUnarchivePut
+      produces:
+      - application/json
+      parameters:
+      - name: Toast-Restaurant-External-ID
+        description: "The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n"
+        in: header
+        type: string
+        format: string
+        required: true
+      - name: Content-Type
+        description: "The Internet Assigned Numbers Authority (IANA) media type \nof the message body data. The value must be \n`application/json`.\n"
+        in: header
+        type: string
+        format: string
+        required: true
+      responses:
+        '200':
+          description: 'Returns the updated employee record.
+
+            '
+          schema:
+            $ref: '#/definitions/Employee'
+        '400':
+          description: 'Employee being unarchived is not currently archived.
+
+            '
+      security:
+      - oauth2:
+        - labor.employees:write
+  /employees/{employeeId}/jobs:
+    parameters:
+    - name: employeeId
+      description: 'The Toast platform GUID of the employee record.
+
+        '
+      in: path
+      type: string
+      required: true
+    put:
+      tags:
+      - Employees
+      summary: Toast Replace a Jobs List
+      description: "Replaces the list of jobs for an employee. Include a JSON  \narray of job identifiers in the message body.\n\nIf a job is defined at the restaurant group or subgroup level, \nthis operation adds or removes that job for the the employee at \n_all restaurant locations_ in the group or subgroup.\n"
+      operationId: employeesEmployeeIdJobsPut
+      produces:
+      - application/json
+      parameters:
+      - name: Toast-Restaurant-External-ID
+        description: "The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n"
+        in: header
+        type: string
+        format: string
+        required: true
+      - name: Content-Type
+        description: "The Internet Assigned Numbers Authority (IANA) media type \nof the message body data. The value must be \n`application/json`.\n"
+        in: header
+        type: string
+        format: string
+        required: true
+      - name: body
+        description: "An array of JSON objects containing identifiers for jobs. \nThe identifiers can be either Toast platform GUIDs or \nexternal identifiers.\n"
+        in: body
+        required: true
+        schema:
+          type: string
+          example:
+          - guid: dd8cea7a-add5-4508-b8fe-ffd0b584e4da
+          - externalId: MyToastNamingAuthority:9876543210
+      responses:
+        '200':
+          description: 'Returns the updated employee record.
+
+            '
+          schema:
+            $ref: '#/definitions/Employee'
+      security:
+      - oauth2:
+        - labor.employees:write
+  /employees/{employeeId}/wageOverrides:
+    parameters:
+    - name: employeeId
+      description: 'The Toast platform GUID of the employee record.
+
+        '
+      in: path
+      type: string
+      required: true
+    put:
+      tags:
+      - Employees
+      summary: Toast Replace Wage Overrides
+      description: "Replaces the list of wage overrides for the jobs that are \nassigned to an employee. Include a JSON  array of \n`JobWageOverride` objects in the message body. Include the new \nwage for the employee in the `wage` value. Specify the wage in \nU.S. dollars.\n\nYou must include all existing wage overrides in the message \nbody. Any wage overrides that are not present in the array are \nremoved from the employee record.\n"
+      operationId: employeesEmployeeIdWageOverridesPut
+      produces:
+      - application/json
+      parameters:
+      - name: Toast-Restaurant-External-ID
+        description: "The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n"
+        in: header
+        type: string
+        format: string
+        required: true
+      - name: Content-Type
+        description: "The Internet Assigned Numbers Authority (IANA) media type \nof the message body data. The value must be \n`application/json`.\n"
+        in: header
+        type: string
+        format: string
+        required: true
+      - name: body
+        description: 'An array of JSON `JobWageOverride` objects.
+
+          '
+        in: body
+        required: true
+        schema:
+          type: string
+          example:
+          - jobReference:
+              guid: 8d3bba92-10e4-4345-9ae6-ed94c09dc332
+            wage: 15.75
+      responses:
+        '200':
+          description: "The wage overrides for the employee are replaced. Returns \nthe updated employee record.\n"
+          schema:
+            $ref: '#/definitions/Employee'
+      security:
+      - oauth2:
+        - labor.employees:write
+definitions:
+  Employee:
+    type: object
+    description: A restaurant employee
+    allOf:
+    - $ref: '#/definitions/ExternalReference'
+    - type: object
+      properties:
+        createdDate:
+          type: string
+          format: date-time
+          description: 'Date created, in UTC format (read-only).
+
+            '
+        modifiedDate:
+          type: string
+          format: date-time
+          description: 'Date modified, in UTC format (read-only).
+
+            '
+        deletedDate:
+          type: string
+          format: date-time
+          description: 'Date deleted, in UTC format (read-only).
+
+            '
+        firstName:
+          type: string
+          description: 'Optional, first name of the employee.
+
+            '
+        chosenName:
+          type: string
+          description: 'Optional, chosen name of the employee. To be used, when appropriate, in place of first name.
+
+            '
+        lastName:
+          type: string
+          description: 'Optional, last name of the employee.
+
+            '
+        email:
+          type: string
+          description: 'Employee''s email address.
+
+            '
+        phoneNumber:
+          type: string
+          description: 'Employee''s phone number
+
+            '
+        phoneNumberCountryCode:
+          type: string
+          description: "A numeric code corresponding to one or more countries, \nused as a telephone number prefix when making international telephone calls.\n"
+        passcode:
+          type: string
+          description: "An optional numeric security code that a new employee can \nuse to begin a session in a Toast POS device. The \npasscode value can only occur in `POST` requests. The \nvalue must be numeric and it must contain at least one \nand no more than eight digits. The employee can only use \nthe passcode at the restaurant specified in the `POST` \nrequest.   The response to a successful `POST` request \nwill include the passcode value in clear text. A `GET` \nrequest for the employee will not return the passcode.\n"
+        externalEmployeeId:
+          type: string
+          description: 'Optional, employee’s external ID in the Toast platform.
+
+            '
+        deleted:
+          type: boolean
+          description: 'If the employee is deleted in the Toast platform.
+
+            '
+        jobReferences:
+          type: array
+          description: "An array of external references to jobs assigned to this \nemployee. If the job is deleted, it will be excluded from this array.\n"
+          minItems: 0
+          items:
+            $ref: '#/definitions/ExternalReference'
+        wageOverrides:
+          type: array
+          description: "An optional array of per job wage overrides, where each \nelement defines a job reference and the wage override for \nthis employee when performing that job. If the underlying job\nis deleted, it will be excluded from the array.\n"
+          minItems: 0
+          items:
+            $ref: '#/definitions/JobWageOverride'
+        v2EmployeeGuid:
+          type: string
+          description: "This value is included for future use. An alternate Toast \nplatform GUID for the employee that will be used in \nupcoming labor API functionality.\n"
+  ExternalReference:
+    type: object
+    description: "A wrapper object with fields that allow reference to a Toast \nplatform entity by Toast GUID or an external identifier.\n"
+    allOf:
+    - $ref: '#/definitions/ToastReference'
+    - type: object
+      properties:
+        externalId:
+          description: "External identifier string that is prefixed by the naming \nauthority. You can, for example, use the labor API to \n`POST` an `externalId` for an employee and then `GET` the \nemployee with that `externalId`.\n"
+          type: string
+  ToastReference:
+    type: object
+    description: "A wrapper object with fields that allow reference to a Toast \nplatform entity by Toast GUID.\n"
+    required:
+    - guid
+    - entityType
+    properties:
+      guid:
+        description: 'The GUID maintained by the Toast platform.
+
+          '
+        type: string
+      entityType:
+        description: 'The type of object this is.
+
+          '
+        type: string
+  JobWageOverride:
+    type: object
+    description: "The overriding job wage, for an employee that has a wage that \ndiffers from the job's default wage.\n"
+    required:
+    - wage
+    - jobReference
+    properties:
+      wage:
+        type: number
+        format: double
+        description: 'Required currency value of the employee''s overriding job wage.
+
+          '
+      jobReference:
+        type: object
+        description: "Required external reference to the job to which this wage \napplies overridden\n"
+        $ref: '#/definitions/ExternalReference'
+externalDocs:
+  description: Authentication developer guide
+  url: https://doc.toasttab.com/doc/devguide/authentication.html

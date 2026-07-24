@@ -1,0 +1,452 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Toast Authentication Time entries API
+  description: 'The authentication API returns an authentication token that you can present
+
+    when your integration client software uses other Toast APIs. For more
+
+    information about authentication, see [the Toast Developer
+
+    Guide](https://doc.toasttab.com/doc/devguide/authentication.html).
+
+    '
+  termsOfService: https://pos.toasttab.com/api-terms-of-use
+  contact:
+    name: Toast developer support
+host: toast-api-server
+basePath: /authentication/v1
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+tags:
+- name: Time entries
+paths:
+  /timeEntries:
+    get:
+      tags:
+      - Time entries
+      summary: Toast Get Time Entries
+      description: "Returns an array of `TimeEntry` objects that contain \ninformation about employee shift events. The information \nincludes shift start times, end times, and the start and end \ntimes of break periods.\n\n*  Include one or more `timeEntryId` query parameters set to \n   the GUIDs for specific time entries.\n\n*  Include both a `startDate` and an `endDate` query parameter \n   to get time entries for a specific time period.\n\n*  Include both a `modifiedStartDate` and a `modifiedEndDate` \n   query parameter to get the time entries that were modified \n   during a specific time period.\n\n*  Includes a `businessDate` query parameter to get the time \n   entries with an `inDate` during a specific business date.\n\nValid requests include one or more `timeEntryId` parameters, \nboth a `startDate` and an `endDate`, both a `modifiedStartDate` \nand a `modifiedEndDate`, or a `businessDate`.\n"
+      operationId: timeEntriesGet
+      produces:
+      - application/json
+      parameters:
+      - name: Toast-Restaurant-External-ID
+        description: "The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n"
+        in: header
+        type: string
+        format: string
+        required: true
+      - name: timeEntryIds
+        description: "Optional array of one or more time entry identifiers, \neither the Toast platform GUID or an external identifier. \n100 max.\n"
+        in: query
+        type: array
+        items:
+          type: string
+        collectionFormat: multi
+      - name: startDate
+        description: "Optional start date and time of time period to match time \nentries. A time entry matches the time period if its \nclock-in `inDate` is after (inclusive) the specified \n`startDate` and before (exclusive) the `endDate`. The \nspecified period cannot be longer than one month.\n"
+        in: query
+        type: string
+        format: ISO-8601
+      - name: endDate
+        description: "Optional end date and time of time period to match time \nentries. A time entry matches the time period if its \nclock-in `inDate` is after (inclusive) the specified \n`startDate` and before (exclusive) the `endDate`. The \nspecified period cannot be longer than one month.\n"
+        in: query
+        type: string
+        format: ISO-8601
+      - name: modifiedStartDate
+        description: "Start date and time of the time period to match modified \ntime entries. A time entry matches the time period if that \nentry was modified after (inclusive) the \n`modifiedStartDate`. If you include this parameter, you \nmust also include the `modifiedEndDate` parameter.  The \nspecified period cannot be longer than one month.\n"
+        in: query
+        type: string
+        format: ISO-8601
+      - name: modifiedEndDate
+        description: "End date and time of the time period to match modified time \nentries. A time entry matches the time period if that entry \nwas modified before (exclusive) the `modifiedEndDate`. If \nyou include this parameter, you must also include the \n`modifiedStartDate` parameter.  The specified period cannot \nbe longer than one month.\n"
+        in: query
+        type: string
+        format: ISO-8601
+      - name: businessDate
+        description: "Optional date to match time entries. A time entry matches \nthe business date if its clock-in `inDate` is during the \nbusiness date. The cutoff from one `businessDate` to the \nnext is the `closeoutHour` for the restaurant.\n"
+        in: query
+        type: string
+        format: yyyymmdd
+      - name: includeMissedBreaks
+        description: "Optional flag to indicate whether missed breaks should be \nreturned in the breaks array for the time entries.\n"
+        in: query
+        type: boolean
+      - name: includeArchived
+        description: 'Controls whether the response includes archived time entries, when
+
+          using the `startDate` and `endDate` parameters.
+
+
+          **Important**: this parameter _has no effect_ if you use the
+
+          `modifiedStartDate` and `modifiedEndDate` parameters or the
+
+          `businessDate` parameter to select time entries.
+
+
+          * Querying by modified date range _always_ returns archived time entries.
+
+          * Querying by businessDate _never_ returns archived time entries.
+
+
+          This parameter is optional and the default value is `false`.
+
+          '
+        in: query
+        type: boolean
+      responses:
+        '200':
+          description: 'Returns the specified time entries.
+
+            '
+          schema:
+            title: Response
+            type: array
+            items:
+              $ref: '#/definitions/TimeEntry'
+        '500':
+          description: "An unexpected internal error occurred. There is a \n`requestId` attached to this error that can be referenced \nby Toast support.\n"
+      security:
+      - oauth2:
+        - labor:read
+  /timeEntries/{timeEntryId}:
+    get:
+      tags:
+      - Time entries
+      summary: Toast Get One Time Entry
+      description: "Returns a `TimeEntry` object containing information about one \nemployee shift. The information includes the shift start time, \nend time, and the start and end times of break periods.\n"
+      operationId: timeEntriesTimeEntryIdGet
+      produces:
+      - application/json
+      parameters:
+      - name: Toast-Restaurant-External-ID
+        description: "The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n"
+        in: header
+        type: string
+        format: string
+        required: true
+      - name: timeEntryId
+        description: "The Toast platform GUID or an external identifier for the \ntime entry.\n"
+        in: path
+        type: string
+        format: string
+        required: true
+      - name: includeMissedBreaks
+        description: "Optional flag to indicate whether missed breaks should be \nreturned in the breaks array for the time entries.\n"
+        in: query
+        type: boolean
+      - name: includeArchived
+        description: 'Controls whether the response includes an archived time entry.
+
+          Optional.
+
+          '
+        in: query
+        type: boolean
+      responses:
+        '200':
+          description: 'Returns the specified time entry.
+
+            '
+          schema:
+            $ref: '#/definitions/TimeEntry'
+        '400':
+          description: 'The GUID or external identifier was malformed.
+
+            '
+        '500':
+          description: "An unexpected internal error occurred. There is a \n`requestId` attached to this error that can be referenced \nby Toast support.\n"
+      security:
+      - oauth2:
+        - labor:read
+definitions:
+  TimeEntryBreak:
+    type: object
+    description: 'Information about a period of time that an employee is not
+
+      working during a shift. For example, an employee might take a
+
+      break to eat at some time during a shift. An employee can be paid
+
+      or unpaid for the break period.
+
+      '
+    properties:
+      guid:
+        description: 'The GUID maintained by the Toast platform.
+
+          '
+        type: string
+      breakType:
+        type: object
+        description: "Optional, Toast platform reference to the break type \nassociated with this time entry.\n"
+        $ref: '#/definitions/ToastReference'
+      paid:
+        type: boolean
+        description: 'Indicates whether the employee was paid for the break.
+
+          * `true` - The break was a paid break.
+
+          * `false` - The break was an unpaid break.
+
+          '
+      inDate:
+        type: string
+        format: date-time
+        description: 'The date and time that the employee started the break period,
+
+          in UTC.
+
+          '
+      outDate:
+        type: string
+        format: date-time
+        description: 'The date and time that the employee ended the break period
+
+          and returned to work, in UTC.
+
+          '
+      missed:
+        type: boolean
+        description: 'Indicates whether the break was a missed break.
+
+          * `true` - The break was missed.
+
+          * `false` - The break was taken.
+
+          '
+      waived:
+        type: boolean
+        description: 'Indicates whether the break was waived by the employee.
+
+          * `true` - The break was waived.
+
+          * `false` - The break was not waived.
+
+          '
+      auditResponse:
+        type: boolean
+        description: "Indicates whether the employee was asked to take the break.\n\n* `true` - The employee was asked to take the break.\n* `false` - The employee was not asked to take the break.\n\nNull for break types that do not use break acknowledgement \ntracking or when the employee did not complete the audit \nresponse prompt.\n"
+  ToastReference:
+    type: object
+    description: "A wrapper object with fields that allow reference to a Toast \nplatform entity by Toast GUID.\n"
+    required:
+    - guid
+    - entityType
+    properties:
+      guid:
+        description: 'The GUID maintained by the Toast platform.
+
+          '
+        type: string
+      entityType:
+        description: 'The type of object this is.
+
+          '
+        type: string
+  TimeEntry:
+    type: object
+    description: "A `TimeEntry` captures the actual time an employee worked or took \na break. Typically, a time entry is one-to-one with a scheduled \nshift, but it is possible in the Toast platform for an employee \nto clock-in and clock-out without a shift.\n"
+    allOf:
+    - $ref: '#/definitions/ExternalReference'
+    - type: object
+      properties:
+        createdDate:
+          type: string
+          format: date-time
+          description: 'Date created, in UTC format (read-only).
+
+            '
+        modifiedDate:
+          type: string
+          format: date-time
+          description: 'Date modified, in UTC format (read-only).
+
+            '
+        deletedDate:
+          type: string
+          format: date-time
+          description: 'Date deleted, in UTC format (read-only).
+
+            '
+        deleted:
+          type: boolean
+          description: 'If the time entry is deleted in the Toast platform.
+
+            '
+        jobReference:
+          type: object
+          description: "Optional, external reference to the job the employee \nassumed when clocking into the Toast platform.\n"
+          $ref: '#/definitions/ExternalReference'
+        employeeReference:
+          type: object
+          description: "External reference to the employee that created this time \nentry.\n"
+          $ref: '#/definitions/ExternalReference'
+        shiftReference:
+          type: object
+          description: "Optional, external reference to the scheduled shift \nassociated with this time entry.\n"
+          $ref: '#/definitions/ExternalReference'
+        inDate:
+          type: string
+          format: date-time
+          description: 'The date and time that an employee clocked in to a work
+
+            shift.
+
+            '
+        outDate:
+          type: string
+          format: date-time
+          description: 'The date and time that an employee closed a work shift.
+
+            If the employee has not closed the shift this field is
+
+            null.
+
+            '
+        autoClockedOut:
+          type: boolean
+          description: 'Indicates whether the Toast platform automatically clocked the
+
+            employee out of their shift at the end of the restaurant business
+
+            day. For more information, see [the Toast platform guide section
+
+            about automatic clock-out and time
+
+            entries](https://doc.toasttab.com/doc/platformguide/adminEffectOfAutoclockOutOnBreakEntries.html).
+
+            '
+        businessDate:
+          type: string
+          description: "The business date of `inDate`, in the format of \n\"yyyymmdd\".\n"
+        regularHours:
+          type: number
+          format: double
+          description: "Regular hours worked by the employee for this time entry, \nexcluding breaks.\n"
+        overtimeHours:
+          type: number
+          format: double
+          description: "Any overtime hours taken by this employee during this \ntime entry.\n"
+        hourlyWage:
+          type: number
+          format: double
+          description: "Optional, historical `hourlyWage`; that is, the wage in \neffect when the time entry was made. The current \n`hourlyWage` for the employee (or job) may be different. \nThis will be null if the job is `SALARY`.\n"
+        breaks:
+          type: array
+          description: "An optional array of time entry breaks, each break \ndefining a clock-in date, clock-out date, and whether or \nnot the break was paid.\n"
+          minItems: 0
+          items:
+            $ref: '#/definitions/TimeEntryBreak'
+        declaredCashTips:
+          type: number
+          format: double
+          description: 'The currency amount of tips paid in cash during the time
+
+            entry. This does not include service charges applied as
+
+            automatic gratuities. If the employee has not closed the
+
+            shift, this value is not final and may change. If the
+
+            `outDate` value is set, the `declaredCashTips` value is
+
+            final.
+
+            '
+        nonCashTips:
+          type: number
+          format: double
+          description: 'The currency amount of tips paid using non-cash tender
+
+            during the time entry. For example, this includes credit
+
+            card tips. This does not include service charges applied
+
+            as automatic gratuities. If the employee has not closed
+
+            the shift, this value is not final and may change. If the
+
+            `outDate` value is set, the `nonCashTips` value is final.
+
+            '
+        nonCashTipsRoundingLoss:
+          type: number
+          format: double
+          description: 'The currency amount of cash added to the payout of total
+
+            tips paid using non-cash tender and service charges
+
+            applied as automatic gratuities to round up the total to
+
+            the nearest $.05. This only applies if tip rounding is
+
+            configured for shift review. If the employee has not
+
+            closed the shift, the value should be null.
+
+            '
+          x-nullable: true
+        cashGratuityServiceCharges:
+          type: number
+          format: double
+          description: 'The currency amount of service charges applied as
+
+            automatic gratuities that were paid in cash during the
+
+            time entry. If the employee has not closed the shift,
+
+            this value is not final and may change. If the `outDate`
+
+            value is set, the `cashGratuityServiceCharges` value is
+
+            final.
+
+            '
+        nonCashGratuityServiceCharges:
+          type: number
+          format: double
+          description: 'The currency amount of service charges applied as
+
+            automatic gratuities that were paid using non-cash tender
+
+            during the time entry. If the employee has not closed the
+
+            shift, this value is not final and may change. If the
+
+            `outDate` value is set, the
+
+            `nonCashGratuityServiceCharges` value is final.
+
+            '
+        tipsWithheld:
+          type: number
+          format: double
+          description: "The currency amount withheld from the employee's credit \ncard tips during the time entry. The amount withheld is \ncalculated as a percentage of tips added to credit card \npayments. If the employee has not closed the shift (the \n`outDate` value is null), the `tipsWithheld` value is not \nfinal and may change. If the employee has closed the \nshift (the `outDate` value is set), the `tipsWithheld` \nvalue is final.\n"
+        nonCashSales:
+          type: number
+          format: double
+          description: "The currency amount of non-cash sales during the time \nentry. The value includes the order amounts and tax.\nIt does not include tips.\n\nIf the employee has not closed the shift, this \nvalue is `0`. If the `outDate` value is set, then the \n`nonCashSales` value is final.\n"
+        cashSales:
+          type: number
+          format: double
+          description: "The currency amount of sales paid for in cash during the \ntime entry. The value includes the order amounts and tax.\nIt does not include tips.\n\nIf the employee has not closed the shift, \nthis value is `0`. If the `outDate` value is set, \nthen the `cashSales` value is final.\n"
+  ExternalReference:
+    type: object
+    description: "A wrapper object with fields that allow reference to a Toast \nplatform entity by Toast GUID or an external identifier.\n"
+    allOf:
+    - $ref: '#/definitions/ToastReference'
+    - type: object
+      properties:
+        externalId:
+          description: "External identifier string that is prefixed by the naming \nauthority. You can, for example, use the labor API to \n`POST` an `externalId` for an employee and then `GET` the \nemployee with that `externalId`.\n"
+          type: string
+externalDocs:
+  description: Authentication developer guide
+  url: https://doc.toasttab.com/doc/devguide/authentication.html
