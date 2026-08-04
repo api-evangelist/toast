@@ -1,0 +1,40 @@
+{
+  "provider": "toast",
+  "sources": [
+    "toast-authentication-api-openapi.yml",
+    "toast-connectedrestaurants-api-openapi.yml",
+    "toast-discounts-api-openapi.yml",
+    "toast-employees-api-openapi.yml",
+    "toast-groups-api-openapi.yml",
+    "toast-jobs-api-openapi.yml",
+    "toast-menus-api-openapi.yml",
+    "toast-metadata-api-openapi.yml",
+    "toast-orders-api-openapi.yml",
+    "toast-payments-api-openapi.yml",
+    "toast-restaurants-api-openapi.yml",
+    "toast-shifts-api-openapi.yml",
+    "toast-stock-api-openapi.yml",
+    "toast-time-entries-api-openapi.yml"
+  ],
+  "outputs": [
+    "toast-authentication-api-openapi.yml",
+    "toast-connectedrestaurants-api-openapi.yml",
+    "toast-discounts-api-openapi.yml",
+    "toast-employees-api-openapi.yml",
+    "toast-groups-api-openapi.yml",
+    "toast-jobs-api-openapi.yml",
+    "toast-menus-api-openapi.yml",
+    "toast-metadata-api-openapi.yml",
+    "toast-orders-api-openapi.yml",
+    "toast-payments-api-openapi.yml",
+    "toast-restaurants-api-openapi.yml",
+    "toast-shifts-api-openapi.yml",
+    "toast-stock-api-openapi.yml",
+    "toast-time-entries-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
