@@ -1,0 +1,29 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Toast Authentication API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Toast Get an Authentication Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/authentication/login"
+          },
+          "docs": "Returns an authentication token that your Toast API client can present\nwhen using other Toast platform APIs.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

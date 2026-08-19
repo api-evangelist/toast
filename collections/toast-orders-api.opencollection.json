@@ -1,0 +1,244 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Toast Authentication Orders API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Toast Get Order Prices",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/prices",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Calculates the check price amounts, tax amounts, and service\ncharges for an `Order` object you supply as a _required message\nbody parameter_.\n\nThe `prices` endpoint validates the order you\nsubmit to ensure all referenced data exists and that you include\nitem selections in the expected structure with all required modifier\noptions.\n\nSome values that would be present in the response data when\ncreating an order are not present in the response data for the `prices`\nendpoint. For example, the order GU"
+        },
+        {
+          "info": {
+            "name": "Toast Get an Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/orders/:guid",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "guid",
+                "value": "",
+                "type": "path",
+                "description": "The GUID for the order to be returned."
+              }
+            ]
+          },
+          "docs": "Retrieves detailed information about a single order, specified by its GUID."
+        },
+        {
+          "info": {
+            "name": "Toast Get Multiple Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/ordersBulk",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "The inclusive start date and time. The results include orders with a modified\ndate and time that occur at or after the `startDate`,\nbut before the `endDate`.\n\nUse ISO-8601 format for the date and time, including a decimal fraction of\na second. For example, `2016-01-01T14:13:12.000+0400`. URL encode the date\nand time value.\n\nThe date must be after\n2015-12-01T00:00:00.000+0000.\n"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "The exclusive end date and time. The results exclude any orders that have\na modified date and time that occurs at or after `endDate`.\n\nUse ISO-8601 format for the date and time, including a decimal\nfraction of a second. For example, `2016-01-01T14:13:12.000+0400`. URL\nencode the date and time value.\n\nThe `endDate` date and time\nmust be later than the `startDate` parameter value.\n"
+              },
+              {
+                "name": "businessDate",
+                "value": "",
+                "type": "query",
+                "description": "The business date that same-day orders opened or that\nscheduled orders are promised, in the format `yyyymmdd`.\n\nThe business day of an order is determined by the time the\norder is opened or promised in the local time zone, and the\nrestaurant's business day cutoff time, which is available\nfrom  the `General` object of the restaurants API in the\n`closeoutHour` property.\n"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of objects to return in the array. If the\nnumber of objects selected by your request is greater than\nthe `pageSize`, the API uses response pagination for the\nremaining objects.\n\nThe maximum `pageSize` is `100`.\n\nFor more information, see [the _Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiResponseDataPagination.html).\n"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "The sequence number of the set of objects to return in\npaginated response data.\n\nFor example, if you set the\n`pageSize` parameter to `10`, and you set `page` to `2`, the\nAPI returns a set of objects that starts with the eleventh\nobject.\n\nFor more information, see [the _Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiResponseDataPagination.html).\n"
+              }
+            ]
+          },
+          "docs": "Returns an array of `Order` objects containing detailed\ninformation about all of the orders opened during a period of time.\n\nYou can return the orders for either a specific period of time\nor for one business day.\n\n* Specify both `startDate` and `endDate` to return the orders\n  modified during that period of time.\n\n* Specify the `businessDate` to return the orders promised\n  during that business day.\n"
+        },
+        {
+          "info": {
+            "name": "Toast Add Items to a Check",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/orders/:orderGuid/checks/:checkGuid/selections",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "orderGuid",
+                "value": "",
+                "type": "path",
+                "description": "The Toast platform identifier of the order that you are\nadding items to.\n"
+              },
+              {
+                "name": "checkGuid",
+                "value": "",
+                "type": "path",
+                "description": "The Toast platform identifier of the check that you are\nadding items to.\n"
+              }
+            ]
+          },
+          "docs": "Adds one or more items to an existing check in an order.\n\nInclude information about the items in an array of `Selection` objects in the\nmessage body.\n\nSpecify the Toast platform GUID of the order and\ncheck in REST path parameters.\n\nFor more information, see [the _Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiAddingItemsToACheck.html).\n"
+        },
+        {
+          "info": {
+            "name": "Toast Update Delivery Information",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/orders/:orderGuid/deliveryInfo",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "orderGuid",
+                "value": "",
+                "type": "path",
+                "description": "The Toast platform identifier of the order that you are\nupdating the delivery information for.\n"
+              }
+            ]
+          },
+          "docs": "Updates the delivery information of an order that uses the `DELIVERY` dining option.\nYou can use this endpoint to update the delivery time, dispatch time, the\nemployee who is delivering the order, the delivery state, and the delivery notes.\n\nSpecify the Toast platform GUID of the\norder in the `PATCH` path parameters. Returns a JSON\n`Order` object if successful.\n\nOnce an order's `deliveryState` is `DELIVERED`, updates are no longer accepted. \n\nFor more information, see [the _Toast Developer Guide"
+        },
+        {
+          "info": {
+            "name": "Toast Void an Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/orders/:orderGuid/void",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "orderGuid",
+                "value": "",
+                "type": "path",
+                "description": "The GUID of the order to be voided."
+              }
+            ]
+          },
+          "docs": "Voids an order, and (if specified) its selections and payments. Only Orders with `OTHER` payment types can be voided.\n\nA request body that contains the `selections` and `payments` objects with each `voidAll` value set to `true` is required to void an order. The response body is the modified Order object.\n\nFor more information, see [Void an order](https://doc.toasttab.com/doc/devguide/apiVoidOrder.html).\n"
+        },
+        {
+          "info": {
+            "name": "Toast Get Order Identifiers (deprecated)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/orders",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "\\\nThe inclusive start date and time. The results exclude orders with an earlier modified date and time.\nUse ISO-8601 format for the date and time, including a decimal fraction of a second. For example, `2016-01-01T14:13:12.000+0400`. URL encode the date and time value.\nThe date must be after 2015-12-01T00:00:00.000+0000."
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "\nThe exclusive end date and time. The results exclude orders with an equal\nor later modified date and time.\n\nUse ISO-8601 format for the date and time, including a decimal fraction of a\nsecond. For example,\n`2016-01-01T14:13:12.000+0400`. URL encode the date and time value.\n\nThe `endDate` date and time must be later than the `startDate`\nparameter value.\n"
+              },
+              {
+                "name": "businessDate",
+                "value": "",
+                "type": "query",
+                "description": "The business date that same-day orders opened or that\nscheduled orders are promised, in the format `yyyyMMdd`.\n\nThe business day of an order is determined by the time the order is opened or\npromised in the local time zone, and by the restaurant's business day\ncutoff time, which is available from  the `General` object of the\nrestaurants API in the `closeoutHour` property.\n"
+              }
+            ]
+          },
+          "docs": "Returns a list of the GUIDs of all orders opened during a period of\ntime. You can return the list of orders for either a period of up to\none hour or for one business day.\n* Specify both `startDate` and `endDate` to return the list of orders\n  modified during a period of up to one hour.\n* Specify the `businessDate` to return the list of orders promised\n  for delivery during a business day.\n"
+        },
+        {
+          "info": {
+            "name": "Toast Post an Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/orders",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Submits an order to the server. Returns a JSON `Order` object if successful."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

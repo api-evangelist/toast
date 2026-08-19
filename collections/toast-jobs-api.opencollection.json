@@ -1,0 +1,126 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Toast Authentication Jobs API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Jobs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Toast Get Jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/jobs",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "jobIds",
+                "value": "",
+                "type": "query",
+                "description": "An optional array of one or more job identifiers, either \nthe Toast platform GUID or an external identifier assigned \nby the client. 100 max. If not provided, all jobs known to \nthe Toast platform for this restaurant will be returned.\n"
+              }
+            ]
+          },
+          "docs": "Returns an array of `Job` objects containing information about \nthe employee jobs configured at a restaurant. By default, if no\njob IDs are provided in the request, deleted jobs will be excluded\nfrom the array.\n"
+        },
+        {
+          "info": {
+            "name": "Toast Get One Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/jobs/:jobId",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "The Toast platform GUID or an external identifier for the \njob.\n"
+              }
+            ]
+          },
+          "docs": "Returns a `Job` object containing information about one \nemployee job at a restaurant.\n"
+        },
+        {
+          "info": {
+            "name": "Toast Add an External Identifier",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/jobs/:jobId/externalId",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "The Toast platform GUID or external identifier of the job \nrecord.\n"
+              }
+            ]
+          },
+          "docs": "Adds an external identifier for an existing job. Include the \nstring value of the new external identifier in the message \nbody.\n\nYou cannot change an existing external identifier with another \n`POST` request. The Toast platform uses this external \nidentifier as one of the unique, persistent identifiers for a \njob record.\n"
+        },
+        {
+          "info": {
+            "name": "Toast Add or Replace an External Identifier",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/jobs/:jobId/externalId",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "jobId",
+                "value": "",
+                "type": "path",
+                "description": "The Toast platform GUID or external identifier of the job \nrecord.\n"
+              }
+            ]
+          },
+          "docs": "Adds or replaces the external identifier for an existing job. \nInclude the string value of the new external identifier in the \nmessage body.\n\nThe Toast platform uses this external identifier as one of the \nunique, persistent identifiers for a job record. _Changing the \nexternal identifier for an existing job might affect reporting \nand other Toast platform functions that select jobs using the \n`externalId` value._\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

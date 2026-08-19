@@ -1,0 +1,35 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Toast Authentication Menus API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Menus",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Toast Get Menus",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/menus",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Get menus\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,288 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Toast Authentication Employees API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Employees",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Toast Get Employees",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/employees",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "employeeIds",
+                "value": "",
+                "type": "query",
+                "description": "An optional identifier that filters return values for a \nspecific employee. The identifier can be a Toast platform \nGUID or an external identifier. If present, the `employees` \nresource will only return the employees you specify. You \ncan include multiple `employeeIds` query parameters \n(maximum 100). If not present, the resource returns each \nemployee for the restaurant.\n"
+              }
+            ]
+          },
+          "docs": "Returns an array of `Employee` objects containing information \nabout restaurant employees.\n"
+        },
+        {
+          "info": {
+            "name": "Toast Add an Employee",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/employees",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Creates a restaurant employee record.\n"
+        },
+        {
+          "info": {
+            "name": "Toast Get Information About One Employee",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/employees/:employeeId",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "employeeId",
+                "value": "",
+                "type": "path",
+                "description": "The Toast platform GUID or external identifier for the\nemployee to be returned.\n"
+              }
+            ]
+          },
+          "docs": "Returns an `Employee` object containing information about one \nrestaurant employee.\n"
+        },
+        {
+          "info": {
+            "name": "Toast Update Employee Information",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/employees/:employeeId",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "employeeId",
+                "value": "",
+                "type": "path",
+                "description": "The Toast platform GUID or external identifier for the \nemployee to be returned.\n"
+              }
+            ]
+          },
+          "docs": "Updates the first name, chosen name, last name, external employee ID, and/or \npasscode of a restaurant employee. The `PATCH` operation cannot \nupdate any other employee information.\n"
+        },
+        {
+          "info": {
+            "name": "Toast Delete an Employee",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/employees/:employeeId",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "employeeId",
+                "value": "",
+                "type": "path",
+                "description": "The Toast platform GUID or external identifier for the \nemployee to be deleted.\n"
+              }
+            ]
+          },
+          "docs": "Deletes a restaurant employee record by marking the record as \ndeleted. A deleted employee cannot log in at the restaurant or \nopen new time entries.\n\nIf you `GET` an employee record that has been deleted, its \n`deleted` value is `true` and its `deletedDate` value contains \nthe date and time the record was deleted. \n\nIf you delete an employee that has already been deleted then \nthe result is successful (200) and no change is made.\n\nThe deleted record appears in the list of deleted employees for "
+        },
+        {
+          "info": {
+            "name": "Toast Add an External Identifier",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/employees/:employeeId/externalId",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "employeeId",
+                "value": "",
+                "type": "path",
+                "description": "The Toast platform GUID of the employee record.\n"
+              }
+            ]
+          },
+          "docs": "Adds an external identifier for an existing employee. Include \nthe string value of the new external identifier in the message \nbody.\n\nYou cannot change an existing external identifier with another \n`POST` request; use `PUT` instead. The Toast platform uses this \nexternal identifier as one of the unique, persistent \nidentifiers for an employee record.\n"
+        },
+        {
+          "info": {
+            "name": "Toast Add or Replace an External Identifier",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/employees/:employeeId/externalId",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "employeeId",
+                "value": "",
+                "type": "path",
+                "description": "The Toast platform GUID of the employee record.\n"
+              }
+            ]
+          },
+          "docs": "Adds or replaces the external identifier for an\nexisting employee. Include the string value of the new external\nidentifier in the message body.\n\nThe Toast platform uses this external identifier as one of the \nunique, persistent identifiers for an employee record. \n_Changing the external identifier for an existing employee \nmight affect reporting and other Toast platform functions that \nselect employees using the `externalId` value._\n"
+        },
+        {
+          "info": {
+            "name": "Toast Unarchive an Employee",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/employees/:employeeId/unarchive",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "employeeId",
+                "value": "",
+                "type": "path",
+                "description": "The Toast platform GUID of the employee record.\n"
+              }
+            ]
+          },
+          "docs": "Unarchives an employee record that was previously archived.\n\n* Unarchived employees can sign into the Toast POS.\n* Unarchived employees can sign in to Toast Web. \n* When you unarchive an employee, the employee has all \n  jobs that were previously assigned to them.\n* If an employee had a swipe card for signing into the \n  Toast POS, the swipe card _is not_ re-associated with \n  the employee when you unarchive them.\n\nIf you unarchive an employee who will take a different \nrole than the one they ha"
+        },
+        {
+          "info": {
+            "name": "Toast Replace a Jobs List",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/employees/:employeeId/jobs",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "employeeId",
+                "value": "",
+                "type": "path",
+                "description": "The Toast platform GUID of the employee record.\n"
+              }
+            ]
+          },
+          "docs": "Replaces the list of jobs for an employee. Include a JSON  \narray of job identifiers in the message body.\n\nIf a job is defined at the restaurant group or subgroup level, \nthis operation adds or removes that job for the the employee at \n_all restaurant locations_ in the group or subgroup.\n"
+        },
+        {
+          "info": {
+            "name": "Toast Replace Wage Overrides",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/employees/:employeeId/wageOverrides",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "employeeId",
+                "value": "",
+                "type": "path",
+                "description": "The Toast platform GUID of the employee record.\n"
+              }
+            ]
+          },
+          "docs": "Replaces the list of wage overrides for the jobs that are \nassigned to an employee. Include a JSON  array of \n`JobWageOverride` objects in the message body. Include the new \nwage for the employee in the `wage` value. Specify the wage in \nU.S. dollars.\n\nYou must include all existing wage overrides in the message \nbody. Any wage overrides that are not present in the array are \nremoved from the employee record.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

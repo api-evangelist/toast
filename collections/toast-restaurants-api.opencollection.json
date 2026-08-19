@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Toast Authentication Restaurants API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Restaurants",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Toast Get Accessible Restaurants",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/restaurants",
+            "params": [
+              {
+                "name": "lastModified",
+                "value": "",
+                "type": "query",
+                "description": "Limits the return data to restaurants that changed their \naccess configuration for a partner API client after a \nspecific date and time.\n\nRestaurants returned either:\n\n* Gave access to a partner API client for a partner \n  integration service after a specific date and time.\n\n* Modified the configuration for a partner integration \n  after a specific date and time. \n\nYou must specify the date and time as a UTC timestamp in \nISO 8601 format, for example: \n`2020-03-01T00:00:00.000-0000`. URL encode the timestamp. \nFor example, `2020-03-01T00%3A00%3A00.000-0000`.\n"
+              }
+            ]
+          },
+          "docs": "Returns an array of `PartnerAccessExternalRep` \nobjects that contain information about the Toast restaurants that your partner \nAPI client can access. If a `lastModified` date is specified, the API returns \nall objects that were created or modified after that date.\n"
+        },
+        {
+          "info": {
+            "name": "Toast Get Restaurant Configuration Information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/restaurants/:restaurantGUID",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "restaurantGUID",
+                "value": "",
+                "type": "path",
+                "description": "The Toast GUID of the restaurant that you want to get \ninformation about.\n"
+              },
+              {
+                "name": "includeArchived",
+                "value": "",
+                "type": "query",
+                "description": "Set `includeArchived` to `true` if the API should return information\nabout the restaurant even if it is archived. The `General` object in\nthe response includes an `archived` value that your integration can\nuse to determine whether a restaurant is archived or not. A common\nreason for a restaurant being archived is if it was created in\nerror. Set `includeArchived` to `false` if the API should _not_\nreturn information about the restaurant if it is archived. Defaults\nto `false` if omitted.\n"
+              }
+            ]
+          },
+          "docs": "Returns a `RestaurantInfo` object\nthat contains detailed information about the configuration of a\nrestaurant.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,91 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Toast Authentication Discounts API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Discounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Toast Add Check-level Discounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/orders/:orderGuid/checks/:checkGuid/appliedDiscounts",
+            "params": [
+              {
+                "name": "orderGuid",
+                "value": "",
+                "type": "path",
+                "description": "The Toast platform identifier of the order that you are\nadding a discount to.\n"
+              },
+              {
+                "name": "checkGuid",
+                "value": "",
+                "type": "path",
+                "description": "The Toast platform identifier of the check that you are\nadding a discount to.\n"
+              }
+            ]
+          },
+          "docs": "Adds one or more check-level discounts to a check in an\nexisting order. Include an array of `Discount` objects in the\nmessage body.\n\nFor more information, see [the _Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiDiscountingOrders.html#apiAddingDiscountsToChecks).\n"
+        },
+        {
+          "info": {
+            "name": "Toast Add Item-level Discounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/orders/:orderGuid/checks/:checkGuid/selections/:selectionGuid/appliedDiscounts",
+            "params": [
+              {
+                "name": "orderGuid",
+                "value": "",
+                "type": "path",
+                "description": "The Toast platform identifier of the order that you are\nadding a discount to.\n"
+              },
+              {
+                "name": "checkGuid",
+                "value": "",
+                "type": "path",
+                "description": "The Toast platform identifier of the check that you are\nadding a discount to.\n"
+              },
+              {
+                "name": "selectionGuid",
+                "value": "",
+                "type": "path",
+                "description": "The Toast platform identifier of the menu item selection\nthat you are adding a discount to.\n"
+              }
+            ]
+          },
+          "docs": "Adds one or more item-level discounts to menu item selections\nin a check in an existing order. Include an array of `Discount` objects in the\nmessage body.\n\nFor more information, see [the _Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiDiscountingOrders.html#apiAddingDiscountsToChecks).\n"
+        },
+        {
+          "info": {
+            "name": "Toast Get Applicable Discounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/applicableDiscounts",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Returns an array of `ApplicableDiscount`\nobjects that contain information about the discounts that apply\nto the checks and menu item selections in an order.\n\nEach `ApplicableDiscount` object contains information that you can\nuse to determine which items and checks are eligible for the\ndiscount.\n\nIf you include a `promoCode` value in the\n`ApplicableDiscount` object, the `applicableDiscounts` endpoint\nreturns the only the discounts that are associated with that\npromotional code.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,151 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Toast Authentication Shifts API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Shifts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Toast Get Shifts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/shifts",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "shiftIds",
+                "value": "",
+                "type": "query",
+                "description": "An optional identifier that filters return values for a\nspecific shift. The identifier can be a Toast platform GUID\nor an external identifier. If present, the shifts\nresource will only return the shifts you specify. You\ncan include multiple `shiftIds` query parameters (maximum\n100).\n"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Optional start date and time of time period to match \nshifts. A shift matches the time period if the shift \n`inDate` is after (inclusive) the specified `startDate` and \nthe shift `outDate` is before the `endDate` (exclusive). \nThese parameters are required if the `shiftIds` parameter \nis not defined. The specified period cannot be longer than \none month.\n"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "Optional end date and time of time period to match shifts. \nA shift matches the time period if the shift `inDate` is \nafter (inclusive) the specified `startDate` and the shift \n`outDate` is before the `endDate` (exclusive). These \nparameters are required if the `shiftIds` parameter is not \ndefined. The specified period cannot be longer than one \nmonth.\n"
+              }
+            ]
+          },
+          "docs": "Returns an array of `Shift` objects that contain information \nabout schedule shifts for restaurant employees.\n"
+        },
+        {
+          "info": {
+            "name": "Toast Create a Shift",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/shifts",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              },
+              {
+                "name": "Content-Type",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Creates a schedule shift for a restaurant employee.\n"
+        },
+        {
+          "info": {
+            "name": "Toast Get a Shift",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/shifts/:shiftId",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "shiftId",
+                "value": "",
+                "type": "path",
+                "description": "The Toast platform GUID or an external identifier for the \nshift.\n"
+              }
+            ]
+          },
+          "docs": "Returns a `Shift` object containing of information about one \nschedule shift for a restaurant employee.\n"
+        },
+        {
+          "info": {
+            "name": "Toast Update a Shift",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/shifts/:shiftId",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "shiftId",
+                "value": "",
+                "type": "path",
+                "description": "The shift identifier, either the Toast platform GUID or an \nexternal identifier.\n"
+              }
+            ]
+          },
+          "docs": "Updates an existing schedule shift record for a restaurant \nemployee. A `PUT` request completely replaces the information \nin the existing record.\n"
+        },
+        {
+          "info": {
+            "name": "Toast Delete a Shift",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/shifts/:shiftId",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "shiftId",
+                "value": "",
+                "type": "path",
+                "description": "The shift identifier, either the Toast platform GUID or an \nexternal identifier.\n"
+              }
+            ]
+          },
+          "docs": "Marks an existing schedule shift record for a restaurant \nemployee as deleted. If the shift record was already deleted, \nthen the operation will succeed (HTTP 200 response code) and no \nchange will be made.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

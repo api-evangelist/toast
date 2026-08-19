@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Toast Authentication Groups API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Groups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Toast Get Restaurants in a Management Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/groups/:managementGroupGUID/restaurants",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "managementGroupGUID",
+                "value": "",
+                "type": "path",
+                "description": "The GUID of the restaurant management group.\n"
+              }
+            ]
+          },
+          "docs": "Returns an array of `Restaurant` objects that are a part of the \nrestaurant management group you specify in the \n`managementGroupGUID` path parameter. Each `Restaurant` object \ncontains the unique Toast platform identifier for the restaurant in \nits `guid` value.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,175 @@
+{
+  "item": [
+    {
+      "id": "c6dafe2c-603f-46ed-9f76-b4dcea661d88",
+      "name": "ConnectedRestaurants",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "382466a8-4a54-466f-a5c4-738f7745a88f",
+          "name": "Toast Get Connected Restaurants",
+          "request": {
+            "name": "Toast Get Connected Restaurants",
+            "description": {
+              "content": "Returns a `PaginatedResponse` object that contains a paginated array of\nthe restaurants that have connected to your integrated partner service.\nInformation about each restaurant is included in the array as a\n`PartnerAccessExternalRep` object.\n\nUse the `pageSize` query parameter to control the number of restaurants\nreturned in the response. The default `pageSize` is 100. The maximum\n`pageSize` is 200.\n\nRequest the next page of restaurant information using the `pageToken`\nquery parameter. You get the token string for the next page from the\n`nextPageToken` value of the `PaginatedResponse` object for a page of\nresults. You can also get the token strings for the first and next pages\nfrom [the `link` response header\nfields](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Link).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "connectedRestaurants"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "lastModified",
+                  "value": "<date>",
+                  "description": "Limits the return data to restaurants that changed their access\nconfiguration for your partner service after a specific date and\ntime. You can use this parameter to identify new or updated\nrestaurants connected to your partner service.\n\nThe restaurants included in the response data either:\n\n* Gave access to your integrated partner service after a specific\n  date and time.\n\n* Modified the configuration for your integrated partner service after\n  a specific date and time. \n\nYou must [specify the date and\ntime](https://doc.toasttab.com/doc/devguide/api_dates_and_timestamps.html)\nas a UTC timestamp in ISO 8601 format, for example:\n`2020-03-01T00:00:00.000-0000`. URL-encode the timestamp. For\nexample, `2020-03-01T00%3A00%3A00.000-0000`.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageSize",
+                  "value": "<integer>",
+                  "description": "Controls the number of `PartnerAccessExternalRep` objects that the\nendpoint will return in each page of response data. The default page\nsize is `100`. The maximum page size is `200`.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "pageToken",
+                  "value": "<string>",
+                  "description": "Returns a specific set of restaurants in the response value. You get\nthe token string for the next page of connected restaurants from the\n`nextPageToken` value of the `PaginatedResponse` object for a page\nof results. You can also get the token strings for the first and\nnext pages from [the `link` response header\nfields](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Link).\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "82fd115a-6500-4ad5-922c-d7d2d85c13dc",
+              "name": "Returns a `PaginatedResponse` object that contains a paginated array of\nthe restaurants that have connected to your integrated partner service.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connectedRestaurants"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "lastModified",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"currentPageNum\": 1,\n    \"results\": [\n      {\n        \"restaurantGuid\": \"7ab295f6-8dc8-4cb6-8cdb-072b83e84184\",\n        \"managementGroupGuid\": \"75063706-dd6e-4da6-8bb6-3a99e218e686\",\n        \"restaurantName\": \"Main Street Cafe\",\n        \"locationName\": \"123 Main Street\",\n        \"createdByEmailAddress\": \"clefebvre@mainstreetcafe.com\",\n        \"externalGroupRef\": \"\",\n        \"externalRestaurantRef\": \"\",\n        \"modifiedDate\": 1678823073353,\n        \"createdDate\": 1678823073353,\n        \"isoModifiedDate\": \"2023-03-14T19:44:33.353Z\",\n        \"isoCreatedDate\": \"2023-03-14T19:44:33.353Z\"\n      }\n    ],\n    \"totalResultCount\": 3222,\n    \"pageSize\": 1,\n    \"currentPageToken\": \"cDoxLHM6MQ==\",\n    \"nextPageToken\": \"cDoyLHM6MQ==\",\n    \"totalCount\": 3222,\n    \"nextPageNum\": 2,\n    \"lastPageNum\": 3222\n  },\n  {\n    \"currentPageNum\": 1,\n    \"results\": [\n      {\n        \"restaurantGuid\": \"7ab295f6-8dc8-4cb6-8cdb-072b83e84184\",\n        \"managementGroupGuid\": \"75063706-dd6e-4da6-8bb6-3a99e218e686\",\n        \"restaurantName\": \"Main Street Cafe\",\n        \"locationName\": \"123 Main Street\",\n        \"createdByEmailAddress\": \"clefebvre@mainstreetcafe.com\",\n        \"externalGroupRef\": \"\",\n        \"externalRestaurantRef\": \"\",\n        \"modifiedDate\": 1678823073353,\n        \"createdDate\": 1678823073353,\n        \"isoModifiedDate\": \"2023-03-14T19:44:33.353Z\",\n        \"isoCreatedDate\": \"2023-03-14T19:44:33.353Z\"\n      }\n    ],\n    \"totalResultCount\": 3222,\n    \"pageSize\": 1,\n    \"currentPageToken\": \"cDoxLHM6MQ==\",\n    \"nextPageToken\": \"cDoyLHM6MQ==\",\n    \"totalCount\": 3222,\n    \"nextPageNum\": 2,\n    \"lastPageNum\": 3222\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "95d5d251-6db3-4096-a03e-b006d7d27635",
+              "name": "Your Toast API client does not have permission to use the \n`/connectedRestaurants` endpoint.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "connectedRestaurants"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "lastModified",
+                      "value": "<date>"
+                    },
+                    {
+                      "key": "pageSize",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "pageToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://toast-api-server/authentication/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "d9028066-3db6-4e17-b712-ec777941ed33",
+    "name": "Toast Authentication ConnectedRestaurants API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The authentication API returns an authentication token that you can present\nwhen your integration client software uses other Toast APIs. For more\ninformation about authentication, see [the Toast Developer\nGuide](https://doc.toasttab.com/doc/devguide/authentication.html).\n\n\nContact Support:\n Name: Toast developer support",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Toast Authentication Stock API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Stock",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Toast Get Menu Item Inventory for a Restaurant",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v1/inventory",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Limits the items in the response to those items with the specified\nstock status. Values are:\n\n* `OUT_OF_STOCK`- Returns all menu items that have the\n  `OUT_OF_STOCK` stock status.\n\n* `QUANTITY` - Returns all menu items that have the\n  `QUANTITY` stock status.\n"
+              }
+            ]
+          },
+          "docs": "Returns inventory information for all menu items that have an\n`OUT_OF_STOCK` or `QUANTITY` status.\n\nInventory information is not returned for menu items with an `IN_STOCK`\nstatus, because they are not considered at risk for going out of stock.\n\nTo restrict the menu items in the response to either `OUT_OF_STOCK` or\n`QUANTITY` stock status, use the `status` query parameter.\n"
+        },
+        {
+          "info": {
+            "name": "Toast Get Inventory Information for Specific Menu Items",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v1/inventory/search",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns inventory information for a list of menu items.\n\nThe request must include a message body that contains an\n`InventorySearchRequest` object with one or both of these values:\n\n* A`multiLocationIds` value that contains an array of menu item\n  multi-location IDs to search for.\n\n* A `guids` value that contains an array of menu item GUIDs to search\n  for.\n\nFor information on these two identifier types, see <a\nhref=\"https://doc.toasttab.com/doc/devguide/portalToastIdentifiers.html\">Toast\nidentif"
+        },
+        {
+          "info": {
+            "name": "Toast Update Inventory Information for Specific Menu Items",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v1/inventory/update",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates inventory information for a list of menu items.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

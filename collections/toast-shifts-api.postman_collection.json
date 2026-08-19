@@ -1,0 +1,1266 @@
+{
+  "item": [
+    {
+      "id": "c6e9de00-255a-4c07-bcd1-d90fac53627b",
+      "name": "Shifts",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "de7d644d-c23b-43e1-a4fc-c5601bf3e74f",
+          "name": "Toast Get Shifts",
+          "request": {
+            "name": "Toast Get Shifts",
+            "description": {
+              "content": "Returns an array of `Shift` objects that contain information \nabout schedule shifts for restaurant employees.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "shifts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "shiftIds",
+                  "value": "<string>",
+                  "description": "An optional identifier that filters return values for a\nspecific shift. The identifier can be a Toast platform GUID\nor an external identifier. If present, the shifts\nresource will only return the shifts you specify. You\ncan include multiple `shiftIds` query parameters (maximum\n100).\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "startDate",
+                  "value": "<ISO-8601>",
+                  "description": "Optional start date and time of time period to match \nshifts. A shift matches the time period if the shift \n`inDate` is after (inclusive) the specified `startDate` and \nthe shift `outDate` is before the `endDate` (exclusive). \nThese parameters are required if the `shiftIds` parameter \nis not defined. The specified period cannot be longer than \none month.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "endDate",
+                  "value": "<ISO-8601>",
+                  "description": "Optional end date and time of time period to match shifts. \nA shift matches the time period if the shift `inDate` is \nafter (inclusive) the specified `startDate` and the shift \n`outDate` is before the `endDate` (exclusive). These \nparameters are required if the `shiftIds` parameter is not \ndefined. The specified period cannot be longer than one \nmonth.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n",
+                "key": "Toast-Restaurant-External-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "5eec2ba4-6151-48b3-885c-397d18b9f4ce",
+              "name": "Returns the specified shifts in an unordered list.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shifts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "shiftIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<ISO-8601>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<ISO-8601>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n",
+                    "key": "Toast-Restaurant-External-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"guid\": \"string\",\n    \"entityType\": \"string\",\n    \"externalId\": \"string\",\n    \"createdDate\": \"1958-11-27T23:52:27.033Z\",\n    \"modifiedDate\": \"2004-01-07T09:37:11.736Z\",\n    \"deletedDate\": \"1948-12-03T19:04:49.509Z\",\n    \"deleted\": true,\n    \"jobReference\": {\n      \"guid\": \"string\",\n      \"entityType\": \"string\",\n      \"externalId\": \"string\"\n    },\n    \"employeeReference\": {\n      \"guid\": \"string\",\n      \"entityType\": \"string\",\n      \"externalId\": \"string\"\n    },\n    \"inDate\": \"1999-05-23T19:48:07.907Z\",\n    \"outDate\": \"1981-06-16T18:52:02.689Z\",\n    \"scheduleConfig\": {\n      \"guid\": \"string\",\n      \"minBeforeClockIn\": 8145.263778785928,\n      \"minAfterClockIn\": 1524.1925945271817,\n      \"minBeforeClockOut\": 5895.588355758634,\n      \"minAfterClockOut\": 9121.960555124964\n    }\n  },\n  {\n    \"guid\": \"string\",\n    \"entityType\": \"string\",\n    \"externalId\": \"string\",\n    \"createdDate\": \"1975-03-10T17:52:16.491Z\",\n    \"modifiedDate\": \"1975-06-15T04:55:26.676Z\",\n    \"deletedDate\": \"1992-06-10T14:34:15.376Z\",\n    \"deleted\": false,\n    \"jobReference\": {\n      \"guid\": \"string\",\n      \"entityType\": \"string\",\n      \"externalId\": \"string\"\n    },\n    \"employeeReference\": {\n      \"guid\": \"string\",\n      \"entityType\": \"string\",\n      \"externalId\": \"string\"\n    },\n    \"inDate\": \"1959-09-02T20:02:26.126Z\",\n    \"outDate\": \"1984-06-11T12:24:27.822Z\",\n    \"scheduleConfig\": {\n      \"guid\": \"string\",\n      \"minBeforeClockIn\": 629.2002254874108,\n      \"minAfterClockIn\": 3293.1847937111247,\n      \"minBeforeClockOut\": 2695.3126185597553,\n      \"minAfterClockOut\": 7455.884418700087\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c6ac2182-6307-48d9-b65f-52ab12011f44",
+              "name": "An unexpected internal error occurred. There is a \n`requestId` attached to this error that can be referenced \nby Toast support.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shifts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "shiftIds",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "startDate",
+                      "value": "<ISO-8601>"
+                    },
+                    {
+                      "key": "endDate",
+                      "value": "<ISO-8601>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n",
+                    "key": "Toast-Restaurant-External-ID",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "046b658b-fbe0-4158-b9d1-4aed2ca7b1f8",
+          "name": "Toast Create a Shift",
+          "request": {
+            "name": "Toast Create a Shift",
+            "description": {
+              "content": "Creates a schedule shift for a restaurant employee.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "shifts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n",
+                "key": "Toast-Restaurant-External-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "<string>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f2d586be-bca4-4d34-af56-fc33f468769e",
+              "name": "Creates a shift record and returns information about it.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shifts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n",
+                    "key": "Toast-Restaurant-External-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The Internet Assigned Numbers Authority (IANA) media type \nof the message body data. The value must be \n`application/json`.\n",
+                    "key": "Content-Type",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<string>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"guid\": \"string\",\n  \"entityType\": \"string\",\n  \"externalId\": \"string\",\n  \"createdDate\": \"1968-03-24T18:30:22.007Z\",\n  \"modifiedDate\": \"2024-11-21T18:12:20.751Z\",\n  \"deletedDate\": \"1958-05-31T15:08:50.455Z\",\n  \"deleted\": false,\n  \"jobReference\": {\n    \"guid\": \"string\",\n    \"entityType\": \"string\",\n    \"externalId\": \"string\"\n  },\n  \"employeeReference\": {\n    \"guid\": \"string\",\n    \"entityType\": \"string\",\n    \"externalId\": \"string\"\n  },\n  \"inDate\": \"1992-12-31T00:09:47.268Z\",\n  \"outDate\": \"1974-12-26T04:22:16.045Z\",\n  \"scheduleConfig\": {\n    \"guid\": \"string\",\n    \"minBeforeClockIn\": 6636.422327505303,\n    \"minAfterClockIn\": 7522.9077502247055,\n    \"minBeforeClockOut\": 8249.939078699497,\n    \"minAfterClockOut\": 8468.588395214081\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d0634e80-d2f5-4658-ae16-89b9b1d587cb",
+              "name": "The request contains data that is not supported by the \ncurrent version of the API as described.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shifts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n",
+                    "key": "Toast-Restaurant-External-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The Internet Assigned Numbers Authority (IANA) media type \nof the message body data. The value must be \n`application/json`.\n",
+                    "key": "Content-Type",
+                    "value": "string"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<string>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "af6e71ce-93ae-4df1-8468-14f0a5a5e812",
+              "name": "The request did not have \"application/json\" in the \n`Content-Type` header.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shifts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n",
+                    "key": "Toast-Restaurant-External-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The Internet Assigned Numbers Authority (IANA) media type \nof the message body data. The value must be \n`application/json`.\n",
+                    "key": "Content-Type",
+                    "value": "string"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<string>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "95c7763e-9f63-4137-9784-59662244b275",
+              "name": "An unexpected internal error occurred. There is a \n`requestId` attached to this error that can be referenced \nby Toast support.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shifts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n",
+                    "key": "Toast-Restaurant-External-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The Internet Assigned Numbers Authority (IANA) media type \nof the message body data. The value must be \n`application/json`.\n",
+                    "key": "Content-Type",
+                    "value": "string"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<string>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0b56ed69-f5b7-4a19-a168-fe3503eb88fc",
+          "name": "Toast Get a Shift",
+          "request": {
+            "name": "Toast Get a Shift",
+            "description": {
+              "content": "Returns a `Shift` object containing of information about one \nschedule shift for a restaurant employee.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "shifts",
+                ":shiftId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shiftId",
+                  "description": "(Required) The Toast platform GUID or an external identifier for the \nshift.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n",
+                "key": "Toast-Restaurant-External-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "e714d927-5b8a-4d2e-8889-2113282bb7e6",
+              "name": "Returns the specified shifts in an unordered list.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shifts",
+                    ":shiftId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) The Toast platform GUID or an external identifier for the \nshift.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n",
+                    "key": "Toast-Restaurant-External-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"guid\": \"string\",\n  \"entityType\": \"string\",\n  \"externalId\": \"string\",\n  \"createdDate\": \"1968-03-24T18:30:22.007Z\",\n  \"modifiedDate\": \"2024-11-21T18:12:20.751Z\",\n  \"deletedDate\": \"1958-05-31T15:08:50.455Z\",\n  \"deleted\": false,\n  \"jobReference\": {\n    \"guid\": \"string\",\n    \"entityType\": \"string\",\n    \"externalId\": \"string\"\n  },\n  \"employeeReference\": {\n    \"guid\": \"string\",\n    \"entityType\": \"string\",\n    \"externalId\": \"string\"\n  },\n  \"inDate\": \"1992-12-31T00:09:47.268Z\",\n  \"outDate\": \"1974-12-26T04:22:16.045Z\",\n  \"scheduleConfig\": {\n    \"guid\": \"string\",\n    \"minBeforeClockIn\": 6636.422327505303,\n    \"minAfterClockIn\": 7522.9077502247055,\n    \"minBeforeClockOut\": 8249.939078699497,\n    \"minAfterClockOut\": 8468.588395214081\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ddb79dc6-95d1-48a3-9f61-f9652188d3f2",
+              "name": "The GUID or external identifier was malformed.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shifts",
+                    ":shiftId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) The Toast platform GUID or an external identifier for the \nshift.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n",
+                    "key": "Toast-Restaurant-External-ID",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "98595218-ce42-4b38-a15d-a26578063db9",
+              "name": "The GUID or external identifier does not match any shifts\nat the current restaurant.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shifts",
+                    ":shiftId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) The Toast platform GUID or an external identifier for the \nshift.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n",
+                    "key": "Toast-Restaurant-External-ID",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d0398d9f-58f0-46cc-b524-d5040ed900a5",
+              "name": "An unexpected internal error occurred. There is a \n`requestId` attached to this error that can be referenced \nby Toast support.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shifts",
+                    ":shiftId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) The Toast platform GUID or an external identifier for the \nshift.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n",
+                    "key": "Toast-Restaurant-External-ID",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5221f9e1-8689-439c-92a0-93a936a2c20e",
+          "name": "Toast Update a Shift",
+          "request": {
+            "name": "Toast Update a Shift",
+            "description": {
+              "content": "Updates an existing schedule shift record for a restaurant \nemployee. A `PUT` request completely replaces the information \nin the existing record.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "shifts",
+                ":shiftId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shiftId",
+                  "description": "(Required) The shift identifier, either the Toast platform GUID or an \nexternal identifier.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n",
+                "key": "Toast-Restaurant-External-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "<string>",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e9a1209d-6982-43ee-84f6-09f63d77b2ad",
+              "name": "Returns the updated `Shift`.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shifts",
+                    ":shiftId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) The shift identifier, either the Toast platform GUID or an \nexternal identifier.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n",
+                    "key": "Toast-Restaurant-External-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<string>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"guid\": \"string\",\n  \"entityType\": \"string\",\n  \"externalId\": \"string\",\n  \"createdDate\": \"1968-03-24T18:30:22.007Z\",\n  \"modifiedDate\": \"2024-11-21T18:12:20.751Z\",\n  \"deletedDate\": \"1958-05-31T15:08:50.455Z\",\n  \"deleted\": false,\n  \"jobReference\": {\n    \"guid\": \"string\",\n    \"entityType\": \"string\",\n    \"externalId\": \"string\"\n  },\n  \"employeeReference\": {\n    \"guid\": \"string\",\n    \"entityType\": \"string\",\n    \"externalId\": \"string\"\n  },\n  \"inDate\": \"1992-12-31T00:09:47.268Z\",\n  \"outDate\": \"1974-12-26T04:22:16.045Z\",\n  \"scheduleConfig\": {\n    \"guid\": \"string\",\n    \"minBeforeClockIn\": 6636.422327505303,\n    \"minAfterClockIn\": 7522.9077502247055,\n    \"minBeforeClockOut\": 8249.939078699497,\n    \"minAfterClockOut\": 8468.588395214081\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c7cfccff-da70-4710-9ac4-a598da5f59e8",
+              "name": "The request contains data that is not supported by the \ncurrent version of the API as described.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shifts",
+                    ":shiftId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) The shift identifier, either the Toast platform GUID or an \nexternal identifier.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n",
+                    "key": "Toast-Restaurant-External-ID",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<string>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "011fe9f1-a609-4b2a-ac64-b13c1d6da018",
+              "name": "The GUID or external identifier does not match any shifts\nat the current restaurant.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shifts",
+                    ":shiftId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) The shift identifier, either the Toast platform GUID or an \nexternal identifier.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n",
+                    "key": "Toast-Restaurant-External-ID",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<string>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5d6cb132-e6fb-4fb3-87de-c400ebd18875",
+              "name": "The request did not have `application/json` in the \n`Content-Type` header.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shifts",
+                    ":shiftId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) The shift identifier, either the Toast platform GUID or an \nexternal identifier.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n",
+                    "key": "Toast-Restaurant-External-ID",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<string>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unsupported Media Type",
+              "code": 415,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "185c94d4-2e04-4e0f-a9cf-c1e2ec7fb4f6",
+              "name": "An unexpected internal error occurred. There is a \n`requestId` attached to this error that can be referenced \nby Toast support.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shifts",
+                    ":shiftId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) The shift identifier, either the Toast platform GUID or an \nexternal identifier.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n",
+                    "key": "Toast-Restaurant-External-ID",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "<string>",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2991d7cd-d3ed-4550-9de6-ab9eb059d9d1",
+          "name": "Toast Delete a Shift",
+          "request": {
+            "name": "Toast Delete a Shift",
+            "description": {
+              "content": "Marks an existing schedule shift record for a restaurant \nemployee as deleted. If the shift record was already deleted, \nthen the operation will succeed (HTTP 200 response code) and no \nchange will be made.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "shifts",
+                ":shiftId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "shiftId",
+                  "description": "(Required) The shift identifier, either the Toast platform GUID or an \nexternal identifier.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n",
+                "key": "Toast-Restaurant-External-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE"
+          },
+          "response": [
+            {
+              "id": "73330ffe-3bd9-4ab7-9a8a-2094500b631f",
+              "name": "Returns the specified shift, with the deleted flag set to \n`true`.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shifts",
+                    ":shiftId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) The shift identifier, either the Toast platform GUID or an \nexternal identifier.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n",
+                    "key": "Toast-Restaurant-External-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"guid\": \"string\",\n  \"entityType\": \"string\",\n  \"externalId\": \"string\",\n  \"createdDate\": \"1968-03-24T18:30:22.007Z\",\n  \"modifiedDate\": \"2024-11-21T18:12:20.751Z\",\n  \"deletedDate\": \"1958-05-31T15:08:50.455Z\",\n  \"deleted\": false,\n  \"jobReference\": {\n    \"guid\": \"string\",\n    \"entityType\": \"string\",\n    \"externalId\": \"string\"\n  },\n  \"employeeReference\": {\n    \"guid\": \"string\",\n    \"entityType\": \"string\",\n    \"externalId\": \"string\"\n  },\n  \"inDate\": \"1992-12-31T00:09:47.268Z\",\n  \"outDate\": \"1974-12-26T04:22:16.045Z\",\n  \"scheduleConfig\": {\n    \"guid\": \"string\",\n    \"minBeforeClockIn\": 6636.422327505303,\n    \"minAfterClockIn\": 7522.9077502247055,\n    \"minBeforeClockOut\": 8249.939078699497,\n    \"minAfterClockOut\": 8468.588395214081\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4d35359d-98f9-4eb9-b16e-75d95e4ed0e8",
+              "name": "The Toast platform GUID or external identifier was \nmalformed.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shifts",
+                    ":shiftId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) The shift identifier, either the Toast platform GUID or an \nexternal identifier.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n",
+                    "key": "Toast-Restaurant-External-ID",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6aa83b9f-734d-4004-89ef-1f4af5453e5c",
+              "name": "The Toast platform GUID or external identifier does not \nmatch any shifts at the current restaurant.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shifts",
+                    ":shiftId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) The shift identifier, either the Toast platform GUID or an \nexternal identifier.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n",
+                    "key": "Toast-Restaurant-External-ID",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f3cc8b54-f1d7-4f69-bfda-32dd41260f62",
+              "name": "An unexpected internal error occurred. There is a \n`requestId` attached to this error that can be referenced \nby Toast support.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "shifts",
+                    ":shiftId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "shiftId",
+                      "description": "(Required) The shift identifier, either the Toast platform GUID or an \nexternal identifier.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n",
+                    "key": "Toast-Restaurant-External-ID",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://toast-api-server/authentication/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "180cc39c-b338-4ffd-8cd7-eeb8b3b32d4e",
+    "name": "Toast Authentication Shifts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The authentication API returns an authentication token that you can present\nwhen your integration client software uses other Toast APIs. For more\ninformation about authentication, see [the Toast Developer\nGuide](https://doc.toasttab.com/doc/devguide/authentication.html).\n\n\nContact Support:\n Name: Toast developer support",
+      "type": "text/plain"
+    }
+  }
+}

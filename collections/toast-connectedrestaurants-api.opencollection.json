@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Toast Authentication ConnectedRestaurants API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "ConnectedRestaurants",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Toast Get Connected Restaurants",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/connectedRestaurants",
+            "params": [
+              {
+                "name": "lastModified",
+                "value": "",
+                "type": "query",
+                "description": "Limits the return data to restaurants that changed their access\nconfiguration for your partner service after a specific date and\ntime. You can use this parameter to identify new or updated\nrestaurants connected to your partner service.\n\nThe restaurants included in the response data either:\n\n* Gave access to your integrated partner service after a specific\n  date and time.\n\n* Modified the configuration for your integrated partner service after\n  a specific date and time. \n\nYou must [specify the date and\ntime](https://doc.toasttab.com/doc/devguide/api_dates_and_timestamps.html)\nas a UTC timestamp in ISO 8601 format, for example:\n`2020-03-01T00:00:00.000-0000`. URL-encode the timestamp. For\nexample, `2020-03-01T00%3A00%3A00.000-0000`.\n"
+              },
+              {
+                "name": "pageSize",
+                "value": "",
+                "type": "query",
+                "description": "Controls the number of `PartnerAccessExternalRep` objects that the\nendpoint will return in each page of response data. The default page\nsize is `100`. The maximum page size is `200`.\n"
+              },
+              {
+                "name": "pageToken",
+                "value": "",
+                "type": "query",
+                "description": "Returns a specific set of restaurants in the response value. You get\nthe token string for the next page of connected restaurants from the\n`nextPageToken` value of the `PaginatedResponse` object for a page\nof results. You can also get the token strings for the first and\nnext pages from [the `link` response header\nfields](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Link).\n"
+              }
+            ]
+          },
+          "docs": "Returns a `PaginatedResponse` object that contains a paginated array of\nthe restaurants that have connected to your integrated partner service.\nInformation about each restaurant is included in the array as a\n`PartnerAccessExternalRep` object.\n\nUse the `pageSize` query parameter to control the number of restaurants\nreturned in the response. The default `pageSize` is 100. The maximum\n`pageSize` is 200.\n\nRequest the next page of restaurant information using the `pageToken`\nquery parameter. You get "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

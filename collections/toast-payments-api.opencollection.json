@@ -1,0 +1,136 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Toast Authentication Payments API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Toast Get Payment Identifiers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/payments",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "paidBusinessDate",
+                "value": "",
+                "type": "query",
+                "description": "Returns a list of the payments that were made during\none business day.\n\nSpecify the business day in the format yyyyMMdd.\nFor example, `20170101`.\n"
+              },
+              {
+                "name": "refundBusinessDate",
+                "value": "",
+                "type": "query",
+                "description": "Returns a list of the payments that were refunded\nduring one business day.\n\nSpecify the business day in the format\nyyyyMMdd. For example, `20170101`.\n"
+              },
+              {
+                "name": "voidBusinessDate",
+                "value": "",
+                "type": "query",
+                "description": "Returns a list of the payments that were voided during\none business day.\n\nSpecify the business day in the format yyyyMMdd.\nFor example, `20170101`.\n"
+              }
+            ]
+          },
+          "docs": "Returns a list of the GUIDs for each payment made during\none restaurant business day.\n\nThe specific hours that make up a business\nday depend on the business day cutoff in the restaurant configuration,\nwhich is available from the restaurants API in the `closeoutHour`\nproperty.\n\nThe business day for a restaurant is based on its local time (not UTC\nor local time for an API client).\n\nYou must include one of the\n`paidBusinessDate`, `refundBusinessDate`, or `voidBusinessDate` query\nparameters.\n"
+        },
+        {
+          "info": {
+            "name": "Toast Get a Payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/payments/:guid",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "guid",
+                "value": "",
+                "type": "path",
+                "description": "The GUID for the payment you want to return."
+              }
+            ]
+          },
+          "docs": "Returns a JSON `Payment` object containing detailed information about a  single payment, specified by its GUID."
+        },
+        {
+          "info": {
+            "name": "Toast Post Payments",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/orders/:orderGuid/checks/:checkGuid/payments",
+            "params": [
+              {
+                "name": "orderGuid",
+                "value": "",
+                "type": "path",
+                "description": "The Toast platform identifier of the order that you are\nadding payments to.\n"
+              },
+              {
+                "name": "checkGuid",
+                "value": "",
+                "type": "path",
+                "description": "The Toast platform identifier of the check that you are\nadding payments to.\n"
+              }
+            ]
+          },
+          "docs": "Adds one or more payments to a check in an existing order. Include\ninformation about the payments in an array of `Payment` objects in the\nmessage body. Specify the Toast platform GUID of the order\nand check in REST path parameters.\n\nFor more information, see [the _Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiAddingPaymentsToACheck.html).\n"
+        },
+        {
+          "info": {
+            "name": "Toast Update a Tip Amount",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/orders/:orderGuid/checks/:checkGuid/payments/:paymentGuid",
+            "params": [
+              {
+                "name": "orderGuid",
+                "value": "",
+                "type": "path",
+                "description": "The Toast platform identifier of the order that you are\nupdating a tip in.\n"
+              },
+              {
+                "name": "checkGuid",
+                "value": "",
+                "type": "path",
+                "description": "The Toast platform identifier of the check that you are\nupdating a tip in.\n"
+              },
+              {
+                "name": "paymentGuid",
+                "value": "",
+                "type": "path",
+                "description": "The Toast platform identifier of the payment that you are\nupdating a tip in.\n"
+              }
+            ]
+          },
+          "docs": "Updates the tip amount in an existing payment for a check in an\norder. Include the new `tipAmount` value in a `Payment` object\nin the message body.\n\nThis endpoint does not allow any other\n`Payment` object value for a `PATCH` request.\n\nSpecify the Toast\nplatform GUID of the order, check, and payment in REST path\nparameters.\n\nFor more information, see [the _Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiUpdatingTipsInAPayment.html).\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

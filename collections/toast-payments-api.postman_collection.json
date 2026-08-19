@@ -1,0 +1,778 @@
+{
+  "item": [
+    {
+      "id": "9c571297-4ab7-49ed-8e29-4e2f5bebba09",
+      "name": "Payments",
+      "description": {
+        "content": "Related to guests' payments for restaurant orders. Toast platform\npayments apply to a check in an order.\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "36cc8539-c8b6-4336-b85e-aa18bf665256",
+          "name": "Toast Get Payment Identifiers",
+          "request": {
+            "name": "Toast Get Payment Identifiers",
+            "description": {
+              "content": "Returns a list of the GUIDs for each payment made during\none restaurant business day.\n\nThe specific hours that make up a business\nday depend on the business day cutoff in the restaurant configuration,\nwhich is available from the restaurants API in the `closeoutHour`\nproperty.\n\nThe business day for a restaurant is based on its local time (not UTC\nor local time for an API client).\n\nYou must include one of the\n`paidBusinessDate`, `refundBusinessDate`, or `voidBusinessDate` query\nparameters.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "paidBusinessDate",
+                  "value": "<string>",
+                  "description": "Returns a list of the payments that were made during\none business day.\n\nSpecify the business day in the format yyyyMMdd.\nFor example, `20170101`.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "refundBusinessDate",
+                  "value": "<string>",
+                  "description": "Returns a list of the payments that were refunded\nduring one business day.\n\nSpecify the business day in the format\nyyyyMMdd. For example, `20170101`.\n"
+                },
+                {
+                  "disabled": false,
+                  "key": "voidBusinessDate",
+                  "value": "<string>",
+                  "description": "Returns a list of the payments that were voided during\none business day.\n\nSpecify the business day in the format yyyyMMdd.\nFor example, `20170101`.\n"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The GUID of the restaurant used as the context of the request.",
+                "key": "Toast-Restaurant-External-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "179aca1e-f3af-4677-8229-fdf09ff9e8ff",
+              "name": "A JSON array of the GUID identifiers for the payments.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "paidBusinessDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "refundBusinessDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "voidBusinessDate",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The GUID of the restaurant used as the context of the request.",
+                    "key": "Toast-Restaurant-External-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  \"string\",\n  \"string\"\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc8b4438-2ed9-4510-83f2-db98916864b2",
+              "name": "The API cannot process the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "paidBusinessDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "refundBusinessDate",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "voidBusinessDate",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The GUID of the restaurant used as the context of the request.",
+                    "key": "Toast-Restaurant-External-ID",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7201b516-2a86-4c64-9269-03498c42b0cd",
+          "name": "Toast Get a Payment",
+          "request": {
+            "name": "Toast Get a Payment",
+            "description": {
+              "content": "Returns a JSON `Payment` object containing detailed information about a  single payment, specified by its GUID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "payments",
+                ":guid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "guid",
+                  "description": "(Required) The GUID for the payment you want to return."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The GUID of the restaurant used as the context of the request.",
+                "key": "Toast-Restaurant-External-ID",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "3dddbf11-15e9-4fb7-9801-33cfeae28242",
+              "name": "Returns a JSON `Payment` object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":guid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "guid",
+                      "description": "(Required) The GUID for the payment you want to return."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The GUID of the restaurant used as the context of the request.",
+                    "key": "Toast-Restaurant-External-ID",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"amount\": 1950.0251831983185,\n  \"entityType\": \"string\",\n  \"guid\": \"string\",\n  \"tipAmount\": 777.2149466427236,\n  \"type\": \"HOUSE_ACCOUNT\",\n  \"externalId\": \"string\",\n  \"paidDate\": \"1955-12-13T06:28:39.604Z\",\n  \"paidBusinessDate\": 6790,\n  \"cardEntryMode\": \"KEYED\",\n  \"amountTendered\": 7765.20598504492,\n  \"cardType\": \"CIT\",\n  \"first6Digits\": \"string\",\n  \"last4Digits\": \"string\",\n  \"originalProcessingFee\": 6501.905389683588,\n  \"server\": {\n    \"guid\": \"string\",\n    \"entityType\": \"string\",\n    \"externalId\": \"string\"\n  },\n  \"cashDrawer\": {\n    \"guid\": \"string\",\n    \"entityType\": \"string\",\n    \"externalId\": \"string\"\n  },\n  \"refundStatus\": \"PARTIAL\",\n  \"refund\": {\n    \"refundAmount\": 6049.107853815957,\n    \"tipRefundAmount\": 51.50068115713946,\n    \"refundDate\": \"2022-01-26T13:44:11.423Z\",\n    \"refundBusinessDate\": 2101,\n    \"refundTransaction\": {\n      \"guid\": \"string\",\n      \"entityType\": \"string\"\n    }\n  },\n  \"paymentStatus\": \"PROCESSING_VOID\",\n  \"voidInfo\": {\n    \"voidUser\": {\n      \"guid\": \"string\",\n      \"entityType\": \"string\",\n      \"externalId\": \"string\"\n    },\n    \"voidApprover\": {\n      \"guid\": \"string\",\n      \"entityType\": \"string\",\n      \"externalId\": \"string\"\n    },\n    \"voidDate\": \"2004-09-25T17:43:05.213Z\",\n    \"voidBusinessDate\": 1704,\n    \"voidReason\": {\n      \"guid\": \"string\",\n      \"entityType\": \"string\",\n      \"externalId\": \"string\"\n    }\n  },\n  \"houseAccount\": {\n    \"guid\": \"string\",\n    \"entityType\": \"string\",\n    \"externalId\": \"string\"\n  },\n  \"otherPayment\": {\n    \"guid\": \"string\",\n    \"entityType\": \"string\",\n    \"externalId\": \"string\"\n  },\n  \"createdDevice\": {\n    \"id\": \"string\"\n  },\n  \"lastModifiedDevice\": {\n    \"id\": \"string\"\n  },\n  \"mcaRepaymentAmount\": 8014.440037268555,\n  \"cardPaymentId\": \"string\",\n  \"orderGuid\": \"string\",\n  \"checkGuid\": \"string\",\n  \"tenderTransactionGuid\": \"string\",\n  \"networkTransactionIdentifier\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bd9ae0f4-9530-4c6a-a897-62b37f993d3e",
+              "name": "The GUID was malformed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":guid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "guid",
+                      "description": "(Required) The GUID for the payment you want to return."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The GUID of the restaurant used as the context of the request.",
+                    "key": "Toast-Restaurant-External-ID",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2526fcf2-acc9-4192-8084-2fcdfc4b5ef3",
+              "name": "The specified payment was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "payments",
+                    ":guid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "guid",
+                      "description": "(Required) The GUID for the payment you want to return."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) The GUID of the restaurant used as the context of the request.",
+                    "key": "Toast-Restaurant-External-ID",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1447ec60-113f-4b60-81de-1bffc52ac525",
+          "name": "Toast Post Payments",
+          "request": {
+            "name": "Toast Post Payments",
+            "description": {
+              "content": "Adds one or more payments to a check in an existing order. Include\ninformation about the payments in an array of `Payment` objects in the\nmessage body. Specify the Toast platform GUID of the order\nand check in REST path parameters.\n\nFor more information, see [the _Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiAddingPaymentsToACheck.html).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "orders",
+                ":orderGuid",
+                "checks",
+                ":checkGuid",
+                "payments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orderGuid",
+                  "description": "(Required) The Toast platform identifier of the order that you are\nadding payments to.\n"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "checkGuid",
+                  "description": "(Required) The Toast platform identifier of the check that you are\nadding payments to.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  \"<object>\",\n  \"<object>\"\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f33288b5-57f2-47f9-a69c-62d9a0e3000f",
+              "name": "A JSON `Order` object that includes the payments that you added.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderGuid",
+                    "checks",
+                    ":checkGuid",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderGuid",
+                      "description": "(Required) The Toast platform identifier of the order that you are\nadding payments to.\n"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "checkGuid",
+                      "description": "(Required) The Toast platform identifier of the check that you are\nadding payments to.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"amount\": \"<double>\",\n    \"entityType\": \"<string>\",\n    \"guid\": \"<string>\",\n    \"tipAmount\": \"<double>\",\n    \"type\": \"<string>\",\n    \"externalId\": \"<string>\",\n    \"paidDate\": \"<dateTime>\",\n    \"paidBusinessDate\": \"<integer>\",\n    \"cardEntryMode\": \"<string>\",\n    \"amountTendered\": \"<double>\",\n    \"cardType\": \"<string>\",\n    \"first6Digits\": \"<string>\",\n    \"last4Digits\": \"<string>\",\n    \"originalProcessingFee\": \"<double>\",\n    \"server\": {\n      \"guid\": \"<string>\",\n      \"entityType\": \"<string>\",\n      \"externalId\": \"<string>\"\n    },\n    \"cashDrawer\": {\n      \"guid\": \"<string>\",\n      \"entityType\": \"<string>\",\n      \"externalId\": \"<string>\"\n    },\n    \"refundStatus\": \"<string>\",\n    \"refund\": {\n      \"refundAmount\": \"<double>\",\n      \"tipRefundAmount\": \"<double>\",\n      \"refundDate\": \"<dateTime>\",\n      \"refundBusinessDate\": \"<integer>\",\n      \"refundTransaction\": \"<object>\"\n    },\n    \"paymentStatus\": \"<string>\",\n    \"voidInfo\": {\n      \"voidUser\": {\n        \"guid\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"entityType\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"externalId\": \"<string>\"\n      },\n      \"voidApprover\": {\n        \"guid\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"entityType\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"externalId\": \"<string>\"\n      },\n      \"voidDate\": \"<dateTime>\",\n      \"voidBusinessDate\": \"<integer>\",\n      \"voidReason\": {\n        \"guid\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"entityType\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"externalId\": \"<string>\"\n      }\n    },\n    \"houseAccount\": {\n      \"guid\": \"<string>\",\n      \"entityType\": \"<string>\",\n      \"externalId\": \"<string>\"\n    },\n    \"otherPayment\": {\n      \"guid\": \"<string>\",\n      \"entityType\": \"<string>\",\n      \"externalId\": \"<string>\"\n    },\n    \"createdDevice\": {\n      \"id\": \"<string>\"\n    },\n    \"lastModifiedDevice\": {\n      \"id\": \"<string>\"\n    },\n    \"mcaRepaymentAmount\": \"<double>\",\n    \"cardPaymentId\": \"<string>\",\n    \"orderGuid\": \"<string>\",\n    \"checkGuid\": \"<string>\",\n    \"tenderTransactionGuid\": \"<string>\",\n    \"networkTransactionIdentifier\": \"<string>\"\n  },\n  {\n    \"amount\": \"<double>\",\n    \"entityType\": \"<string>\",\n    \"guid\": \"<string>\",\n    \"tipAmount\": \"<double>\",\n    \"type\": \"<string>\",\n    \"externalId\": \"<string>\",\n    \"paidDate\": \"<dateTime>\",\n    \"paidBusinessDate\": \"<integer>\",\n    \"cardEntryMode\": \"<string>\",\n    \"amountTendered\": \"<double>\",\n    \"cardType\": \"<string>\",\n    \"first6Digits\": \"<string>\",\n    \"last4Digits\": \"<string>\",\n    \"originalProcessingFee\": \"<double>\",\n    \"server\": {\n      \"guid\": \"<string>\",\n      \"entityType\": \"<string>\",\n      \"externalId\": \"<string>\"\n    },\n    \"cashDrawer\": {\n      \"guid\": \"<string>\",\n      \"entityType\": \"<string>\",\n      \"externalId\": \"<string>\"\n    },\n    \"refundStatus\": \"<string>\",\n    \"refund\": {\n      \"refundAmount\": \"<double>\",\n      \"tipRefundAmount\": \"<double>\",\n      \"refundDate\": \"<dateTime>\",\n      \"refundBusinessDate\": \"<integer>\",\n      \"refundTransaction\": \"<object>\"\n    },\n    \"paymentStatus\": \"<string>\",\n    \"voidInfo\": {\n      \"voidUser\": {\n        \"guid\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"entityType\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"externalId\": \"<string>\"\n      },\n      \"voidApprover\": {\n        \"guid\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"entityType\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"externalId\": \"<string>\"\n      },\n      \"voidDate\": \"<dateTime>\",\n      \"voidBusinessDate\": \"<integer>\",\n      \"voidReason\": {\n        \"guid\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"entityType\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"externalId\": \"<string>\"\n      }\n    },\n    \"houseAccount\": {\n      \"guid\": \"<string>\",\n      \"entityType\": \"<string>\",\n      \"externalId\": \"<string>\"\n    },\n    \"otherPayment\": {\n      \"guid\": \"<string>\",\n      \"entityType\": \"<string>\",\n      \"externalId\": \"<string>\"\n    },\n    \"createdDevice\": {\n      \"id\": \"<string>\"\n    },\n    \"lastModifiedDevice\": {\n      \"id\": \"<string>\"\n    },\n    \"mcaRepaymentAmount\": \"<double>\",\n    \"cardPaymentId\": \"<string>\",\n    \"orderGuid\": \"<string>\",\n    \"checkGuid\": \"<string>\",\n    \"tenderTransactionGuid\": \"<string>\",\n    \"networkTransactionIdentifier\": \"<string>\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"checks\": [\n    {\n      \"entityType\": \"<string>\",\n      \"guid\": \"<string>\",\n      \"selections\": [\n        {\n          \"item\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"quantity\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"itemGroup\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"optionGroup\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"preModifier\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"seatNumber\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unitOfMeasure\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"selectionType\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"salesCategory\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"appliedDiscounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deferred\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"preDiscountPrice\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"price\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tax\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voided\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voidDate\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voidBusinessDate\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voidReason\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"refundDetails\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"displayName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"plu\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"premodifierPlu\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"createdDate\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"modifiedDate\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"modifiers\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"fulfillmentStatus\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"fulfillment\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"taxInclusion\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"appliedTaxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"diningOption\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"openPriceAmount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"receiptLinePrice\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"optionGroupPricingMode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"externalPriceAmount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"splitOrigin\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"item\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"quantity\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"itemGroup\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"optionGroup\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"preModifier\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"seatNumber\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unitOfMeasure\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"selectionType\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"salesCategory\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"appliedDiscounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deferred\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"preDiscountPrice\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"price\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tax\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voided\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voidDate\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voidBusinessDate\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voidReason\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"refundDetails\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"displayName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"plu\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"premodifierPlu\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"createdDate\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"modifiedDate\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"modifiers\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"fulfillmentStatus\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"fulfillment\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"taxInclusion\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"appliedTaxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"diningOption\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"openPriceAmount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"receiptLinePrice\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"optionGroupPricingMode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"externalPriceAmount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"splitOrigin\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"externalId\": \"<string>\",\n      \"createdDate\": \"1964-08-18T12:50:40.055Z\",\n      \"openedDate\": \"1975-08-31T11:32:29.910Z\",\n      \"closedDate\": \"2019-08-18T08:28:42.171Z\",\n      \"modifiedDate\": \"1990-05-07T12:01:36.044Z\",\n      \"deletedDate\": \"1954-07-01T22:58:14.645Z\",\n      \"deleted\": false,\n      \"customer\": {\n        \"email\": \"string\",\n        \"entityType\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"firstName\": \"string\",\n        \"guid\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"lastName\": \"string\",\n        \"phone\": \"string\",\n        \"phoneCountryCode\": \"string\"\n      },\n      \"appliedLoyaltyInfo\": {\n        \"entityType\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"guid\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"loyaltyIdentifier\": \"string\",\n        \"vendor\": \"TOAST\",\n        \"maskedLoyaltyIdentifier\": \"string\",\n        \"accrualFamilyGuid\": \"string\",\n        \"accrualText\": \"string\"\n      },\n      \"taxExempt\": false,\n      \"displayNumber\": \"string\",\n      \"appliedServiceCharges\": [\n        {\n          \"serviceCharge\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"chargeAmount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"chargeType\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"delivery\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"takeout\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"dineIn\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"gratuity\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"taxable\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"appliedTaxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"serviceChargeCalculation\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"refundDetails\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"serviceChargeCategory\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentGuid\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"serviceCharge\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"chargeAmount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"chargeType\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"delivery\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"takeout\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"dineIn\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"gratuity\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"taxable\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"appliedTaxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"serviceChargeCalculation\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"refundDetails\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"serviceChargeCategory\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentGuid\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"amount\": 5259.285510750983,\n      \"taxAmount\": 395.18004546646443,\n      \"totalAmount\": 4218.151725395023,\n      \"payments\": [\n        {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tipAmount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paidDate\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paidBusinessDate\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"cardEntryMode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amountTendered\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"cardType\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"first6Digits\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last4Digits\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"originalProcessingFee\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"server\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"cashDrawer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"refundStatus\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"refund\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentStatus\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voidInfo\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"houseAccount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"otherPayment\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"createdDevice\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lastModifiedDevice\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mcaRepaymentAmount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"cardPaymentId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"orderGuid\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"checkGuid\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tenderTransactionGuid\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"networkTransactionIdentifier\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tipAmount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paidDate\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paidBusinessDate\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"cardEntryMode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amountTendered\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"cardType\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"first6Digits\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last4Digits\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"originalProcessingFee\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"server\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"cashDrawer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"refundStatus\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"refund\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentStatus\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voidInfo\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"houseAccount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"otherPayment\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"createdDevice\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lastModifiedDevice\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mcaRepaymentAmount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"cardPaymentId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"orderGuid\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"checkGuid\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tenderTransactionGuid\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"networkTransactionIdentifier\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"tabName\": \"string\",\n      \"paymentStatus\": \"PAID\",\n      \"appliedDiscounts\": [\n        {\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"discountAmount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"nonTaxDiscountAmount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"discount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"triggers\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"approver\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"processingState\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"appliedDiscountReason\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"loyaltyDetails\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"comboItems\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"appliedPromoCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"discountType\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"discountPercent\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"discountAmount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"nonTaxDiscountAmount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"discount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"triggers\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"approver\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"processingState\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"appliedDiscountReason\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"loyaltyDetails\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"comboItems\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"appliedPromoCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"discountType\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"discountPercent\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"voided\": true,\n      \"voidDate\": \"1974-12-31T18:18:11.909Z\",\n      \"voidBusinessDate\": 3108,\n      \"paidDate\": \"1995-09-22T05:10:59.144Z\",\n      \"createdDevice\": {\n        \"id\": \"<string>\"\n      },\n      \"lastModifiedDevice\": {\n        \"id\": \"<string>\"\n      },\n      \"duration\": 3092,\n      \"openedBy\": {\n        \"guid\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"entityType\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"externalId\": \"<string>\"\n      }\n    }\n  ],\n  \"diningOption\": {\n    \"guid\": \"<string>\",\n    \"entityType\": \"<string>\",\n    \"externalId\": \"<string>\"\n  },\n  \"entityType\": \"<string>\",\n  \"guid\": \"<string>\",\n  \"externalId\": \"<string>\",\n  \"openedDate\": \"2025-02-07T08:00:00.000-0800\",\n  \"modifiedDate\": \"2025-02-07T08:00:00.000-0800\",\n  \"promisedDate\": \"2025-05-01T08:00:00.000-0800\",\n  \"channelGuid\": \"9d7de3e4-3acf-6c90-1ad8-411804d67963\",\n  \"table\": {\n    \"guid\": \"<string>\",\n    \"entityType\": \"<string>\",\n    \"externalId\": \"<string>\"\n  },\n  \"serviceArea\": {\n    \"guid\": \"<string>\",\n    \"entityType\": \"<string>\",\n    \"externalId\": \"<string>\"\n  },\n  \"restaurantService\": {\n    \"guid\": \"<string>\",\n    \"entityType\": \"<string>\",\n    \"externalId\": \"<string>\"\n  },\n  \"revenueCenter\": {\n    \"guid\": \"<string>\",\n    \"entityType\": \"<string>\",\n    \"externalId\": \"<string>\"\n  },\n  \"source\": \"string\",\n  \"duration\": 2109,\n  \"deliveryInfo\": {\n    \"address1\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"zipCode\": \"string\",\n    \"address2\": \"string\",\n    \"administrativeArea\": \"string\",\n    \"country\": \"string\",\n    \"latitude\": 9795.54071107576,\n    \"longitude\": 5817.039326926263,\n    \"notes\": \"string\",\n    \"deliveredDate\": \"2025-02-07T08:00:00.000-0800\",\n    \"dispatchedDate\": \"2025-02-07T08:00:00.000-0800\",\n    \"deliveryEmployee\": {\n      \"guid\": \"<string>\",\n      \"entityType\": \"<string>\",\n      \"externalId\": \"<string>\"\n    },\n    \"deliveryState\": \"PICKED_UP\"\n  },\n  \"requiredPrepTime\": \"string\",\n  \"estimatedFulfillmentDate\": \"2025-05-01T08:00:00.000-0800\",\n  \"numberOfGuests\": 9126,\n  \"voided\": false,\n  \"voidDate\": \"2025-02-07T08:00:00.000-0800\",\n  \"voidBusinessDate\": 6343,\n  \"paidDate\": \"2025-02-07T08:00:00.000-0800\",\n  \"closedDate\": \"2025-02-07T08:00:00.000-0800\",\n  \"deletedDate\": \"2025-02-07T08:00:00.000-0800\",\n  \"deleted\": true,\n  \"businessDate\": 6540,\n  \"server\": {\n    \"guid\": \"<string>\",\n    \"entityType\": \"<string>\",\n    \"externalId\": \"<string>\"\n  },\n  \"pricingFeatures\": [\n    \"TAXESV2\",\n    \"TAXESV2\"\n  ],\n  \"approvalStatus\": \"NEEDS_APPROVAL\",\n  \"createdDevice\": {\n    \"id\": \"<string>\"\n  },\n  \"createdDate\": \"2025-02-07T08:00:00.000-0800\",\n  \"lastModifiedDevice\": {\n    \"id\": \"<string>\"\n  },\n  \"curbsidePickupInfo\": {\n    \"guid\": \"<string>\",\n    \"entityType\": \"<string>\",\n    \"transportColor\": \"string\",\n    \"transportDescription\": \"string\",\n    \"notes\": \"string\"\n  },\n  \"marketplaceFacilitatorTaxInfo\": {\n    \"facilitatorCollectAndRemitTaxOrder\": false,\n    \"taxes\": [\n      {\n        \"entityType\": \"<string>\",\n        \"guid\": \"<string>\",\n        \"taxRate\": {\n          \"guid\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"entityType\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"name\": \"string\",\n        \"rate\": 6111.854810819708,\n        \"taxAmount\": 7345.713092383438,\n        \"type\": \"NONE\",\n        \"facilitatorCollectAndRemitTax\": false,\n        \"displayName\": \"string\",\n        \"jurisdiction\": \"string\",\n        \"jurisdictionType\": \"string\"\n      },\n      {\n        \"entityType\": \"<string>\",\n        \"guid\": \"<string>\",\n        \"taxRate\": {\n          \"guid\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"entityType\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"name\": \"string\",\n        \"rate\": 8844.367694434846,\n        \"taxAmount\": 4319.972886713611,\n        \"type\": \"TABLE\",\n        \"facilitatorCollectAndRemitTax\": true,\n        \"displayName\": \"string\",\n        \"jurisdiction\": \"string\",\n        \"jurisdictionType\": \"string\"\n      }\n    ]\n  },\n  \"createdInTestMode\": false,\n  \"appliedPackagingInfo\": {\n    \"guid\": \"<string>\",\n    \"entityType\": \"<string>\",\n    \"appliedPackagingItems\": [\n      {\n        \"entityType\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"guid\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"inclusion\": \"YES\",\n        \"itemConfigId\": \"string\",\n        \"itemTypes\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"guestDisplayName\": \"string\"\n      }\n    ]\n  },\n  \"excessFood\": false,\n  \"displayNumber\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7f95f9e8-1423-4ce0-b289-cad73881c973",
+              "name": "The API cannot process the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderGuid",
+                    "checks",
+                    ":checkGuid",
+                    "payments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderGuid",
+                      "description": "(Required) The Toast platform identifier of the order that you are\nadding payments to.\n"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "checkGuid",
+                      "description": "(Required) The Toast platform identifier of the check that you are\nadding payments to.\n"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"amount\": \"<double>\",\n    \"entityType\": \"<string>\",\n    \"guid\": \"<string>\",\n    \"tipAmount\": \"<double>\",\n    \"type\": \"<string>\",\n    \"externalId\": \"<string>\",\n    \"paidDate\": \"<dateTime>\",\n    \"paidBusinessDate\": \"<integer>\",\n    \"cardEntryMode\": \"<string>\",\n    \"amountTendered\": \"<double>\",\n    \"cardType\": \"<string>\",\n    \"first6Digits\": \"<string>\",\n    \"last4Digits\": \"<string>\",\n    \"originalProcessingFee\": \"<double>\",\n    \"server\": {\n      \"guid\": \"<string>\",\n      \"entityType\": \"<string>\",\n      \"externalId\": \"<string>\"\n    },\n    \"cashDrawer\": {\n      \"guid\": \"<string>\",\n      \"entityType\": \"<string>\",\n      \"externalId\": \"<string>\"\n    },\n    \"refundStatus\": \"<string>\",\n    \"refund\": {\n      \"refundAmount\": \"<double>\",\n      \"tipRefundAmount\": \"<double>\",\n      \"refundDate\": \"<dateTime>\",\n      \"refundBusinessDate\": \"<integer>\",\n      \"refundTransaction\": \"<object>\"\n    },\n    \"paymentStatus\": \"<string>\",\n    \"voidInfo\": {\n      \"voidUser\": {\n        \"guid\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"entityType\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"externalId\": \"<string>\"\n      },\n      \"voidApprover\": {\n        \"guid\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"entityType\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"externalId\": \"<string>\"\n      },\n      \"voidDate\": \"<dateTime>\",\n      \"voidBusinessDate\": \"<integer>\",\n      \"voidReason\": {\n        \"guid\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"entityType\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"externalId\": \"<string>\"\n      }\n    },\n    \"houseAccount\": {\n      \"guid\": \"<string>\",\n      \"entityType\": \"<string>\",\n      \"externalId\": \"<string>\"\n    },\n    \"otherPayment\": {\n      \"guid\": \"<string>\",\n      \"entityType\": \"<string>\",\n      \"externalId\": \"<string>\"\n    },\n    \"createdDevice\": {\n      \"id\": \"<string>\"\n    },\n    \"lastModifiedDevice\": {\n      \"id\": \"<string>\"\n    },\n    \"mcaRepaymentAmount\": \"<double>\",\n    \"cardPaymentId\": \"<string>\",\n    \"orderGuid\": \"<string>\",\n    \"checkGuid\": \"<string>\",\n    \"tenderTransactionGuid\": \"<string>\",\n    \"networkTransactionIdentifier\": \"<string>\"\n  },\n  {\n    \"amount\": \"<double>\",\n    \"entityType\": \"<string>\",\n    \"guid\": \"<string>\",\n    \"tipAmount\": \"<double>\",\n    \"type\": \"<string>\",\n    \"externalId\": \"<string>\",\n    \"paidDate\": \"<dateTime>\",\n    \"paidBusinessDate\": \"<integer>\",\n    \"cardEntryMode\": \"<string>\",\n    \"amountTendered\": \"<double>\",\n    \"cardType\": \"<string>\",\n    \"first6Digits\": \"<string>\",\n    \"last4Digits\": \"<string>\",\n    \"originalProcessingFee\": \"<double>\",\n    \"server\": {\n      \"guid\": \"<string>\",\n      \"entityType\": \"<string>\",\n      \"externalId\": \"<string>\"\n    },\n    \"cashDrawer\": {\n      \"guid\": \"<string>\",\n      \"entityType\": \"<string>\",\n      \"externalId\": \"<string>\"\n    },\n    \"refundStatus\": \"<string>\",\n    \"refund\": {\n      \"refundAmount\": \"<double>\",\n      \"tipRefundAmount\": \"<double>\",\n      \"refundDate\": \"<dateTime>\",\n      \"refundBusinessDate\": \"<integer>\",\n      \"refundTransaction\": \"<object>\"\n    },\n    \"paymentStatus\": \"<string>\",\n    \"voidInfo\": {\n      \"voidUser\": {\n        \"guid\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"entityType\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"externalId\": \"<string>\"\n      },\n      \"voidApprover\": {\n        \"guid\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"entityType\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"externalId\": \"<string>\"\n      },\n      \"voidDate\": \"<dateTime>\",\n      \"voidBusinessDate\": \"<integer>\",\n      \"voidReason\": {\n        \"guid\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"entityType\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"externalId\": \"<string>\"\n      }\n    },\n    \"houseAccount\": {\n      \"guid\": \"<string>\",\n      \"entityType\": \"<string>\",\n      \"externalId\": \"<string>\"\n    },\n    \"otherPayment\": {\n      \"guid\": \"<string>\",\n      \"entityType\": \"<string>\",\n      \"externalId\": \"<string>\"\n    },\n    \"createdDevice\": {\n      \"id\": \"<string>\"\n    },\n    \"lastModifiedDevice\": {\n      \"id\": \"<string>\"\n    },\n    \"mcaRepaymentAmount\": \"<double>\",\n    \"cardPaymentId\": \"<string>\",\n    \"orderGuid\": \"<string>\",\n    \"checkGuid\": \"<string>\",\n    \"tenderTransactionGuid\": \"<string>\",\n    \"networkTransactionIdentifier\": \"<string>\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8422ebb8-9254-4633-a9f2-ed66050a9a86",
+          "name": "Toast Update a Tip Amount",
+          "request": {
+            "name": "Toast Update a Tip Amount",
+            "description": {
+              "content": "Updates the tip amount in an existing payment for a check in an\norder. Include the new `tipAmount` value in a `Payment` object\nin the message body.\n\nThis endpoint does not allow any other\n`Payment` object value for a `PATCH` request.\n\nSpecify the Toast\nplatform GUID of the order, check, and payment in REST path\nparameters.\n\nFor more information, see [the _Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiUpdatingTipsInAPayment.html).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "orders",
+                ":orderGuid",
+                "checks",
+                ":checkGuid",
+                "payments",
+                ":paymentGuid"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orderGuid",
+                  "description": "(Required) The Toast platform identifier of the order that you are\nupdating a tip in.\n"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "checkGuid",
+                  "description": "(Required) The Toast platform identifier of the check that you are\nupdating a tip in.\n"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "paymentGuid",
+                  "description": "(Required) The Toast platform identifier of the payment that you are\nupdating a tip in.\n"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tipAmount\": \"<double>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "adca0eae-129e-4d5a-9744-3074ed69e539",
+              "name": "A JSON `Order` object\nthat includes the tip amount that you updated.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderGuid",
+                    "checks",
+                    ":checkGuid",
+                    "payments",
+                    ":paymentGuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderGuid",
+                      "description": "(Required) The Toast platform identifier of the order that you are\nupdating a tip in.\n"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "checkGuid",
+                      "description": "(Required) The Toast platform identifier of the check that you are\nupdating a tip in.\n"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentGuid",
+                      "description": "(Required) The Toast platform identifier of the payment that you are\nupdating a tip in.\n"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tipAmount\": 3.25\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"checks\": [\n    {\n      \"entityType\": \"<string>\",\n      \"guid\": \"<string>\",\n      \"selections\": [\n        {\n          \"item\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"quantity\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"itemGroup\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"optionGroup\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"preModifier\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"seatNumber\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unitOfMeasure\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"selectionType\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"salesCategory\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"appliedDiscounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deferred\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"preDiscountPrice\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"price\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tax\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voided\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voidDate\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voidBusinessDate\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voidReason\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"refundDetails\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"displayName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"plu\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"premodifierPlu\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"createdDate\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"modifiedDate\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"modifiers\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"fulfillmentStatus\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"fulfillment\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"taxInclusion\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"appliedTaxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"diningOption\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"openPriceAmount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"receiptLinePrice\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"optionGroupPricingMode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"externalPriceAmount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"splitOrigin\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"item\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"quantity\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"itemGroup\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"optionGroup\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"preModifier\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"seatNumber\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"unitOfMeasure\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"selectionType\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"salesCategory\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"appliedDiscounts\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"deferred\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"preDiscountPrice\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"price\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tax\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voided\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voidDate\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voidBusinessDate\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voidReason\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"refundDetails\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"displayName\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"plu\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"premodifierPlu\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"createdDate\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"modifiedDate\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"modifiers\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"fulfillmentStatus\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"fulfillment\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"taxInclusion\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"appliedTaxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"diningOption\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"openPriceAmount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"receiptLinePrice\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"optionGroupPricingMode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"externalPriceAmount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"splitOrigin\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"externalId\": \"<string>\",\n      \"createdDate\": \"1991-06-07T17:03:34.225Z\",\n      \"openedDate\": \"2019-04-17T13:21:57.244Z\",\n      \"closedDate\": \"2005-11-10T00:38:47.789Z\",\n      \"modifiedDate\": \"1955-09-04T03:51:56.956Z\",\n      \"deletedDate\": \"1974-07-14T04:25:01.958Z\",\n      \"deleted\": true,\n      \"customer\": {\n        \"email\": \"string\",\n        \"entityType\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"firstName\": \"string\",\n        \"guid\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"lastName\": \"string\",\n        \"phone\": \"string\",\n        \"phoneCountryCode\": \"string\"\n      },\n      \"appliedLoyaltyInfo\": {\n        \"entityType\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"guid\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"loyaltyIdentifier\": \"string\",\n        \"vendor\": \"PUNCHH\",\n        \"maskedLoyaltyIdentifier\": \"string\",\n        \"accrualFamilyGuid\": \"string\",\n        \"accrualText\": \"string\"\n      },\n      \"taxExempt\": false,\n      \"displayNumber\": \"string\",\n      \"appliedServiceCharges\": [\n        {\n          \"serviceCharge\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"chargeAmount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"chargeType\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"delivery\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"takeout\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"dineIn\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"gratuity\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"taxable\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"appliedTaxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"serviceChargeCalculation\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"refundDetails\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"serviceChargeCategory\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentGuid\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"serviceCharge\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"chargeAmount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"chargeType\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"delivery\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"takeout\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"dineIn\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"gratuity\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"taxable\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"appliedTaxes\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"serviceChargeCalculation\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"refundDetails\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"serviceChargeCategory\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentGuid\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"amount\": 181.28018410657143,\n      \"taxAmount\": 622.9347947642893,\n      \"totalAmount\": 4746.828804207417,\n      \"payments\": [\n        {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tipAmount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paidDate\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paidBusinessDate\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"cardEntryMode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amountTendered\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"cardType\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"first6Digits\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last4Digits\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"originalProcessingFee\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"server\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"cashDrawer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"refundStatus\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"refund\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentStatus\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voidInfo\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"houseAccount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"otherPayment\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"createdDevice\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lastModifiedDevice\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mcaRepaymentAmount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"cardPaymentId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"orderGuid\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"checkGuid\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tenderTransactionGuid\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"networkTransactionIdentifier\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"type\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tipAmount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paidDate\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paidBusinessDate\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"cardEntryMode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"amountTendered\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"cardType\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"first6Digits\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"last4Digits\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"originalProcessingFee\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"server\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"cashDrawer\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"refundStatus\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"refund\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"paymentStatus\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"voidInfo\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"houseAccount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"otherPayment\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"createdDevice\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"lastModifiedDevice\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"mcaRepaymentAmount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"cardPaymentId\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"orderGuid\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"checkGuid\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"tenderTransactionGuid\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"networkTransactionIdentifier\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"tabName\": \"string\",\n      \"paymentStatus\": \"PAID\",\n      \"appliedDiscounts\": [\n        {\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"discountAmount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"nonTaxDiscountAmount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"discount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"triggers\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"approver\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"processingState\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"appliedDiscountReason\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"loyaltyDetails\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"comboItems\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"appliedPromoCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"discountType\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"discountPercent\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        {\n          \"name\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"discountAmount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"nonTaxDiscountAmount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"discount\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"triggers\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"approver\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"processingState\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"appliedDiscountReason\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"loyaltyDetails\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"comboItems\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"appliedPromoCode\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"discountType\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"discountPercent\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        }\n      ],\n      \"voided\": true,\n      \"voidDate\": \"1981-04-16T14:30:53.866Z\",\n      \"voidBusinessDate\": 4710,\n      \"paidDate\": \"1973-03-25T00:35:15.670Z\",\n      \"createdDevice\": {\n        \"id\": \"<string>\"\n      },\n      \"lastModifiedDevice\": {\n        \"id\": \"<string>\"\n      },\n      \"duration\": 1724,\n      \"openedBy\": {\n        \"guid\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"entityType\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"externalId\": \"<string>\"\n      }\n    }\n  ],\n  \"diningOption\": {\n    \"guid\": \"<string>\",\n    \"entityType\": \"<string>\",\n    \"externalId\": \"<string>\"\n  },\n  \"entityType\": \"<string>\",\n  \"guid\": \"<string>\",\n  \"externalId\": \"<string>\",\n  \"openedDate\": \"2025-02-07T08:00:00.000-0800\",\n  \"modifiedDate\": \"2025-02-07T08:00:00.000-0800\",\n  \"promisedDate\": \"2025-05-01T08:00:00.000-0800\",\n  \"channelGuid\": \"c189a5a1-0a14-d64b-595f-1f8417fc4488\",\n  \"table\": {\n    \"guid\": \"<string>\",\n    \"entityType\": \"<string>\",\n    \"externalId\": \"<string>\"\n  },\n  \"serviceArea\": {\n    \"guid\": \"<string>\",\n    \"entityType\": \"<string>\",\n    \"externalId\": \"<string>\"\n  },\n  \"restaurantService\": {\n    \"guid\": \"<string>\",\n    \"entityType\": \"<string>\",\n    \"externalId\": \"<string>\"\n  },\n  \"revenueCenter\": {\n    \"guid\": \"<string>\",\n    \"entityType\": \"<string>\",\n    \"externalId\": \"<string>\"\n  },\n  \"source\": \"string\",\n  \"duration\": 975,\n  \"deliveryInfo\": {\n    \"address1\": \"string\",\n    \"city\": \"string\",\n    \"state\": \"string\",\n    \"zipCode\": \"string\",\n    \"address2\": \"string\",\n    \"administrativeArea\": \"string\",\n    \"country\": \"string\",\n    \"latitude\": 8704.155842159538,\n    \"longitude\": 2935.992225333204,\n    \"notes\": \"string\",\n    \"deliveredDate\": \"2025-02-07T08:00:00.000-0800\",\n    \"dispatchedDate\": \"2025-02-07T08:00:00.000-0800\",\n    \"deliveryEmployee\": {\n      \"guid\": \"<string>\",\n      \"entityType\": \"<string>\",\n      \"externalId\": \"<string>\"\n    },\n    \"deliveryState\": \"IN_PROGRESS\"\n  },\n  \"requiredPrepTime\": \"string\",\n  \"estimatedFulfillmentDate\": \"2025-05-01T08:00:00.000-0800\",\n  \"numberOfGuests\": 3273,\n  \"voided\": true,\n  \"voidDate\": \"2025-02-07T08:00:00.000-0800\",\n  \"voidBusinessDate\": 724,\n  \"paidDate\": \"2025-02-07T08:00:00.000-0800\",\n  \"closedDate\": \"2025-02-07T08:00:00.000-0800\",\n  \"deletedDate\": \"2025-02-07T08:00:00.000-0800\",\n  \"deleted\": true,\n  \"businessDate\": 6273,\n  \"server\": {\n    \"guid\": \"<string>\",\n    \"entityType\": \"<string>\",\n    \"externalId\": \"<string>\"\n  },\n  \"pricingFeatures\": [\n    \"TAXESV2\",\n    \"TAXESV3\"\n  ],\n  \"approvalStatus\": \"FUTURE\",\n  \"createdDevice\": {\n    \"id\": \"<string>\"\n  },\n  \"createdDate\": \"2025-02-07T08:00:00.000-0800\",\n  \"lastModifiedDevice\": {\n    \"id\": \"<string>\"\n  },\n  \"curbsidePickupInfo\": {\n    \"guid\": \"<string>\",\n    \"entityType\": \"<string>\",\n    \"transportColor\": \"string\",\n    \"transportDescription\": \"string\",\n    \"notes\": \"string\"\n  },\n  \"marketplaceFacilitatorTaxInfo\": {\n    \"facilitatorCollectAndRemitTaxOrder\": false,\n    \"taxes\": [\n      {\n        \"entityType\": \"<string>\",\n        \"guid\": \"<string>\",\n        \"taxRate\": {\n          \"guid\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"entityType\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"name\": \"string\",\n        \"rate\": 1288.8604369283264,\n        \"taxAmount\": 8157.199869329182,\n        \"type\": \"TABLE\",\n        \"facilitatorCollectAndRemitTax\": false,\n        \"displayName\": \"string\",\n        \"jurisdiction\": \"string\",\n        \"jurisdictionType\": \"string\"\n      },\n      {\n        \"entityType\": \"<string>\",\n        \"guid\": \"<string>\",\n        \"taxRate\": {\n          \"guid\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          \"entityType\": {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        },\n        \"name\": \"string\",\n        \"rate\": 1894.860541692437,\n        \"taxAmount\": 3446.763757164535,\n        \"type\": \"NONE\",\n        \"facilitatorCollectAndRemitTax\": false,\n        \"displayName\": \"string\",\n        \"jurisdiction\": \"string\",\n        \"jurisdictionType\": \"string\"\n      }\n    ]\n  },\n  \"createdInTestMode\": true,\n  \"appliedPackagingInfo\": {\n    \"guid\": \"<string>\",\n    \"entityType\": \"<string>\",\n    \"appliedPackagingItems\": [\n      {\n        \"entityType\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"guid\": {\n          \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n        },\n        \"inclusion\": \"NO\",\n        \"itemConfigId\": \"string\",\n        \"itemTypes\": [\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          },\n          {\n            \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n          }\n        ],\n        \"guestDisplayName\": \"string\"\n      }\n    ]\n  },\n  \"excessFood\": true,\n  \"displayNumber\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "34452f4b-545a-4523-a9a4-28d7538838d7",
+              "name": "The API cannot process the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "orders",
+                    ":orderGuid",
+                    "checks",
+                    ":checkGuid",
+                    "payments",
+                    ":paymentGuid"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderGuid",
+                      "description": "(Required) The Toast platform identifier of the order that you are\nupdating a tip in.\n"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "checkGuid",
+                      "description": "(Required) The Toast platform identifier of the check that you are\nupdating a tip in.\n"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "paymentGuid",
+                      "description": "(Required) The Toast platform identifier of the payment that you are\nupdating a tip in.\n"
+                    }
+                  ]
+                },
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tipAmount\": 3.25\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://toast-api-server/authentication/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "93e1556a-1cad-4241-9ae3-e2595ffd73f4",
+    "name": "Toast Authentication Payments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The authentication API returns an authentication token that you can present\nwhen your integration client software uses other Toast APIs. For more\ninformation about authentication, see [the Toast Developer\nGuide](https://doc.toasttab.com/doc/devguide/authentication.html).\n\n\nContact Support:\n Name: Toast developer support",
+      "type": "text/plain"
+    }
+  }
+}

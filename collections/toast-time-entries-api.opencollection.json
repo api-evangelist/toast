@@ -1,0 +1,122 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Toast Authentication Time entries API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Time entries",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Toast Get Time Entries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/timeEntries",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "timeEntryIds",
+                "value": "",
+                "type": "query",
+                "description": "Optional array of one or more time entry identifiers, \neither the Toast platform GUID or an external identifier. \n100 max.\n"
+              },
+              {
+                "name": "startDate",
+                "value": "",
+                "type": "query",
+                "description": "Optional start date and time of time period to match time \nentries. A time entry matches the time period if its \nclock-in `inDate` is after (inclusive) the specified \n`startDate` and before (exclusive) the `endDate`. The \nspecified period cannot be longer than one month.\n"
+              },
+              {
+                "name": "endDate",
+                "value": "",
+                "type": "query",
+                "description": "Optional end date and time of time period to match time \nentries. A time entry matches the time period if its \nclock-in `inDate` is after (inclusive) the specified \n`startDate` and before (exclusive) the `endDate`. The \nspecified period cannot be longer than one month.\n"
+              },
+              {
+                "name": "modifiedStartDate",
+                "value": "",
+                "type": "query",
+                "description": "Start date and time of the time period to match modified \ntime entries. A time entry matches the time period if that \nentry was modified after (inclusive) the \n`modifiedStartDate`. If you include this parameter, you \nmust also include the `modifiedEndDate` parameter.  The \nspecified period cannot be longer than one month.\n"
+              },
+              {
+                "name": "modifiedEndDate",
+                "value": "",
+                "type": "query",
+                "description": "End date and time of the time period to match modified time \nentries. A time entry matches the time period if that entry \nwas modified before (exclusive) the `modifiedEndDate`. If \nyou include this parameter, you must also include the \n`modifiedStartDate` parameter.  The specified period cannot \nbe longer than one month.\n"
+              },
+              {
+                "name": "businessDate",
+                "value": "",
+                "type": "query",
+                "description": "Optional date to match time entries. A time entry matches \nthe business date if its clock-in `inDate` is during the \nbusiness date. The cutoff from one `businessDate` to the \nnext is the `closeoutHour` for the restaurant.\n"
+              },
+              {
+                "name": "includeMissedBreaks",
+                "value": "",
+                "type": "query",
+                "description": "Optional flag to indicate whether missed breaks should be \nreturned in the breaks array for the time entries.\n"
+              },
+              {
+                "name": "includeArchived",
+                "value": "",
+                "type": "query",
+                "description": "Controls whether the response includes archived time entries, when\nusing the `startDate` and `endDate` parameters.\n\n**Important**: this parameter _has no effect_ if you use the\n`modifiedStartDate` and `modifiedEndDate` parameters or the\n`businessDate` parameter to select time entries.\n\n* Querying by modified date range _always_ returns archived time entries.\n* Querying by businessDate _never_ returns archived time entries.\n\nThis parameter is optional and the default value is `false`.\n"
+              }
+            ]
+          },
+          "docs": "Returns an array of `TimeEntry` objects that contain \ninformation about employee shift events. The information \nincludes shift start times, end times, and the start and end \ntimes of break periods.\n\n*  Include one or more `timeEntryId` query parameters set to \n   the GUIDs for specific time entries.\n\n*  Include both a `startDate` and an `endDate` query parameter \n   to get time entries for a specific time period.\n\n*  Include both a `modifiedStartDate` and a `modifiedEndDate` \n   query parameter "
+        },
+        {
+          "info": {
+            "name": "Toast Get One Time Entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/timeEntries/:timeEntryId",
+            "headers": [
+              {
+                "name": "Toast-Restaurant-External-ID",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "timeEntryId",
+                "value": "",
+                "type": "path",
+                "description": "The Toast platform GUID or an external identifier for the \ntime entry.\n"
+              },
+              {
+                "name": "includeMissedBreaks",
+                "value": "",
+                "type": "query",
+                "description": "Optional flag to indicate whether missed breaks should be \nreturned in the breaks array for the time entries.\n"
+              },
+              {
+                "name": "includeArchived",
+                "value": "",
+                "type": "query",
+                "description": "Controls whether the response includes an archived time entry.\nOptional.\n"
+              }
+            ]
+          },
+          "docs": "Returns a `TimeEntry` object containing information about one \nemployee shift. The information includes the shift start time, \nend time, and the start and end times of break periods.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
