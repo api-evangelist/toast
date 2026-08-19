@@ -33,7 +33,7 @@ tags:
 created: '2025-02-08'
 modified: '2026-06-03'
 url: https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/apis.yml
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 apis:
 - aid: toast:toast-configuration
   name: Toast Configuration API
