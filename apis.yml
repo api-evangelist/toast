@@ -27,6 +27,11 @@ access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/toast.png
 tags:
 - Food Service
+- Point-of-Sale
+- Restaurant
+- Hospitality
+tags_raw:
+- Food Service
 - Point of Sale
 - Restaurants
 - Hospitality
@@ -44,6 +49,9 @@ apis:
     are excluded from results.
   humanURL: https://doc.toasttab.com/openapi/configuration/overview/
   tags:
+  - Configuration
+  - Restaurant
+  tags_raw:
   - Configuration
   - Restaurants
   properties:
@@ -121,6 +129,9 @@ apis:
   humanURL: https://doc.toasttab.com/openapi/giftcards/overview/
   tags:
   - Gift Cards
+  - Webhook
+  tags_raw:
+  - Gift Cards
   - Webhooks
   properties:
   - type: Documentation
@@ -134,6 +145,9 @@ apis:
   humanURL: https://doc.toasttab.com/openapi/loyalty/overview/
   tags:
   - Loyalty
+  - Webhook
+  tags_raw:
+  - Loyalty
   - Webhooks
   properties:
   - type: Documentation
@@ -146,6 +160,10 @@ apis:
     or third-party payment tender types processed at the restaurant.
   humanURL: https://doc.toasttab.com/openapi/tender/overview/
   tags:
+  - Tender
+  - Payments
+  - Webhook
+  tags_raw:
   - Tender
   - Payments
   - Webhooks
@@ -260,6 +278,8 @@ apis:
   description: The Groups API from Toast — 1 operation(s) for groups.
   humanURL: https://doc.toasttab.com/openapi/orders/overview/
   tags:
+  - Group
+  tags_raw:
   - Groups
   properties:
   - type: OpenAPI
@@ -285,6 +305,8 @@ apis:
   description: The Jobs API from Toast — 3 operation(s) for jobs.
   humanURL: https://doc.toasttab.com/openapi/orders/overview/
   tags:
+  - Job
+  tags_raw:
   - Jobs
   properties:
   - type: OpenAPI
@@ -365,6 +387,8 @@ apis:
     more guest check.
   humanURL: https://doc.toasttab.com/openapi/orders/overview/
   tags:
+  - Order
+  tags_raw:
   - Orders
   properties:
   - type: OpenAPI
@@ -418,6 +442,8 @@ apis:
   description: The Restaurants API from Toast — 2 operation(s) for restaurants.
   humanURL: https://doc.toasttab.com/openapi/orders/overview/
   tags:
+  - Restaurant
+  tags_raw:
   - Restaurants
   properties:
   - type: OpenAPI
@@ -493,6 +519,8 @@ apis:
   description: The Time entries API from Toast — 2 operation(s) for time entries.
   humanURL: https://doc.toasttab.com/openapi/orders/overview/
   tags:
+  - Time Entries
+  tags_raw:
   - Time entries
   properties:
   - type: OpenAPI
