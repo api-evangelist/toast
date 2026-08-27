@@ -1,0 +1,56 @@
+# Kin Score artifact — toast — 2026-08-27T123021
+# The API Evangelist rating (https://github.com/api-evangelist/kin-score). Generated; do not edit.
+---
+kin_score:
+  slug: toast
+  schema_version: 0.15.1
+  scored_at: '2026-08-27'
+  run_ts: 2026-08-27T123021
+  composite: 67.7
+  band: exemplar
+  facets:
+    discoverability: 59.3
+    contract_quality: 75.6
+    governance: 59.1
+    operational_transparency: 68.4
+    developer_ergonomics: 69.0
+    commercial_clarity: 39.5
+    contract_governance: 59.1
+    access_clarity: 39.5
+  agent_readiness:
+    score: 44.0
+    band: agent-ready
+    band_gated_from: agent-native
+    dimensions:
+      spec_presence: true
+      agentic_access: derived
+      reversibility_documented: documented
+      mcp_server: documented
+      auth_clarity: negotiable
+      idempotency: false
+      error_semantics: verified
+      openapi_examples: partial
+      rate_limit_signal: documented
+      event_surface_described: true
+      agent_skills: true
+      well_known_catalog: false
+      consent_identity: false
+      agent_card: false
+      dry_run_mode: false
+      delegated_identity: false
+      protected_resource_metadata: false
+      dynamic_client_registration: false
+      agentic_commerce: false
+  regulatory:
+    applies: true
+    regime: Payments
+    regime_id: payments
+    score: 67.2
+    matched_via: tags
+  provenance:
+    agentic_access: derived
+    contracts:
+      total: 14
+      derived: 0
+      coverage: 0.0
+      callable: 0.0

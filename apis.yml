@@ -1,13 +1,12 @@
 aid: toast
 name: Toast
-description: Toast is a restaurant technology platform providing cloud-based point-of-sale,
-  payment processing, and business management tools for the restaurant industry. The
-  Toast platform exposes REST APIs enabling technology partners to build integrations
-  for orders, menus, labor management, restaurant configuration, inventory/stock management,
-  authentication, and partner ecosystem access. APIs use OAuth 2.0 client credentials
-  authentication with GUIDs for resource identification. Toast serves 120,000+ restaurant
-  locations and offers both partner integrations (requiring formal partnership) and
-  custom integrations via the developer portal.
+description: Toast is a restaurant technology platform providing cloud-based point-of-sale, payment processing,
+  and business management tools for the restaurant industry. The Toast platform exposes REST APIs enabling
+  technology partners to build integrations for orders, menus, labor management, restaurant configuration,
+  inventory/stock management, authentication, and partner ecosystem access. APIs use OAuth 2.0 client
+  credentials authentication with GUIDs for resource identification. Toast serves 120,000+ restaurant
+  locations and offers both partner integrations (requiring formal partnership) and custom integrations
+  via the developer portal.
 type: Index
 accessModel:
   pricing: enterprise
@@ -30,146 +29,22 @@ tags:
 - Point-of-Sale
 - Restaurant
 - Hospitality
+- Restaurant Technology
+- Payments
+- Online Ordering
+- Labor Management
+- Inventory
+- API Partner Program
 tags_raw:
 - Food Service
 - Point of Sale
 - Restaurants
 - Hospitality
 created: '2025-02-08'
-modified: '2026-06-03'
+modified: '2026-08-27'
 url: https://raw.githubusercontent.com/api-evangelist/toast/refs/heads/main/apis.yml
 specificationVersion: '0.23'
 apis:
-- aid: toast:toast-configuration
-  name: Toast Configuration API
-  description: >-
-    The Toast Configuration API returns information about the configuration of a restaurant and its menus,
-    such as menu items and alternate payment types, plus physical configuration including cash drawers,
-    dining options, revenue centers, service areas, tables, and tax rates. Archived or removed entities
-    are excluded from results.
-  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
-  tags:
-  - Configuration
-  - Restaurant
-  tags_raw:
-  - Configuration
-  - Restaurants
-  properties:
-  - type: Documentation
-    url: https://doc.toasttab.com/openapi/configuration/overview/
-- aid: toast:toast-analytics
-  name: Toast Analytics API
-  description: >-
-    The Toast Analytics API provides an enterprise reporting and analytics service with operations that
-    retrieve data for all or a subset of restaurants in a management group, create requests for reporting
-    data, and retrieve the results. Reporting data includes aggregated sales, check, labor, and guest
-    reporting data.
-  humanURL: https://doc.toasttab.com/openapi/analytics/overview/
-  tags:
-  - Analytics
-  - Reporting
-  properties:
-  - type: Documentation
-    url: https://doc.toasttab.com/openapi/analytics/overview/
-- aid: toast:toast-cash-management
-  name: Toast Cash Management API
-  description: >-
-    The Toast Cash Management API provides information about cash operations that add cash to or remove
-    cash from a restaurant cash drawer, separately from cash transaction payments.
-  humanURL: https://doc.toasttab.com/openapi/cashmanagement/overview/
-  tags:
-  - Cash Management
-  - Payments
-  properties:
-  - type: Documentation
-    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
-- aid: toast:toast-kitchen
-  name: Toast Kitchen API
-  description: >-
-    The Toast Kitchen API returns information about kitchen operations for a restaurant, supporting kitchen
-    display and fulfillment workflow integrations.
-  humanURL: https://doc.toasttab.com/openapi/kitchen/overview/
-  tags:
-  - Kitchen
-  - Food Service
-  properties:
-  - type: Documentation
-    url: https://doc.toasttab.com/openapi/kitchen/overview/
-- aid: toast:toast-credit-cards
-  name: Toast Credit Cards API
-  description: >-
-    The Toast Credit Cards API is a simple, single-request, synchronous API to authorize credit card transactions
-    associated with a Toast Orders API order.
-  humanURL: https://doc.toasttab.com/openapi/creditcards/overview/
-  tags:
-  - Credit Cards
-  - Payments
-  properties:
-  - type: Documentation
-    url: https://doc.toasttab.com/openapi/creditcards/overview/
-- aid: toast:toast-menus-v3
-  name: Toast Menus V3 API
-  description: >-
-    The Toast Menus V3 API is the next-generation menu retrieval API, returning structured menu, item,
-    modifier, and pricing data for a restaurant in an updated catalog-oriented model alongside the existing
-    Menus V2 surface.
-  humanURL: https://doc.toasttab.com/openapi/menusv3/overview/
-  tags:
-  - Menus
-  - Food Service
-  properties:
-  - type: Documentation
-    url: https://doc.toasttab.com/openapi/menusv3/overview/
-- aid: toast:toast-gift-cards-integration
-  name: Toast Gift Cards Integration API
-  description: >-
-    The Toast Gift Cards integration specification is an outbound API. The partner hosts an HTTPS endpoint
-    that accepts POST requests from the Toast platform to process gift card transactions (balance inquiry,
-    activation, redemption, reload) for restaurants using a third-party gift card provider.
-  humanURL: https://doc.toasttab.com/openapi/giftcards/overview/
-  tags:
-  - Gift Cards
-  - Webhook
-  tags_raw:
-  - Gift Cards
-  - Webhooks
-  properties:
-  - type: Documentation
-    url: https://doc.toasttab.com/openapi/giftcards/overview/
-- aid: toast:toast-loyalty-integration
-  name: Toast Loyalty Integration API
-  description: >-
-    The Toast Loyalty integration specification is an outbound API. The partner hosts an HTTPS endpoint
-    that accepts POST requests from the Toast platform to handle loyalty program transactions (accrual,
-    redemption, inquiry) for restaurants using a third-party loyalty provider.
-  humanURL: https://doc.toasttab.com/openapi/loyalty/overview/
-  tags:
-  - Loyalty
-  - Webhook
-  tags_raw:
-  - Loyalty
-  - Webhooks
-  properties:
-  - type: Documentation
-    url: https://doc.toasttab.com/openapi/loyalty/overview/
-- aid: toast:toast-tender-integration
-  name: Toast Tender Integration API
-  description: >-
-    The Toast Tender integration specification is an outbound API. The partner hosts an HTTPS endpoint
-    that accepts POST requests from the Toast platform to receive tender transaction data for alternate
-    or third-party payment tender types processed at the restaurant.
-  humanURL: https://doc.toasttab.com/openapi/tender/overview/
-  tags:
-  - Tender
-  - Payments
-  - Webhook
-  tags_raw:
-  - Tender
-  - Payments
-  - Webhooks
-  properties:
-  - type: Documentation
-    url: https://doc.toasttab.com/openapi/tender/overview/
 - aid: toast:toast-authentication-api
   name: Toast Authentication API
   description: The Authentication API from Toast — 1 operation(s) for authentication.
@@ -181,8 +56,6 @@ apis:
     url: openapi/toast-authentication-api-openapi.yml
   - type: Documentation
     url: https://doc.toasttab.com/openapi/orders/overview/
-  - type: GraphQL
-    url: graphql/toast-graphql.md
   - type: Documentation
     url: https://doc.toasttab.com/openapi/menus/overview/
   - type: Documentation
@@ -206,8 +79,6 @@ apis:
     url: openapi/toast-connectedrestaurants-api-openapi.yml
   - type: Documentation
     url: https://doc.toasttab.com/openapi/orders/overview/
-  - type: GraphQL
-    url: graphql/toast-graphql.md
   - type: Documentation
     url: https://doc.toasttab.com/openapi/menus/overview/
   - type: Documentation
@@ -234,8 +105,6 @@ apis:
     url: openapi/toast-discounts-api-openapi.yml
   - type: Documentation
     url: https://doc.toasttab.com/openapi/orders/overview/
-  - type: GraphQL
-    url: graphql/toast-graphql.md
   - type: Documentation
     url: https://doc.toasttab.com/openapi/menus/overview/
   - type: Documentation
@@ -259,8 +128,6 @@ apis:
     url: openapi/toast-employees-api-openapi.yml
   - type: Documentation
     url: https://doc.toasttab.com/openapi/orders/overview/
-  - type: GraphQL
-    url: graphql/toast-graphql.md
   - type: Documentation
     url: https://doc.toasttab.com/openapi/menus/overview/
   - type: Documentation
@@ -286,8 +153,6 @@ apis:
     url: openapi/toast-groups-api-openapi.yml
   - type: Documentation
     url: https://doc.toasttab.com/openapi/orders/overview/
-  - type: GraphQL
-    url: graphql/toast-graphql.md
   - type: Documentation
     url: https://doc.toasttab.com/openapi/menus/overview/
   - type: Documentation
@@ -313,8 +178,6 @@ apis:
     url: openapi/toast-jobs-api-openapi.yml
   - type: Documentation
     url: https://doc.toasttab.com/openapi/orders/overview/
-  - type: GraphQL
-    url: graphql/toast-graphql.md
   - type: Documentation
     url: https://doc.toasttab.com/openapi/menus/overview/
   - type: Documentation
@@ -338,8 +201,6 @@ apis:
     url: openapi/toast-menus-api-openapi.yml
   - type: Documentation
     url: https://doc.toasttab.com/openapi/orders/overview/
-  - type: GraphQL
-    url: graphql/toast-graphql.md
   - type: Documentation
     url: https://doc.toasttab.com/openapi/menus/overview/
   - type: Documentation
@@ -363,8 +224,6 @@ apis:
     url: openapi/toast-metadata-api-openapi.yml
   - type: Documentation
     url: https://doc.toasttab.com/openapi/orders/overview/
-  - type: GraphQL
-    url: graphql/toast-graphql.md
   - type: Documentation
     url: https://doc.toasttab.com/openapi/menus/overview/
   - type: Documentation
@@ -395,8 +254,6 @@ apis:
     url: openapi/toast-orders-api-openapi.yml
   - type: Documentation
     url: https://doc.toasttab.com/openapi/orders/overview/
-  - type: GraphQL
-    url: graphql/toast-graphql.md
   - type: Documentation
     url: https://doc.toasttab.com/openapi/menus/overview/
   - type: Documentation
@@ -423,8 +280,6 @@ apis:
     url: openapi/toast-payments-api-openapi.yml
   - type: Documentation
     url: https://doc.toasttab.com/openapi/orders/overview/
-  - type: GraphQL
-    url: graphql/toast-graphql.md
   - type: Documentation
     url: https://doc.toasttab.com/openapi/menus/overview/
   - type: Documentation
@@ -450,8 +305,6 @@ apis:
     url: openapi/toast-restaurants-api-openapi.yml
   - type: Documentation
     url: https://doc.toasttab.com/openapi/orders/overview/
-  - type: GraphQL
-    url: graphql/toast-graphql.md
   - type: Documentation
     url: https://doc.toasttab.com/openapi/menus/overview/
   - type: Documentation
@@ -475,8 +328,6 @@ apis:
     url: openapi/toast-shifts-api-openapi.yml
   - type: Documentation
     url: https://doc.toasttab.com/openapi/orders/overview/
-  - type: GraphQL
-    url: graphql/toast-graphql.md
   - type: Documentation
     url: https://doc.toasttab.com/openapi/menus/overview/
   - type: Documentation
@@ -500,8 +351,6 @@ apis:
     url: openapi/toast-stock-api-openapi.yml
   - type: Documentation
     url: https://doc.toasttab.com/openapi/orders/overview/
-  - type: GraphQL
-    url: graphql/toast-graphql.md
   - type: Documentation
     url: https://doc.toasttab.com/openapi/menus/overview/
   - type: Documentation
@@ -527,8 +376,6 @@ apis:
     url: openapi/toast-time-entries-api-openapi.yml
   - type: Documentation
     url: https://doc.toasttab.com/openapi/orders/overview/
-  - type: GraphQL
-    url: graphql/toast-graphql.md
   - type: Documentation
     url: https://doc.toasttab.com/openapi/menus/overview/
   - type: Documentation
@@ -541,7 +388,1436 @@ apis:
     url: https://doc.toasttab.com/openapi/partners/overview/
   - type: Documentation
     url: https://doc.toasttab.com/openapi/authentication/overview/
+- aid: toast:toast-aggregated-sales-api
+  name: Toast Aggregated sales API
+  description: >-
+    The analytics API endpoints for aggregated sales reporting data covering sales and labor information.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Aggregated sales
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-aggregated-sales-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-alternate-payment-types-api
+  name: Toast Alternate Payment Types API
+  description: The Alternate Payment Types API from Toast — 2 operation(s) for alternate payment types.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Alternate Payment Types
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-alternate-payment-types-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-availability-api
+  name: Toast Availability API
+  description: The availability API from Toast — 1 operation(s) for availability.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - availability
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-availability-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-break-types-api
+  name: Toast Break Types API
+  description: The Break Types API from Toast — 2 operation(s) for break types.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Break Types
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-break-types-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-cash-drawers-api
+  name: Toast Cash Drawers API
+  description: The Cash Drawers API from Toast — 2 operation(s) for cash drawers.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Cash Drawers
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-cash-drawers-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-check-api
+  name: Toast Check API
+  description: The analytics API endpoints for check reporting data.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Check
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-check-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-deposits-api
+  name: Toast Deposits API
+  description: The Deposits API from Toast — 1 operation(s) for deposits.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Deposits
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-deposits-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-device-details-api
+  name: Toast Device details API
+  description: The Device details API from Toast — 1 operation(s) for device details.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Device details
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-device-details-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-dining-options-api
+  name: Toast Dining Options API
+  description: The Dining Options API from Toast — 2 operation(s) for dining options.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Dining Options
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-dining-options-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-entries-api
+  name: Toast Entries API
+  description: The Entries API from Toast — 1 operation(s) for entries.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Entries
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-entries-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-export-api
+  name: Toast Export API
+  description: The Export API from Toast — 1 operation(s) for export.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Export
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-export-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-guest-api
+  name: Toast Guest API
+  description: The analytics API endpoint for guest reporting data organized by payment.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Guest
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-guest-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-labor-api
+  name: Toast Labor API
+  description: >-
+    The analytics API endpoints for labor reporting data. This only supports hourly job and employee data.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Labor
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-labor-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-menu-api
+  name: Toast Menu API
+  description: The analytics API endpoints for menu reporting data.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Menu
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-menu-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-menu-groups-api
+  name: Toast Menu Groups API
+  description: The Menu Groups API from Toast — 2 operation(s) for menu groups.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Menu Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-menu-groups-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-menu-items-api
+  name: Toast Menu Items API
+  description: The Menu Items API from Toast — 2 operation(s) for menu items.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Menu Items
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-menu-items-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-merchants-api
+  name: Toast Merchants API
+  description: The Merchants API from Toast — 1 operation(s) for merchants.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Merchants
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-merchants-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-modifier-groups-api
+  name: Toast Modifier Groups API
+  description: The Modifier Groups API from Toast — 2 operation(s) for modifier groups.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Modifier Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-modifier-groups-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-no-sale-reasons-api
+  name: Toast No Sale Reasons API
+  description: The No Sale Reasons API from Toast — 2 operation(s) for no sale reasons.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - No Sale Reasons
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-no-sale-reasons-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-ordering-schedule-api
+  name: Toast Ordering Schedule API
+  description: Operations related to online ordering schedules
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Ordering Schedule
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-ordering-schedule-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-payout-by-payments-api
+  name: Toast Payout by payments API
+  description: The analytics API endpoint for payout reporting data organized by payments.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Payout by payments
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-payout-by-payments-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-payout-by-sales-date-api
+  name: Toast Payout by sales date API
+  description: The analytics API endpoint for payout reporting data organized by sales date.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Payout by sales date
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-payout-by-sales-date-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-payout-by-settled-date-api
+  name: Toast Payout by settled date API
+  description: The analytics API endpoint for payout reporting data organized by settled date.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Payout by settled date
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-payout-by-settled-date-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-payout-reasons-api
+  name: Toast Payout Reasons API
+  description: The Payout Reasons API from Toast — 2 operation(s) for payout reasons.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Payout Reasons
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-payout-reasons-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-pre-modifier-groups-api
+  name: Toast Pre Modifier Groups API
+  description: The Pre Modifier Groups API from Toast — 2 operation(s) for pre modifier groups.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Pre Modifier Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-pre-modifier-groups-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-pre-modifiers-api
+  name: Toast Pre Modifiers API
+  description: The Pre Modifiers API from Toast — 2 operation(s) for pre modifiers.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Pre Modifiers
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-pre-modifiers-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-price-groups-api
+  name: Toast Price Groups API
+  description: The Price Groups API from Toast — 2 operation(s) for price groups.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Price Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-price-groups-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-printers-api
+  name: Toast Printers API
+  description: The Printers API from Toast — 2 operation(s) for printers.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Printers
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-printers-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-published-api
+  name: Toast Published API
+  description: The Published API from Toast — 3 operation(s) for published.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Published
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-published-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-restaurant-services-api
+  name: Toast Restaurant Services API
+  description: The Restaurant Services API from Toast — 2 operation(s) for restaurant services.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Restaurant Services
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-restaurant-services-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-restaurants-information-api
+  name: Toast Restaurants information API
+  description: >-
+    The analytics API endpoint for providing information about restaurants in a management group.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Restaurants information
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-restaurants-information-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-revenue-centers-api
+  name: Toast Revenue Centers API
+  description: The Revenue Centers API from Toast — 2 operation(s) for revenue centers.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Revenue Centers
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-revenue-centers-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-sales-categories-api
+  name: Toast Sales Categories API
+  description: The Sales Categories API from Toast — 2 operation(s) for sales categories.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Sales Categories
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-sales-categories-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-service-areas-api
+  name: Toast Service Areas API
+  description: The Service Areas API from Toast — 2 operation(s) for service areas.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Service Areas
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-service-areas-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-service-charges-api
+  name: Toast Service Charges API
+  description: The Service Charges API from Toast — 2 operation(s) for service charges.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Service Charges
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-service-charges-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-tables-api
+  name: Toast Tables API
+  description: The Tables API from Toast — 2 operation(s) for tables.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Tables
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-tables-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-tax-rates-api
+  name: Toast Tax Rates API
+  description: The Tax Rates API from Toast — 2 operation(s) for tax rates.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Tax Rates
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-tax-rates-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-tip-withholding-api
+  name: Toast Tip Withholding API
+  description: The Tip Withholding API from Toast — 1 operation(s) for tip withholding.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Tip Withholding
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-tip-withholding-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-void-reasons-api
+  name: Toast Void Reasons API
+  description: The Void Reasons API from Toast — 2 operation(s) for void reasons.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Void Reasons
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-void-reasons-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- aid: toast:toast-yourendpointname-api
+  name: Toast Yourendpointname API
+  description: The Yourendpointname API from Toast — 1 operation(s) for yourendpointname.
+  humanURL: https://doc.toasttab.com/openapi/configuration/overview/
+  tags:
+  - Yourendpointname
+  properties:
+  - type: OpenAPI
+    url: openapi/toast-yourendpointname-api-openapi.yml
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/analytics/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/cashmanagement/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/kitchen/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/creditcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/menusv3/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/giftcards/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/loyalty/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/tender/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/devicedetails/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/packaging/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+  - type: Documentation
+    url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
 common:
+- type: Overlay
+  url: overlays/toast-configuration-overlay.yaml
+- type: Overlay
+  url: overlays/toast-analytics-overlay.yaml
+- type: Overlay
+  url: overlays/toast-cash-management-overlay.yaml
+- type: Overlay
+  url: overlays/toast-kitchen-overlay.yaml
+- type: Overlay
+  url: overlays/toast-credit-cards-overlay.yaml
+- type: Overlay
+  url: overlays/toast-menus-v3-overlay.yaml
+- type: Overlay
+  url: overlays/toast-gift-cards-overlay.yaml
+- type: Overlay
+  url: overlays/toast-loyalty-overlay.yaml
+- type: Overlay
+  url: overlays/toast-tender-overlay.yaml
+- type: Overlay
+  url: overlays/toast-device-details-overlay.yaml
+- type: Overlay
+  url: overlays/toast-packaging-overlay.yaml
+- type: Overlay
+  url: overlays/toast-ordermgmt-configuration-overlay.yaml
+- type: Overlay
+  url: overlays/toast-restaurant-availability-overlay.yaml
 - type: AgenticAccess
   url: agentic-access/toast-agentic-access.yml
 - type: VulnerabilityDisclosure
@@ -571,49 +1847,36 @@ common:
 - type: Features
   data:
   - name: Orders API
-    description: Retrieve restaurant orders, checks, and payment data by GUID or bulk
-      date queries.
+    description: Retrieve restaurant orders, checks, and payment data by GUID or bulk date queries.
   - name: Menus API
-    description: Full menu data retrieval including items, modifiers, prices, and
-      availability.
+    description: Full menu data retrieval including items, modifiers, prices, and availability.
   - name: Labor Management API
-    description: Employee CRUD operations, shift management, and payroll integration
-      support.
+    description: Employee CRUD operations, shift management, and payroll integration support.
   - name: Restaurant Configuration API
-    description: Location settings, payment options, and management group restaurant
-      discovery.
+    description: Location settings, payment options, and management group restaurant discovery.
   - name: Stock and Inventory API
-    description: Inventory management for menu items and modifiers with stock level
-      tracking.
+    description: Inventory management for menu items and modifiers with stock level tracking.
   - name: OAuth 2.0 Authentication
-    description: Client credentials OAuth flow with GUID-scoped tokens for secure
-      API access.
+    description: Client credentials OAuth flow with GUID-scoped tokens for secure API access.
   - name: Partner Integration Program
-    description: Formal partner program enabling multi-restaurant access and ecosystem
-      integrations.
+    description: Formal partner program enabling multi-restaurant access and ecosystem integrations.
   - name: Webhook Support
-    description: Outbound integration webhooks for real-time event delivery (gift
-      cards, loyalty, tender).
+    description: Outbound integration webhooks for real-time event delivery (gift cards, loyalty, tender).
 - type: UseCases
   data:
   - name: Online Ordering Integration
-    description: Connect third-party online ordering platforms to Toast POS for order
-      injection and menu sync.
+    description: Connect third-party online ordering platforms to Toast POS for order injection and menu
+      sync.
   - name: Payroll and Labor Integration
-    description: Sync Toast employee and shift data with payroll systems using the
-      Labor API.
+    description: Sync Toast employee and shift data with payroll systems using the Labor API.
   - name: Reporting and Analytics
-    description: Pull order and payment data via bulk orders API for custom reporting
-      and business intelligence.
+    description: Pull order and payment data via bulk orders API for custom reporting and business intelligence.
   - name: Inventory Management
-    description: Integrate restaurant inventory systems with Toast Stock API for real-time
-      stock tracking.
+    description: Integrate restaurant inventory systems with Toast Stock API for real-time stock tracking.
   - name: Loyalty and Gift Cards
-    description: Build loyalty program and gift card integrations using Toast outbound
-      webhook APIs.
+    description: Build loyalty program and gift card integrations using Toast outbound webhook APIs.
   - name: Multi-Location Management
-    description: Partner integrations managing hundreds of restaurant locations via
-      Partners API.
+    description: Partner integrations managing hundreds of restaurant locations via Partners API.
 - type: Integrations
   data:
   - name: DoorDash
@@ -621,12 +1884,116 @@ common:
   - name: UberEats
     description: Delivery platform integration for menu sync and order management.
   - name: QuickBooks
-    description: Accounting integration for restaurant financial data via Toast reporting
-      APIs.
+    description: Accounting integration for restaurant financial data via Toast reporting APIs.
   - name: ADP
     description: Payroll platform integration using Toast Labor API data.
   - name: OpenTable
     description: Reservation system integration with Toast for guest management.
+- type: Packages
+  url: packages/toast-packages.yml
+- type: WellKnownProbe
+  url: well-known/toast-well-known.yml
+- type: MCPCandidate
+  url: mcp/toast-mcp.yml
+- type: LLMsTxt
+  url: llms/toast-llms.txt
+- type: Conformance
+  url: conformance/toast-conformance.yml
+- type: ErrorCatalog
+  url: errors/toast-problem-types.yml
+- type: DeclineCodes
+  url: errors/toast-decline-codes.yml
+- type: Lifecycle
+  url: lifecycle/toast-lifecycle.yml
+- type: StatusPage
+  url: https://status.toasttab.com/
+- type: Deprecation
+  url: https://doc.toasttab.com/doc/devguide/apiDeprecatedApiFunctions.html
+- type: Security
+  url: security/toast-vulnerability-disclosure.yml
+- type: Sandbox
+  url: sandbox/toast-sandbox.yml
+- type: Conventions
+  url: conventions/toast-conventions.yml
+- type: ChangeLog
+  url: https://api-updates.toasttab.com/
+- type: DataModel
+  url: data-model/toast-data-model.yml
+- type: Webhooks
+  url: asyncapi/toast-webhooks.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Plans
+  url: plans/toast-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/toast-rate-limits.yml
+- type: FinOps
+  url: finops/toast-finops.yml
+- type: APIReference
+  url: https://doc.toasttab.com/openapi/
+- type: GettingStarted
+  url: https://doc.toasttab.com/doc/devguide/portalHowToBuildAToastIntegration.html
+- type: Support
+  url: https://doc.toasttab.com/doc/devguide/apiSupport.html
+- type: HelpCenter
+  url: https://central.toasttab.com/
+- type: TermsOfService
+  url: https://pos.toasttab.com/api-terms-of-use
+- type: DeveloperPortal
+  url: https://doc.toasttab.com/openapi/
+- type: Examples
+  url: examples/authentication-authentication-request-example.json
+- type: Examples
+  url: examples/authentication-authentication-response-example.json
+- type: Examples
+  url: examples/authentication-authentication-token-example.json
+- type: Examples
+  url: examples/labor-employee-example.json
+- type: Examples
+  url: examples/labor-external-reference-example.json
+- type: Examples
+  url: examples/labor-job-example.json
+- type: Examples
+  url: examples/labor-job-wage-override-example.json
+- type: Examples
+  url: examples/labor-schedule-config-example.json
+- type: Examples
+  url: examples/labor-shift-example.json
+- type: Examples
+  url: examples/labor-time-entry-break-example.json
+- type: Examples
+  url: examples/labor-time-entry-example.json
+- type: Examples
+  url: examples/labor-toast-reference-example.json
+- type: JSONSchema
+  url: json-schema/authentication-authentication-request-schema.json
+- type: JSONSchema
+  url: json-schema/authentication-authentication-response-schema.json
+- type: JSONSchema
+  url: json-schema/authentication-authentication-token-schema.json
+- type: JSONSchema
+  url: json-schema/labor-employee-schema.json
+- type: JSONSchema
+  url: json-schema/labor-external-reference-schema.json
+- type: JSONSchema
+  url: json-schema/labor-job-schema.json
+- type: JSONSchema
+  url: json-schema/labor-job-wage-override-schema.json
+- type: JSONSchema
+  url: json-schema/labor-schedule-config-schema.json
+- type: JSONSchema
+  url: json-schema/labor-shift-schema.json
+- type: JSONSchema
+  url: json-schema/labor-time-entry-break-schema.json
+- type: JSONSchema
+  url: json-schema/labor-time-entry-schema.json
+- type: JSONSchema
+  url: json-schema/labor-toast-reference-schema.json
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-08-27'
+  status: enriched
+  artifacts_added: 44
+  pass: local-v1
