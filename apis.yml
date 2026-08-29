@@ -8,6 +8,18 @@ description: Toast is a restaurant technology platform providing cloud-based poi
   locations and offers both partner integrations (requiring formal partnership) and custom integrations
   via the developer portal.
 type: Index
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: enterprise
   onboarding: approval
@@ -1792,6 +1804,9 @@ apis:
   - type: Documentation
     url: https://doc.toasttab.com/openapi/rx.availability.service/overview/
 common:
+- type: CapabilityMap
+  url: capabilities/toast-capability-edges.yml
+  name: Toast Business Capability Map
 - type: Overlay
   url: overlays/toast-configuration-overlay.yaml
 - type: Overlay
