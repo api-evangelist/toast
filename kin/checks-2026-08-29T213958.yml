@@ -1,11 +1,11 @@
 ---
 kin_checks:
   slug: toast
-  schema_version: 0.15.1
-  scored_at: '2026-08-27'
-  run_ts: 2026-08-27T140727
+  schema_version: 0.16.0
+  scored_at: '2026-08-29'
+  run_ts: 2026-08-29T213958
   note: Actionable checks only (missed + partial). earned/na are every other check
-    in rubric/scoring-0.15.1.yml; counts below let you verify that.
+    in rubric/scoring-0.16.0.yml; counts below let you verify that.
   counts:
     total: 130
     earned: 54
@@ -18,8 +18,6 @@ kin_checks:
   - id: base_url_per_api
     status: missed
   - id: well_known_published
-    status: missed
-  - id: llms_txt_published
     status: missed
   - id: apis_json_self_hosted
     status: missed
@@ -39,6 +37,8 @@ kin_checks:
   - id: json_schema_per_resource
     status: missed
   - id: domain_standard_conformance
+    status: missed
+  - id: overlay_published
     status: missed
   - id: roadmap_present
     status: missed
