@@ -1,0 +1,483 @@
+openapi: 3.2.0
+info:
+  title: Analytics Menu API
+  description: "The analytics API provides an enterprise reporting and analytics service, \nand includes operations that retrieve information for all restaurants, or a\nsubset of restaurants, in a management group, create requests for reporting data, \nand retrieve the reporting data.\n\nThe types of reporting data include:\n* Aggregated sales reporting data covering sales and labor information.\n* Check reporting data providing information for each check.\n* Labor reporting data providing information for employees and jobs that are paid hourly.\n* Menu reporting data providing information for menu entities as they relate to sales.\n* Payout reporting data providing information for payouts organized either by settled date, payments, or sales date.\n* Guest reporting data providing information for guest's payment cards organized by payments.\n"
+  version: 1.0.0
+  contact:
+    name: Toast developer support
+servers:
+- url: https://toast-api-server/era/v1
+tags:
+- name: Menu
+  description: The analytics API endpoints for menu reporting data.
+paths:
+  /menu:
+    post:
+      summary: Post a menu data request for a custom time range
+      description: "Creates a menu reporting data request for a custom time range.\n\nUse the `onlyInactiveRestaurants` query parameter set to `true` to get data for inactive restaurants only.\n\nSpecify the `startBusinessDate` and `endBusinessDate` for the data in the message body.\n\nIdentify restaurants to include or exclude with the `restaurantIds` and \n`excludedRestaurantIds` properties. If left blank, all restaurants are included by default.\n"
+      operationId: postMenuReportCustomTimeRange
+      parameters:
+      - name: onlyInactiveRestaurants
+        description: 'Specifies whether the data is for inactive restaurants only. Active restaurant data is returned by default.
+
+
+          Valid values:
+
+
+          * `true` - The data retrieved is for inactive restaurants only.
+
+
+          * `false` - The data retrieved is for active restaurants only.
+
+          '
+        in: query
+        required: false
+        schema:
+          type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MenuReportingDataRequest'
+        description: "A JSON object containing the starting and ending dates for the menu reporting data \nrequest, included or excluded restaurants, and aggregation options.\n"
+        required: true
+      responses:
+        '200':
+          description: The `reportRequestGuid` used to retrieve the data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportRequestGuid'
+        '400':
+          description: The request contains invalid information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '500':
+          description: 'An unexpected internal error occurred. The
+
+            `requestId` attached to this error can be referenced by
+
+            the Toast support team.
+
+            '
+      security:
+      - oauth2:
+        - enterprise-metrics:read
+      tags:
+      - Menu
+  /menu/{timeRange}:
+    post:
+      summary: Post a menu reporting data request for a specific time range
+      description: "Creates a menu reporting data request for a specific time range.\n\nSpecify the time range with the `timeRange` path parameter.\n\nSpecify whether to include data from inactive restaurants using the `onlyInactiveRestaurants` query parameter.\n\nSpecify the `startBusinessDate` and `endBusinessDate` for the menu data in the message body.\n\nInclude information about which restaurants to include or exclude with the \n`restaurantIds` and `excludedRestaurantIds` properties.\n\nInclude information about how to aggregate the data with the `groupBy` property. You can only use the `groupBy` property when requesting\ndata for a `day` or `week` time range.\n"
+      operationId: postMenuReportSpecificTimeRange
+      parameters:
+      - name: timeRange
+        description: 'The specific time range that you are requesting reporting data for.
+
+
+          Valid values:
+
+
+          * `day` - The request covers a one day time range.
+
+
+          * `week` - The request covers a time range of seven days or fewer.
+
+
+          * `month` - The request covers a time range of 31 days or fewer.
+
+
+          * `year` - The request covers a time range of 366 days or fewer.
+
+          '
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - day
+          - week
+          - month
+          - year
+      - name: onlyInactiveRestaurants
+        description: "Specifies whether the data is for inactive restaurants only. Active restaurant data is \nreturned by default.\n\nValid values:\n\n* `true` - The data retrieved is for inactive restaurants only.\n\n* `false` - The data retrieved is for active restaurants only.\n"
+        in: query
+        required: false
+        schema:
+          type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MenuReportingDataRequest'
+        description: "A JSON object containing the starting and ending dates for the reporting data \nrequest, included or excluded restaurants, and aggregation options.\n"
+        required: true
+      responses:
+        '200':
+          description: The `reportRequestGuid` used to retrieve the reporting data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportRequestGuid'
+        '400':
+          description: The request contains invalid information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '500':
+          description: 'An unexpected internal error occurred. The
+
+            `requestId` attached to this error can be referenced by
+
+            the Toast support team.
+
+            '
+      security:
+      - oauth2:
+        - enterprise-metrics:read
+      tags:
+      - Menu
+  /menu/{reportRequestGuid}:
+    get:
+      summary: Get the menu reporting data
+      description: 'Returns the menu data for the reporting data request.
+
+
+        Specify the `reportRequestGuid` for the reporting data.
+
+        '
+      operationId: getMenuReportingData
+      parameters:
+      - name: reportRequestGuid
+        description: The Toast platform identifier for the reporting data request.
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The reporting data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MenuReportingData'
+        '202':
+          description: The Toast platform is in the process of gathering the reporting data. Try the request again at a later time.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportingDataInProgress'
+        '404':
+          description: An unexpected error occurred. Refer to the `message` attached to this error for more information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: The Toast platform was unable to process the request. Request a new `reportRequestGuid` and try again.
+        '500':
+          description: 'An unexpected internal error occurred. The
+
+            `requestId` attached to this error can be referenced by
+
+            the Toast support team.
+
+            '
+        '504':
+          description: The Toast platform was unable to process the request because internal services took too long to process, resulting in a timeout.
+      security:
+      - oauth2:
+        - enterprise-metrics:read
+      tags:
+      - Menu
+components:
+  schemas:
+    ReportingDataInProgress:
+      description: The Toast platform is in the process of gathering the reporting data. Try the request again at a later time.
+      type: object
+      properties:
+        message:
+          description: A brief message describing that the reporting data is still in progress and to try again at a later time.
+          format: string
+          type: string
+        reportStatus:
+          description: Reflects the in progress status of the reporting data using the IN_PROGRESS value.
+          format: text
+          type: string
+        reportRequestGuid:
+          description: The Toast platform assigned identifier used to identify a specific analytics reporting data request.
+          format: UUID
+          type: string
+    ReportRequestGuid:
+      description: The Toast platform assigned identifier used to identify a specific analytics reporting data request.
+      format: UUID
+      type: string
+    MenuReportingData:
+      description: The menu reporting data.
+      type: object
+      properties:
+        businessDate:
+          description: 'The date for the menu reporting data. The business day uses the YYYYMMDD format. For example, 20220824.
+
+            '
+          format: integer
+          type: string
+        restaurantGuid:
+          description: 'The identifier assigned by the Toast platform used to identify a restaurant location.
+
+            '
+          format: UUID
+          type: string
+        restaurantName:
+          description: 'The restaurant’s name.
+
+            '
+          format: string
+          type: string
+        restaurantLocationName:
+          description: 'The restaurant’s location name.
+
+            '
+          format: string
+          type: string
+        restaurantLocationCode:
+          description: 'The restaurant’s location code.
+
+            '
+          format: string
+          type: string
+        netSalesAmount:
+          description: 'The total sales, excluding tax, gratuity, tips, discounts, refunds, and deferred amounts.
+
+            '
+          format: double
+          type: number
+        grossSalesAmount:
+          description: 'The total sales, including discounts and refunds.
+
+            '
+          format: double
+          type: number
+        discountAmount:
+          description: The total amount of discounts.
+          format: double
+          type: number
+        refundAmount:
+          description: The total amount of refunded sales.
+          format: double
+          type: number
+        voidAmount:
+          description: The total amount of voided sales.
+          format: double
+          type: number
+        quantitySold:
+          description: 'The number of line items sold. This number includes items that were made but later refunded.
+
+            When grouping by `MENU`, `MENU_GROUP`, or `MENU_ITEM`, this is the count of the associated menu items and includes any modifiers.
+
+            When grouping by `MODIFIER`, this is the count of the modifier.
+
+            '
+          format: double
+          type: number
+        averagePrice:
+          description: 'The average price of the associated line items.
+
+            When grouping by `MENU`, `MENU_GROUP`, or `MENU_ITEM`, this is the average price for the menu item and any associated modifiers.
+
+            When grouping by `MODIFIER`, this is the average price for the modifier.
+
+            '
+          format: double
+          type: number
+        wasteCount:
+          description: 'The number of line items tracked as food waste.
+
+            When grouping by `MENU`, `MENU_GROUP`, or `MENU_ITEM`, this is the count of the associated menu items and does not include modifiers.
+
+            When grouping by `MODIFIER`, this is the count of the modifier.
+
+            '
+          format: double
+          type: number
+        wasteAmount:
+          description: 'The total amount of menu items tracked as food waste.
+
+            When grouping by `MENU`, `MENU_GROUP`, or `MENU_ITEM`, this is the total price for the menu items and any associated modifiers.
+
+            When grouping by `MODIFIER`, this is the total price for the modifiers.
+
+            '
+          format: double
+          type: number
+        menuGuid:
+          description: 'The identifier for the menu, assigned by the Toast platform.
+
+            This property appears when the request for menu data includes the groupBy property with value MENU.
+
+            '
+          format: UUID
+          type: string
+        menuName:
+          description: The name of the menu. This property appears when the request for menu data includes the groupBy property with value MENU.
+          format: string
+          type: string
+        menuGroupGuid:
+          description: 'The identifier for the menu group, assigned by the Toast platform.
+
+            This property appears when the request for menu data includes the groupBy property with value MENU_GROUP.
+
+            '
+          format: UUID
+          type: string
+        menuGroupName:
+          description: The name of the menu group. This property appears when the request for menu data includes the groupBy property with value MENU_GROUP.
+          format: string
+          type: string
+        menuItemGuid:
+          description: 'The identifier for the menu item, assigned by the Toast platform.
+
+            This property appears when the request for menu data includes the groupBy property with value MENU_ITEM.
+
+            '
+          format: UUID
+          type: string
+        menuItemName:
+          description: The name of the menu item. This property appears when the request for menu data includes the groupBy property with value MENU_ITEM.
+          format: string
+          type: string
+        modifierGuid:
+          description: 'The identifier for the modifier, assigned by the Toast platform.
+
+            This property appears when the request for menu data includes the groupBy property with value MODIFIER.
+
+            '
+          format: UUID
+          type: string
+        modifierName:
+          description: The name of the modifier. This property appears when the request for menu data includes the groupBy property with value MODIFIER.
+          format: string
+          type: string
+    ErrorMessage:
+      type: object
+      description: Information about an unsuccessful REST request.
+      properties:
+        status:
+          description: The HTTP status code.
+          format: integer
+          type: number
+        code:
+          description: The service-specific result code.
+          format: integer
+          type: number
+        message:
+          description: A brief message describing the error.
+          type: string
+        messageKey:
+          description: Reserved for future use.
+          type: string
+        fieldName:
+          description: Reserved for future use.
+          type: string
+        link:
+          description: The URL of a Toast page that provides more information about the error.
+          format: URL
+          type: string
+        requestId:
+          description: The identifier of the HTTP request that generated the error.
+          format: UUID
+          type: string
+        developerMessage:
+          description: Optional, technical information to help a developer investigate the cause of the error.
+          type: string
+        errors:
+          description: A list of JSON `ErrorMessage` objects.
+          items:
+            type: string
+          type: array
+        canRetry:
+          description: Reserved for future use.
+          type: string
+    MenuReportingDataRequest:
+      description: "Information about what the menu data covers and how it is presented. This includes \nthe starting and ending dates of the time range, the included or excluded restaurants, and \naggregation options.\n"
+      type: object
+      properties:
+        startBusinessDate:
+          description: 'The starting date of the time range for the reporting data.
+
+
+            Specify the business day in the format YYYYMMDD. For example, `20220824`.
+
+            '
+          format: integer
+          type: number
+        endBusinessDate:
+          description: 'The ending date of the time range for the reporting data.
+
+
+            Specify the business day in the format YYYYMMDD. For example, `20220824`.
+
+            '
+          format: integer
+          type: number
+        restaurantIds:
+          description: "The `restaurantGuid` values of specific restaurants in the management group to include in the \nreporting data. If used, only the data for listed restaurants in the management group \nthat are identified by `restaurantGuid` is included. If left blank, all restaurants are included \nby default.\n"
+          items:
+            format: uuid
+            type: string
+          type: array
+        excludedRestaurantIds:
+          description: "The `restaurantGuid` values of specific restaurants in the management group to exclude from the \nreporting data. If used, the data for listed restaurants in the management group \nthat are identified by `restaurantGuid` is excluded. If left blank, all restaurants are included \nby default.\n"
+          items:
+            format: UUID
+            type: string
+          type: array
+        groupBy:
+          description: 'The way the reporting data results are aggregated.
+
+            You can only use the `groupBy` property when requesting data for a `day` or `week` time range.
+
+
+            Valid values:
+
+
+            * `MENU` - The reporting data is grouped by menu.
+
+
+            * `MENU_GROUP` - The reporting data is grouped by menu group.
+
+
+            * `MENU_ITEM` - The reporting data is grouped by menu item.
+
+
+            * `MODIFIER` - The reporting data is grouped by modifier.
+
+            '
+          type: array
+          items:
+            enum:
+            - MENU
+            - MENU_GROUP
+            - MENU_ITEM
+            - MODIFIER
+            type: string
+      required:
+      - restaurantIds
+      - excludedRestaurantIds
+      - startBusinessDate
+      - endBusinessDate
+  securitySchemes:
+    oauth2:
+      description: "Access to Toast APIs, specific endpoints, \nand specific API endpoint operations is \ncontrolled by the scopes that are associated \nwith your API account. \n\nA full reference for Toast API scopes and \ntheir capabilities can be found in the\n[_Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html).\n"
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://toast-api-server/authentication/v1/authentication/login
+          scopes:
+            enterprise-metrics:read: 'Allows reading from the analytics API.
+
+              '
+x-components: {}

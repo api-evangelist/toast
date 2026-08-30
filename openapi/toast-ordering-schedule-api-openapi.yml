@@ -1,0 +1,211 @@
+openapi: 3.2.0
+info:
+  version: 1.0.1
+  title: Order Management Configuration Ordering Schedule API
+  description: '
+
+    Returns a restaurant location''s online ordering schedule for takeout and/or delivery, including overrides, and the maximum number of days in the future a guest can place an online order.
+
+    '
+  contact:
+    name: Toast developer support
+servers:
+- url: https://toast-api-server/ordermgmt-config/v1
+tags:
+- name: Ordering Schedule
+  description: Operations related to online ordering schedules
+paths:
+  /published/orderingSchedule:
+    get:
+      operationId: orderingScheduleGet
+      summary: Get online ordering schedule
+      description: 'Get a restaurant location''s online ordering schedule.
+
+        '
+      tags:
+      - Ordering Schedule
+      parameters:
+      - name: Toast-Restaurant-External-ID
+        description: The identifier of the restaurant location whose online ordering schedule is to be retrieved.
+        in: header
+        required: true
+        example: 00000000-05f4-55a4-0000-0000020f4be3
+        schema:
+          type: string
+      responses:
+        '200':
+          description: A `OrderingSchedule` object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderingSchedule'
+      security:
+      - oauth2:
+        - digital_schedule:read
+components:
+  schemas:
+    DateOverride:
+      type: object
+      description: 'An array of `Overrides` objects that indicate the specific days and times when the restaurant''s online ordering schedule is different from its hours of operation.
+
+        '
+      properties:
+        description:
+          description: Description of the planned override.
+          type: string
+        diningOptionBehavior:
+          description: The `diningOptionBehavior` the override applies to. Can be TAKE_OUT or DELIVERY or both.
+          type: array
+          items:
+            type: string
+            enum:
+            - TAKE_OUT
+            - DELIVERY
+        businessDate:
+          description: The day when the override applies in YYYYMMDD format.
+          type: integer
+        timeRanges:
+          description: The time range when the override starts and ends.
+          type: array
+          items:
+            $ref: '#/components/schemas/OverrideTimeRanges'
+    OverrideTimeRanges:
+      type: object
+      description: 'The time range when the planned override starts and ends.
+
+        '
+      properties:
+        start:
+          description: The local time in HH:MM format when the override starts.
+          type: string
+          format: time
+        end:
+          description: The local time in HH:MM format when the override ends.
+          type: string
+          format: time
+    OrderingSchedule:
+      type: object
+      description: 'A representation of an array of `servicePeriods` objects.
+
+        '
+      properties:
+        servicePeriods:
+          description: 'An array of `servicePeriods` objects that contain information about the days and times when the restaurant location accepts online orders.
+
+            '
+          type: array
+          items:
+            $ref: '#/components/schemas/ServicePeriod'
+        overrides:
+          description: 'An array of `override` objects that contain information about planned overrides. `Overrides` only affect online ordering.
+
+            '
+          type: array
+          items:
+            $ref: '#/components/schemas/DateOverride'
+        acceptScheduledOrders:
+          description: 'Indicates whether this restaurant location accepts scheduled orders (future orders).
+
+            '
+          type: boolean
+        scheduledOrderMaxDays:
+          description: 'Number of days an online order can be placed into the future.
+
+            '
+          type: integer
+        lastOrderConfiguration:
+          description: 'Allows guests to place online orders until the restaurant''s closing time or closing time minus prep time.
+
+            '
+          type: string
+          enum:
+          - UNTIL_CLOSING_TIME
+          - UNTIL_PREPTIME_CUTOFF
+        timeZoneId:
+          description: 'The time zone of the restaurant location. This is the same time zone used in the restaurant''s hours of operation.
+
+            '
+          type: string
+          example: America/New_York
+    TimeRange:
+      type: object
+      description: 'The time range when the restaurant is accepting online orders.
+
+        '
+      properties:
+        start:
+          type: string
+          format: time
+          description: The local time in HH:MM format when the restaurant's online ordering hours start.
+        end:
+          type: string
+          format: time
+          description: The local time in HH:MM format when the restaurant's online ordering hours end.
+    DayPeriod:
+      type: object
+      description: 'Holds information about the specific day and time range when the restaurant location accepts online orders.
+
+        '
+      properties:
+        day:
+          description: The day the online ordering schedule is returned for.
+          type: string
+          enum:
+          - MONDAY
+          - TUESDAY
+          - WEDNESDAY
+          - THURSDAY
+          - FRIDAY
+          - SATURDAY
+          - SUNDAY
+        timeRanges:
+          description: Contains a key value pair detailing the start and end time for online ordering in HH:MM format.
+          type: array
+          items:
+            $ref: '#/components/schemas/TimeRange'
+    ServicePeriod:
+      type: object
+      description: 'An array of `servicePeriods` objects that contain information about the days and times when the restaurant location accepts online orders.
+
+        '
+      properties:
+        diningOptionBehavior:
+          description: 'The dining option behavior the online ordering schedule is returned for. Options are TAKE_OUT or DELIVERY. First-party delivery must be enabled to display DELIVERY hours.
+
+            '
+          type: string
+          enum:
+          - TAKE_OUT
+          - DELIVERY
+        dayPeriods:
+          description: 'An array of `DayPeriods` objects that contain information about the specific day and time range when the restaurant accepts online orders.
+
+            '
+          type: array
+          items:
+            $ref: '#/components/schemas/DayPeriod'
+  securitySchemes:
+    oauth2:
+      description: 'Access to Toast APIs, specific endpoints,
+
+        and specific API endpoint operations is
+
+        controlled by the scopes that are associated
+
+        with your API account.
+
+        A full reference for Toast API scopes and
+
+        their capabilities can be found in the
+
+        [_Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html).
+
+        '
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://toast-api-server/authentication/v1/authentication/login
+          scopes:
+            digital_schedule:read: 'Allows reading from the order management configuration API.
+
+              '

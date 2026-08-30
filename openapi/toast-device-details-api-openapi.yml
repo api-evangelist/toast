@@ -1,0 +1,334 @@
+openapi: 3.2.0
+info:
+  version: 1.0.0
+  title: Device details API
+  description: 'Returns information about devices for a single restaurant.
+
+    '
+  contact:
+    name: Enterprise Reporting
+  termsOfService: https://pos.toasttab.com/api-terms-of-use
+servers:
+- url: https://toast-api-server/device-details/v1
+tags:
+- name: Device details
+paths:
+  /device-info:
+    get:
+      tags:
+      - Device details
+      operationId: getDeviceInfo
+      summary: Get device details for a restaurant
+      description: 'Get details for the devices at a location. This includes POS terminal and handheld devices, and printers.
+
+        '
+      security:
+      - oauth2:
+        - device-details.info:read
+      parameters:
+      - name: Toast-Restaurant-External-ID
+        description: The identifier for the restaurant.
+        in: header
+        required: true
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Device'
+        '400':
+          description: Missing or invalid restaurant header.
+        '401':
+          description: Unauthorized.
+        '403':
+          description: Forbidden.
+        '429':
+          description: Too many requests.
+        '500':
+          description: An unexpected error occurred.
+components:
+  schemas:
+    PosDeviceInfo:
+      type: object
+      description: 'Device details for devices using the Toast POS app. The `deviceType` value for the
+
+        containing `Device` object must be `POS`.
+
+        '
+      properties:
+        posType:
+          type: string
+          description: The POS device type, which is either terminal or handheld. This is determined by the device model.
+          enum:
+          - TERMINAL
+          - HANDHELD
+          example: TERMINAL
+        deviceName:
+          type: string
+          description: The custom name assigned to the POS device when initially setting up the Toast POS app.
+        deviceId:
+          type: string
+          description: The identifier assigned by the Toast platform to the hardware device.
+          example: 4f49a8734eb214d0
+        lastSyncedAt:
+          type: string
+          format: date-time
+          description: 'The date and time when the device was last synchronized with the Toast platform, in
+
+            ISO-8601 format and UTC. All values in this object reflect the device state as of
+
+            this timestamp.
+
+            '
+          example: '2025-04-01T12:00:00.000Z'
+        primaryMode:
+          type: string
+          description: 'The primary device mode as stored on the device.
+
+
+            Known values:
+
+
+            - `Table Service`
+
+            - `Quick Order`
+
+            - `Retail`
+
+            - `Drive-Thru`
+
+            - `Payment Terminal`
+
+            - `Orders Hub`
+
+            - `Pending Orders`
+
+            - `Kitchen Display/Expo Screen`
+
+            - `Kiosk`
+
+            - `Tableside Kiosk`
+
+            - `Delivery`
+
+
+            This list may grow over time without a schema change; clients should treat unknown values gracefully.
+
+            '
+        orderAutofireEnabled:
+          type: boolean
+          description: 'Identifies whether this POS device is the designated Autofire device. Autofire devices
+
+            automatically approve and send online and scheduled orders to the kitchen.
+
+
+            Valid values:
+
+
+            *`true` - This POS device is the designated Autofire device for the location.
+
+            *`false` - This POS device is not the designated Autofire device.
+
+            *`null` - The Autofire designation is not reported for this POS device.
+
+
+            For more information about Autofire devices, see [Autofiring overview](https://doc.toasttab.com/doc/platformguide/platformAutoFireDeviceOverview.html).
+
+            '
+        pciCompliant:
+          type: boolean
+          description: 'Identifies whether the POS device meets PCI compliance requirements.
+
+
+            Valid values:
+
+
+            *`true` - The POS device meets PCI compliance requirements.
+
+            *`false` - The POS device does not meet PCI compliance requirements. When this value is `false`, the `pciNonComplianceReason` value identifies the reason.
+
+            *`null` - PCI compliance status is not reported for this POS device.
+
+            '
+        pciNonComplianceReason:
+          type: string
+          description: When the `pciCompliant` value is `false`, this value identifies the reason why a POS device is not PCI compliant.
+        ipAddress:
+          type: string
+          description: The IP address of the network used by the POS device.
+        ipType:
+          type: string
+          description: The type of IP address assigned to the POS device.
+          enum:
+          - DHCP
+          - STATIC
+          - UNKNOWN
+        macAddress:
+          type: string
+          description: The MAC address of the network interface controller used by this POS device.
+        networkName:
+          type: string
+          description: The service set identifier (SSID) for the Wi-Fi internet connection. This value is `null` for Ethernet connections.
+        networkConnectionType:
+          type: string
+          description: 'The type of the network interface controller used by the POS device.
+
+
+            `RJ45` and `USBC` are both wired ethernet connector form factors. `MOBILE` indicates a
+
+            cellular (LTE) connection on handheld devices.
+
+            '
+          enum:
+          - WIFI
+          - ETHERNET
+          - RJ45
+          - USBC
+          - MOBILE
+        deviceUptimeMillis:
+          type: integer
+          format: int64
+          description: 'The number of milliseconds the device has been running since its last boot.
+
+            This value is captured at `lastSyncedAt` and is not real-time data.
+
+            '
+        posAppVersion:
+          type: string
+          description: The version of the Toast POS app installed on the device. For example, 2.95.1.
+          example: 4.3.1
+        firmwareVersion:
+          type: string
+          description: The firmware version of the POS device. For example, FV2.028.01.
+        androidOsVersion:
+          type: string
+          description: The Android OS version of the POS device. For example, 14.0.
+          example: '14.0'
+        androidOsSdkLevel:
+          type: integer
+          description: 'The Android API level of the POS device. For example, 34 corresponds to Android 14.
+
+            For more information, see the [Android API levels reference](https://apilevels.com/).
+
+            '
+          example: 34
+        securityPatchVersion:
+          type: string
+          description: 'The date of the most recent Android OS security update applied to the POS device, in
+
+            `YYYY-MM-DD` format. Despite the field name, this is a date string, not a version number.
+
+            For example, 2025-10-05.
+
+            '
+    Device:
+      type: object
+      description: 'Device details for a device. This device either uses the Toast POS app or is a printer
+
+        used by the Toast platform.
+
+
+        Depending on the `deviceType` (either `POS` or `PRINTER`), it will include either the
+
+        `PosDeviceInfo` object, or the `PrinterDeviceInfo` object respectively. Only one of
+
+        these two objects is used for each device.
+
+        '
+      required:
+      - serialNumber
+      - deviceType
+      properties:
+        deviceModel:
+          type: string
+          description: The hardware model of the device. For example, TT200, TG3, TP200, and so on.
+          example: TT200
+        deviceModelName:
+          type: string
+          description: The model name of the device. For example, Toast Terminal, Toast Go 3, and so on.
+          example: Toast Terminal
+        serialNumber:
+          type: string
+          description: The serial number of the hardware device.
+          example: cb5f9ea
+        deviceType:
+          type: string
+          description: "The type of device.\n\nThe values include:\n\n* `POS` - Devices that use the Toast POS app. The `PosDeviceInfo` object is used with this value.\n  This value includes terminal and handheld devices, which are identified using the `posType`\n  value in the `PosDeviceInfo` object.\n\n* `PRINTER` - Devices that are printers. The `PrinterDeviceInfo` object is used with this value.\n"
+          enum:
+          - POS
+          - PRINTER
+          example: POS
+        posDeviceInfo:
+          $ref: '#/components/schemas/PosDeviceInfo'
+        printerDeviceInfo:
+          $ref: '#/components/schemas/PrinterDeviceInfo'
+    PrinterDeviceInfo:
+      type: object
+      description: 'Device details for printers identified by the Toast platform. The `deviceType` value for the
+
+        containing `Device` object must be `PRINTER`.
+
+        '
+      properties:
+        deviceName:
+          type: string
+          description: The custom name assigned to the printer device in the Toast Web configuration.
+        lastSyncedAt:
+          type: string
+          format: date-time
+          description: The date and time when the device was last synchronized with the Toast platform, in ISO-8601 format and UTC.
+        firmwareVersion:
+          type: string
+          description: The firmware version of the printer. This value is `null` if it's not reported.
+        ipAddress:
+          type: string
+          description: The IP address of the network used by the printer.
+        ipType:
+          type: string
+          description: The type of IP address assigned to the printer.
+          enum:
+          - DHCP
+          - STATIC
+          - UNKNOWN
+        macAddress:
+          type: string
+          description: The MAC address of the network interface controller used by the printer.
+        gatewayAddress:
+          type: string
+          description: The default gateway IP address of the network interface controller.
+        netmaskAddress:
+          type: string
+          description: The subnet mask used by the printer.
+        printerPort:
+          type: string
+          description: The transmission control protocol (TCP) port used for network printing. For example, 9100.
+  securitySchemes:
+    oauth2:
+      description: 'Access to Toast APIs, specific endpoints,
+
+        and specific API endpoint operations is
+
+        controlled by the scopes that are associated
+
+        with your API account.
+
+
+        A full reference for Toast API scopes and
+
+        their capabilities can be found in the
+
+        [_Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html).
+
+        '
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://toast-api-server/authentication/v1/authentication/login
+          scopes:
+            device-details.info:read: Allows reading from the device details API.

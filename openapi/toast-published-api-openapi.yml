@@ -1,0 +1,319 @@
+openapi: 3.2.0
+info:
+  title: Toast Published API
+  version: '1.0'
+  description: 'Operations tagged Published across 2 of this provider''s published API definitions: toast-kitchen-openapi.yaml, toast-packaging-openapi.yaml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://toast-api-server/kitchen/v1
+- url: https://toast-api-server/packaging
+tags:
+- name: Published
+paths:
+  /published/prepStations:
+    get:
+      operationId: prepStationsGet
+      summary: Get all prep stations
+      description: 'Returns the configuration for every prep station that has been created for the specified restaurant. A prep station represents the location of a kitchen printer or KDS device that receives orders for fulfillment. You can use optional query parameters to paginate the results. If a `lastModified` date is specified, returns all objects that were created or modified after that date.<br>
+
+        <br>
+
+        *Related topics:*<br>
+
+        <a href="https://doc.toasttab.com/doc/platformguide/platformKitchenRoutingOverview.html#adminRoutingToPrepStations">Routing to prep stations</a>
+
+        '
+      parameters:
+      - name: pageToken
+        in: query
+        description: "A string that identifies the set of data objects that the \nendpoint will return in its response data. You can use this \nparameter to control the pagination of response data. You \nget the value that you supply in the `pageToken` parameter \nfrom the `Toast-Next-Page-Token` header field value of a \nprevious request to the endpoint. For more information, see \n<a href=\"https://doc.toasttab.com/doc/devguide/apiResponseDataPagination.html\">Paginating response data</a>.\n"
+        schema:
+          type: string
+      - name: lastModified
+        in: query
+        description: 'Limits the return data to objects created or modified after a specific date and time. For example: `2021-12-01T00:00:00.000+0000`.
+
+          '
+        schema:
+          type: string
+          format: date-time
+      - name: Toast-Restaurant-External-ID
+        in: header
+        description: 'The Toast platform identifier for the restaurant.
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 'Returns an array of `PrepStation` objects. A prep station represents the location of a kitchen printer or KDS device that receives orders for fulfillment.<br>
+
+            *Related topics:*<br>
+
+            <a href="https://doc.toasttab.com/doc/platformguide/platformKitchenRoutingOverview.html#adminRoutingToPrepStations">Routing to prep stations</a>
+
+            '
+          headers:
+            Toast-Next-Page-Token:
+              description: "A string that identifies the following set of objects \nthat the endpoint will return. You can use this value \nto control the pagination of response data. To return \nthe next page of objects you supply this value in the \n`pageToken` parameter of the next request to the \nendpoint. For more information, see \n<a href=\"https://doc.toasttab.com/doc/devguide/apiResponseDataPagination.html\">Paginating response \ndata</a>.\n\nThe endpoint does not return the \n`Toast-Next-Page-Token` field if there is no following \npage of response data objects. For example, the \nendpoint will not return a `Toast-Next-Page-Token` \nheader field if all the data objects fit in one \nresponse or if you have reached the last page of \nresponse objects.\n"
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                minItems: 0
+                maxItems: 1000
+                items:
+                  $ref: '#/components/schemas/PrepStation'
+      security:
+      - oauth2:
+        - kitchen:read
+      tags:
+      - Published
+    servers:
+    - url: https://toast-api-server/kitchen/v1
+  /published/prepStations/{guid}:
+    parameters:
+    - name: guid
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      operationId: prepStationsGuidGet
+      summary: Get a prep station
+      description: 'Returns the configuration for a single prep station that has been defined for the specified restaurant. A prep station represents the location of a kitchen printer or KDS device that receives orders for fulfillment.<br>
+
+        <br>
+
+        *Related topics:*<br>
+
+        <a href="https://doc.toasttab.com/doc/platformguide/platformKitchenRoutingOverview.html#adminRoutingToPrepStations">Routing to prep stations</a>
+
+        '
+      parameters:
+      - name: Toast-Restaurant-External-ID
+        in: header
+        description: 'The Toast platform identifier for the restaurant.
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 'Returns a `PrepStation` object.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrepStation'
+      security:
+      - oauth2:
+        - kitchen:read
+      tags:
+      - Published
+    servers:
+    - url: https://toast-api-server/kitchen/v1
+  /v1/published/packagingConfig:
+    get:
+      summary: Get a restaurant's published packaging configuration
+      operationId: getPackagingConfig
+      security:
+      - OAuth2:
+        - packaging:read
+      parameters:
+      - in: header
+        name: Toast-Restaurant-External-ID
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: 'A restaurant''s packaging configuration. You can expect a `200` response
+
+            even if your restaurant does not have a published packaging configuration. If the restaurant does not have a published configuration, an empty, disabled packaging config is returned.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PackagingConfig'
+      tags:
+      - Published
+    servers:
+    - url: https://toast-api-server/packaging
+components:
+  schemas:
+    ToastReference:
+      type: object
+      title: ToastReference
+      description: 'A wrapper object containing a Toast platform GUID.
+
+        '
+      properties:
+        guid:
+          type: string
+          description: 'A Toast platform identifier for an entity.
+
+            '
+        entityType:
+          type: string
+          description: 'The type of object this is. For prep stations, `entityType` is set to `PrepStation`.
+
+            '
+      required:
+      - guid
+      - entityType
+    PrepStation:
+      title: PrepStation
+      type: object
+      description: 'The configuration for a single prep station. A prep station represents the location of a kitchen printer or KDS device that receives orders for fulfillment.<br>
+
+        <br>
+
+        *Related topics:*<br>
+
+        <a href="https://doc.toasttab.com/doc/platformguide/adminAddPrepStation.html">Add a prep station</a>
+
+        '
+      allOf:
+      - $ref: '#/components/schemas/ToastReference'
+      - type: object
+        properties:
+          connectedPrepStations:
+            type: array
+            description: 'An array of `ToastReference` objects containing the identifiers of the other prep stations that this prep station monitors.<br>
+
+              <br>
+
+              Allowing a prep station to monitor other prep stations makes it easier for restaurant employees to coordinate when an order includes items that are fulfilled at more than one prep station.<br>
+
+              <br>
+
+              *Related topics:*<br>
+
+              <a href="https://doc.toasttab.com/doc/platformguide/adminMonitoringTicketsOtherPrepStations.html">Monitoring items at other prep stations</a><br>
+
+              <a href="https://doc.toasttab.com/doc/platformguide/adminMonitoringTicketsOtherPrepStations.html#adminConfigurePrintOtherStationsItems">Configure printing of other stations'' items</a>
+
+              '
+            items:
+              $ref: '#/components/schemas/ToastReference'
+          printingMode:
+            type: string
+            description: "Determines whether tickets sent to this prep station are printed at the prep station's assigned printer. Values include:\n* ON: Every ticket sent to this prep station prints at the prep station's assigned printer.\n* OFFLINE_ONLY: Tickets sent to this prep station only print at the assigned printer if the prep station normally uses a KDS device for ticket display but that device is offline.          \n"
+            enum:
+            - 'ON'
+            - OFFLINE_ONLY
+          includeWithExpediter:
+            type: boolean
+            description: 'True if tickets sent to this prep station should also be sent to the printer or KDS device that has been set up for the restaurant''s expediter.<br>
+
+              <br>
+
+              *Related topics:*<br>
+
+              <a href="https://doc.toasttab.com/doc/platformguide/adminUsingExpo.html">Using an expediter KDS</a><br>
+
+              '
+          expoRouting:
+            type: string
+            description: 'Determines how tickets are routed to the expediter. This field works in conjunction with `includeWithExpediter` to provide more granular control over expo routing. Values include:
+
+              * SEND_TO_EXPO: Tickets are sent to both the prep station and the expediter (equivalent to `includeWithExpediter: true`)
+
+              * EXPO_ONLY: Tickets are sent only to the expediter, not to the prep station
+
+              * SKIP_EXPO: Tickets are sent only to the prep station, not to the expediter (equivalent to `includeWithExpediter: false`)
+
+              <br>
+
+              <br>
+
+              *Related topics:*<br>
+
+              <a href="https://doc.toasttab.com/doc/platformguide/adminUsingExpo.html">Using an expediter KDS</a><br>
+
+              '
+            enum:
+            - SEND_TO_EXPO
+            - EXPO_ONLY
+            - SKIP_EXPO
+          name:
+            type: string
+            description: The name of this prep station.
+          kitchenPrinter:
+            $ref: '#/components/schemas/ToastReference'
+    PackagingItem:
+      type: object
+      description: Configuration for a type of packaging
+      required:
+      - id
+      - itemTypes
+      - guestDisplayName
+      - guestInclusionType
+      properties:
+        id:
+          type: string
+          description: Unique identifier for a packaging item.
+        itemTypes:
+          type: array
+          description: The possible packaging values like UTENSILS, NAPKINS, BAGS, STRAWS or CONDIMENTS. Packaging preferences can be configured in Toast Web at **Takeout and Delivery > Packaging Preferences**.
+          items:
+            type: string
+        guestDisplayName:
+          type: string
+          description: A question to be shown to guests that asks if they want to include utensils in their order. For example, "Include Utensils?"
+        guestDescription:
+          type: string
+          description: A longer description for the packaging item. Max 60 characters. This description is optional.
+        guestInclusionType:
+          type: string
+          description: "`guestInclusionType` is an indication of what action the guest must take to include or exclude a packaging item.\n\nDetails:\n  * `OPT_IN` - The guest creating an order must take an action to receive the packaging item. For example, if there is a checkbox for \"UTENSILS\", and it is unchecked by default, the guest must check it for their order to include utensils.\n  * `OPT_OUT` - The guest creating an order must take an action to _not_ receive the packaging item. For example, if there is a checkbox for \"UTENSILS\", and it is checked by default, the guest must uncheck it for their order to not include utensils.\n"
+    PackagingConfig:
+      type: object
+      description: Specific options for how a restaurant packages a guest's takeout or delivery order based on guest requests or specifications.
+      required:
+      - enabled
+      - items
+      properties:
+        enabled:
+          type: boolean
+          description: "`TRUE`: packaging options should be shown to guests during\nthe online ordering checkout experience. \n\n`FALSE`: packaging options should not be shown to guests during the online ordering checkout experience. \n"
+        guestMessage:
+          type: string
+          description: 'An optional message that restaurants can use to describe the use for packaging preferences. This field is not meant to individually reference packaging preference items and instead should provide further details regarding the use of packaging preferences.
+
+            For example, a restaurant may want to communicate the following to their takeout guests, "California law now requires us to ask if you want disposable items."
+
+            '
+        items:
+          type: array
+          description: Different types of packaging preference items such as utensils, napkins, straws, bags, or condiments. Items are configured in Toast Web at **Takeout and Delivery > Packaging Preferences**.
+          items:
+            $ref: '#/components/schemas/PackagingItem'
+  securitySchemes:
+    oauth2:
+      description: "Access to Toast APIs, specific endpoints, \nand specific API endpoint operations is \ncontrolled by the scopes that are associated \nwith your API account. \n\nA full reference for Toast API scopes and \ntheir capabilities can be found in the\n[_Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html).\n\nThe `/kitchen/v1/export/itemFulfillments` endpoint requires an active subscription\nto <a href=\"https://www.toasttab.com/customers/shop/software-services/restaurant-management-suite?tier=Pro\">Toast Restaurant Management Suite Pro or higher</a> \nto retrieve the data.\n"
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://toast-api-server/authentication/v1/authentication/login
+          scopes:
+            kitchen:read: 'Allows reading from the kitchen API.
+
+              '
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://toast-api-server/authentication/v1/authentication/login
+          scopes:
+            packaging:read: Allows to read from packaging service
+x-refined-from:
+- toast-kitchen-openapi.yaml
+- toast-packaging-openapi.yaml
+x-components: {}

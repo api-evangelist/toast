@@ -1,0 +1,210 @@
+openapi: 3.2.0
+info:
+  version: 1.1.0
+  title: Cash Management Entries API
+  description: "Provides information about cash operations that add cash to or \nremove cash from a restaurant cash drawer, separately from cash\ntransaction payments (customer payments for individual checks). \nCash entries are different than cash transactions, and affect \nthe overall amount of cash that the Toast POS accounts for in \na restaurant.\n"
+  termsOfService: https://pos.toasttab.com/api-terms-of-use
+servers:
+- url: https://toast-api-server/cashmgmt/v1
+tags:
+- name: Entries
+paths:
+  /entries:
+    get:
+      summary: 'Get cash entries
+
+        '
+      description: "Returns information about cash added to or removed from a cash\ndrawer or other cash storage device. Returns an array of \n`CashEntry` objects.\n"
+      operationId: entriesGet
+      externalDocs:
+        description: Getting cash entries
+        url: https://dev.toasttab.com/doc/devguide/apiUsingCashManagementApi.html
+      security:
+      - cashMgmtRead:
+        - cashmgmt:read
+      parameters:
+      - name: Toast-Restaurant-External-ID
+        description: 'The GUID of the restaurant that is the context of the
+
+          request.
+
+          '
+        in: header
+        required: true
+        schema:
+          type: string
+          format: string
+      - name: yyyymmdd
+        description: 'Deprecated. Use the `businessDate` parameter. The business
+
+          date the cash entries were created, in the format
+
+          `yyyymmdd`. For example, `20180228`.
+
+          '
+        in: query
+        required: false
+        schema:
+          type: string
+          format: calendar-date
+      - name: businessDate
+        description: 'The business date the cash entries were created, in the
+
+          format `yyyymmdd`. For example, `20180228`.
+
+          '
+        in: query
+        required: true
+        schema:
+          type: string
+          format: calendar-date
+      responses:
+        '200':
+          description: 'Returns an array of `CashEntry` objects.
+
+            '
+          content:
+            application/json:
+              schema:
+                title: Response
+                type: array
+                minItems: 0
+                items:
+                  $ref: '#/components/schemas/CashEntry'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - Entries
+components:
+  schemas:
+    ExternalReference:
+      type: object
+      description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID or a partner's identifier.
+      allOf:
+      - $ref: '#/components/schemas/ToastReference'
+      - type: object
+        properties:
+          externalId:
+            description: External identifier string that is prefixed by the naming authority.
+            type: string
+    ToastReference:
+      type: object
+      description: 'Identifying information about a Toast POS entity.
+
+        '
+      required:
+      - guid
+      - entityType
+      properties:
+        guid:
+          description: The GUID assigned to the entity by the Toast POS.
+          type: string
+        entityType:
+          description: The category of the Toast POS object.
+          type: string
+    CashEntry:
+      type: object
+      description: 'Information about an event in which a restaurant employee puts
+
+        cash into a cash drawer or removes cash from a cash drawer.
+
+        '
+      allOf:
+      - $ref: '#/components/schemas/ToastReference'
+      - type: object
+        required:
+        - amount
+        - reason
+        - date
+        - type
+        properties:
+          amount:
+            type: number
+            format: double
+            description: 'The currency amount of the cash that an employee adds to
+
+              or removes from a cash drawer. This value is positive
+
+              when an employee adds cash and negative when an employee
+
+              removes cash.
+
+              '
+          reason:
+            type: string
+            description: 'A short description of why this cash entry was created,
+
+              written by the restaurant employee.
+
+              '
+          date:
+            type: string
+            format: date-time
+            description: 'The date and time that the cash entry occurred.
+
+              '
+          type:
+            type: string
+            description: "The type of the cash entry.\n<ul>\n  <li><code>CASH_IN</code> - cash added to a cash\n  drawer.</li>\n\n  <li><code>CASH_COLLECTED</code> - cash added to a cash\n  drawer at the end of an employee shift.</li>\n\n  <li><code>CASH_OUT</code> - cash removed from a cash\n  drawer and stored in a different restaurant location.\n  The Toast POS does track cash after it is removed by a\n  <code>CASH_OUT</code> entry.</li>\n\n  <li><code>NO_SALE</code> - cash drawer opened with no\n  change to the cash balance. For example, a restaurant\n  employee might perform a no sale transaction to make\n  change for a customer.</li>\n\n  <li><code>PAY_OUT</code> - cash removed from a cash\n  drawer to pay for a pre-configured restaurant\n  expense.</li>\n\n  <li><code>TIP_OUT</code> - cash removed from a cash\n  drawer to distribute tips or gratuities to restaurant\n  employees.</li>\n\n  <li><code>UNDO_PAY_OUT</code> - cash added to a cash\n  drawer to undo a previous <code>PAY_OUT</code> cash\n  entry.</li>\n\n  <li><code>DRIVER_REIMBURSEMENT</code> - cash removed\n  from a cash drawer to repay delivery drivers for\n  delivery driving expenses.</li>\n\n  <li><code>CLOSE_OUT_EXACT</code> - an employee closes\n  a cash drawer and the closing balance is equal to the\n  expected balance.</li>\n\n  <li><code>CLOSE_OUT_OVERAGE</code> - an employee\n  closes a cash drawer and the closing balance is greater\n  than the expected balance.</li>\n\n  <li><code>CLOSE_OUT_SHORTAGE</code> - an employee\n  closes a cash drawer and the closing balance is less\n  than the expected balance.</li>\n</ul>\n"
+            enum:
+            - CASH_IN
+            - CASH_COLLECTED
+            - CASH_OUT
+            - PAY_OUT
+            - UNDO_PAY_OUT
+            - TIP_OUT
+            - NO_SALE
+            - DRIVER_REIMBURSEMENT
+            - CLOSE_OUT_EXACT
+            - CLOSE_OUT_OVERAGE
+            - CLOSE_OUT_SHORTAGE
+          cashDrawer:
+            $ref: '#/components/schemas/ToastReference'
+          payoutReason:
+            $ref: '#/components/schemas/ToastReference'
+          noSaleReason:
+            $ref: '#/components/schemas/ToastReference'
+          undoes:
+            description: 'The Toast GUID of the cash entry that is being undone.
+
+              This value is null if the cash entry does not undo a
+
+              previous entry.
+
+              '
+            type: string
+          employee1:
+            $ref: '#/components/schemas/ExternalReference'
+          employee2:
+            $ref: '#/components/schemas/ExternalReference'
+          creatorOrShiftReviewSubject:
+            $ref: '#/components/schemas/ToastReference'
+          approverOrShiftReviewSubject:
+            $ref: '#/components/schemas/ToastReference'
+    Error:
+      required:
+      - status
+      - message
+      properties:
+        status:
+          type: integer
+          format: int32
+          description: An HTTP status code.
+        message:
+          type: string
+          description: A message that describes the error.
+  securitySchemes:
+    cashMgmtRead:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://toast-api-server/authentication/v1/authentication/login
+          scopes:
+            cashmgmt:read: Read cash transactions
+externalDocs:
+  description: Cash management API documentation
+  url: https://doc.toasttab.com/doc/devguide/apiWorkingWithCashEntriesAndDeposits.html

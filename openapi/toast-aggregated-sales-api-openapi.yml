@@ -1,0 +1,563 @@
+openapi: 3.2.0
+info:
+  title: Analytics Aggregated sales API
+  description: "The analytics API provides an enterprise reporting and analytics service, \nand includes operations that retrieve information for all restaurants, or a\nsubset of restaurants, in a management group, create requests for reporting data, \nand retrieve the reporting data.\n\nThe types of reporting data include:\n* Aggregated sales reporting data covering sales and labor information.\n* Check reporting data providing information for each check.\n* Labor reporting data providing information for employees and jobs that are paid hourly.\n* Menu reporting data providing information for menu entities as they relate to sales.\n* Payout reporting data providing information for payouts organized either by settled date, payments, or sales date.\n* Guest reporting data providing information for guest's payment cards organized by payments.\n"
+  version: 1.0.0
+  contact:
+    name: Toast developer support
+servers:
+- url: https://toast-api-server/era/v1
+tags:
+- name: Aggregated sales
+  description: The analytics API endpoints for aggregated sales reporting data covering sales and labor information.
+paths:
+  /metrics:
+    post:
+      summary: Post an aggregated sales reporting data request for a custom time range
+      description: "Creates an aggregated sales reporting data request for a customized time range. \n\nUse the `onlyInactiveRestaurants` query parameter set to `true` to get data for inactive restaurants only.\n\nSpecify the `startBusinessDate` and `endBusinessDate` for the data in the message body.\n\nIdentify restaurants to include or exclude with the `restaurantIds` and \n`excludedRestaurantIds` properties. If left blank, all restaurants are included by default.\n\nInclude information about how to aggregate the data with the `groupBy` property.\n"
+      operationId: postMetricsReportingDataCustomTimeRangeRequest
+      parameters:
+      - name: onlyInactiveRestaurants
+        description: 'Specifies whether the data is for inactive restaurants only. Active restaurant data is returned by default.
+
+
+          Valid values:
+
+
+          * `true` - The data retrieved is for inactive restaurants only.
+
+
+          * `false` - The data retrieved is for active restaurants only.
+
+          '
+        in: query
+        required: false
+        schema:
+          type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MetricsReportingDataRequest'
+        description: "A JSON object containing the starting and ending dates for the aggregated sales reporting data \nrequest, included or excluded restaurants, and aggregation options.\n"
+        required: true
+      responses:
+        '200':
+          description: The `reportRequestGuid` used to retrieve the data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportRequestGuid'
+        '400':
+          description: The request contains invalid information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '500':
+          description: 'An unexpected internal error occurred. The
+
+            `requestId` attached to this error can be referenced by
+
+            the Toast support team.
+
+            '
+      security:
+      - oauth2:
+        - enterprise-metrics:read
+      tags:
+      - Aggregated sales
+  /metrics/{timeRange}:
+    post:
+      summary: Post an aggregated sales reporting data request for a specific time range
+      description: "Creates an aggregated sales reporting data request for a specific time range.\n\nSpecify the time range with the `timeRange` path parameter.\n\nInclude information on how to aggregate the data for the `day` time range using the\n`aggregateBy` query parameter.\n\nUse the `onlyInactiveRestaurants` query parameter set to `true` to get data for inactive restaurants only.\n\nSpecify the `startBusinessDate` and `endBusinessDate` for the data in the message body.\n\nIdentify which restaurants to include or exclude with the \n`restaurantIds` and `excludedRestaurantIds` properties. If left blank, all restaurants are included by default.\n\nInclude information about how to aggregate the data with the `groupBy` property.\n"
+      operationId: postMetricsReportingDataSpecificTimeRangeRequest
+      parameters:
+      - name: timeRange
+        description: 'The specific time range that you are requesting the data for.
+
+
+          Valid values:
+
+
+          * `day` - The request covers a one day time range. This value can optionally use the `aggregateBy` query parameter.
+
+
+          * `week` - The request covers a time range of seven days or fewer.
+
+
+          * `month` - The request covers a time range of 31 days or fewer.
+
+
+          * `year` - The request covers a time range of 366 days or fewer.
+
+          '
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - day
+          - week
+          - month
+          - year
+      - name: aggregateBy
+        description: 'Aggregates the data by day or hour if using the `timeRange` value `day`. The data is aggregated by day by default.
+
+
+          Valid values:
+
+
+          * `DAY` - The reporting data is aggregated by day.
+
+
+          * `HOUR` - The reporting data is aggregated by hour.
+
+          '
+        in: query
+        required: false
+        schema:
+          type: string
+          enum:
+          - DAY
+          - HOUR
+      - name: onlyInactiveRestaurants
+        description: 'Specifies whether the data is for inactive restaurants only. Active restaurant data is returned by default.
+
+
+          Valid values:
+
+
+          * `true` - The data retrieved is for inactive restaurants only.
+
+
+          * `false` - The data retrieved is for active restaurants only.
+
+          '
+        in: query
+        required: false
+        schema:
+          type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MetricsReportingDataRequest'
+        description: 'A JSON object containing the starting and ending dates for the aggregated sales reporting data
+
+          request, included or excluded restaurants, and aggregation options.
+
+          '
+        required: true
+      responses:
+        '200':
+          description: The `reportRequestGuid` used to retrieve the data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportRequestGuid'
+        '400':
+          description: The request contains invalid information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '500':
+          description: 'An unexpected internal error occurred. The
+
+            `requestId` attached to this error can be referenced by
+
+            the Toast support team.
+
+            '
+      security:
+      - oauth2:
+        - enterprise-metrics:read
+      tags:
+      - Aggregated sales
+  /metrics/{reportRequestGuid}:
+    get:
+      summary: Get the aggregated sales reporting data
+      description: "Returns the aggregated sales reporting data for the specified report request GUID. \n\nSpecify the `reportRequestGuid` for the data.\n\nSpecify whether to include the guest-facing restaurant names.\n"
+      operationId: getMetricsReportingData
+      parameters:
+      - name: reportRequestGuid
+        description: The Toast platform identifier for the data request.
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: fetchRestaurantNames
+        description: "Specifies whether the data includes the guest-facing restaurant name. The guest-facing \nrestaurant name is not returned by default.\n\nValid values:\n\n* `true` - The guest-facing restaurant name is returned with the data.\n\n* `false` - The guest-facing restaurant name is not returned with the data.\n"
+        in: query
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: The aggregated sales reporting data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricsReportingData'
+        '202':
+          description: The Toast platform is in the process of gathering the reporting data. Try the request again at a later time.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportingDataInProgress'
+        '404':
+          description: An unexpected error occurred. Refer to the `message` attached to this error for more information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: The Toast platform was unable to process the request. Request a new `reportRequestGuid` and try again.
+        '500':
+          description: 'An unexpected internal error occurred. The
+
+            `requestId` attached to this error can be referenced by
+
+            the Toast support team.
+
+            '
+        '504':
+          description: The Toast platform was unable to process the request because internal services took too long to process, resulting in a timeout.
+      security:
+      - oauth2:
+        - enterprise-metrics:read
+      tags:
+      - Aggregated sales
+  /metrics/{timeRange}/{reportRequestGuid}:
+    get:
+      deprecated: true
+      summary: Get the aggregated sales reporting data for a specific time range
+      description: "This endpoint is deprecated. Instead of `/metrics/{timeRange}/{reportRequestGuid}`, use\n`/metrics/{reportRequestGuid}`.\n\nReturns the aggregated sales reporting data for cumulative metrics for the specified time range report request GUID. \n\nSpecify the time range with the `timeRange` path parameter.\n\nSpecify the `reportRequestGuid` for the data.\n\nSpecify whether to include the guest-facing restaurant names.\n"
+      operationId: getMetricsReportingDataSpecificTimeRange
+      parameters:
+      - name: timeRange
+        description: 'The specific time range that you are requesting the data for.
+
+
+          Valid values:
+
+
+          * `day` - The request covers a one day time range.
+
+
+          * `week` - The request covers a time range of seven days or fewer.
+
+
+          * `month` - The request covers a time range of 31 days or fewer.
+
+
+          * `year` - The request covers a time range of 366 days or fewer.
+
+          '
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - day
+          - week
+          - month
+          - year
+      - name: reportRequestGuid
+        description: The Toast platform identifier for the data request.
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: fetchRestaurantNames
+        description: 'Specifies whether the data includes the guest-facing restaurant name. The guest-facing restaurant name is not returned by default.
+
+
+          Valid values:
+
+
+          * `true` - The guest-facing restaurant name is returned with the data.
+
+
+          * `false` - The guest-facing restaurant name is not returned with the data.
+
+          '
+        in: query
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: The aggregated sales reporting data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MetricsReportingData'
+        '202':
+          description: The Toast platform is in the process of gathering the reporting data. Try the request again at a later time.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportingDataInProgress'
+        '404':
+          description: An unexpected error occurred. Refer to the `message` attached to this error for more information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: The Toast platform was unable to process the request. Request a new `reportRequestGuid` and try again.
+        '500':
+          description: 'An unexpected internal error occurred. The
+
+            `requestId` attached to this error can be referenced by
+
+            the Toast support team.
+
+            '
+        '504':
+          description: The Toast platform was unable to process the request because internal services took too long to process, resulting in a timeout.
+      security:
+      - oauth2:
+        - enterprise-metrics:read
+      tags:
+      - Aggregated sales
+components:
+  schemas:
+    MetricsReportingDataRequest:
+      description: "Information about what the aggregated sales reporting data covers and how it is presented. This includes \nthe starting and ending dates of the time range, the included or excluded restaurants, and \naggregation options.\n"
+      type: object
+      properties:
+        startBusinessDate:
+          description: 'The starting date of the time range for the reporting data.
+
+
+            Specify the business day in the format YYYYMMDD. For example, `20220824`.
+
+            '
+          format: integer
+          type: number
+        endBusinessDate:
+          description: 'The ending date of the time range for the reporting data.
+
+
+            Specify the business day in the format YYYYMMDD. For example, `20220824`.
+
+            '
+          format: integer
+          type: number
+        restaurantIds:
+          description: "The `restaurantGuid` values of specific restaurants in the management group to include in the \nreporting data. If used, only the data for listed restaurants in the management group \nthat are identified by `restaurantGuid` is included. If left blank, all restaurants are included \nby default.\n"
+          items:
+            format: uuid
+            type: string
+          type: array
+        excludedRestaurantIds:
+          description: "The `restaurantGuid` values of specific restaurants in the management group to exclude from the \nreporting data. If used, the data for listed restaurants in the management group \nthat are identified by `restaurantGuid` is excluded. If left blank, all restaurants are included \nby default.\n"
+          items:
+            format: UUID
+            type: string
+          type: array
+        groupBy:
+          description: 'The way the reporting data results are aggregated. You can use up to two values at a time.
+
+
+            Valid values:
+
+
+            * `DINING_OPTION` - The reporting data is grouped by dining option.
+
+            * `ORDER_SOURCE` - The reporting data is grouped by order source.
+
+            * `REVENUE_CENTER` - The reporting data is grouped by revenue center.
+
+            '
+          items:
+            enum:
+            - REVENUE_CENTER
+            - DINING_OPTION
+            - ORDER_SOURCE
+            type: string
+          type: array
+      required:
+      - restaurantIds
+      - excludedRestaurantIds
+      - startBusinessDate
+      - endBusinessDate
+    ReportRequestGuid:
+      description: The Toast platform assigned identifier used to identify a specific analytics reporting data request.
+      format: UUID
+      type: string
+    ErrorMessage:
+      type: object
+      description: Information about an unsuccessful REST request.
+      properties:
+        status:
+          description: The HTTP status code.
+          format: integer
+          type: number
+        code:
+          description: The service-specific result code.
+          format: integer
+          type: number
+        message:
+          description: A brief message describing the error.
+          type: string
+        messageKey:
+          description: Reserved for future use.
+          type: string
+        fieldName:
+          description: Reserved for future use.
+          type: string
+        link:
+          description: The URL of a Toast page that provides more information about the error.
+          format: URL
+          type: string
+        requestId:
+          description: The identifier of the HTTP request that generated the error.
+          format: UUID
+          type: string
+        developerMessage:
+          description: Optional, technical information to help a developer investigate the cause of the error.
+          type: string
+        errors:
+          description: A list of JSON `ErrorMessage` objects.
+          items:
+            type: string
+          type: array
+        canRetry:
+          description: Reserved for future use.
+          type: string
+    ReportingDataInProgress:
+      description: The Toast platform is in the process of gathering the reporting data. Try the request again at a later time.
+      type: object
+      properties:
+        message:
+          description: A brief message describing that the reporting data is still in progress and to try again at a later time.
+          format: string
+          type: string
+        reportStatus:
+          description: Reflects the in progress status of the reporting data using the IN_PROGRESS value.
+          format: text
+          type: string
+        reportRequestGuid:
+          description: The Toast platform assigned identifier used to identify a specific analytics reporting data request.
+          format: UUID
+          type: string
+    MetricsReportingData:
+      description: The aggregated sales reporting data.
+      type: object
+      properties:
+        restaurantGuid:
+          description: 'The identifier assigned by the Toast platform used to identify a restaurant location.
+
+            '
+          format: UUID
+          type: string
+        businessDate:
+          description: "The date for the aggregated reporting data. The business \nday uses the YYYYMMDD format. For example, `20220824`.\n"
+          format: integer
+          type: string
+        guestCount:
+          description: 'The total number of guests recorded across all orders.
+
+            '
+          format: integer
+          type: number
+        voidOrdersCount:
+          description: The total number of orders with at least one voided item.
+          format: integer
+          type: number
+        discountOrderCount:
+          description: The total number of orders that have at least one discount.
+          format: integer
+          type: number
+        ordersCount:
+          description: 'The total number of orders that were not voided.
+
+            '
+          format: integer
+          type: number
+        openOrderCount:
+          description: The total number of open orders.
+          format: integer
+          type: number
+        closedOrderCount:
+          description: The total number of closed orders.
+          format: integer
+          type: number
+        netSalesAmount:
+          description: "The total sales, excluding tax, gratuity, tips, discounts, refunds, and \ndeferred amounts.\n"
+          format: double
+          type: number
+        grossSalesAmount:
+          description: The total sales, including discounts and refunds.
+          format: double
+          type: number
+        discountAmount:
+          description: The total amount of discounts for orders.
+          format: double
+          type: number
+        voidOrdersAmount:
+          description: The total amount of voided items.
+          format: double
+          type: number
+        refundAmount:
+          description: The total amount of refunded sales.
+          format: double
+          type: number
+        avgOrderValue:
+          description: The average amount for an order.
+          format: double
+          type: number
+        revenueCenter:
+          description: "The revenue center for the data. This property only appears when the \nrequest for reporting data includes the `groupBy` property with\nvalue `REVENUE_CENTER`.\n"
+          type: string
+        diningOption:
+          description: "The dining option for the data. This property only appears when the \nrequest for reporting data includes the `groupBy` property with\nvalue `DINING_OPTION`.\n"
+          type: string
+        orderSource:
+          description: "The method used to place an order, also known as the order source. This property\nonly appears when the request for reporting data includes the `groupBy` property \nwith value `ORDER_SOURCE`.\n\nValid values:\n* `API`\n* `BRANDED_ONLINE_ORDERING`\n* `CALLER_ID`\n* `CATERING`\n* `CATERING_ONLINE_ORDERING`\n* `GOOGLE`\n* `GRUBHUB` (deprecated)\n* `IN_STORE`\n* `INVOICE`\n* `KIOSK`\n* `ONLINE`\n* `ORDER_AND_PAY_AT_TABLE`\n* `TOAST_LOCAL`\n* `TOAST_PICKUP_APP`\n* `TOAST_TABLES`\n"
+        businessHour:
+          description: "The hour the data represents. This property only appears when the `aggregateBy` \nquery parameter is set to `HOUR` in the `POST` request for creating the reporting\nmetrics request. The hour number corresponds to the 24 hours of the day, starting \nat 0 and ending at 23.\n"
+          format: integer
+          type: string
+        hourlyJobTotalHours:
+          description: 'The total hours worked by employees with hourly jobs. This does not include breaks.
+
+            '
+          format: double
+          type: string
+        hourlyJobTotalPay:
+          description: 'The total wages earned by employees with hourly jobs, including overtime pay. This does not include tips.
+
+            '
+          format: double
+          type: string
+        hourlyJobSalesPerLaborHour:
+          description: 'The average net sales for each hour worked by employees with hourly jobs.
+
+            '
+          format: double
+          type: string
+        restaurantName:
+          description: 'The restaurant''s name. This property is only included when
+
+            the `fetchRestaurantNames` parameter is set to `true` in the `GET` request.
+
+            '
+          format: string
+          type: string
+  securitySchemes:
+    oauth2:
+      description: "Access to Toast APIs, specific endpoints, \nand specific API endpoint operations is \ncontrolled by the scopes that are associated \nwith your API account. \n\nA full reference for Toast API scopes and \ntheir capabilities can be found in the\n[_Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html).\n"
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://toast-api-server/authentication/v1/authentication/login
+          scopes:
+            enterprise-metrics:read: 'Allows reading from the analytics API.
+
+              '
+x-components: {}

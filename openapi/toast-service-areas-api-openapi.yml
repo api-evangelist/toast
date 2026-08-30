@@ -1,0 +1,174 @@
+openapi: 3.2.0
+info:
+  version: 2.5.0
+  title: Configuration Service Areas API
+  description: "Returns information about the configuration of a restaurant and \nits menus, such as menu items and alternate payment types, as \nwell as physical configuration such as cash drawers and \nrestaurant tables.\n\nThe configuration API does not return information about entities that you have \nremoved from your restaurant configuration or archived.\n"
+  contact:
+    name: Toast developer support
+servers:
+- url: https://toast-api-server/config/v2
+tags:
+- name: Service Areas
+paths:
+  /serviceAreas/{guid}:
+    get:
+      tags:
+      - Service Areas
+      operationId: serviceAreasGuidGet
+      summary: 'Get a service area
+
+        '
+      description: 'Returns a `ServiceArea`
+
+        object containing information about a physical setting that a
+
+        restaurant serves customers in. For example, a restaurant might
+
+        serve customers in dining room and patio service areas.
+
+        '
+      parameters:
+      - name: Toast-Restaurant-External-ID
+        description: 'The Toast POS GUID of the restaurant that the configuration
+
+          applies to.
+
+          '
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: guid
+        description: The Toast POS GUID of the service area.
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns a `ServiceArea` object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceArea'
+      security:
+      - oauth2:
+        - config:read
+  /serviceAreas:
+    get:
+      tags:
+      - Service Areas
+      operationId: serviceAreasGet
+      summary: 'Get service areas
+
+        '
+      description: 'Returns an array of `ServiceArea` objects
+
+        containing information about the physical settings that a
+
+        restaurant serves customers in. For example, a restaurant might
+
+        serve customers in dining room and patio service areas. If a
+
+        `lastModified` date is specified, returns all objects that were
+
+        created or modified after that date.
+
+        '
+      parameters:
+      - name: Toast-Restaurant-External-ID
+        description: 'The Toast POS GUID of the restaurant that the configuration
+
+          applies to.
+
+          '
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: pageToken
+        in: query
+        description: "A string that identifies the set of data objects that the \nendpoint will return in its response data. You can use this \nparameter to retrieve one page of response data. You \nget the value that you supply in the `pageToken` parameter \nfrom the `Toast-Next-Page-Token` header field value of a \nprevious request to the endpoint. For more information, see \n<a href=\"https://doc.toasttab.com/doc/devguide/apiResponseDataPagination.html\">Paginating response data</a>.\n"
+        schema:
+          type: string
+      - name: lastModified
+        description: 'Limits the return data to objects created or modified after
+
+          a specific date and time. For example:
+
+          `2024-06-20T00:00:00.000%2B0000`.
+
+          '
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      responses:
+        '200':
+          description: Returns an array of `ServiceArea` objects.
+          headers:
+            Toast-Next-Page-Token:
+              description: "A string that identifies the following set of objects \nthat the endpoint will return. You can use this value \nto retrieve that page of response data. To return \nthe next page of objects you supply this value in the \n`pageToken` parameter of the next request to the \nendpoint. For more information, see \n<a href=\"https://doc.toasttab.com/doc/devguide/apiResponseDataPagination.html\">Paginating response data</a>.\n\nThe endpoint does not return the \n`Toast-Next-Page-Token` field if there is no following \npage of response data objects. For example, the \nendpoint will not return a `Toast-Next-Page-Token` \nheader field if all the data objects fit in one \nresponse or if you have reached the last page of \nresponse objects.\n"
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                title: Response
+                type: array
+                minItems: 0
+                maxItems: 300
+                items:
+                  $ref: '#/components/schemas/ServiceArea'
+      security:
+      - oauth2:
+        - config:read
+components:
+  schemas:
+    ToastReference:
+      type: object
+      description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID.
+      required:
+      - guid
+      - entityType
+      properties:
+        guid:
+          description: The GUID maintained by the Toast POS.
+          type: string
+        entityType:
+          description: The type of object this is.
+          type: string
+    ServiceArea:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ToastReference'
+      - type: object
+        description: A representation of a physical service area, a group of tables, in a restaurant.
+        properties:
+          name:
+            type: string
+            description: The name of this service area.
+          revenueCenter:
+            $ref: '#/components/schemas/ExternalReference'
+    ExternalReference:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ToastReference'
+      - type: object
+        properties:
+          externalId:
+            description: External identifier string, prefixed by the naming authority.
+            type: string
+        description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID or a partner's identifier.
+  securitySchemes:
+    oauth2:
+      description: "Access to Toast APIs, specific endpoints, \nand specific API endpoint operations is \ncontrolled by the scopes that are associated \nwith your API account. \nA full reference for Toast API scopes and \ntheir capabilities can be found in the\n[_Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html).\n"
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://toast-api-server/authentication/v1/authentication/login
+          scopes:
+            config:read: 'Allows reading from the configuration API.
+
+              '

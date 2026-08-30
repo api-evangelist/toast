@@ -1,0 +1,110 @@
+openapi: 3.2.0
+info:
+  title: Analytics Restaurants information API
+  description: "The analytics API provides an enterprise reporting and analytics service, \nand includes operations that retrieve information for all restaurants, or a\nsubset of restaurants, in a management group, create requests for reporting data, \nand retrieve the reporting data.\n\nThe types of reporting data include:\n* Aggregated sales reporting data covering sales and labor information.\n* Check reporting data providing information for each check.\n* Labor reporting data providing information for employees and jobs that are paid hourly.\n* Menu reporting data providing information for menu entities as they relate to sales.\n* Payout reporting data providing information for payouts organized either by settled date, payments, or sales date.\n* Guest reporting data providing information for guest's payment cards organized by payments.\n"
+  version: 1.0.0
+  contact:
+    name: Toast developer support
+servers:
+- url: https://toast-api-server/era/v1
+tags:
+- name: Restaurants information
+  description: The analytics API endpoint for providing information about restaurants in a management group.
+paths:
+  /restaurants-information:
+    get:
+      summary: Get management group restaurant information
+      description: 'Returns an array of `RestaurantInfo` objects containing the GUID and guest-facing name for each
+
+        restaurant in the associated management group, and whether or not the restaurant is activated, in test mode, or archived.
+
+        '
+      operationId: getManagementGroupRestaurantsInformation
+      responses:
+        '200':
+          description: A JSON array of `RestaurantsGuidName` objects for each restaurant in the management group.
+          content:
+            application/json:
+              schema:
+                title: Response
+                type: array
+                items:
+                  $ref: '#/components/schemas/RestaurantsGuidName'
+      security:
+      - oauth2:
+        - enterprise-metrics:read
+      tags:
+      - Restaurants information
+components:
+  schemas:
+    RestaurantsGuidName:
+      description: Information about a restaurant in the management group.
+      type: object
+      properties:
+        restaurantGuid:
+          description: 'The identifier assigned by the Toast platform used to identify a restaurant location.
+
+            '
+          format: UUID
+          type: string
+        restaurantName:
+          description: The restaurant's name.
+          format: string
+          type: string
+        active:
+          description: 'Indicates whether the restaurant is activated or not.
+
+
+            Valid values:
+
+
+            * `true` - The restaurant is activated.
+
+
+            * `false` - The restaurant is deactivated.
+
+            '
+          format: boolean
+          type: boolean
+        testMode:
+          description: 'Indicates whether the restaurant is in test mode or not.
+
+
+            Valid values:
+
+
+            * `true` - The restaurant is in test mode.
+
+
+            * `false` - The restaurant is not in test mode.
+
+            '
+          format: boolean
+          type: boolean
+        archived:
+          description: 'Indicates whether the restaurant is archived or not.
+
+
+            Valid values:
+
+
+            * `true` - The restaurant is archived.
+
+
+            * `false` - The restaurant is not archived.
+
+            '
+          format: boolean
+          type: boolean
+  securitySchemes:
+    oauth2:
+      description: "Access to Toast APIs, specific endpoints, \nand specific API endpoint operations is \ncontrolled by the scopes that are associated \nwith your API account. \n\nA full reference for Toast API scopes and \ntheir capabilities can be found in the\n[_Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html).\n"
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://toast-api-server/authentication/v1/authentication/login
+          scopes:
+            enterprise-metrics:read: 'Allows reading from the analytics API.
+
+              '
+x-components: {}

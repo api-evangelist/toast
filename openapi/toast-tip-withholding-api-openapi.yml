@@ -1,0 +1,119 @@
+openapi: 3.2.0
+info:
+  version: 2.5.0
+  title: Configuration Tip Withholding API
+  description: "Returns information about the configuration of a restaurant and \nits menus, such as menu items and alternate payment types, as \nwell as physical configuration such as cash drawers and \nrestaurant tables.\n\nThe configuration API does not return information about entities that you have \nremoved from your restaurant configuration or archived.\n"
+  contact:
+    name: Toast developer support
+servers:
+- url: https://toast-api-server/config/v2
+tags:
+- name: Tip Withholding
+paths:
+  /tipWithholding:
+    get:
+      tags:
+      - Tip Withholding
+      operationId: tipWithholdingGet
+      summary: 'Get the percentage withheld for credit card tips
+
+        '
+      description: 'Returns a `TipWithholding`
+
+        object containing information about the way tip withholding
+
+        is configured for a restaurant. Tip withholding is a percentage
+
+        of employees'' credit card tips that is kept by a restaurant to
+
+        cover credit card processing fees.
+
+        '
+      parameters:
+      - name: Toast-Restaurant-External-ID
+        description: 'The Toast POS GUID of the restaurant that the configuration applies to.
+
+          '
+        in: header
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns a `TipWithholding` object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TipWithholding'
+      security:
+      - oauth2:
+        - config:read
+components:
+  schemas:
+    ToastReference:
+      type: object
+      description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID.
+      required:
+      - guid
+      - entityType
+      properties:
+        guid:
+          description: The GUID maintained by the Toast POS.
+          type: string
+        entityType:
+          description: The type of object this is.
+          type: string
+    TipWithholding:
+      type: object
+      description: 'Information about the way tip withholding is configured for
+
+        a restaurant. Tip withholding is a percentage of employees''
+
+        credit card tips and service charges that are paid to
+
+        employees as a gratuity that is kept by a restaurant to
+
+        cover credit card processing fees.
+
+        '
+      allOf:
+      - $ref: '#/components/schemas/ToastReference'
+      - type: object
+        properties:
+          enabled:
+            type: boolean
+            description: 'Indicates whether a restaurant location withholds a percent of
+
+              employees'' credit card tips.
+
+
+              * `true` - the location keeps a percent of employees'' credit card
+
+              tips.
+
+
+              * `false` - the location does not keep a percent of employees''
+
+              credit card tips.
+
+              '
+          percentage:
+            type: number
+            description: 'The decimal percentage of credit card tips withheld. If tip
+
+              withholding is not `enabled`, tips will not be withheld in the
+
+              Toast platform regardless of this value.
+
+              '
+  securitySchemes:
+    oauth2:
+      description: "Access to Toast APIs, specific endpoints, \nand specific API endpoint operations is \ncontrolled by the scopes that are associated \nwith your API account. \nA full reference for Toast API scopes and \ntheir capabilities can be found in the\n[_Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html).\n"
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://toast-api-server/authentication/v1/authentication/login
+          scopes:
+            config:read: 'Allows reading from the configuration API.
+
+              '

@@ -1,0 +1,338 @@
+openapi: 3.2.0
+info:
+  version: 2.5.0
+  title: Configuration Menu Groups API
+  description: "Returns information about the configuration of a restaurant and \nits menus, such as menu items and alternate payment types, as \nwell as physical configuration such as cash drawers and \nrestaurant tables.\n\nThe configuration API does not return information about entities that you have \nremoved from your restaurant configuration or archived.\n"
+  contact:
+    name: Toast developer support
+servers:
+- url: https://toast-api-server/config/v2
+tags:
+- name: Menu Groups
+paths:
+  /menuGroups/{guid}:
+    get:
+      tags:
+      - Menu Groups
+      operationId: menuGroupsGuidGet
+      summary: 'Get a menu group
+
+        '
+      description: 'Returns a `MenuGroup`
+
+        object containing information about a section within a menu.
+
+        '
+      parameters:
+      - name: Toast-Restaurant-External-ID
+        description: 'The Toast POS GUID of the restaurant that the configuration
+
+          applies to.
+
+          '
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: guid
+        description: The Toast POS GUID of the menu group.
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns a `MenuGroup` object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MenuGroup'
+      security:
+      - oauth2:
+        - config:read
+  /menuGroups:
+    get:
+      tags:
+      - Menu Groups
+      operationId: menuGroupsGet
+      summary: 'Get menu groups
+
+        '
+      description: 'Returns an array of `MenuGroup` objects
+
+        containing information about the subsections of the menus
+
+        configured for a restaurant. If a `lastModified` date is
+
+        specified, returns all objects that were created or modified
+
+        after that date.
+
+        '
+      parameters:
+      - name: Toast-Restaurant-External-ID
+        description: 'The Toast POS GUID of the restaurant that the configuration
+
+          applies to.
+
+          '
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: pageToken
+        in: query
+        description: "A string that identifies the set of data objects that the \nendpoint will return in its response data. You can use this \nparameter to retrieve one page of response data. You \nget the value that you supply in the `pageToken` parameter \nfrom the `Toast-Next-Page-Token` header field value of a \nprevious request to the endpoint. For more information, see \n<a href=\"https://doc.toasttab.com/doc/devguide/apiResponseDataPagination.html\">Paginating response data</a>.\n"
+        schema:
+          type: string
+      - name: lastModified
+        description: 'Limits the return data to objects created or modified after
+
+          a specific date and time. For example:
+
+          `2024-06-20T00:00:00.000%2B0000`.
+
+          '
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      responses:
+        '200':
+          description: Returns an array of `MenuGroup` objects.
+          headers:
+            Toast-Next-Page-Token:
+              description: "A string that identifies the following set of objects \nthat the endpoint will return. You can use this value \nto retrieve that page of response data. To return \nthe next page of objects you supply this value in the \n`pageToken` parameter of the next request to the \nendpoint. For more information, see \n<a href=\"https://doc.toasttab.com/doc/devguide/apiResponseDataPagination.html\">Paginating response data</a>.\n\nThe endpoint does not return the \n`Toast-Next-Page-Token` field if there is no following \npage of response data objects. For example, the \nendpoint will not return a `Toast-Next-Page-Token` \nheader field if all the data objects fit in one \nresponse or if you have reached the last page of \nresponse objects.\n"
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                title: Response
+                type: array
+                minItems: 0
+                maxItems: 300
+                items:
+                  $ref: '#/components/schemas/MenuGroup'
+      security:
+      - oauth2:
+        - config:read
+components:
+  schemas:
+    ToastReference:
+      type: object
+      description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID.
+      required:
+      - guid
+      - entityType
+      properties:
+        guid:
+          description: The GUID maintained by the Toast POS.
+          type: string
+        entityType:
+          description: The type of object this is.
+          type: string
+    ExternalReference:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ToastReference'
+      - type: object
+        properties:
+          externalId:
+            description: External identifier string, prefixed by the naming authority.
+            type: string
+        description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID or a partner's identifier.
+    Image:
+      type: object
+      description: Information about an image associated with a menu or menu item.
+      properties:
+        url:
+          description: The web address of the image.
+          type: string
+    MenuGroup:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ExternalReference'
+      - type: object
+        properties:
+          name:
+            type: string
+            description: The name of the menu group as it appears in the Toast POS.
+          menu:
+            $ref: '#/components/schemas/ExternalReference'
+          orderableOnline:
+            type: string
+            description: 'Deprecated. Indicates whether restaurant guests can order from the menu online.
+
+
+              Use the `visibility` array that the menus API (V2) returns for each menu entity, instead of this
+
+              `orderableOnline` value, to determine if the entity should be
+
+              available for online ordering.
+
+              '
+            enum:
+            - 'YES'
+            - 'NO'
+          visibility:
+            type: string
+            description: 'Deprecated. Indicates where the menu is displayed and who can see it.
+
+              * ALL: Visible to everyone (servers and customers)
+
+              * POS_ONLY: Only visible to servers
+
+              * NONE: Hidden from everyone
+
+
+              Use the `visibility` array that the menus API (V2) returns for each menu
+
+              entity, instead of this `visibility` value, to determine where the
+
+              entity should be visible.
+
+              '
+            enum:
+            - ALL
+            - POS_ONLY
+            - NONE
+          parent:
+            $ref: '#/components/schemas/ExternalReference'
+          items:
+            type: array
+            description: 'An array of `ExternalReference` objects containing the
+
+              identifiers of the `MenuItem`s in the menu
+
+              group.
+
+              '
+            minItems: 0
+            items:
+              $ref: '#/components/schemas/ExternalReference'
+          subgroups:
+            type: array
+            description: 'An array of `ExternalReference` objects containing the
+
+              identifiers of the child `MenuGroup`s in
+
+              the menu group. Empty if the menu group does not include any child
+
+              menu groups.
+
+              '
+            minItems: 0
+            items:
+              $ref: '#/components/schemas/ExternalReference'
+          optionGroups:
+            type: array
+            description: 'An array of `ExternalReference` objects containing the
+
+              identifiers of the child `MenuOptionGroup`s
+
+              that contain modifiers applicable to the group, its
+
+              subgroups and its items. Does not include
+
+              `MenuOptionGroup`s inherited from its parent `MenuGroup`.
+
+              '
+            minItems: 0
+            items:
+              $ref: '#/components/schemas/ExternalReference'
+          inheritOptionGroups:
+            type: boolean
+            description: 'True if this `MenuGroup` inherits `MenuOptionGroup`s
+
+              from its parent `MenuGroup`.
+
+              '
+          images:
+            type: array
+            description: 'An array of `Image`
+
+              objects associated with with the `MenuGroup`.
+
+              '
+            items:
+              $ref: '#/components/schemas/Image'
+          unitOfMeasure:
+            type: string
+            description: 'The unit of measure used to determine the price of items in this group.
+
+
+              The default is `NONE`, which means that the item is not meant to
+
+              be measured during a sale.
+
+              This value is not relevant if `inheritUnitOfMeasure` is true.
+
+
+              Values are:
+
+              * `NONE` - The item is not meant to be measured.
+
+              * `LB` - Weighed in pounds.
+
+              * `OZ` - Weighed in ounces.
+
+              * `KG` - Weighed in kilograms.
+
+              * `G` - Weighed in grams.
+
+              * `GAL` - Measured in gallons.
+
+              * `L` - Measured in liters.
+
+              * `ML` - Measured in milliliters.
+
+              * `FL_OZ` - Measured in fluid ounces.
+
+              * `M` - Measured in meters.
+
+              * `CM` - Measured in centimeters.
+
+              * `FT` - Measured in feet.
+
+              * `IN` - Measured in inches.
+
+              * `YD` - Measured in yards.
+
+              '
+            enum:
+            - NONE
+            - LB
+            - OZ
+            - KG
+            - G
+            - GAL
+            - L
+            - ML
+            - FL_OZ
+            - M
+            - CM
+            - FT
+            - IN
+            - YD
+          inheritUnitOfMeasure:
+            type: boolean
+            description: 'True if this `MenuGroup` inherits its unit of measure
+
+              from its parent `MenuGroup` or (if its parent is null)
+
+              its parent `Menu`.
+
+              '
+  securitySchemes:
+    oauth2:
+      description: "Access to Toast APIs, specific endpoints, \nand specific API endpoint operations is \ncontrolled by the scopes that are associated \nwith your API account. \nA full reference for Toast API scopes and \ntheir capabilities can be found in the\n[_Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html).\n"
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://toast-api-server/authentication/v1/authentication/login
+          scopes:
+            config:read: 'Allows reading from the configuration API.
+
+              '

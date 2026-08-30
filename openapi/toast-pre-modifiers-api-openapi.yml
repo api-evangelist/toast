@@ -1,0 +1,204 @@
+openapi: 3.2.0
+info:
+  version: 2.5.0
+  title: Configuration Pre Modifiers API
+  description: "Returns information about the configuration of a restaurant and \nits menus, such as menu items and alternate payment types, as \nwell as physical configuration such as cash drawers and \nrestaurant tables.\n\nThe configuration API does not return information about entities that you have \nremoved from your restaurant configuration or archived.\n"
+  contact:
+    name: Toast developer support
+servers:
+- url: https://toast-api-server/config/v2
+tags:
+- name: Pre Modifiers
+paths:
+  /preModifiers/{guid}:
+    get:
+      tags:
+      - Pre Modifiers
+      operationId: preModifiersGuidGet
+      summary: 'Get a pre modifier
+
+        '
+      description: 'Returns a `PreModifier` object
+
+        containing information about a pre modifier.
+
+        '
+      parameters:
+      - name: Toast-Restaurant-External-ID
+        description: 'The Toast POS GUID of the restaurant that the configuration
+
+          applies to.
+
+          '
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: guid
+        description: The Toast POS GUID of the pre modifier.
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Returns a `PreModifier` object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreModifier'
+      security:
+      - oauth2:
+        - config:read
+  /preModifiers:
+    get:
+      tags:
+      - Pre Modifiers
+      operationId: preModifiersGet
+      summary: 'Get pre-modifiers
+
+        '
+      description: 'Returns an array of `PreModifier` objects
+
+        containing information about PreModifiers configured
+
+        for a restaurant.
+
+        '
+      parameters:
+      - name: Toast-Restaurant-External-ID
+        description: 'The Toast POS GUID of the restaurant that the configuration
+
+          applies to.
+
+          '
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: pageToken
+        in: query
+        description: "A string that identifies the set of data objects that the \nendpoint will return in its response data. You can use this \nparameter to retrieve one page of response data. You \nget the value that you supply in the `pageToken` parameter \nfrom the `Toast-Next-Page-Token` header field value of a \nprevious request to the endpoint. For more information, see \n<a href=\"https://doc.toasttab.com/doc/devguide/apiResponseDataPagination.html\">Paginating response data</a>.\n"
+        schema:
+          type: string
+      - name: lastModified
+        description: 'Limits the return data to objects created or modified after
+
+          a specific date and time. For example:
+
+          `2024-06-20T00:00:00.000%2B0000`.
+
+          '
+        in: query
+        required: false
+        schema:
+          type: string
+          format: date-time
+      responses:
+        '200':
+          description: Returns an array of `PreModifier` objects.
+          headers:
+            Toast-Next-Page-Token:
+              description: "A string that identifies the following set of objects \nthat the endpoint will return. You can use this value \nto retrieve that page of response data. To return \nthe next page of objects you supply this value in the \n`pageToken` parameter of the next request to the \nendpoint. For more information, see \n<a href=\"https://doc.toasttab.com/doc/devguide/apiResponseDataPagination.html\">Paginating response data</a>.\n\nThe endpoint does not return the \n`Toast-Next-Page-Token` field if there is no following \npage of response data objects. For example, the \nendpoint will not return a `Toast-Next-Page-Token` \nheader field if all the data objects fit in one \nresponse or if you have reached the last page of \nresponse objects.\n"
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                title: Response
+                type: array
+                minItems: 0
+                maxItems: 300
+                items:
+                  $ref: '#/components/schemas/PreModifier'
+      security:
+      - oauth2:
+        - config:read
+components:
+  schemas:
+    PreModifier:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ToastReference'
+      - type: object
+        properties:
+          name:
+            type: string
+            description: The name of the pre modifier that appears in the Toast POS.
+          scalePrice:
+            type: boolean
+            description: True if this multiplies the modifier price, false if it adds to the modifier price.
+          basePrice:
+            type: number
+            format: double
+            description: Amount to add to the modifier price, if scalePrice is false. Otherwise not used.
+          scaleFactor:
+            type: number
+            format: float
+            description: Amount to multiply the modifier price, if scalePrice is true. Otherwise not used.
+          displayMode:
+            type: string
+            description: 'Where this premodifier should be displayed relative to the modifier name.
+
+              PREFIX - before the modifier name
+
+              SUFFIX - after the modifier name
+
+              '
+            enum:
+            - PREFIX
+            - SUFFIX
+          parent:
+            $ref: '#/components/schemas/ToastReference'
+          chargeAsExtra:
+            type:
+            - boolean
+            - 'null'
+            description: 'When true, selecting this pre-modifier adds an additional portion of the modifier to the menu item and adds the price of the additional portion to the menu item according to the rules listed below.
+
+
+              If the modifier group that the modifier belongs to:
+
+              * Uses the **No charge** option, the Toast platform uses the modifier''s <a href="https://doc.toasttab.com/doc/platformguide/adminPricingModifierOptions.html#adminBasingModifierOptionsOnExistingMenuItems">override price</a> or, if no override price exists, the <a href="https://doc.toasttab.com/doc/platformguide/adminPricingModifierOptions.html#adminUnderstandingAModifierOptionsItemReference">item reference</a> price as the price of the additional portion.
+
+              * Uses the **Individual** option where each modifier has its own price, the Toast platform uses the modifier''s override price or, if no override price exists, the item reference price as the price of the additional portion.
+
+              * Uses the **Group** option where all modifiers in the group share a price, the Toast platform uses the group price as the price of the additional portion.
+
+
+              Additionally, if the modifier group that the modifier belongs to uses:
+
+              * <a href="https://doc.toasttab.com/doc/platformguide/adminSizePrice.html#adminSizePricingForModifierGroups">Size</a> pricing, the Toast platform uses the size price that matches the size of the menu item when determining the price of the additional portion.
+
+              * <a href="https://doc.toasttab.com/doc/platformguide/adminSequencePrice.html">Sequence</a> pricing, the Toast platform treats the additional portion as the next modifier in the sequence and prices it using the sequence pricing rules that have been specified.
+
+              * <a href="https://doc.toasttab.com/doc/platformguide/adminSizeSequencePrice.html">Size/sequence</a> pricing, the Toast platform matches the size of the additional portion to the size of the menu item and then treats it as the next modifier in the sequence when determining the price of the additional portion.
+
+
+              The `chargeAsExtra` value is `null` if the value is not set.
+
+              '
+    ToastReference:
+      type: object
+      description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID.
+      required:
+      - guid
+      - entityType
+      properties:
+        guid:
+          description: The GUID maintained by the Toast POS.
+          type: string
+        entityType:
+          description: The type of object this is.
+          type: string
+  securitySchemes:
+    oauth2:
+      description: "Access to Toast APIs, specific endpoints, \nand specific API endpoint operations is \ncontrolled by the scopes that are associated \nwith your API account. \nA full reference for Toast API scopes and \ntheir capabilities can be found in the\n[_Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html).\n"
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://toast-api-server/authentication/v1/authentication/login
+          scopes:
+            config:read: 'Allows reading from the configuration API.
+
+              '

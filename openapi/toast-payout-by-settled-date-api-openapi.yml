@@ -1,0 +1,348 @@
+openapi: 3.2.0
+info:
+  title: Analytics Payout by settled date API
+  description: "The analytics API provides an enterprise reporting and analytics service, \nand includes operations that retrieve information for all restaurants, or a\nsubset of restaurants, in a management group, create requests for reporting data, \nand retrieve the reporting data.\n\nThe types of reporting data include:\n* Aggregated sales reporting data covering sales and labor information.\n* Check reporting data providing information for each check.\n* Labor reporting data providing information for employees and jobs that are paid hourly.\n* Menu reporting data providing information for menu entities as they relate to sales.\n* Payout reporting data providing information for payouts organized either by settled date, payments, or sales date.\n* Guest reporting data providing information for guest's payment cards organized by payments.\n"
+  version: 1.0.0
+  contact:
+    name: Toast developer support
+servers:
+- url: https://toast-api-server/era/v1
+tags:
+- name: Payout by settled date
+  description: The analytics API endpoint for payout reporting data organized by settled date.
+paths:
+  /payout/{timeRange}:
+    post:
+      summary: Post a payout data request organized by settled date for a specific time range
+      description: "Creates a payout reporting data organized by settled date request for a specific time range.\n\nSpecify the time range with the `timeRange` path parameter.\n\nSpecify whether to include data from inactive restaurants using the `onlyInactiveRestaurants` query parameter.\n\nSpecify the `startDate` and `endDate` for the payout data in the message body.\n\nInclude information about which restaurants to include or exclude with the \n`restaurantIds` and `excludedRestaurantIds` properties.\n"
+      operationId: postPayoutReportSettledDateSpecificTimeRange
+      parameters:
+      - name: timeRange
+        description: 'The specific time range that you are requesting reporting data for.
+
+
+          Valid values:
+
+
+          * `day` - The request covers a one day time range.
+
+
+          * `week` - The request covers a time range of seven days or fewer.
+
+
+          * `month` - The request covers a time range of 31 days or fewer.
+
+          '
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - day
+          - week
+          - month
+      - name: onlyInactiveRestaurants
+        description: "Specifies whether the data is for inactive restaurants only. Active restaurant data is \nreturned by default.\n\nValid values:\n\n* `true` - The data retrieved is for inactive restaurants only.\n\n* `false` - The data retrieved is for active restaurants only.\n"
+        in: query
+        required: false
+        schema:
+          type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PayoutSettledDateReportingDataRequest'
+        description: 'A JSON object containing the starting and ending dates for the reporting data request and included or excluded restaurants.
+
+          '
+        required: true
+      responses:
+        '200':
+          description: The `reportRequestGuid` used to retrieve the reporting data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportRequestGuid'
+        '400':
+          description: The request contains invalid information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '500':
+          description: 'An unexpected internal error occurred. The
+
+            `requestId` attached to this error can be referenced by
+
+            the Toast support team.
+
+            '
+      security:
+      - oauth2:
+        - enterprise-metrics:read
+      tags:
+      - Payout by settled date
+  /payout/{reportRequestGuid}:
+    get:
+      summary: Get the payout reporting data organized by settled date
+      description: 'Returns the payout data organized by settled date for the reporting data request.
+
+
+        Specify the `reportRequestGuid` for the reporting data.
+
+        '
+      operationId: getPayoutSettledDateReportingData
+      parameters:
+      - name: reportRequestGuid
+        description: The Toast platform identifier for the reporting data request.
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The reporting data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayoutSettledDateReportingData'
+        '202':
+          description: The Toast platform is in the process of gathering the reporting data. Try the request again at a later time.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportingDataInProgress'
+        '404':
+          description: An unexpected error occurred. Refer to the `message` attached to this error for more information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: The Toast platform was unable to process the request. Request a new `reportRequestGuid` and try again.
+        '500':
+          description: 'An unexpected internal error occurred. The
+
+            `requestId` attached to this error can be referenced by
+
+            the Toast support team.
+
+            '
+        '504':
+          description: The Toast platform was unable to process the request because internal services took too long to process, resulting in a timeout.
+      security:
+      - oauth2:
+        - enterprise-metrics:read
+      tags:
+      - Payout by settled date
+components:
+  schemas:
+    PayoutSettledDateReportingData:
+      description: The payout reporting data organized by settled date.
+      type: object
+      properties:
+        restaurantGuid:
+          description: 'The identifier assigned by the Toast platform used to identify a restaurant location.
+
+            '
+          format: UUID
+          type: string
+        restaurantName:
+          description: 'The restaurant’s name.
+
+            '
+          format: string
+          type: string
+        restaurantLocationName:
+          description: 'The restaurant’s location name.
+
+            '
+          format: string
+          type: string
+        restaurantLocationCode:
+          description: 'The restaurant’s location code.
+
+            '
+          format: string
+          type: string
+        settledDate:
+          description: 'The date when the payout was either processed or settled.
+
+            '
+          format: integer
+          type: string
+        salesPeriodStartDateTime:
+          description: 'The date and time of the first payment included in the payout amount.
+
+            '
+          format: string
+          type: string
+        salesPeriodEndDateTime:
+          description: 'The date and time of the last payment included in the payout amount.
+
+            '
+          format: string
+          type: string
+        transactionCount:
+          description: 'The number of transactions included in the payout.
+
+            '
+          format: integer
+          type: number
+        paymentAmount:
+          description: 'The amount paid to the restaurant by guests using cards that contributes towards the payout amount.
+
+            '
+          format: double
+          type: number
+        refundAmount:
+          description: 'The amount refunded to guests by the restaurant that contributes towards the payout amount.
+
+            '
+          format: double
+          type: number
+        totalFeeAmount:
+          description: 'The amount paid or owed by the restaurant in fees that contributes towards the payout amount. An example is the processing fees charged by card providers on payments.
+
+            '
+          format: double
+          type: number
+        withholdingAmount:
+          description: 'The amount owed to Toast by the restaurant for products and services. For example, this includes Toast Capital, Fundraising, and Instant Deposit.
+
+            '
+          format: double
+          type: number
+        payoutAmount:
+          description: 'The amount to be deposited into the restaurant’s account. This amount is calculated by subtracting the refund, fee, and withholding amounts from the payment amount.
+
+            '
+          format: double
+          type: number
+        payoutStatus:
+          description: 'The status of the payout.
+
+
+            Valid values:
+
+
+            * `CAPTURED` - Toast collected the guest card payments included in the payout successfully.
+
+            * `SENT` - Toast sent the payout to the bank. It may take some time to appear in the account.
+
+            * `NONE` - The payout was made prior to January 10, 2024 and is unavailable.
+
+            '
+          format: string
+          type: string
+    PayoutSettledDateReportingDataRequest:
+      description: "Information about what the payout data organized by settled date covers and how it is presented. This includes \nthe starting and ending dates of the time range and the included or excluded restaurants.\n"
+      type: object
+      properties:
+        startDate:
+          description: 'The starting date of the time range for the reporting data.
+
+
+            Specify the date in the format YYYYMMDD. For example, `20220824`.
+
+            '
+          format: integer
+          type: number
+        endDate:
+          description: 'The ending date of the time range for the reporting data.
+
+
+            Specify the date in the format YYYYMMDD. For example, `20220824`.
+
+            '
+          format: integer
+          type: number
+        restaurantIds:
+          description: "The `restaurantGuid` values of specific restaurants in the management group to include in the \nreporting data. If used, only the data for listed restaurants in the management group \nthat are identified by `restaurantGuid` is included. If left blank, all restaurants are included \nby default.\n"
+          items:
+            format: uuid
+            type: string
+          type: array
+        excludedRestaurantIds:
+          description: "The `restaurantGuid` values of specific restaurants in the management group to exclude from the \nreporting data. If used, the data for listed restaurants in the management group \nthat are identified by `restaurantGuid` is excluded. If left blank, all restaurants are included \nby default.\n"
+          items:
+            format: UUID
+            type: string
+          type: array
+      required:
+      - restaurantIds
+      - excludedRestaurantIds
+      - startDate
+      - endDate
+    ReportRequestGuid:
+      description: The Toast platform assigned identifier used to identify a specific analytics reporting data request.
+      format: UUID
+      type: string
+    ErrorMessage:
+      type: object
+      description: Information about an unsuccessful REST request.
+      properties:
+        status:
+          description: The HTTP status code.
+          format: integer
+          type: number
+        code:
+          description: The service-specific result code.
+          format: integer
+          type: number
+        message:
+          description: A brief message describing the error.
+          type: string
+        messageKey:
+          description: Reserved for future use.
+          type: string
+        fieldName:
+          description: Reserved for future use.
+          type: string
+        link:
+          description: The URL of a Toast page that provides more information about the error.
+          format: URL
+          type: string
+        requestId:
+          description: The identifier of the HTTP request that generated the error.
+          format: UUID
+          type: string
+        developerMessage:
+          description: Optional, technical information to help a developer investigate the cause of the error.
+          type: string
+        errors:
+          description: A list of JSON `ErrorMessage` objects.
+          items:
+            type: string
+          type: array
+        canRetry:
+          description: Reserved for future use.
+          type: string
+    ReportingDataInProgress:
+      description: The Toast platform is in the process of gathering the reporting data. Try the request again at a later time.
+      type: object
+      properties:
+        message:
+          description: A brief message describing that the reporting data is still in progress and to try again at a later time.
+          format: string
+          type: string
+        reportStatus:
+          description: Reflects the in progress status of the reporting data using the IN_PROGRESS value.
+          format: text
+          type: string
+        reportRequestGuid:
+          description: The Toast platform assigned identifier used to identify a specific analytics reporting data request.
+          format: UUID
+          type: string
+  securitySchemes:
+    oauth2:
+      description: "Access to Toast APIs, specific endpoints, \nand specific API endpoint operations is \ncontrolled by the scopes that are associated \nwith your API account. \n\nA full reference for Toast API scopes and \ntheir capabilities can be found in the\n[_Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html).\n"
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://toast-api-server/authentication/v1/authentication/login
+          scopes:
+            enterprise-metrics:read: 'Allows reading from the analytics API.
+
+              '
+x-components: {}

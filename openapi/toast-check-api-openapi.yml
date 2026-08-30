@@ -1,0 +1,351 @@
+openapi: 3.2.0
+info:
+  title: Analytics Check API
+  description: "The analytics API provides an enterprise reporting and analytics service, \nand includes operations that retrieve information for all restaurants, or a\nsubset of restaurants, in a management group, create requests for reporting data, \nand retrieve the reporting data.\n\nThe types of reporting data include:\n* Aggregated sales reporting data covering sales and labor information.\n* Check reporting data providing information for each check.\n* Labor reporting data providing information for employees and jobs that are paid hourly.\n* Menu reporting data providing information for menu entities as they relate to sales.\n* Payout reporting data providing information for payouts organized either by settled date, payments, or sales date.\n* Guest reporting data providing information for guest's payment cards organized by payments.\n"
+  version: 1.0.0
+  contact:
+    name: Toast developer support
+servers:
+- url: https://toast-api-server/era/v1
+tags:
+- name: Check
+  description: The analytics API endpoints for check reporting data.
+paths:
+  /check/{timeRange}:
+    post:
+      summary: Post a check reporting data request for a specific time range
+      description: "Creates a check reporting data request for a specific time range. Currently, `day` is the only \nvalid value.\n\nUse the `onlyInactiveRestaurants` query parameter set to `true` to get data for inactive \nrestaurants only.\n\nSpecify the `startBusinessDate` and `endBusinessDate` for the \ndata in the message body.\n\nIdentify restaurants to include or exclude with the `restaurantIds` and `excludedRestaurantIds` \nproperties. If left blank, all restaurants are included by default.\n"
+      operationId: postCheckReportingDataSpecificTimeRangeRequest
+      parameters:
+      - name: timeRange
+        description: "The specific time range that you are requesting the data for. Currently, `day` is the \nonly valid value.\n"
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - day
+      - name: onlyInactiveRestaurants
+        description: "Specifies whether the data is for inactive restaurants only. Active restaurant data is \nreturned by default.\n\nValid values:\n\n* `true` - The data retrieved is for inactive restaurants only.\n\n* `false` - The data retrieved is for active restaurants only.\n"
+        in: query
+        required: false
+        schema:
+          type: boolean
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckReportingDataRequest'
+        description: "A JSON object containing the starting and ending dates for the check reporting data \nrequest and included or excluded restaurants.\n"
+        required: true
+      responses:
+        '200':
+          description: The `reportRequestGuid` used to retrieve the data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportRequestGuid'
+        '400':
+          description: The request contains invalid information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '500':
+          description: 'An unexpected internal error occurred. The
+
+            `requestId` attached to this error can be referenced by
+
+            the Toast support team.
+
+            '
+      security:
+      - oauth2:
+        - enterprise-metrics:read
+      tags:
+      - Check
+  /check/{reportRequestGuid}:
+    get:
+      summary: Get the check reporting data
+      description: 'Returns the check reporting data for the specified report request GUID.
+
+
+        Specify the `reportRequestGuid` for the data.
+
+
+        Specify whether to include the guest-facing restaurant names.
+
+        '
+      operationId: getCheckReportingData
+      parameters:
+      - name: reportRequestGuid
+        description: The Toast platform identifier for the data request.
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: fetchRestaurantNames
+        description: "Specifies whether the data includes the guest-facing restaurant name. The guest-facing \nrestaurant name is not returned by default.\n\nValid values:\n\n* `true` - The guest-facing restaurant name is returned with the data.\n\n* `false` - The guest-facing restaurant name is not returned with the data.\n"
+        in: query
+        required: false
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: The check reporting data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckReportingData'
+        '202':
+          description: The Toast platform is in the process of gathering the reporting data. Try the request again at a later time.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportingDataInProgress'
+        '404':
+          description: An unexpected error occurred. Refer to the `message` attached to this error for more information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+        '409':
+          description: The Toast platform was unable to process the request. Request a new `reportRequestGuid` and try again.
+        '500':
+          description: 'An unexpected internal error occurred. The
+
+            `requestId` attached to this error can be referenced by
+
+            the Toast support team.
+
+            '
+        '504':
+          description: "The Toast platform was unable to process the request because internal \nservices took too long to process, resulting in a timeout.\n"
+      security:
+      - oauth2:
+        - enterprise-metrics:read
+      tags:
+      - Check
+components:
+  schemas:
+    CheckReportingDataRequest:
+      description: 'Information about what the check reporting data covers and how it is presented. This includes
+
+        the starting and ending dates of the time range, and the included or excluded restaurants.
+
+        '
+      type: object
+      properties:
+        startBusinessDate:
+          description: 'The starting date of the time range for the reporting data.
+
+
+            Specify the business day in the format YYYYMMDD. For example, `20220824`.
+
+            '
+          format: integer
+          type: number
+        endBusinessDate:
+          description: 'The ending date of the time range for the reporting data.
+
+
+            Specify the business day in the format YYYYMMDD. For example, `20220824`.
+
+            '
+          format: integer
+          type: number
+        restaurantIds:
+          description: "The `restaurantGuid` values of specific restaurants in the management group to include in the \nreporting data. If used, only the data for listed restaurants in the management group \nthat are identified by `restaurantGuid` is included. If left blank, all restaurants are included \nby default.\n"
+          items:
+            format: uuid
+            type: string
+          type: array
+        excludedRestaurantIds:
+          description: "The `restaurantGuid` values of specific restaurants in the management group to exclude from the \nreporting data. If used, the data for listed restaurants in the management group \nthat are identified by `restaurantGuid` is excluded. If left blank, all restaurants are included \nby default.\n"
+          items:
+            format: UUID
+            type: string
+          type: array
+      required:
+      - restaurantIds
+      - excludedRestaurantIds
+      - startBusinessDate
+      - endBusinessDate
+    ReportRequestGuid:
+      description: The Toast platform assigned identifier used to identify a specific analytics reporting data request.
+      format: UUID
+      type: string
+    ErrorMessage:
+      type: object
+      description: Information about an unsuccessful REST request.
+      properties:
+        status:
+          description: The HTTP status code.
+          format: integer
+          type: number
+        code:
+          description: The service-specific result code.
+          format: integer
+          type: number
+        message:
+          description: A brief message describing the error.
+          type: string
+        messageKey:
+          description: Reserved for future use.
+          type: string
+        fieldName:
+          description: Reserved for future use.
+          type: string
+        link:
+          description: The URL of a Toast page that provides more information about the error.
+          format: URL
+          type: string
+        requestId:
+          description: The identifier of the HTTP request that generated the error.
+          format: UUID
+          type: string
+        developerMessage:
+          description: Optional, technical information to help a developer investigate the cause of the error.
+          type: string
+        errors:
+          description: A list of JSON `ErrorMessage` objects.
+          items:
+            type: string
+          type: array
+        canRetry:
+          description: Reserved for future use.
+          type: string
+    ReportingDataInProgress:
+      description: The Toast platform is in the process of gathering the reporting data. Try the request again at a later time.
+      type: object
+      properties:
+        message:
+          description: A brief message describing that the reporting data is still in progress and to try again at a later time.
+          format: string
+          type: string
+        reportStatus:
+          description: Reflects the in progress status of the reporting data using the IN_PROGRESS value.
+          format: text
+          type: string
+        reportRequestGuid:
+          description: The Toast platform assigned identifier used to identify a specific analytics reporting data request.
+          format: UUID
+          type: string
+    CheckReportingData:
+      description: The check reporting data.
+      type: object
+      properties:
+        restaurantGuid:
+          description: 'The identifier assigned by the Toast platform used to identify a restaurant location.
+
+            '
+          format: UUID
+          type: string
+        orderNumber:
+          description: The number of the order.
+          format: long
+          type: number
+        orderGuid:
+          description: The identifier assigned by the Toast platform used to identify an order.
+          format: UUID
+          type: string
+        checkNumber:
+          description: The number of the check.
+          format: long
+          type: number
+        checkGuid:
+          description: The identifier assigned by the Toast platform used to identify a check.
+          format: UUID
+          type: string
+        orderOpenDate:
+          description: "The business date for when the order is initially expected to be fulfilled. The business \ndate uses the YYYYMMDD format. For example, `20220824`.\n"
+          format: integer
+          type: string
+        checkPaidDateTime:
+          description: The business date and time that the check was paid.
+          format: date-time
+          type: string
+        checkModifiedDateTime:
+          description: The business date and time that the check was modified.
+          format: date-time
+          type: string
+        checkStatus:
+          description: "The state of the check. \n\nValid values:\n\n* `OPEN` - The check is open and unpaid.\n\n* `PAID` - The check is initially paid, but the payment is not finalized.\n\n* `CLOSED` - The check payment is finalized.\n"
+          format: text
+          type: string
+        checkVoidedStatus:
+          description: 'Indicates whether the check is void or not.
+
+
+            Valid values:
+
+
+            * `true` - The check is void.
+
+
+            * `false` - The check is not void.
+
+            '
+          format: boolean
+          type: boolean
+        diningOption:
+          description: 'The dining option for the data.
+
+            '
+          type: string
+        revenueCenter:
+          description: 'The revenue center for the data.
+
+            '
+          type: string
+        serverName:
+          description: The first and last name of the employee who initially created the order associated with the check.
+          type: string
+        checkTotalAmount:
+          description: 'The sum of the cost of each item applied to a check, taking into account the item quantity.
+
+            This includes taxes, services charges, tip, and refunds applied to the check.
+
+            '
+          format: double
+          type: number
+        checkDiscountAmount:
+          description: The total discount amount applied to the check or to associated items on the check.
+          format: double
+          type: number
+        checkTaxAmount:
+          description: The calculated tax amount applied to the check. This includes any service charge and item-level taxes.
+          format: double
+          type: number
+        checkTipAmount:
+          description: The tip amount applied to the check.
+          format: double
+          type: number
+        checkGratuityAmount:
+          description: The gratuity amount applied to the check.
+          format: double
+          type: number
+        checkRefundAmount:
+          description: The refund amount applied to the check.
+          format: double
+          type: number
+        restaurantName:
+          description: 'The restaurant''s name. This property is only included when
+
+            the `fetchRestaurantNames` parameter is set to `true` in the `GET` request.
+
+            '
+          format: string
+          type: string
+  securitySchemes:
+    oauth2:
+      description: "Access to Toast APIs, specific endpoints, \nand specific API endpoint operations is \ncontrolled by the scopes that are associated \nwith your API account. \n\nA full reference for Toast API scopes and \ntheir capabilities can be found in the\n[_Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html).\n"
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://toast-api-server/authentication/v1/authentication/login
+          scopes:
+            enterprise-metrics:read: 'Allows reading from the analytics API.
+
+              '
+x-components: {}

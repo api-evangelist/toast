@@ -1,0 +1,125 @@
+generated: '2026-08-27'
+method: searched
+source: https://doc.toasttab.com/doc/devguide/apiWebhooksReference.html
+docs:
+- https://doc.toasttab.com/doc/devguide/apiWebhookBasics.html
+- https://doc.toasttab.com/doc/devguide/apiWebhooksReference.html
+- https://doc.toasttab.com/doc/devguide/apiSubscriptions.html
+- https://doc.toasttab.com/doc/devguide/apiMessageDataSchema.html
+- https://doc.toasttab.com/doc/devguide/apiHttpHeaders.html
+- https://doc.toasttab.com/doc/devguide/apiMessageSigning.html
+- https://doc.toasttab.com/doc/devguide/apiTimeouts.html
+- https://doc.toasttab.com/doc/devguide/apiRetrySupport.html
+- https://doc.toasttab.com/doc/devguide/apiEndpointRequirements.html
+provider: Toast
+providerId: toast
+asyncapi_published: false
+asyncapi_note: >-
+  Toast publishes NO AsyncAPI document. Its event surface is documented in prose in the developer
+  guide, one reference page per event category. This artifact is the webhook catalogue read from those
+  pages; it is not a generated AsyncAPI and none was fabricated.
+transport: https-webhook
+direction: outbound (Toast POSTs to a partner-hosted endpoint)
+subscription_model:
+  self_service: false
+  note: >-
+    A webhook subscription is created and maintained by Toast support (or, for Standard API access
+    customers, through Toast Web), binding one partner endpoint to one event category. There is no
+    subscription-management API. A partner endpoint may be bound to several categories.
+  standard_api_access: https://doc.toasttab.com/doc/devguide/devApiAccessWebhookSubscriptions.html
+security:
+  signing_header: Toast-Signature
+  algorithm: HMAC over the message body and timestamp using the per-subscription secret key
+  secret_scope: One secret per webhook subscription per environment - a stock subscription and a
+    partner subscription for the same partner in the same environment have different secrets.
+  required: false
+  note: Toast states signature verification is not required but is strongly recommended.
+headers:
+- name: Toast-Signature
+  description: HMAC signature of the message.
+- name: Toast-Restaurant-External-ID
+  description: GUID of the restaurant the event belongs to. Omitted for events with no restaurant
+    context, for example partners events.
+delivery:
+  connection_timeout_seconds: 2
+  socket_timeout_seconds: 2
+  ack_requirement: The endpoint must return a 2xx response within the 2-second window BEFORE running
+    any business logic.
+  retry: >-
+    Toast retries failed deliveries. Restaurant availability updates retry five times within a minute.
+    An endpoint may return 429 to signal it is overloaded; Toast also treats 404 as a delivery failure.
+event_category_count: 8
+event_type_count: 12
+event_categories:
+- category: orders
+  events:
+  - order_updated
+  - orders_updated
+  - channel_order_updated
+  description: Fires as guest orders are created and modified. Toast recommends this in place of
+    polling GET /orders/v2/ordersBulk.
+  reference: https://doc.toasttab.com/doc/devguide/devOrdersWebhookRef.html
+  related_api: openapi/toast-orders-api-openapi.yml
+- category: guest order fulfillment status
+  events:
+  - guest_order_status
+  description: Fulfillment-status transitions for a guest order.
+  reference: https://doc.toasttab.com/doc/devguide/apiGuestOrderFulfillmentStatusWebhook.html
+- category: menus
+  events:
+  - menus_updated
+  description: Fires when a location publishes menu changes, signalling that cached menu JSON is
+    stale.
+  reference: https://doc.toasttab.com/doc/devguide/apiMenusWebhook.html
+  related_api: openapi/toast-menus-v3-openapi.yaml
+- category: stock
+  events:
+  - in_stock
+  - low_quantity
+  - out_of_stock
+  description: Inventory availability transitions for menu items and modifier options.
+  reference: https://doc.toasttab.com/doc/devguide/apiStockWebhook.html
+  related_api: openapi/toast-stock-api-openapi.yml
+- category: partners
+  events:
+  - partner_added
+  - partner_removed
+  - partner_updated
+  description: A restaurant location added, removed, or changed a partner integration. Carries no
+    restaurant header. As of 2026-07-07 the partner access representation also carries a scopes value.
+  reference: https://doc.toasttab.com/doc/devguide/apiPartnersWebhook.html
+  related_api: openapi/toast-connectedrestaurants-api-openapi.yml
+- category: restaurant availability
+  events:
+  - availability_online
+  - availability_offline
+  description: A location toggled its online-ordering availability on or off.
+  reference: https://doc.toasttab.com/doc/devguide/apiRxAvailabilityWebhook.html
+  related_api: openapi/toast-restaurant-availability-openapi.yaml
+- category: restaurant online ordering schedule
+  events:
+  - ordering_schedule_updated
+  description: A location changed its online-ordering schedule. Now carries acceptScheduledOrders
+    (added 2026-05-28).
+  reference: https://doc.toasttab.com/doc/devguide/apiRxOnlineOrderingScheduleWebhook.html
+  related_api: openapi/toast-ordermgmt-configuration-openapi.yaml
+- category: packaging preferences configuration
+  events:
+  - packaging_updated
+  description: A location changed its packaging preferences configuration.
+  reference: https://doc.toasttab.com/doc/devguide/apiPackagingPreferencesConfigWebhook.html
+  related_api: openapi/toast-packaging-openapi.yaml
+outbound_integration_apis:
+  note: >-
+    Distinct from webhooks, Toast also publishes three OUTBOUND integration specifications where the
+    partner implements the server and Toast is the client. These are full OpenAPI documents in this
+    repo and are described as APIs rather than events, but they are part of the same
+    Toast-calls-you surface.
+  specs:
+  - openapi/toast-gift-cards-openapi.yaml
+  - openapi/toast-loyalty-openapi.yaml
+  - openapi/toast-tender-openapi.yaml
+  docs: https://doc.toasttab.com/doc/devguide/apiUsingToastOutboundApis.html
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

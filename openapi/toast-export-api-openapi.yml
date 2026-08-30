@@ -1,0 +1,203 @@
+openapi: 3.2.0
+info:
+  title: Kitchen Export API
+  version: 1.0.2
+  description: 'Returns information about kitchen operations.
+
+    '
+  contact:
+    name: Toast developer support
+servers:
+- url: https://toast-api-server/kitchen/v1
+tags:
+- name: Export
+paths:
+  /export/itemFulfillments:
+    get:
+      operationId: itemFulfillmentsGet
+      summary: Get item fulfillments
+      description: 'Exports item fulfillments for a single, specified business date.
+
+        '
+      parameters:
+      - name: businessDate
+        in: query
+        description: 'The business date for the item fulfillments to export. This  value must be in `YYYYMMDD` format.
+
+          '
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 'Returns a list of `ItemFulfillment` objects.
+
+            '
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ItemFulfillment'
+        '204':
+          description: 'No data is returned. The restaurant does not have an active subscription to Toast Restaurant Management Suite Pro or higher.
+
+            '
+        '400':
+          description: 'The request is invalid.
+
+            '
+        '401':
+          description: 'The authentication token is not recognized.
+
+            '
+        '403':
+          description: 'The request is not permitted.
+
+            '
+        '404':
+          description: 'The endpoint was not found.
+
+            '
+        '500':
+          description: 'There was an unexpected server error.
+
+            '
+      security:
+      - oauth2:
+        - kitchen:read
+      tags:
+      - Export
+components:
+  schemas:
+    ItemFulfillment:
+      title: ItemFulfillment
+      type: object
+      description: 'Details about the fulfillment of a menu item.
+
+        '
+      allOf:
+      - type: object
+        properties:
+          restaurantGuid:
+            description: The unique identifier assigned to the restaurant by the Toast platform.
+            type: string
+            format: uuid
+          orderGuid:
+            description: The unique identifier assigned to the order by the Toast platform.
+            type: string
+            format: uuid
+          selectionGuid:
+            description: The unique identifier assigned to the `Selection` object, which represents an item, of an order by the Toast platform.
+            type: string
+            format: uuid
+          selectionMenuItemGuid:
+            description: The unique identifier assigned to the menu item by the Toast platform.
+            type: string
+            format: uuid
+          selectionMenuItemName:
+            description: The descriptive name for the menu item, if available.
+            type: string
+          selectionMenuItemMultiLocationId:
+            description: A number used to identify and consolidate menu entities that are versions of each other.
+            type: string
+          ticketGuid:
+            description: The unique identifier assigned to the kitchen ticket by the Toast platform.
+            type: string
+            format: uuid
+          ticketFiredAt:
+            description: The time and date when the ticket for the menu item was fired to the kitchen, in ISO format.
+            type: string
+            format: date-time
+          itemFulfilledAt:
+            description: The time and date when the item was fulfilled, in ISO format.
+            type: string
+            format: date-time
+          itemStartedAt:
+            description: The time and date when an employee started working on the item, in ISO format. If the restaurant is not using the start queue feature, this value is the same as the `ticketFiredAt` value.
+            type: string
+            format: date-time
+          itemFulfillmentLevel:
+            description: "The fulfillment level for the menu item. The values include:\n  * `0`: The item was fulfilled at the prep station level. If an item has multiple prep stations, a separate `ItemFulfillment` object exists for each prep station that reaches this level.\n  * `1`: The item was fulfilled at the first-level expediter.\n  * `2`: The item was fulfilled at the second-level expediter. This is only used if [Two Level Fulfillment](https://doc.toasttab.com/doc/platformguide/adminKitchenDiningRoomReference.html#configTwoLevelFulfillment) is enabled.\n"
+            type: integer
+          prepStationGuid:
+            description: The unique identifier assigned to the prep station by the Toast platform, if available.
+            type: string
+            format: uuid
+          prepStationName:
+            description: The descriptive name of the prep station where the item was fulfilled, if available.
+            type: string
+          prepStationMultiLocationId:
+            description: An identifier used to identify and consolidate prep station entities that are versions of each other. For more information about multi-location identifiers, see [Toast identifiers](https://doc.toasttab.com/doc/devguide/apiIdentifiers.html).
+            type: string
+          diningOptionGuid:
+            description: The unique identifier assigned to the dining option by the Toast platform, if available.
+            type: string
+            format: uuid
+          diningOptionName:
+            description: The descriptive name of the dining option associated with the order, if available. For example, "Dine In" or "Take Out".
+            type: string
+          diningOptionBehavior:
+            description: The behavior type of the dining option, indicating whether the order is on-premise or off-premise, if available. For example, `DINE_IN` or `TAKE_OUT`.
+            type: string
+          courseGuid:
+            description: The unique identifier assigned to the course by the Toast platform, if available.
+            type: string
+            format: uuid
+          courseName:
+            description: The descriptive name of the course associated with the item, if available. For example, "Appetizer" or "Entree".
+            type: string
+          orderSource:
+            description: 'The way the order was placed.
+
+
+              Valid values:
+
+
+              * `In Store`
+
+              * `Online`
+
+              * `Order-and-Pay-at-Table`
+
+              * `API`
+
+              * `Kiosk`
+
+              * `Caller Id`
+
+              * `Google`
+
+              * `Invoice`
+
+              * `Toast Pickup App`
+
+              * `Toast Local`
+
+              * `Branded Online Ordering`
+
+              * `Catering`
+
+              * `Catering Online Ordering`
+
+              * `Toast Tables`
+
+              * `eCommerce Online ordering`
+
+              * `Branded Mobile App`
+
+              * `Grubhub` (deprecated)
+
+              '
+            type: string
+  securitySchemes:
+    oauth2:
+      description: "Access to Toast APIs, specific endpoints, \nand specific API endpoint operations is \ncontrolled by the scopes that are associated \nwith your API account. \n\nA full reference for Toast API scopes and \ntheir capabilities can be found in the\n[_Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html).\n\nThe `/kitchen/v1/export/itemFulfillments` endpoint requires an active subscription\nto <a href=\"https://www.toasttab.com/customers/shop/software-services/restaurant-management-suite?tier=Pro\">Toast Restaurant Management Suite Pro or higher</a> \nto retrieve the data.\n"
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://toast-api-server/authentication/v1/authentication/login
+          scopes:
+            kitchen:read: 'Allows reading from the kitchen API.
+
+              '

@@ -1,0 +1,156 @@
+openapi: 3.2.0
+info:
+  version: 1.1.0
+  title: Cash Management Deposits API
+  description: "Provides information about cash operations that add cash to or \nremove cash from a restaurant cash drawer, separately from cash\ntransaction payments (customer payments for individual checks). \nCash entries are different than cash transactions, and affect \nthe overall amount of cash that the Toast POS accounts for in \na restaurant.\n"
+  termsOfService: https://pos.toasttab.com/api-terms-of-use
+servers:
+- url: https://toast-api-server/cashmgmt/v1
+tags:
+- name: Deposits
+paths:
+  /deposits:
+    get:
+      summary: 'Get deposits
+
+        '
+      description: "Returns an array of `Deposit` objects containing information about\ncash removed from a restaurant to be deposited in a bank or \nother financial institution during one business day.\n"
+      operationId: depositsGet
+      externalDocs:
+        description: Getting cash deposit entries
+        url: https://dev.toasttab.com/doc/devguide/apiGetCashDeposits.html
+      security:
+      - cashMgmtRead:
+        - cashmgmt:read
+      parameters:
+      - name: Toast-Restaurant-External-ID
+        description: 'The GUID of the restaurant that is the context of the
+
+          request.
+
+          '
+        in: header
+        required: true
+        schema:
+          type: string
+          format: string
+      - name: businessDate
+        description: 'The business date the deposits were created, in the
+
+          format `yyyymmdd`. For example, `20180228`.
+
+          '
+        in: query
+        required: true
+        schema:
+          type: string
+          format: calendar-date
+      responses:
+        '200':
+          description: 'Returns an array of `Deposit` objects.
+
+            '
+          content:
+            application/json:
+              schema:
+                title: Response
+                type: array
+                minItems: 0
+                items:
+                  $ref: '#/components/schemas/Deposit'
+        default:
+          description: An unexpected error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      tags:
+      - Deposits
+components:
+  schemas:
+    ToastReference:
+      type: object
+      description: 'Identifying information about a Toast POS entity.
+
+        '
+      required:
+      - guid
+      - entityType
+      properties:
+        guid:
+          description: The GUID assigned to the entity by the Toast POS.
+          type: string
+        entityType:
+          description: The category of the Toast POS object.
+          type: string
+    ExternalReference:
+      type: object
+      description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID or a partner's identifier.
+      allOf:
+      - $ref: '#/components/schemas/ToastReference'
+      - type: object
+        properties:
+          externalId:
+            description: External identifier string that is prefixed by the naming authority.
+            type: string
+    Error:
+      required:
+      - status
+      - message
+      properties:
+        status:
+          type: integer
+          format: int32
+          description: An HTTP status code.
+        message:
+          type: string
+          description: A message that describes the error.
+    Deposit:
+      type: object
+      description: 'Information about an event in which a restaurant employee removes
+
+        cash from a restaurant and deposits it in a bank or other
+
+        financial institution.
+
+        '
+      allOf:
+      - $ref: '#/components/schemas/ToastReference'
+      - type: object
+        required:
+        - amount
+        - date
+        properties:
+          amount:
+            type: number
+            format: double
+            description: "The amount of the deposit. The `amount` value must be greater than zero. \n"
+          date:
+            type: string
+            format: date-time
+            description: 'The date that the deposit was registered in the POS and
+
+              the deposit slip was printed.
+
+              '
+          undoes:
+            type: string
+            format: string
+            description: 'The Toast GUID of the deposit entry that is being undone. This value is null if the deposit entry does not undo a previous entry.
+
+              '
+          employee:
+            $ref: '#/components/schemas/ExternalReference'
+          creator:
+            $ref: '#/components/schemas/ToastReference'
+  securitySchemes:
+    cashMgmtRead:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://toast-api-server/authentication/v1/authentication/login
+          scopes:
+            cashmgmt:read: Read cash transactions
+externalDocs:
+  description: Cash management API documentation
+  url: https://doc.toasttab.com/doc/devguide/apiWorkingWithCashEntriesAndDeposits.html
