@@ -41,12 +41,6 @@ tags:
 - Point-of-Sale
 - Restaurant
 - Hospitality
-- Restaurant Technology
-- Payments
-- Online Ordering
-- Labor Management
-- Inventory
-- API Partner Program
 tags_raw:
 - Food Service
 - Point of Sale
@@ -380,7 +374,7 @@ apis:
   description: The Time entries API from Toast — 2 operation(s) for time entries.
   humanURL: https://doc.toasttab.com/openapi/orders/overview/
   tags:
-  - Time Entries
+  - Time entries
   tags_raw:
   - Time entries
   properties:
@@ -476,6 +470,8 @@ apis:
   description: The availability API from Toast — 1 operation(s) for availability.
   humanURL: https://doc.toasttab.com/openapi/configuration/overview/
   tags:
+  - Availability
+  tags_raw:
   - availability
   properties:
   - type: OpenAPI
@@ -862,6 +858,8 @@ apis:
   description: The analytics API endpoints for menu reporting data.
   humanURL: https://doc.toasttab.com/openapi/configuration/overview/
   tags:
+  - Menus
+  tags_raw:
   - Menu
   properties:
   - type: OpenAPI
