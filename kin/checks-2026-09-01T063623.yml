@@ -1,18 +1,20 @@
 ---
 kin_checks:
   slug: toast
-  schema_version: 0.16.0
-  scored_at: '2026-08-29'
-  run_ts: 2026-08-29T230545
+  schema_version: 0.17.2
+  scored_at: '2026-09-01'
+  run_ts: 2026-09-01T063623
   note: Actionable checks only (missed + partial). earned/na are every other check
-    in rubric/scoring-0.16.0.yml; counts below let you verify that.
+    in rubric/scoring-0.17.2.yml; counts below let you verify that.
   counts:
     total: 130
-    earned: 54
+    earned: 52
     partial: 23
-    missed: 35
-    na: 18
+    missed: 34
+    na: 21
   checks:
+  - id: tags_present
+    status: missed
   - id: maintainer_present
     status: missed
   - id: base_url_per_api
@@ -63,10 +65,6 @@ kin_checks:
   - id: reg_privacy_policy
     status: missed
   - id: reg_compliance_published
-    status: missed
-  - id: reg_named_standard_conformance
-    status: missed
-  - id: reg_write_surface
     status: missed
   - id: idempotency
     status: missed

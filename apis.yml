@@ -374,7 +374,7 @@ apis:
   description: The Time entries API from Toast — 2 operation(s) for time entries.
   humanURL: https://doc.toasttab.com/openapi/orders/overview/
   tags:
-  - Time entries
+  - Time Entries
   tags_raw:
   - Time entries
   properties:
@@ -930,6 +930,8 @@ apis:
   description: The Menu Items API from Toast — 2 operation(s) for menu items.
   humanURL: https://doc.toasttab.com/openapi/configuration/overview/
   tags:
+  - menu-items
+  tags_raw:
   - Menu Items
   properties:
   - type: OpenAPI
