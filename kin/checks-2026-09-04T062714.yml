@@ -1,17 +1,17 @@
 ---
 kin_checks:
   slug: toast
-  schema_version: 0.17.2
-  scored_at: '2026-09-01'
-  run_ts: 2026-09-01T063623
+  schema_version: 0.18.2
+  scored_at: '2026-09-04'
+  run_ts: 2026-09-04T062714
   note: Actionable checks only (missed + partial). earned/na are every other check
-    in rubric/scoring-0.17.2.yml; counts below let you verify that.
+    in rubric/scoring-0.18.2.yml; counts below let you verify that.
   counts:
-    total: 130
-    earned: 52
-    partial: 23
-    missed: 34
-    na: 21
+    total: 132
+    earned: 53
+    partial: 21
+    missed: 36
+    na: 22
   checks:
   - id: tags_present
     status: missed
@@ -34,6 +34,8 @@ kin_checks:
   - id: webhooks_or_callbacks
     status: missed
     detail: 0 of 54 openapi documents pass
+  - id: inbound_contract_published
+    status: missed
   - id: json_schema_present
     status: missed
   - id: json_schema_per_resource
@@ -65,6 +67,8 @@ kin_checks:
   - id: reg_privacy_policy
     status: missed
   - id: reg_compliance_published
+    status: missed
+  - id: mcp_server
     status: missed
   - id: idempotency
     status: missed
@@ -117,7 +121,7 @@ kin_checks:
     detail: 52 of 54 openapi documents pass
   - id: lifecycle_documented
     status: partial
-    earned: 4.33
+    earned: 3.03
   - id: rules_present
     status: partial
     earned: 2.5
@@ -127,22 +131,16 @@ kin_checks:
   - id: balanced_severities
     status: partial
     earned: 0.75
-  - id: rate_limits_documented
+  - id: conformance_declared
     status: partial
-    earned: 2.0
-  - id: rate_limits_rich
-    status: partial
-    earned: 1.0
+    earned: 1.5
   - id: github_org_present
     status: partial
     earned: 1.0
     detail: pointer liveness 0.5
-  - id: plans_present
+  - id: agent_skill_present
     status: partial
-    earned: 2.0
-  - id: plans_multiple
-    status: partial
-    earned: 1.0
+    earned: 0.75
   - id: agentic_access
     status: partial
     earned: 2.5
@@ -150,10 +148,6 @@ kin_checks:
   - id: reversibility_documented
     status: partial
     earned: 2.4
-    detail: 'grade: documented'
-  - id: mcp_server
-    status: partial
-    earned: 4.8
     detail: 'grade: documented'
   - id: auth_clarity
     status: partial
@@ -167,3 +161,7 @@ kin_checks:
     status: partial
     earned: 3.5
     detail: 'grade: documented'
+  - id: agent_skills
+    status: partial
+    earned: 1.25
+    detail: 'authorship: derived'
