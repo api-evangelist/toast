@@ -1,23 +1,126 @@
-generated: '2026-07-15'
+generated: '2026-09-16'
 method: generated
-source: openapi/toast-authentication-openapi.yaml, openapi/toast-labor-openapi.yaml, openapi/toast-menus-openapi.yaml,
-  openapi/toast-orders-openapi.yaml, openapi/toast-partners-openapi.yaml, openapi/toast-restaurants-openapi.yaml,
-  openapi/toast-stock-openapi.yaml
+source: openapi/toast-aggregated-sales-api-openapi.yml, openapi/toast-alternate-payment-types-api-openapi.yml,
+  openapi/toast-authentication-api-openapi.yml, openapi/toast-availability-api-openapi.yml,
+  openapi/toast-break-types-api-openapi.yml, openapi/toast-cash-drawers-api-openapi.yml, openapi/toast-check-api-openapi.yml,
+  openapi/toast-connectedrestaurants-api-openapi.yml, openapi/toast-deposits-api-openapi.yml,
+  openapi/toast-device-details-api-openapi.yml, openapi/toast-dining-options-api-openapi.yml,
+  openapi/toast-discounts-api-openapi.yml, openapi/toast-employees-api-openapi.yml, openapi/toast-entries-api-openapi.yml,
+  openapi/toast-export-api-openapi.yml, openapi/toast-groups-api-openapi.yml, openapi/toast-guest-api-openapi.yml,
+  openapi/toast-jobs-api-openapi.yml, openapi/toast-labor-api-openapi.yml, openapi/toast-menu-api-openapi.yml,
+  openapi/toast-menu-groups-api-openapi.yml, openapi/toast-menu-items-api-openapi.yml, openapi/toast-menus-api-openapi.yml,
+  openapi/toast-merchants-api-openapi.yml, openapi/toast-metadata-api-openapi.yml, openapi/toast-modifier-groups-api-openapi.yml,
+  openapi/toast-no-sale-reasons-api-openapi.yml, openapi/toast-ordering-schedule-api-openapi.yml,
+  openapi/toast-orders-api-openapi.yml, openapi/toast-payments-api-openapi.yml, openapi/toast-payout-by-payments-api-openapi.yml,
+  openapi/toast-payout-by-sales-date-api-openapi.yml, openapi/toast-payout-by-settled-date-api-openapi.yml,
+  openapi/toast-payout-reasons-api-openapi.yml, openapi/toast-pre-modifier-groups-api-openapi.yml,
+  openapi/toast-pre-modifiers-api-openapi.yml, openapi/toast-price-groups-api-openapi.yml, openapi/toast-printers-api-openapi.yml,
+  openapi/toast-published-api-openapi.yml, openapi/toast-restaurant-services-api-openapi.yml,
+  openapi/toast-restaurants-api-openapi.yml, openapi/toast-restaurants-information-api-openapi.yml,
+  openapi/toast-revenue-centers-api-openapi.yml, openapi/toast-sales-categories-api-openapi.yml,
+  openapi/toast-service-areas-api-openapi.yml, openapi/toast-service-charges-api-openapi.yml,
+  openapi/toast-shifts-api-openapi.yml, openapi/toast-stock-api-openapi.yml, openapi/toast-tables-api-openapi.yml,
+  openapi/toast-tax-rates-api-openapi.yml, openapi/toast-time-entries-api-openapi.yml, openapi/toast-tip-withholding-api-openapi.yml,
+  openapi/toast-void-reasons-api-openapi.yml, openapi/toast-yourendpointname-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
-  operations: 46
+  operations: 123
   by_action_class:
-    acting: 26
-    connected: 20
+    acting: 38
+    connected: 85
   by_consequence:
-    write: 16
-    read: 20
+    write: 23
+    read: 85
+    physical: 14
     safety-critical: 1
-    physical: 9
   human_in_the_loop_required: 1
 operations:
+- path: /metrics
+  method: post
+  operationId: postMetricsReportingDataCustomTimeRangeRequest
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - enterprise-metrics:read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /metrics/{timeRange}
+  method: post
+  operationId: postMetricsReportingDataSpecificTimeRangeRequest
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - enterprise-metrics:read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /metrics/{reportRequestGuid}
+  method: get
+  operationId: getMetricsReportingData
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - enterprise-metrics:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /metrics/{timeRange}/{reportRequestGuid}
+  method: get
+  operationId: getMetricsReportingDataSpecificTimeRange
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - enterprise-metrics:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /alternatePaymentTypes/{guid}
+  method: get
+  operationId: alternatePaymentTypesGuidGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /alternatePaymentTypes
+  method: get
+  operationId: alternatePaymentTypesGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /authentication/login
   method: post
   operationId: authenticationLoginPost
@@ -25,6 +128,236 @@ operations:
     action-class: acting
     consequence: write
     subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /availability
+  method: get
+  operationId: availabilityGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - restaurants:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /breakTypes/{guid}
+  method: get
+  operationId: breakTypesGuidGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /breakTypes
+  method: get
+  operationId: breakTypesGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cashDrawers/{guid}
+  method: get
+  operationId: cashDrawersGuidGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /cashDrawers
+  method: get
+  operationId: cashDrawersGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /check/{timeRange}
+  method: post
+  operationId: postCheckReportingDataSpecificTimeRangeRequest
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - enterprise-metrics:read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /check/{reportRequestGuid}
+  method: get
+  operationId: getCheckReportingData
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - enterprise-metrics:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /connectedRestaurants
+  method: get
+  operationId: connectedRestaurantsGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /deposits
+  method: get
+  operationId: depositsGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - cashmgmt:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /device-info
+  method: get
+  operationId: getDeviceInfo
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - device-details.info:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /diningOptions/{guid}
+  method: get
+  operationId: diningOptionsGuidGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /diningOptions
+  method: get
+  operationId: diningOptionsGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /discounts/{guid}
+  method: get
+  operationId: discountsGuidGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /discounts
+  method: get
+  operationId: discountsGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /orders/{orderGuid}/checks/{checkGuid}/appliedDiscounts
+  method: post
+  operationId: ordersChecksAppliedDiscountsPost
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - orders.discounts:write
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /orders/{orderGuid}/checks/{checkGuid}/selections/{selectionGuid}/appliedDiscounts
+  method: post
+  operationId: ordersChecksSelectionsAppliedDiscountsPost
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - orders.discounts:write
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /applicableDiscounts
+  method: post
+  operationId: applicableDiscountsPost
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - orders.orders:write
     audience: null
     token:
       max-ttl: 900
@@ -202,84 +535,74 @@ operations:
     escalation:
       human-in-the-loop: required
     audit: required
-- path: /shifts
+- path: /entries
   method: get
-  operationId: shiftsGet
+  operationId: entriesGet
   x-agentic-access:
     action-class: connected
     consequence: read
     subject: optional
     scope:
-    - labor:read
+    - cashmgmt:read
     token:
       max-ttl: 3600
     audit: none
-- path: /shifts
+- path: /export/itemFulfillments
+  method: get
+  operationId: itemFulfillmentsGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - kitchen:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /groups/{managementGroupGUID}/restaurants
+  method: get
+  operationId: groupsManagementGroupGuidRestaurantsGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - restaurants:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /guest/payments/{timeRange}
   method: post
-  operationId: shiftsPost
+  operationId: postGuestReportPaymentDateSpecificTimeRange
   x-agentic-access:
     action-class: acting
-    consequence: write
+    consequence: physical
     subject: required
     scope:
-    - labor.shifts:write
+    - enterprise-metrics:read
     audience: null
     token:
-      max-ttl: 900
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
     escalation:
       human-in-the-loop: conditional
       triggers:
       - abnormal
       - high-value
     audit: required
-- path: /shifts/{shiftId}
+- path: /guest/payments/{reportRequestGuid}
   method: get
-  operationId: shiftsShiftIdGet
+  operationId: getGuestByPaymentDateReportingData
   x-agentic-access:
     action-class: connected
     consequence: read
     subject: optional
     scope:
-    - labor:read
+    - enterprise-metrics:read
     token:
       max-ttl: 3600
     audit: none
-- path: /shifts/{shiftId}
-  method: put
-  operationId: shiftsShiftIdPut
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    scope:
-    - labor.shifts:write
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /shifts/{shiftId}
-  method: delete
-  operationId: shiftsShiftIdDelete
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    scope:
-    - labor.shifts:write
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
 - path: /jobs
   method: get
   operationId: jobsGet
@@ -340,27 +663,141 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /timeEntries
+- path: /labor/{timeRange}
+  method: post
+  operationId: postLaborReportingDataSpecificTimeRangeRequest
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - enterprise-metrics:read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /labor/{reportRequestGuid}
   method: get
-  operationId: timeEntriesGet
+  operationId: getLaborReportingData
   x-agentic-access:
     action-class: connected
     consequence: read
     subject: optional
     scope:
-    - labor:read
+    - enterprise-metrics:read
     token:
       max-ttl: 3600
     audit: none
-- path: /timeEntries/{timeEntryId}
+- path: /menu
+  method: post
+  operationId: postMenuReportCustomTimeRange
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - enterprise-metrics:read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /menu/{timeRange}
+  method: post
+  operationId: postMenuReportSpecificTimeRange
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - enterprise-metrics:read
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /menu/{reportRequestGuid}
   method: get
-  operationId: timeEntriesTimeEntryIdGet
+  operationId: getMenuReportingData
   x-agentic-access:
     action-class: connected
     consequence: read
     subject: optional
     scope:
-    - labor:read
+    - enterprise-metrics:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /menuGroups/{guid}
+  method: get
+  operationId: menuGroupsGuidGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /menuGroups
+  method: get
+  operationId: menuGroupsGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /menuItems/{guid}
+  method: get
+  operationId: menuItemsGuidGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /menuItems
+  method: get
+  operationId: menuItemsGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /menus/{guid}
+  method: get
+  operationId: menusGuidGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
     token:
       max-ttl: 3600
     audit: none
@@ -372,10 +809,30 @@ operations:
     consequence: read
     subject: optional
     scope:
-    - menus:read
+    - config:read
     token:
       max-ttl: 3600
     audit: none
+- path: /merchants/{merchantUuid}/payments/{paymentUuid}
+  method: put
+  operationId: merchantsMerchantUuidPaymentsPaymentUuidPut
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - credit_cards.authorization:write
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
 - path: /metadata
   method: get
   operationId: metadataGet
@@ -388,27 +845,63 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /payments
+- path: /menuOptionGroups/{guid}
   method: get
-  operationId: paymentsGet
+  operationId: menuOptionGroupsGuidGet
   x-agentic-access:
     action-class: connected
     consequence: read
     subject: optional
     scope:
-    - orders:read
+    - config:read
     token:
       max-ttl: 3600
     audit: none
-- path: /payments/{guid}
+- path: /menuOptionGroups
   method: get
-  operationId: paymentsGuidGet
+  operationId: menuOptionGroupsGet
   x-agentic-access:
     action-class: connected
     consequence: read
     subject: optional
     scope:
-    - orders:read
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /noSaleReasons/{guid}
+  method: get
+  operationId: noSaleReasonsGuidGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /noSaleReasons
+  method: get
+  operationId: noSaleReasonsGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /published/orderingSchedule
+  method: get
+  operationId: orderingScheduleGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - digital_schedule:read
     token:
       max-ttl: 3600
     audit: none
@@ -456,46 +949,6 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /orders/{orderGuid}/checks/{checkGuid}/payments
-  method: post
-  operationId: ordersChecksPaymentsPost
-  x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    scope:
-    - orders.payments:write
-    audience: null
-    token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /orders/{orderGuid}/checks/{checkGuid}/payments/{paymentGuid}
-  method: patch
-  operationId: ordersOrderGuidChecksCheckGuidPaymentsPaymentGuidPatch
-  x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    scope:
-    - orders.payments:write
-    audience: null
-    token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
 - path: /orders/{orderGuid}/checks/{checkGuid}/selections
   method: post
   operationId: ordersOrderGuidChecksCheckGuidSelectionsPost
@@ -505,46 +958,6 @@ operations:
     subject: required
     scope:
     - orders.items:write
-    audience: null
-    token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /orders/{orderGuid}/checks/{checkGuid}/appliedDiscounts
-  method: post
-  operationId: ordersChecksAppliedDiscountsPost
-  x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    scope:
-    - orders.discounts:write
-    audience: null
-    token:
-      max-ttl: 300
-      exchange: true
-      purpose-required: true
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /orders/{orderGuid}/checks/{checkGuid}/selections/{selectionGuid}/appliedDiscounts
-  method: post
-  operationId: ordersChecksSelectionsAppliedDiscountsPost
-  x-agentic-access:
-    action-class: acting
-    consequence: physical
-    subject: required
-    scope:
-    - orders.discounts:write
     audience: null
     token:
       max-ttl: 300
@@ -629,37 +1042,349 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /applicableDiscounts
+- path: /payments
+  method: get
+  operationId: paymentsGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - orders:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /payments/{guid}
+  method: get
+  operationId: paymentsGuidGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - orders:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /orders/{orderGuid}/checks/{checkGuid}/payments
   method: post
-  operationId: applicableDiscountsPost
+  operationId: ordersChecksPaymentsPost
   x-agentic-access:
     action-class: acting
-    consequence: write
+    consequence: physical
     subject: required
     scope:
-    - orders.orders:write
+    - orders.payments:write
     audience: null
     token:
-      max-ttl: 900
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
     escalation:
       human-in-the-loop: conditional
       triggers:
       - abnormal
       - high-value
     audit: required
-- path: /restaurants
+- path: /orders/{orderGuid}/checks/{checkGuid}/payments/{paymentGuid}
+  method: patch
+  operationId: ordersOrderGuidChecksCheckGuidPaymentsPaymentGuidPatch
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - orders.payments:write
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /payout/payments/{timeRange}
+  method: post
+  operationId: postPayoutReportPaymentsSpecificTimeRange
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - enterprise-metrics:read
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /payout/payments/{reportRequestGuid}
   method: get
-  operationId: restaurantsGet
+  operationId: getPayoutPaymentsReportingData
   x-agentic-access:
     action-class: connected
     consequence: read
     subject: optional
+    scope:
+    - enterprise-metrics:read
     token:
       max-ttl: 3600
     audit: none
-- path: /connectedRestaurants
+- path: /payout/sales-date/{timeRange}
+  method: post
+  operationId: postPayoutReportSalesDateSpecificTimeRange
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - enterprise-metrics:read
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /payout/sales-date/{reportRequestGuid}
   method: get
-  operationId: connectedRestaurantsGet
+  operationId: getPayoutSalesDateReportingData
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - enterprise-metrics:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /payout/{timeRange}
+  method: post
+  operationId: postPayoutReportSettledDateSpecificTimeRange
+  x-agentic-access:
+    action-class: acting
+    consequence: physical
+    subject: required
+    scope:
+    - enterprise-metrics:read
+    audience: null
+    token:
+      max-ttl: 300
+      exchange: true
+      purpose-required: true
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /payout/{reportRequestGuid}
+  method: get
+  operationId: getPayoutSettledDateReportingData
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - enterprise-metrics:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /payoutReasons/{guid}
+  method: get
+  operationId: payoutReasonsGuidGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /payoutReasons
+  method: get
+  operationId: payoutReasonsGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /preModifierGroups/{guid}
+  method: get
+  operationId: preModifierGroupsGuidGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /preModifierGroups
+  method: get
+  operationId: preModifierGroupsGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /preModifiers/{guid}
+  method: get
+  operationId: preModifiersGuidGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /preModifiers
+  method: get
+  operationId: preModifiersGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /priceGroups/{guid}
+  method: get
+  operationId: priceGroupsGuidGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /priceGroups
+  method: get
+  operationId: priceGroupsGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /printers/{guid}
+  method: get
+  operationId: printersGuidGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /printers
+  method: get
+  operationId: printersGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /published/prepStations
+  method: get
+  operationId: prepStationsGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - kitchen:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /published/prepStations/{guid}
+  method: get
+  operationId: prepStationsGuidGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - kitchen:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/published/packagingConfig
+  method: get
+  operationId: getPackagingConfig
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - packaging:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /restaurantServices/{guid}
+  method: get
+  operationId: restaurantServicesGuidGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /restaurantServices
+  method: get
+  operationId: restaurantServicesGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /restaurants
+  method: get
+  operationId: restaurantsGet
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -679,18 +1404,192 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /groups/{managementGroupGUID}/restaurants
+- path: /restaurants-information
   method: get
-  operationId: groupsManagementGroupGuidRestaurantsGet
+  operationId: getManagementGroupRestaurantsInformation
   x-agentic-access:
     action-class: connected
     consequence: read
     subject: optional
     scope:
-    - restaurants:read
+    - enterprise-metrics:read
     token:
       max-ttl: 3600
     audit: none
+- path: /revenueCenters/{guid}
+  method: get
+  operationId: revenueCentersGuidGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /revenueCenters
+  method: get
+  operationId: revenueCentersGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /salesCategories/{guid}
+  method: get
+  operationId: salesCategoriesGuidGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /salesCategories
+  method: get
+  operationId: salesCategoriesGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /serviceAreas/{guid}
+  method: get
+  operationId: serviceAreasGuidGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /serviceAreas
+  method: get
+  operationId: serviceAreasGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /serviceCharges/{guid}
+  method: get
+  operationId: serviceChargesGuidGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /serviceCharges
+  method: get
+  operationId: serviceChargesGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /shifts
+  method: get
+  operationId: shiftsGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - labor:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /shifts
+  method: post
+  operationId: shiftsPost
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - labor.shifts:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /shifts/{shiftId}
+  method: get
+  operationId: shiftsShiftIdGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - labor:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /shifts/{shiftId}
+  method: put
+  operationId: shiftsShiftIdPut
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - labor.shifts:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /shifts/{shiftId}
+  method: delete
+  operationId: shiftsShiftIdDelete
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    scope:
+    - labor.shifts:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
 - path: /v1/inventory
   method: get
   operationId: getInventory
@@ -730,6 +1629,130 @@ operations:
     subject: required
     scope:
     - stock:write
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /tables/{guid}
+  method: get
+  operationId: tablesGuidGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /tables
+  method: get
+  operationId: tablesGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /taxRates/{guid}
+  method: get
+  operationId: taxRatesGuidGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /taxRates
+  method: get
+  operationId: taxRatesGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /timeEntries
+  method: get
+  operationId: timeEntriesGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - labor:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /timeEntries/{timeEntryId}
+  method: get
+  operationId: timeEntriesTimeEntryIdGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - labor:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /tipWithholding
+  method: get
+  operationId: tipWithholdingGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /voidReasons/{guid}
+  method: get
+  operationId: voidReasonsGuidGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /voidReasons
+  method: get
+  operationId: voidReasonsGet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    scope:
+    - config:read
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /yourendpointname
+  method: post
+  operationId: yourendpointnamePost
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
     audience: null
     token:
       max-ttl: 900
