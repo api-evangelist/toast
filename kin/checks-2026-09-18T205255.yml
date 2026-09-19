@@ -2,14 +2,15 @@
 kin_checks:
   slug: toast
   schema_version: 0.22.0
-  scored_at: '2026-09-15'
-  run_ts: 2026-09-15T230249
-  note: Actionable checks only (missed + partial). earned/na are every other check
-    in rubric/scoring-0.22.0.yml; counts below let you verify that.
+  scored_at: '2026-09-18'
+  run_ts: 2026-09-18T205255
+  note: Actionable checks (missed + partial) in `checks`, plus the ids that did not
+    apply in `na`. Everything else in rubric/scoring-0.22.0.yml was earned; counts
+    below let you verify that.
   counts:
     total: 136
-    earned: 54
-    partial: 21
+    earned: 53
+    partial: 22
     missed: 39
     na: 22
   checks:
@@ -96,8 +97,8 @@ kin_checks:
     status: missed
   - id: info_complete
     status: partial
-    earned: 3.63
-    detail: 49 of 54 openapi documents pass
+    earned: 3.7
+    detail: 50 of 54 openapi documents pass
   - id: operations_description_coverage
     status: partial
     earned: 5.89
@@ -115,13 +116,17 @@ kin_checks:
     detail: 17 of 54 openapi documents pass
   - id: security_schemes_defined
     status: partial
-    earned: 3.11
-    detail: 42 of 54 openapi documents pass
+    earned: 3.85
+    detail: 52 of 54 openapi documents pass
   - id: security_applied
     status: partial
     earned: 2.89
     detail: 52 of 54 openapi documents pass
   - id: oauth_flows_current
+    status: partial
+    earned: 3.85
+    detail: 52 of 54 openapi documents pass
+  - id: oauth_scopes_enumerated
     status: partial
     earned: 3.85
     detail: 52 of 54 openapi documents pass
@@ -171,3 +176,26 @@ kin_checks:
     status: partial
     earned: 1.25
     detail: 'authorship: derived'
+  na:
+  - asyncapi_3_x
+  - channels_defined
+  - contract_self_operated
+  - fhir_capability_statement
+  - fhir_resource_coverage
+  - messages_with_schema
+  - os_code_of_conduct
+  - os_contribution_guide
+  - os_releases
+  - os_security_policy
+  - reg_camara_conformance
+  - reg_certification_signal
+  - reg_consent_model
+  - reg_entitlement_terms
+  - reg_fapi_profile
+  - reg_mandate_verified
+  - reg_named_standard_conformance
+  - reg_pci_sca
+  - reg_smart_configuration
+  - reg_write_surface
+  - security_schemes
+  - server_bindings

@@ -350,6 +350,8 @@ apis:
   description: The Stock API from Toast — 3 operation(s) for stock.
   humanURL: https://doc.toasttab.com/openapi/orders/overview/
   tags:
+  - Stocks
+  tags_raw:
   - Stock
   properties:
   - type: OpenAPI
@@ -1928,6 +1930,10 @@ apis:
   humanURL: https://doc.toasttab.com/openapi/analytics/overview/
   baseURL: https://ws-api.toasttab.com/analytics/v1
   tags:
+  - Analytics
+  - Reporting
+  - Business Intelligence
+  tags_raw:
   - Analytics
   - Reporting
   - BI
