@@ -11,8 +11,29 @@ capability_model:
   attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
     CC BY 4.0
   notice: NOTICE
-edge_count: 5
+edge_count: 14
 edges:
+- tag: Discounts
+  spec_file: toast-discounts-api-openapi.yml
+  capability_id: BC-440.30
+  capability_id_l1: BC-440
+  capability_name: Discount & Promotion Management
+  confidence: 0.85
+  evidence: '"Toast Add Check-level Discounts", "Toast Get Applicable Discounts", schema PromoCode'
+  reason: Operations define, retrieve and apply discounts and promo codes to checks and line items — squarely
+    discount and promotion administration. Sub-capability is unambiguous; small residual doubt only because
+    part of the surface is config read-only.
+  recovered_from: vertical-agriculture-food-production-edges.json
+- tag: Menus
+  spec_file: toast-menus-api-openapi.yml
+  capability_id: BC-4070.10
+  capability_id_l1: BC-4070
+  capability_name: Menu Engineering & Recipe Management
+  confidence: 0.8
+  evidence: '"Get a menu", "Get menus"; schemas Menu, MenuItem, ModifierGroup, Portion, Alcohol, ItemTag'
+  reason: Full menu definition surface including items, modifier groups, portions and item tags — the
+    authored F&B menu specification, mapping to Menu Engineering & Recipe Management.
+  recovered_from: vertical-travel-hospitality-edges.json
 - tag: Employees
   spec_file: toast-employees-api-openapi.yml
   capability_id: BC-300.70
@@ -25,6 +46,28 @@ edges:
   reason: CRUD over employee records, job assignments and wage overrides is employee record administration
     (HR operations), notwithstanding the misleading 'Authentication' title. Some overlap with Compensation
     & Benefits via wage overrides, so not maximal confidence.
+- tag: Menu Items
+  spec_file: toast-menu-items-api-openapi.yml
+  capability_id: BC-4070.10
+  capability_id_l1: BC-4070
+  capability_name: Menu Engineering & Recipe Management
+  confidence: 0.78
+  evidence: '"Get a menu item or modifier", "Get menu items and modifiers"; schema "MenuItem"'
+  reason: Operations expose restaurant menu item and modifier definitions — food & beverage menu specification
+    data, which sits under Menu Engineering & Recipe Management.
+  recovered_from: vertical-travel-hospitality-edges.json
+- tag: Menu Groups
+  spec_file: toast-menu-groups-api-openapi.yml
+  capability_id: BC-4070.10
+  capability_id_l1: BC-4070
+  capability_name: Menu Engineering & Recipe Management
+  confidence: 0.72
+  evidence: '"Get a menu group", "Get menu groups"; "configuration of a restaurant and its menus, such
+    as menu items"'
+  reason: Read access to menu-group configuration for a restaurant, i.e. structure of the food & beverage
+    menu. Menu Engineering & Recipe Management is the closest fit for menu structure master data, though
+    these are read-only configuration lookups.
+  recovered_from: vertical-travel-hospitality-edges.json
 - tag: Shifts
   spec_file: toast-shifts-api-openapi.yml
   capability_id: BC-300
@@ -57,6 +100,17 @@ edges:
   reason: Employee clock-in/clock-out time entries with breaks, part of the vendor's stated 'labor management'
     surface; this is HR/payroll operations data. Title referencing Authentication is unreliable per rule
     6.
+- tag: Export
+  spec_file: toast-export-api-openapi.yml
+  capability_id: BC-4070.30
+  capability_id_l1: BC-4070
+  capability_name: Kitchen Production Operations
+  confidence: 0.7
+  evidence: '''Kitchen Export API ... Returns information about kitchen operations'' — GET /export/itemFulfillments  Get
+    item fulfillments; schema ItemFulfillment'
+  reason: Exposes kitchen operations data on item fulfillment (preparation/completion of menu items),
+    aligning with Kitchen Production Operations. The generic 'Export' tag lowers certainty slightly.
+  recovered_from: vertical-travel-hospitality-edges.json
 - tag: Jobs
   spec_file: toast-jobs-api-openapi.yml
   capability_id: BC-300
@@ -66,3 +120,47 @@ edges:
   evidence: GET /jobs "Toast Get Jobs"; GET /jobs/{jobId} "Toast Get One Job"; schema Job
   reason: Jobs here are restaurant job/position definitions employees are assigned to (labor management),
     so Human Capital Management at L1; the read-only surface does not name a specific sub-capability.
+- tag: Modifier Groups
+  spec_file: toast-modifier-groups-api-openapi.yml
+  capability_id: BC-4070.10
+  capability_id_l1: BC-4070
+  capability_name: Menu Engineering & Recipe Management
+  confidence: 0.7
+  evidence: '"Get a modifier group", "Get modifier groups"; schema "MenuOptionGroup"'
+  reason: Menu option/modifier group configuration is part of the F&B menu specification structure, so
+    Menu Engineering & Recipe Management; confidence moderated because these are read-only config lookups.
+  recovered_from: vertical-travel-hospitality-edges.json
+- tag: Orders
+  spec_file: toast-orders-api-openapi.yml
+  capability_id: BC-520.40
+  capability_id_l1: BC-520
+  capability_name: Order Fulfilment Management
+  confidence: 0.7
+  evidence: POST /orders "Toast Post an Order"; POST /orders/{orderGuid}/void "Toast Void an Order"; PATCH
+    /orders/{orderGuid}/deliveryInfo "Toast Update Delivery Information"; schemas Order, Fulfillment,
+    DeliveryInfo
+  reason: Operations create, retrieve, amend, void and fulfil customer orders including delivery information
+    — order capture and fulfilment orchestration. Title mentioning Authentication is spurious per the
+    split-spec rule.
+  recovered_from: sweep-20260829T005356Z-edges.json
+- tag: Price Groups
+  spec_file: toast-price-groups-api-openapi.yml
+  capability_id: BC-440.20
+  capability_id_l1: BC-440
+  capability_name: Price List Management
+  confidence: 0.7
+  evidence: GET /priceGroups "Get price levels for menu items"; schema PriceGroup
+  reason: Retrieves configured price levels applied to menu items — maintenance/consumption of price books
+    rather than transaction processing, matching Price List Management.
+  recovered_from: sweep-20260829T005356Z-edges.json
+- tag: Tax Rates
+  spec_file: toast-tax-rates-api-openapi.yml
+  capability_id: BC-220.20
+  capability_id_l1: BC-220
+  capability_name: Indirect Tax Management
+  confidence: 0.7
+  evidence: GET /taxRates  Get tax rates; schemas TaxRate, ConditionalTaxRate, TaxTableRow
+  reason: Configuration of sales-tax rates and tax tables applied to menu items at point of sale maps
+    to indirect tax (sales tax) management, though the surface is read-only configuration rather than
+    filing/compliance.
+  recovered_from: vertical-agriculture-food-production-edges.json
