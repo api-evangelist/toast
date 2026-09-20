@@ -1,0 +1,68 @@
+slug: toast
+provider: Toast
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Banking & Capital Markets
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 5
+edges:
+- tag: Employees
+  spec_file: toast-employees-api-openapi.yml
+  capability_id: BC-300.70
+  capability_id_l1: BC-300
+  capability_name: HR Operations Management
+  confidence: 0.78
+  evidence: POST /employees "Toast Add an Employee"; PATCH /employees/{employeeId} "Toast Update Employee
+    Information"; PUT /employees/{employeeId}/wageOverrides "Replace Wage Overrides"; schema Employee,
+    JobWageOverride
+  reason: CRUD over employee records, job assignments and wage overrides is employee record administration
+    (HR operations), notwithstanding the misleading 'Authentication' title. Some overlap with Compensation
+    & Benefits via wage overrides, so not maximal confidence.
+- tag: Shifts
+  spec_file: toast-shifts-api-openapi.yml
+  capability_id: BC-300
+  capability_id_l1: BC-300
+  capability_name: Human Capital Management
+  confidence: 0.72
+  evidence: POST /shifts  "Toast Create a Shift"; PUT /shifts/{shiftId}  "Toast Update a Shift"; schemas
+    Shift, ScheduleConfig
+  reason: Full CRUD over employee work shifts and schedule configuration — the vendor's labor management
+    surface — which realises workforce/HR management. No listed L2 cleanly covers shift scheduling, so
+    only the L1 is asserted.
+- tag: Stock
+  spec_file: toast-stock-api-openapi.yml
+  capability_id: BC-530.10
+  capability_id_l1: BC-530
+  capability_name: Stock Level Management
+  confidence: 0.72
+  evidence: GET /v1/inventory 'Toast Get Menu Item Inventory for a Restaurant'; PUT /v1/inventory/update
+    'Update Inventory Information for Specific Menu Items'; schema MenuItemInventory
+  reason: Despite the misleading 'Authentication' title, the operations read and update on-hand inventory
+    quantities for menu items, i.e. stock level management. L2 chosen as stock levels/quantities; some
+    ambiguity vs inventory accuracy.
+- tag: Time entries
+  spec_file: toast-time-entries-api-openapi.yml
+  capability_id: BC-300.70
+  capability_id_l1: BC-300
+  capability_name: HR Operations Management
+  confidence: 0.72
+  evidence: GET /timeEntries 'Toast Get Time Entries'; schemas TimeEntry, TimeEntryBreak
+  reason: Employee clock-in/clock-out time entries with breaks, part of the vendor's stated 'labor management'
+    surface; this is HR/payroll operations data. Title referencing Authentication is unreliable per rule
+    6.
+- tag: Jobs
+  spec_file: toast-jobs-api-openapi.yml
+  capability_id: BC-300
+  capability_id_l1: BC-300
+  capability_name: Human Capital Management
+  confidence: 0.7
+  evidence: GET /jobs "Toast Get Jobs"; GET /jobs/{jobId} "Toast Get One Job"; schema Job
+  reason: Jobs here are restaurant job/position definitions employees are assigned to (labor management),
+    so Human Capital Management at L1; the read-only surface does not name a specific sub-capability.
