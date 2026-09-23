@@ -1,7 +1,13 @@
 openapi: 3.2.0
 info:
   title: Analytics Check API
-  description: "The analytics API provides an enterprise reporting and analytics service, \nand includes operations that retrieve information for all restaurants, or a\nsubset of restaurants, in a management group, create requests for reporting data, \nand retrieve the reporting data.\n\nThe types of reporting data include:\n* Aggregated sales reporting data covering sales and labor information.\n* Check reporting data providing information for each check.\n* Labor reporting data providing information for employees and jobs that are paid hourly.\n* Menu reporting data providing information for menu entities as they relate to sales.\n* Payout reporting data providing information for payouts organized either by settled date, payments, or sales date.\n* Guest reporting data providing information for guest's payment cards organized by payments.\n"
+  description: 'The analytics API provides an enterprise reporting and analytics service,
+
+    and includes operations that retrieve information for all restaurants, or a
+
+    subset of restaurants, in a management group, create requests for reporting data,
+
+    and retrieve the reporting data.'
   version: 1.0.0
   contact:
     name: Toast developer support
@@ -14,7 +20,24 @@ paths:
   /check/{timeRange}:
     post:
       summary: Post a check reporting data request for a specific time range
-      description: "Creates a check reporting data request for a specific time range. Currently, `day` is the only \nvalid value.\n\nUse the `onlyInactiveRestaurants` query parameter set to `true` to get data for inactive \nrestaurants only.\n\nSpecify the `startBusinessDate` and `endBusinessDate` for the \ndata in the message body.\n\nIdentify restaurants to include or exclude with the `restaurantIds` and `excludedRestaurantIds` \nproperties. If left blank, all restaurants are included by default.\n"
+      description: 'Creates a check reporting data request for a specific time range. Currently, `day` is the only
+
+        valid value.
+
+
+        Use the `onlyInactiveRestaurants` query parameter set to `true` to get data for inactive
+
+        restaurants only.
+
+
+        Specify the `startBusinessDate` and `endBusinessDate` for the
+
+        data in the message body.
+
+
+        Identify restaurants to include or exclude with the `restaurantIds` and `excludedRestaurantIds`
+
+        properties. If left blank, all restaurants are included by default.'
       operationId: postCheckReportingDataSpecificTimeRangeRequest
       parameters:
       - name: timeRange
@@ -73,9 +96,7 @@ paths:
         Specify the `reportRequestGuid` for the data.
 
 
-        Specify whether to include the guest-facing restaurant names.
-
-        '
+        Specify whether to include the guest-facing restaurant names.'
       operationId: getCheckReportingData
       parameters:
       - name: reportRequestGuid
@@ -128,53 +149,22 @@ paths:
       - Check
 components:
   schemas:
-    CheckReportingDataRequest:
-      description: 'Information about what the check reporting data covers and how it is presented. This includes
-
-        the starting and ending dates of the time range, and the included or excluded restaurants.
-
-        '
+    ReportingDataInProgress:
+      description: The Toast platform is in the process of gathering the reporting data. Try the request again at a later time.
       type: object
       properties:
-        startBusinessDate:
-          description: 'The starting date of the time range for the reporting data.
-
-
-            Specify the business day in the format YYYYMMDD. For example, `20220824`.
-
-            '
-          format: integer
-          type: number
-        endBusinessDate:
-          description: 'The ending date of the time range for the reporting data.
-
-
-            Specify the business day in the format YYYYMMDD. For example, `20220824`.
-
-            '
-          format: integer
-          type: number
-        restaurantIds:
-          description: "The `restaurantGuid` values of specific restaurants in the management group to include in the \nreporting data. If used, only the data for listed restaurants in the management group \nthat are identified by `restaurantGuid` is included. If left blank, all restaurants are included \nby default.\n"
-          items:
-            format: uuid
-            type: string
-          type: array
-        excludedRestaurantIds:
-          description: "The `restaurantGuid` values of specific restaurants in the management group to exclude from the \nreporting data. If used, the data for listed restaurants in the management group \nthat are identified by `restaurantGuid` is excluded. If left blank, all restaurants are included \nby default.\n"
-          items:
-            format: UUID
-            type: string
-          type: array
-      required:
-      - restaurantIds
-      - excludedRestaurantIds
-      - startBusinessDate
-      - endBusinessDate
-    ReportRequestGuid:
-      description: The Toast platform assigned identifier used to identify a specific analytics reporting data request.
-      format: UUID
-      type: string
+        message:
+          description: A brief message describing that the reporting data is still in progress and to try again at a later time.
+          format: string
+          type: string
+        reportStatus:
+          description: Reflects the in progress status of the reporting data using the IN_PROGRESS value.
+          format: text
+          type: string
+        reportRequestGuid:
+          description: The Toast platform assigned identifier used to identify a specific analytics reporting data request.
+          format: UUID
+          type: string
     ErrorMessage:
       type: object
       description: Information about an unsuccessful REST request.
@@ -214,22 +204,6 @@ components:
           type: array
         canRetry:
           description: Reserved for future use.
-          type: string
-    ReportingDataInProgress:
-      description: The Toast platform is in the process of gathering the reporting data. Try the request again at a later time.
-      type: object
-      properties:
-        message:
-          description: A brief message describing that the reporting data is still in progress and to try again at a later time.
-          format: string
-          type: string
-        reportStatus:
-          description: Reflects the in progress status of the reporting data using the IN_PROGRESS value.
-          format: text
-          type: string
-        reportRequestGuid:
-          description: The Toast platform assigned identifier used to identify a specific analytics reporting data request.
-          format: UUID
           type: string
     CheckReportingData:
       description: The check reporting data.
@@ -337,6 +311,53 @@ components:
             '
           format: string
           type: string
+    ReportRequestGuid:
+      description: The Toast platform assigned identifier used to identify a specific analytics reporting data request.
+      format: UUID
+      type: string
+    CheckReportingDataRequest:
+      description: 'Information about what the check reporting data covers and how it is presented. This includes
+
+        the starting and ending dates of the time range, and the included or excluded restaurants.
+
+        '
+      type: object
+      properties:
+        startBusinessDate:
+          description: 'The starting date of the time range for the reporting data.
+
+
+            Specify the business day in the format YYYYMMDD. For example, `20220824`.
+
+            '
+          format: integer
+          type: number
+        endBusinessDate:
+          description: 'The ending date of the time range for the reporting data.
+
+
+            Specify the business day in the format YYYYMMDD. For example, `20220824`.
+
+            '
+          format: integer
+          type: number
+        restaurantIds:
+          description: "The `restaurantGuid` values of specific restaurants in the management group to include in the \nreporting data. If used, only the data for listed restaurants in the management group \nthat are identified by `restaurantGuid` is included. If left blank, all restaurants are included \nby default.\n"
+          items:
+            format: uuid
+            type: string
+          type: array
+        excludedRestaurantIds:
+          description: "The `restaurantGuid` values of specific restaurants in the management group to exclude from the \nreporting data. If used, the data for listed restaurants in the management group \nthat are identified by `restaurantGuid` is excluded. If left blank, all restaurants are included \nby default.\n"
+          items:
+            format: UUID
+            type: string
+          type: array
+      required:
+      - restaurantIds
+      - excludedRestaurantIds
+      - startBusinessDate
+      - endBusinessDate
   securitySchemes:
     oauth2:
       description: "Access to Toast APIs, specific endpoints, \nand specific API endpoint operations is \ncontrolled by the scopes that are associated \nwith your API account. \n\nA full reference for Toast API scopes and \ntheir capabilities can be found in the\n[_Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html).\n"

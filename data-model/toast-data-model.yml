@@ -1,0 +1,232 @@
+generated: '2026-08-27'
+method: derived
+source: openapi/*.yaml + openapi/*.yml in this repo ($ref graph and id-reference fields across 27
+  definitions, 218 distinct component schemas)
+docs:
+- https://doc.toasttab.com/doc/devguide/portalToastIdentifiers.html
+- https://doc.toasttab.com/doc/devguide/apiOrdersOrderObjectSummary.html
+- https://doc.toasttab.com/doc/devguide/apiUnderstandingGuidsEntityIdentifiersAndMultilocationIds_V2.html
+provider: Toast
+providerId: toast
+schema_count: 218
+summary: >-
+  Toast's object graph hangs off ONE root - the Restaurant, addressed by GUID and carried on nearly
+  every request in the Toast-Restaurant-External-ID header. Below it sit three mostly-separate
+  sub-graphs that meet only at the Order: the MENU catalog (Menu -> MenuGroup -> MenuItem ->
+  ModifierGroup -> ModifierOption), the ORDER lifecycle (Order -> Check -> Selection -> Payment /
+  AppliedDiscount), and the LABOR domain (Employee -> Job / Shift / TimeEntry -> TimeEntryBreak). The
+  configuration API is a flat lookup layer of 24 reference collections (dining options, tax rates,
+  revenue centers, service areas, tables, printers, cash drawers, void reasons) that the order and
+  menu graphs reference by GUID.
+identifiers:
+  primary_key: GUID (UUID v4 string)
+  cross_location_key: multiLocationId
+  cross_location_note: >-
+    Menu entities carry BOTH a per-location `guid` and a `multiLocationId` that is stable for the same
+    logical item across every location in a restaurant group, plus a `masterId`. This is the single
+    most confusing thing in the Toast model for an integrator and Toast documents it separately.
+  external_binding: >-
+    Labor entities accept a partner-owned externalId written through
+    POST/PUT /labor/v1/employees/{id}/externalId and /labor/v1/jobs/{id}/externalId. Menu and order
+    entities expose an ExternalReference / ToastReference wrapper instead.
+  id_prefixes: none - Toast GUIDs carry no type prefix, so an identifier alone does not tell you what
+    it points at.
+entities:
+- name: Restaurant
+  spec: openapi/toast-restaurants-api-openapi.yml
+  role: root
+  description: One physical restaurant location. Every non-partner call is scoped to one.
+  relationships:
+  - has_one: RestaurantInfo
+    via: restaurantGuid
+  - has_one: General
+    via: embedded
+  - has_many: Menu
+    via: restaurantGuid
+  - has_many: Order
+    via: restaurantGuid
+  - has_many: Employee
+    via: restaurantGuid
+  - has_many: Device
+    via: restaurantGuid
+  - belongs_to: RestaurantGroup
+    via: managementGroupGuid
+- name: RestaurantGroup
+  spec: openapi/toast-restaurants-api-openapi.yml
+  description: A management group aggregating locations. The analytics API operates at this level.
+  relationships:
+  - has_many: Restaurant
+    via: managementGroupGuid
+- name: Menu
+  spec: openapi/toast-menus-v3-openapi.yaml
+  relationships:
+  - has_many: MenuGroup
+    via: embedded
+  - belongs_to: Restaurant
+    via: restaurantGuid
+- name: MenuGroup
+  spec: openapi/toast-menus-v3-openapi.yaml
+  relationships:
+  - has_many: MenuItem
+    via: embedded
+  - has_many: MenuGroup
+    via: embedded (nested groups)
+  - belongs_to: Menu
+    via: embedded
+- name: MenuItem
+  spec: openapi/toast-menus-v3-openapi.yaml
+  property_count: 42
+  description: The richest object in the Toast model. Carries pricing, tax info, alcohol and allergen
+    flags, POS button colours, images, and (since 2026-04-22) catalogProductInfo for retail products.
+  relationships:
+  - has_many: ModifierGroup
+    via: embedded
+  - has_one: MultiLocationId
+    via: multiLocationId
+  - has_one: CatalogProduct
+    via: catalogProductInfo
+  - belongs_to: MenuGroup
+    via: embedded
+- name: ModifierGroup
+  spec: openapi/toast-menus-v3-openapi.yaml
+  relationships:
+  - has_many: ModifierOption
+    via: embedded
+  - has_many: PreModifierGroup
+    via: embedded
+- name: ModifierOption
+  spec: openapi/toast-menus-v3-openapi.yaml
+  property_count: 40
+  relationships:
+  - has_many: ModifierGroup
+    via: embedded (nested modifiers)
+- name: Order
+  spec: openapi/toast-orders-api-openapi.yml
+  description: A guest order. Carries guestOrderStatus, voided, paymentStatus and the delivery info.
+  relationships:
+  - has_many: Check
+    via: embedded
+  - has_one: DeliveryInfo
+    via: deliveryInfo
+  - belongs_to: Restaurant
+    via: restaurantGuid
+  - has_one: RevenueCenter
+    via: revenueCenterGuid
+- name: Check
+  spec: openapi/toast-orders-api-openapi.yml
+  relationships:
+  - has_many: Selection
+    via: embedded
+  - has_many: Payment
+    via: embedded
+  - has_many: AppliedDiscount
+    via: appliedDiscounts
+  - belongs_to: Order
+    via: orderGuid
+- name: Selection
+  spec: openapi/toast-orders-api-openapi.yml
+  description: One ordered line item on a check, referencing a MenuItem by GUID or multiLocationId.
+  relationships:
+  - belongs_to: Check
+    via: checkGuid
+  - has_one: MenuItem
+    via: item.guid / item.multiLocationId
+  - has_many: AppliedDiscount
+    via: appliedDiscounts
+- name: Payment
+  spec: openapi/toast-payments-api-openapi.yml
+  relationships:
+  - belongs_to: Check
+    via: checkGuid
+  - has_one: AuthorizationMetadata
+    via: embedded
+- name: AppliedDiscount
+  spec: openapi/toast-discounts-api-openapi.yml
+  relationships:
+  - belongs_to: Check
+    via: checkGuid
+  - belongs_to: Selection
+    via: selectionGuid
+  - has_one: Discount
+    via: discount.guid
+- name: Employee
+  spec: openapi/toast-employees-api-openapi.yml
+  relationships:
+  - has_many: Job
+    via: jobReferences
+  - has_many: Shift
+    via: employeeGuid
+  - has_many: TimeEntry
+    via: employeeGuid
+  - belongs_to: Restaurant
+    via: restaurantGuid
+- name: TimeEntry
+  spec: openapi/toast-time-entries-api-openapi.yml
+  relationships:
+  - has_many: TimeEntryBreak
+    via: breaks
+  - belongs_to: Employee
+    via: employeeGuid
+  - belongs_to: Job
+    via: jobGuid
+- name: Device
+  spec: openapi/toast-device-details-openapi.yaml
+  description: A Toast POS terminal or printer at a location. Carries pciCompliant /
+    pciNonComplianceReason, ipAddress and the Autofire designation.
+  relationships:
+  - has_one: PosDeviceInfo
+    via: embedded
+  - has_one: PrinterDeviceInfo
+    via: embedded
+  - belongs_to: Restaurant
+    via: restaurantGuid
+- name: PartnerAccessExternalRep
+  spec: openapi/toast-connectedrestaurants-api-openapi.yml
+  description: The partner-to-restaurant access record. Since 2026-07-07 it also carries the scopes
+    granted for that connection.
+  relationships:
+  - belongs_to: Restaurant
+    via: restaurantGuid
+configuration_lookup_collections:
+  spec: openapi/toast-configuration-openapi.yaml
+  note: >-
+    24 flat reference collections, each with a list and a get-by-GUID operation, that the order and
+    menu graphs reference by GUID rather than embed.
+  collections:
+  - alternatePaymentTypes
+  - breakTypes
+  - cashDrawers
+  - diningOptions
+  - discounts
+  - menuGroups
+  - menuItems
+  - menuOptionGroups
+  - menus
+  - preModifiers
+  - preModifierGroups
+  - noSaleReasons
+  - payoutReasons
+  - priceGroups
+  - printers
+  - salesCategories
+  - serviceAreas
+  - serviceCharges
+  - revenueCenters
+  - restaurantServices
+  - tables
+  - taxRates
+  - tipWithholding
+  - voidReasons
+reporting_projection:
+  spec: openapi/toast-analytics-openapi.yaml
+  note: >-
+    The analytics API is a denormalised REPORTING projection of the same core, not another view of the
+    entity graph - LaborReportingData, MenuReportingData, MetricsReportingData, CheckReportingData,
+    PayoutPaymentsReportingData, PayoutSettledDateReportingData, PayoutSalesDateReportingData and
+    GuestPaymentsReportingData are flat row shapes with 11-24 columns each and no $ref edges. It
+    operates on a management group, and uses a two-step async pattern (POST returns a
+    reportRequestGuid, GET retrieves the rows).
+render: null
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

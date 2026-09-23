@@ -1,0 +1,121 @@
+generated: '2026-08-27'
+method: searched
+source: https://api-updates.toasttab.com/
+docs:
+- https://api-updates.toasttab.com/
+- https://doc.toasttab.com/doc/relnotes/devPortalApiChangeLog.html
+- https://doc.toasttab.com/doc/relnotes/apiReleaseNotesChangeDeployments.html
+provider: Toast
+providerId: toast
+scheme: dated-entries-by-api
+platform: LaunchNotes
+cadence: >-
+  Roughly one to four dated entries per month, tagged by API (Analytics, Menus, Partners, Device
+  Details, Kitchen, Labor, Configuration, Orders, Webhooks) and by change class ("Objects and values").
+  The feed runs back 13 pages to February 2025 and includes forward-dated entries announcing changes
+  before they deploy.
+subscribe: https://doc.toasttab.com/doc/relnotes/apiUpdatesEmailDistributionList.html
+note: >-
+  Toast moved its API release notes from doc.toasttab.com to a LaunchNotes-hosted feed at
+  api-updates.toasttab.com; the historical dated change log is still served at the doc.toasttab.com URL
+  above. Both were live and 200 on 2026-08-27. The feed also carries a Roadmap tab, but it is rendered
+  client-side and has no distinct crawlable URL, so no Roadmap pointer is emitted.
+current_versions_note: See lifecycle/toast-lifecycle.yml for the per-API version table read from
+  info.version of the 20 published OpenAPI definitions.
+entries:
+- date: '2026-08-11'
+  api: Analytics API
+  breaking: false
+  type: addition
+  title: New values added to the analytics API guest reporting data
+  highlights: GET /era/v1/guest/payments/{reportRequestGuid} now returns cardLast4Digits, cardType and
+    a third new value.
+- date: '2026-07-07'
+  api: Menus API
+  breaking: false
+  type: addition
+  title: New plu value added to the SalesCategory object
+  highlights: SalesCategory now carries plu, the price look-up code for the sales category.
+- date: '2026-07-07'
+  api: Partners API
+  breaking: false
+  type: addition
+  title: Partners API includes new scopes value
+  highlights: PartnerAccessExternalRep now includes a scopes value indicating the scopes granted for
+    the partner access record. Also affects webhooks.
+- date: '2026-07-07'
+  api: Device Details API
+  breaking: false
+  type: new-api
+  title: New device details API for retrieving device information
+  highlights: The device details API went generally available - GET /device-details/v1/device-info
+    returns Toast POS app device and printer information for a location. Scope
+    device-details.info&#58;read.
+- date: '2026-06-30'
+  api: Kitchen API
+  breaking: false
+  type: new-endpoint
+  title: New kitchen API endpoint for requesting item fulfillment data
+  highlights: GET /kitchen/v1/export/itemFulfillments added. Requires kitchen API access.
+- date: '2026-06-12'
+  api: Labor API
+  breaking: true
+  type: validation-tightening
+  title: Labor API will enforce employee passcode value validation
+  highlights: From 2026-09-14 the labor API validates employee passcode values on employee create and
+    update. Integrations writing employees must conform before that date.
+  effective: '2026-09-14'
+- date: '2026-05-28'
+  api: Order Management Configuration API
+  breaking: false
+  type: addition
+  title: New acceptScheduledOrders field in ordering schedule information
+  highlights: The orderingSchedule endpoint and the restaurant online ordering schedule webhook now
+    return acceptScheduledOrders, a boolean indicating whether the location accepts future orders.
+- date: '2026-04-22'
+  api: Menus API
+  breaking: false
+  type: addition
+  title: catalogProductInfo value added to the MenuItem object
+  highlights: MenuItem now carries catalogProductInfo describing retail product catalog data and
+    variant options. Applies to menus v2 and v3. Null where the location uses no retail catalog.
+- date: '2026-04-17'
+  api: Platform-wide
+  breaking: true
+  type: policy-change
+  title: New policy for API enum fields
+  highlights: >-
+    From 2026-07-20, adding a value to an existing enum is no longer a breaking change and carries no
+    90-day notice. Toast's enums are now "open". Removing or renaming still gets 90 days. Integrations
+    must handle unrecognized enum values with a safe default case.
+  effective: '2026-07-20'
+- date: '2026-03-25'
+  api: Labor API
+  breaking: false
+  type: addition
+  title: New waived value in labor API TimeEntryBreak object
+  highlights: TimeEntryBreak now carries a boolean waived indicating the employee waived the break.
+- date: '2026-02-26'
+  api: Menus API
+  breaking: false
+  type: addition
+  title: allergens value added to the ModifierOption object
+  highlights: ModifierOption now carries an allergens array of AllergenItem. Reserved for future
+    functionality and not yet supported for external integrations.
+- date: '2026-02-03'
+  api: Analytics API
+  breaking: true
+  type: limit-change
+  title: New 366 day maximum for aggregated sales custom time range
+  highlights: From 2026-03-06 a custom time range request for aggregated sales reporting data may span
+    at most 366 days between startBusinessDate and endBusinessDate; longer ranges must be split.
+  effective: '2026-03-06'
+- date: '2026-02-03'
+  api: Configuration API
+  breaking: false
+  type: addition
+  title: Promo code information for discounts added
+  highlights: The configuration API discounts surface now returns promoCodes.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

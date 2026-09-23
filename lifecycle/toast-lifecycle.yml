@@ -1,0 +1,130 @@
+generated: '2026-08-27'
+method: searched
+source: https://doc.toasttab.com/doc/relnotes/devPortalApiChangeLog.html
+docs:
+- https://doc.toasttab.com/doc/relnotes/index.html
+- https://doc.toasttab.com/doc/relnotes/apiReleaseNotesChangeDeployments.html
+- https://doc.toasttab.com/doc/devguide/apiDeprecatedApiFunctions.html
+- https://doc.toasttab.com/doc/devguide/apiDeployment.html
+- https://doc.toasttab.com/doc/devguide/apiHandlingDowntimes.html
+provider: Toast
+providerId: toast
+
+versioning:
+  scheme: path-major + semver-in-spec
+  description: >-
+    Each Toast API carries its major version in the URL path segment after the service name
+    (/orders/v2, /menus/v2, /menus/v3, /config/v2, /labor/v1, /era/v1, /cashmgmt/v1, /kitchen/v1,
+    /stock, /packaging, /restaurant-availability/v1, /device-details/v1, /ordermgmt-config/v1,
+    /ccpartner/v1, /partners/v1, /restaurants/v1, /authentication/v1). Point releases advance
+    info.version inside the published OpenAPI without a path change.
+  current_versions:
+    orders: 2.9.4
+    menus_v2: 2.4.1
+    menus_v3: 3.4.1
+    configuration: 2.5.0
+    labor: 1.9.0
+    analytics: 1.0.0
+    cash_management: 1.1.0
+    kitchen: 1.0.2
+    stock: 1.0.0
+    partners: 1.0.2
+    restaurants: 1.0.0
+    credit_cards: 1.0.0
+    device_details: 1.0.0
+    gift_cards: 1.0.0
+    loyalty: 1.1.0
+    tender: 0.1.0
+    packaging: 1.0.0
+    order_management_configuration: 1.0.1
+    restaurant_availability: 1.0.1
+    authentication: 1.0.0
+  parallel_majors:
+    note: >-
+      Menus v2 and v3 run side by side. Toast states v3 currently supports ordering-partner
+      integrations only and requires the menus.channel:read scope; every other integration should stay
+      on v2 with menus:read. There is no announced sunset for v2.
+
+deprecation_policy:
+  published: true
+  breaking_change_notice_days: 90
+  description: >-
+    Toast gives 90 days notice of breaking changes - removing an enum value, renaming a field. Since
+    an announced policy change dated 2026-04-17 and effective 2026-07-20, ADDING a value to an existing
+    enum is no longer treated as a breaking change and carries NO 90-day notice: Toast now treats its
+    enums as "open" and expects integrations to handle unrecognized values with a safe default case.
+    This is a material change in the contract an integrator can rely on and it is the single most
+    important lifecycle fact about Toast right now.
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  source: https://doc.toasttab.com/doc/relnotes/devPortalApiChangeLog.html
+  announced: '2026-04-17'
+  effective: '2026-07-20'
+
+deprecated_surfaces:
+- surface: GET /orders/v2/orders
+  status: deprecated
+  description: >-
+    Retrieving order identifiers for a time period via GET /orders with startDate/endDate or
+    businessDate is documented under "Deprecated API functions". Toast support recommends the orders
+    updated webhook, or /ordersBulk for detail.
+  replacement: orders webhook (order_updated / orders_updated) or GET /orders/v2/ordersBulk
+  source: https://doc.toasttab.com/doc/devguide/apiDeprecatedApiFunctions.html
+- surface: configuration API pageSize and page query parameters
+  status: deprecated
+  description: The pageSize and page query parameters on configuration API endpoints are deprecated
+    and are being removed in favour of the Toast-Next-Page-Token / pageToken scheme.
+  replacement: pageToken query parameter driven by the Toast-Next-Page-Token response header
+  source: https://doc.toasttab.com/doc/devguide/apiResponseDataPagination.html
+- surface: legacy authentication endpoint
+  status: deprecated
+  description: An earlier Toast API authentication service is superseded by POST
+    /authentication/v1/authentication/login. Integrations still on the legacy endpoint must migrate.
+  replacement: POST /authentication/v1/authentication/login
+  source: https://doc.toasttab.com/doc/devguide/authentication.html
+deprecated_operations_in_spec: 0
+deprecated_operations_note: No operation in any of the 20 published Toast OpenAPI definitions carries
+  `deprecated&#58; true`. Deprecation is announced in prose in the developer guide, not in the contract.
+
+status_page:
+  present: true
+  url: https://status.toasttab.com/
+  platform: Atlassian Statuspage
+  machine_readable: https://status.toasttab.com/api/v2/status.json
+  probed:
+    url: https://status.toasttab.com/api/v2/status.json
+    status: 200
+    date: '2026-08-27'
+    note: Returns the live component/incident feed for page id 5bc1y3k2xcvj ("Toast System").
+
+change_log:
+  present: true
+  url: https://api-updates.toasttab.com/
+  legacy_url: https://doc.toasttab.com/doc/relnotes/devPortalApiChangeLog.html
+  note: Toast moved API release notes to a LaunchNotes-hosted feed at api-updates.toasttab.com. The
+    historical dated change log remains on doc.toasttab.com.
+  see: changelog/toast-changelog.yml
+
+announcements:
+  subscribe: https://doc.toasttab.com/doc/relnotes/apiUpdatesEmailDistributionList.html
+  note: Toast runs an email distribution list for API updates and a "Subscribe to developer updates"
+    control on api-updates.toasttab.com.
+
+sla:
+  published: false
+  note: >-
+    No public SLA. Toast documents that maintenance periods are announced to integration providers and
+    that the sandbox environment is guaranteed only 9am-6pm Eastern. Availability commitments for
+    partner integrations are set in the partner agreement, not published.
+  sandbox_availability: 09:00-18:00 America/New_York
+  source: https://doc.toasttab.com/doc/devguide/apiEnvironments.html
+
+downtime_guidance:
+  url: https://doc.toasttab.com/doc/devguide/apiHandlingDowntimes.html
+  note: Toast publishes explicit guidance on how an integration should behave during a Toast platform
+    outage.
+
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

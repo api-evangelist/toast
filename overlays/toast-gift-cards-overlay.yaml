@@ -1,0 +1,34 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Gift Card Integration API
+  version: 1.0.0
+  description: Overlay of API Evangelist annotations for Toast's published Gift Card Integration API 1.0.0.
+    It adds provenance, the documented cross-cutting runtime semantics Toast publishes only in prose,
+    and an explicit warning that the servers[] host is a placeholder. It adds nothing that Toast does
+    not itself publish and it does not modify the original definition, which stays verbatim at the extends
+    target.
+extends: openapi/toast-gift-cards-openapi.yaml
+x-generated: '2026-08-27'
+x-method: generated
+actions:
+- target: $.info
+  update:
+    x-api-evangelist:
+      harvested: '2026-08-27'
+      harvested-from: https://doc.toasttab.com/openapi/page-data/gift-cards/overview/page-data.json
+      provider: Toast
+      provider-id: toast
+      note: Verbatim from the Redocly-rendered Toast API reference on Toast's own documentation host.
+- target: $.servers[0]
+  update:
+    x-host-not-published: true
+    x-host-note: '`toast-api-server` is a placeholder Toast publishes in place of a real hostname. The
+      Toast developer guide states hostnames are issued privately by the Toast integrations team (sandbox
+      at build start, production at go-live). The PATH below the host is real and correct; the host is
+      not resolvable and must be substituted with the hostname Toast issues you. See https://doc.toasttab.com/doc/devguide/apiEnvironments.html'
+    x-host-evidence-url: https://doc.toasttab.com/doc/devguide/apiExampleRequests.html
+- target: $.info
+  update:
+    x-direction: outbound
+    x-direction-note: Toast is the CLIENT for this specification and the partner implements the server.
+      The partner's endpoint must be idempotent - Toast retries on network failure. See https://doc.toasttab.com/doc/devguide/apiUsingToastOutboundApis.html

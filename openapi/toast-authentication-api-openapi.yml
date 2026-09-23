@@ -1,4 +1,4 @@
-swagger: '2.0'
+openapi: 3.2.0
 info:
   version: 1.0.0
   title: Toast Authentication API
@@ -6,22 +6,14 @@ info:
 
     when your integration client software uses other Toast APIs. For more
 
-    information about authentication, see [the Toast Developer
+    information about authentication, see the Toast Developer
 
-    Guide](https://doc.toasttab.com/doc/devguide/authentication.html).
-
-    '
+    Guide.'
   termsOfService: https://pos.toasttab.com/api-terms-of-use
   contact:
     name: Toast developer support
-host: toast-api-server
-basePath: /authentication/v1
-schemes:
-- https
-consumes:
-- application/json
-produces:
-- application/json
+servers:
+- url: https://toast-api-server/authentication/v1
 tags:
 - name: Authentication
 paths:
@@ -32,26 +24,11 @@ paths:
       summary: Toast Get an Authentication Token
       description: 'Returns an authentication token that your Toast API client can present
 
-        when using other Toast platform APIs.
-
-        '
+        when using other Toast platform APIs.'
       externalDocs:
         description: Authentication developer guide
         url: https://doc.toasttab.com/doc/devguide/authentication.html
       operationId: authenticationLoginPost
-      produces:
-      - application/json
-      parameters:
-      - name: body
-        description: 'The authentication credentials for your Toast API client integration
-
-          software.
-
-          '
-        in: body
-        required: true
-        schema:
-          $ref: '#/definitions/AuthenticationRequest'
       responses:
         '200':
           description: 'A JSON `AuthenticationResponse` object that includes an
@@ -59,187 +36,203 @@ paths:
             authentication token string.
 
             '
-          schema:
-            $ref: '#/definitions/AuthenticationResponse'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticationResponse'
         '401':
           description: 'The Toast API client credentials in your request are not valid.
 
             '
-          schema:
-            $ref: '#/definitions/ErrorMessage'
-definitions:
-  AuthenticationToken:
-    type: object
-    description: 'Information about a Toast platform API session, including an
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorMessage'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthenticationRequest'
+        description: 'The authentication credentials for your Toast API client integration
 
-      authentication token string that your Toast API client software can
-
-      present when using other Toast platform APIs.
-
-      '
-    properties:
-      tokenType:
-        description: 'The OAuth 2 authentication scheme used for the authentication token.
-
-          Toast API authentication uses the bearer authentication scheme.
+          software.
 
           '
-        type: string
-        example: Bearer
-      scope:
-        description: 'The scope value in the authentication token request response is
+        required: true
+components:
+  schemas:
+    AuthenticationResponse:
+      type: object
+      description: 'A wrapper object for the response to a successful Toast API authentication
 
-          `null`. The `accessToken` JSON Web Token (JWT) contains the list of
+        request.
 
-          [scopes for your Toast API
+        '
+      properties:
+        token:
+          description: 'An `AuthenticationToken` object containing information about a Toast
 
-          client](https://dev.toasttab.com/doc/devguide/apiScopes.html).
+            platform API session, including an authentication token string that
 
-          '
-        type: string
-      expiresIn:
-        description: "The number of seconds that the authentication token is valid. \n"
-        type: integer
-        example: 86400
-      accessToken:
-        description: 'A JSON Web Token (JWT) string that contains an authentication token.
+            your Toast API client software can present when using other Toast
 
-          You [present this string when you make
+            platform APIs.
 
-          requests](https://dev.toasttab.com/doc/devguide/authentication.html#using-authentication-token)
+            '
+          type: object
+          $ref: '#/components/schemas/AuthenticationToken'
+        status:
+          description: The value `SUCCESS` indicates that your authentication request was successful.
+          type: string
+          example: SUCCESS
+    ErrorMessage:
+      type: object
+      description: 'An object that contains information about one or more errors that the
 
-          to other Toast API resources. The JWT includes information about your
+        Toast platform encountered when processing your API request.
 
-          Toast API client.
+        '
+      properties:
+        status:
+          description: 'The HTTP status code of the response.
 
-          '
-        type: string
-      idToken:
-        description: 'For internal use only.
+            '
+          type: string
+        code:
+          description: 'A numeric identifier for the error condition.
 
-          '
-        type: string
-      refreshToken:
-        description: 'For internal use only.
+            '
+          type: integer
+        message:
+          description: 'A description of the error condition.
 
-          '
-        type: string
-  ErrorMessage:
-    type: object
-    description: 'An object that contains information about one or more errors that the
+            '
+          type: string
+        messageKey:
+          description: 'Reserved for future use.
 
-      Toast platform encountered when processing your API request.
+            '
+          type: string
+        fieldName:
+          description: 'Reserved for future use.
 
-      '
-    properties:
-      status:
-        description: 'The HTTP status code of the response.
+            '
+          type: string
+        link:
+          description: 'The URL of a resource that provides more information about the error
 
-          '
-        type: string
-      code:
-        description: 'A numeric identifier for the error condition.
+            condition.
 
-          '
-        type: integer
-      message:
-        description: 'A description of the error condition.
+            '
+          type: string
+        requestId:
+          description: 'The unique identifier of the HTTP request that your client sent to the Toast API.
 
-          '
-        type: string
-      messageKey:
-        description: 'Reserved for future use.
+            '
+          type: string
+        developerMessage:
+          description: 'Additional detail about the error condition, if it is available.
 
-          '
-        type: string
-      fieldName:
-        description: 'Reserved for future use.
+            '
+          type: string
+        errors:
+          description: 'A JSON array of `ErrorMessage` objects.
 
-          '
-        type: string
-      link:
-        description: 'The URL of a resource that provides more information about the error
+            '
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorMessage'
+        canRetry:
+          description: 'Reserved for future use.
 
-          condition.
+            '
+          type: string
+    AuthenticationToken:
+      type: object
+      description: 'Information about a Toast platform API session, including an
 
-          '
-        type: string
-      requestId:
-        description: 'The unique identifier of the HTTP request that your client sent to the Toast API.
+        authentication token string that your Toast API client software can
 
-          '
-        type: string
-      developerMessage:
-        description: 'Additional detail about the error condition, if it is available.
+        present when using other Toast platform APIs.
 
-          '
-        type: string
-      errors:
-        description: 'A JSON array of `ErrorMessage` objects.
+        '
+      properties:
+        tokenType:
+          description: 'The OAuth 2 authentication scheme used for the authentication token.
 
-          '
-        type: array
-        items:
-          $ref: '#/definitions/ErrorMessage'
-      canRetry:
-        description: 'Reserved for future use.
+            Toast API authentication uses the bearer authentication scheme.
 
-          '
-        type: string
-  AuthenticationRequest:
-    type: object
-    description: 'Authentication credentials for your Toast API integration client software.
+            '
+          type: string
+          example: Bearer
+        scope:
+          description: 'The scope value in the authentication token request response is
 
-      '
-    properties:
-      clientId:
-        description: 'The identifier string for your Toast API client. You receive the
+            `null`. The `accessToken` JSON Web Token (JWT) contains the list of
 
-          identifier string from the Toast integrations team.
+            [scopes for your Toast API
 
-          '
-        type: string
-        example: VKuhk4NaLedOcjZpJM8grvdrsFi3MlcM
-      clientSecret:
-        description: 'The secret string that corresponds to your Toast API client. You
+            client](https://dev.toasttab.com/doc/devguide/apiScopes.html).
 
-          receive the secret string from the Toast integrations team.
+            '
+          type: string
+        expiresIn:
+          description: "The number of seconds that the authentication token is valid. \n"
+          type: integer
+          example: 86400
+        accessToken:
+          description: 'A JSON Web Token (JWT) string that contains an authentication token.
 
-          '
-        type: string
-        example: eS960aiKdvgbSDcLUCk68HR2CJKwwHNO2HKfgxjCWxoj27KIp6jFAi2XOOc_oCuv
-      userAccessType:
-        description: 'Always include the `userAccessType` value and set it to
+            You [present this string when you make
 
-          `TOAST_MACHINE_CLIENT`.
+            requests](https://dev.toasttab.com/doc/devguide/authentication.html#using-authentication-token)
 
-          '
-        type: string
-        example: TOAST_MACHINE_CLIENT
-  AuthenticationResponse:
-    type: object
-    description: 'A wrapper object for the response to a successful Toast API authentication
+            to other Toast API resources. The JWT includes information about your
 
-      request.
+            Toast API client.
 
-      '
-    properties:
-      token:
-        description: 'An `AuthenticationToken` object containing information about a Toast
+            '
+          type: string
+        idToken:
+          description: 'For internal use only.
 
-          platform API session, including an authentication token string that
+            '
+          type: string
+        refreshToken:
+          description: 'For internal use only.
 
-          your Toast API client software can present when using other Toast
+            '
+          type: string
+    AuthenticationRequest:
+      type: object
+      description: 'Authentication credentials for your Toast API integration client software.
 
-          platform APIs.
+        '
+      properties:
+        clientId:
+          description: 'The identifier string for your Toast API client. You receive the
 
-          '
-        type: object
-        $ref: '#/definitions/AuthenticationToken'
-      status:
-        description: The value `SUCCESS` indicates that your authentication request was successful.
-        type: string
-        example: SUCCESS
+            identifier string from the Toast integrations team.
+
+            '
+          type: string
+          example: VKuhk4NaLedOcjZpJM8grvdrsFi3MlcM
+        clientSecret:
+          description: 'The secret string that corresponds to your Toast API client. You
+
+            receive the secret string from the Toast integrations team.
+
+            '
+          type: string
+          example: eS960aiKdvgbSDcLUCk68HR2CJKwwHNO2HKfgxjCWxoj27KIp6jFAi2XOOc_oCuv
+        userAccessType:
+          description: 'Always include the `userAccessType` value and set it to
+
+            `TOAST_MACHINE_CLIENT`.
+
+            '
+          type: string
+          example: TOAST_MACHINE_CLIENT
 externalDocs:
   description: Authentication developer guide
   url: https://doc.toasttab.com/doc/devguide/authentication.html

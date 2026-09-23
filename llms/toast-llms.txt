@@ -1,0 +1,174 @@
+# Toast
+
+> Toast is a restaurant technology platform: cloud point-of-sale, payment processing, online ordering
+> and back-office management for 120,000+ restaurant locations. Toast exposes 20 REST APIs for partner
+> and customer integrations covering orders, payments, menus, configuration, labor, stock, kitchen,
+> cash management, analytics, device details and packaging, plus three OUTBOUND specifications the
+> partner implements (gift cards, loyalty, tender) and eight webhook event categories.
+
+generated: 2026-08-27
+method: generated
+source: apis.yml + the artifacts in this repository, all harvested from Toast's own developer
+  documentation at https://doc.toasttab.com/. Toast publishes no llms.txt of its own
+  (https://doc.toasttab.com/llms.txt -> 403 AccessDenied, https://www.toasttab.com/llms.txt -> 403
+  Cloudflare challenge, checked 2026-08-27).
+
+## Read this first
+
+- **Toast does not publish its API hostname.** Every OpenAPI Toast ships carries the literal
+  placeholder `https://toast-api-server/<service>/<version>` in `servers[]`, and every curl example in
+  the developer guide uses `https://[toast-api-hostname]/...`. The guide states plainly: "To obtain
+  hostnames and authentication credentials, contact Toast." The sandbox hostname is issued by the Toast
+  integrations team when you start building; the production hostname arrives at go-live. You cannot
+  construct a working Toast request from the public contract alone.
+- **Access is approval-gated.** Partner and Custom integrations require Toast approval. Only Standard
+  API access is self-service, is purchased through the Toast Shop, and is READ-ONLY, production-only.
+- **Every call is scoped to one restaurant.** Send that location's GUID in the
+  `Toast-Restaurant-External-ID` header. Its presence also switches rate limiting from per-IP to
+  per-restaurant.
+
+## Authentication
+
+- OAuth 2.0 client credentials. `POST /authentication/v1/authentication/login` with clientId and
+  clientSecret in the JSON body; you receive a JWT bearer token.
+- Put it in `Authorization: Bearer <token>`.
+- Tokens last about a day (`expires_in` is returned - read it). Reuse a token for at least 30 minutes;
+  request no more than one or two per day. There is no refresh token.
+- There is no `scope` parameter on the token request. Your scopes are provisioned onto the API client
+  account and encoded in the JWT - decode the token to see what you hold.
+- No OIDC discovery document, no API keys, no mTLS.
+
+## Scopes (26 published)
+
+Read: `cashmgmt:read` `config:read` `device-details.info:read` `kitchen:read` `labor:read`
+`labor.employees:read` `menus:read` (v2) `menus.channel:read` (v3) `digital_schedule:read`
+`orders:read` `orders.channel:read` `delivery_info.address:read` `guest.pi:read` `packaging:read`
+`restaurants:read` `stock:read`
+Write: `credit_cards.authorization:write` `labor.employees:write` `labor.jobs:write`
+`labor.shifts:write` `orders.delivery_info:write` `orders.discounts:write` `orders.items:write`
+`orders.orders:write` `orders.payments:write` `stock:write`
+Void: `orders.channel:void`
+
+Compound requirements that catch people out: reading back an order you created needs BOTH `orders:read`
+and `orders.channel:read`; guest personal information needs `guest.pi:read` on top of `orders:read`;
+a delivery address needs `delivery_info.address:read`.
+
+## Runtime semantics
+
+- **Rate limits:** 20 requests/second and 10,000 per 15 minutes, globally and per API. `GET /menus/v2/menus`
+  is 1 rps per location. `GET /orders/v2/ordersBulk` is 5 rps per client per location, historical ranges
+  no wider than a month, calls 5-10 seconds apart. Over the limit returns **429**.
+- **Rate-limit headers:** `X-Toast-RateLimit-By`, `X-Toast-RateLimit-Remaining`, `X-Toast-RateLimit-Reset`
+  (epoch seconds). No `Retry-After`.
+- **Pagination:** read the `Toast-Next-Page-Token` response header, replay it as the `pageToken` query
+  parameter. No header means no more pages. The old `pageSize`/`page` parameters on the configuration
+  API are deprecated.
+- **Errors:** a proprietary JSON `ErrorMessage` object (`status`, `code`, `message`, `messageKey`,
+  `fieldName`, `link`, `requestId`, `developerMessage`). NOT RFC 9457 problem+json. Keep `requestId` -
+  Toast support traces 5xx by it.
+- **Idempotency:** Toast publishes NO idempotency key header. The credit cards API instead expects a
+  unique `paymentUuid` per authorization and returns 409 if one was already used. Toast requires
+  idempotency of YOUR endpoint for outbound loyalty calls, not of its own inbound APIs.
+- **Versioning:** major version in the path (`/orders/v2`, `/menus/v3`, `/config/v2`, `/labor/v1`,
+  `/era/v1`). 90 days notice for breaking changes - BUT since 2026-07-20 adding a value to an existing
+  enum is no longer breaking and carries no notice. Handle unknown enum values with a safe default.
+
+## Reversibility - read before you write
+
+- **Creating an order is reversible.** `POST /orders/v2/orders/{orderGuid}/void` (operationId
+  `voidOrder`) with body `{"selections":{"voidAll":true},"payments":{"voidAll":true}}`. Requires scope
+  `orders.channel:void`, the SAME clientId that created the order, an "Other" payment option (not cash,
+  card, or Toast gift card), and an order that is not already voided, deleted, or restricted. No time
+  limit is stated.
+- **Deleting an employee is reversible.** `DELETE /labor/v1/employees/{id}` archives; `PUT
+  /labor/v1/employees/{id}/unarchive` restores.
+- **Taking a payment is NOT reversible through the API.** Toast publishes no refund or payment-reversal
+  operation - only the tip may be amended. A refund is a Toast Web / POS action. Treat
+  `ordersChecksPaymentsPost` as one-way.
+- **Rehearse first.** `POST /orders/v2/prices` (`pricesPost`) returns the calculated prices, taxes and
+  discounts for an order WITHOUT creating it. `POST /orders/v2/applicableDiscounts`
+  (`applicableDiscountsPost`) returns the discounts that would apply.
+
+## APIs
+
+- Orders API 2.9.4 - `/orders/v2` - create, read, void orders; checks, selections, payments, discounts,
+  delivery info. https://doc.toasttab.com/openapi/orders/overview/
+- Menus API 2.4.1 - `/menus/v2` - fully resolved published menu JSON + metadata staleness check.
+  https://doc.toasttab.com/openapi/menus/overview/
+- Menus API 3.4.1 - `/menus/v3` - ordering-partner menu surface, needs `menus.channel:read`.
+  https://doc.toasttab.com/openapi/menusv3/overview/
+- Configuration API 2.5.0 - `/config/v2` - 47 operations over 24 reference collections (dining options,
+  discounts, tax rates, revenue centers, service areas, tables, printers, cash drawers, void reasons).
+  https://doc.toasttab.com/openapi/configuration/overview/
+- Labor API 1.9.0 - `/labor/v1` - employees, jobs, shifts, time entries, wage overrides, externalId
+  binding. https://doc.toasttab.com/openapi/labor/overview/
+- Analytics API 1.0.0 - `/era/v1` - 20 operations; async two-step reporting (POST returns a
+  `reportRequestGuid`, GET retrieves rows) for aggregated sales, check, labor, menu, payout and guest
+  data across a management group. https://doc.toasttab.com/openapi/analytics/overview/
+- Stock API 1.0.0 - `/stock` - inventory read, search and update.
+  https://doc.toasttab.com/openapi/stock/overview/
+- Restaurants API 1.0.0 - `/restaurants/v1` - location business info, group membership.
+  https://doc.toasttab.com/openapi/restaurants/overview/
+- Partners API 1.0.2 - `/partners/v1` - which restaurants have connected this integration.
+  https://doc.toasttab.com/openapi/partners/overview/
+- Cash Management API 1.1.0 - `/cashmgmt/v1` - cash entries and deposits.
+  https://doc.toasttab.com/openapi/cashmanagement/overview/
+- Kitchen API 1.0.2 - `/kitchen/v1` - prep stations and item fulfillment data.
+  https://doc.toasttab.com/openapi/kitchen/overview/
+- Credit Cards API 1.0.0 - `/ccpartner/v1` - single synchronous card authorization.
+  https://doc.toasttab.com/openapi/creditcards/overview/
+- Device Details API 1.0.0 - `/device-details/v1` - POS terminal and printer info including per-device
+  `pciCompliant`. https://doc.toasttab.com/openapi/devicedetails/overview/
+- Order Management Configuration API 1.0.1 - `/ordermgmt-config/v1` - online ordering schedule.
+  https://doc.toasttab.com/openapi/ordermgmt.configuration/overview/
+- Restaurant Availability API 1.0.1 - `/restaurant-availability/v1` - is the location taking online
+  orders. https://doc.toasttab.com/openapi/rx.availability.service/overview/
+- Packaging Configuration API 1.0.0 - `/packaging` - a location's packaging preferences.
+  https://doc.toasttab.com/openapi/packaging/overview/
+- Authentication API 1.0.0 - `/authentication/v1`.
+  https://doc.toasttab.com/openapi/authentication/overview/
+
+## Outbound - Toast calls YOU
+
+You host the endpoint; Toast POSTs to it. Your endpoint must be idempotent.
+
+- Gift Cards Integration API 1.0.0 - https://doc.toasttab.com/openapi/giftcards/overview/
+- Loyalty Integration API 1.1.0 - https://doc.toasttab.com/openapi/loyalty/overview/
+- Tender Integration API 0.1.0 - https://doc.toasttab.com/openapi/tender/overview/
+
+## Webhooks
+
+Eight event categories, twelve event types. Toast POSTs to an endpoint that Toast support (or Toast Web,
+for Standard API access) binds to a category. Signed with HMAC in the `Toast-Signature` header using the
+per-subscription secret. **Your endpoint must return 2xx within 2 seconds, before any business logic** -
+connection and socket timeouts are both 2 seconds.
+
+- orders: `order_updated`, `orders_updated`, `channel_order_updated` (use this instead of polling
+  `/ordersBulk`)
+- guest order fulfillment: `guest_order_status`
+- menus: `menus_updated`
+- stock: `in_stock`, `low_quantity`, `out_of_stock`
+- partners: `partner_added`, `partner_removed`, `partner_updated`
+- restaurant availability: `availability_online`, `availability_offline`
+- ordering schedule: `ordering_schedule_updated`
+- packaging preferences: `packaging_updated`
+
+## Not available
+
+No GraphQL (probed: `/graphql` on ws-api.toasttab.com, api.toasttab.com and www.toasttab.com all miss).
+No MCP server. No A2A agent card. No SOAP/WSDL. No gRPC. No first-party SDK on npm, PyPI, RubyGems,
+Packagist or crates.io - you write your own HTTP client. No `/.well-known/` document on any Toast host.
+No published test card numbers or magic test identifiers. No public SLA.
+
+## Docs
+
+- Developer guide: https://doc.toasttab.com/doc/devguide/index.html
+- API reference: https://doc.toasttab.com/openapi/
+- Cookbook and integration checklists: https://doc.toasttab.com/doc/cookbook/index.html
+- Platform guide: https://doc.toasttab.com/doc/platformguide/index.html
+- API updates / changelog: https://api-updates.toasttab.com/
+- Historical API change log: https://doc.toasttab.com/doc/relnotes/devPortalApiChangeLog.html
+- Status: https://status.toasttab.com/ (JSON at /api/v2/status.json)
+- Developer portal: https://developers.toasttab.com/
+- Support: https://central.toasttab.com/
+- API terms of use: https://pos.toasttab.com/api-terms-of-use

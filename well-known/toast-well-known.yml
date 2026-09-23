@@ -1,0 +1,88 @@
+generated: '2026-08-27'
+method: probed
+source: live unauthenticated GET of /.well-known/* on every Toast host in apis.yml and every
+  OpenAPI servers[] host, 2026-08-27
+provider: Toast
+providerId: toast
+summary: >-
+  No /.well-known document is served on any Toast host. pos.toasttab.com and developers.toasttab.com sit
+  behind a Cloudflare interstitial that answers 403 "Just a moment..." to every path including
+  /.well-known/*, so those rows record the challenge rather than a document; www.toasttab.com answers a
+  real 404 HTML page for every path; doc.toasttab.com is an S3-backed origin that answers 403
+  AccessDenied for absent keys; ws-api.toasttab.com (the live Toast API gateway) answers its own JSON
+  404 envelope. No path on any host returned a document, so NO WellKnown or SecurityTxt pointer is
+  emitted in apis.yml. This file records the absence, it does not assert a presence.
+document_count: 0
+hosts:
+- host: pos.toasttab.com
+  note: Cloudflare bot challenge (HTTP 403, body "Just a moment...") on every path. Not a 404 -
+    a document could exist behind the challenge, but none was retrievable.
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 403
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+    file: null
+  - path: /.well-known/api-catalog
+    status: 403
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 403
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 403
+    file: null
+  - path: /.well-known/agent.json
+    status: 403
+    file: null
+- host: www.toasttab.com
+  note: Real HTML 404 pages, host not challenged. Confirmed absence.
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+- host: doc.toasttab.com
+  note: S3-backed documentation origin; absent keys answer 403 AccessDenied, which is this
+    origin's 404 equivalent.
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 403
+    file: null
+- host: ws-api.toasttab.com
+  note: Live Toast API gateway. Returns the Toast JSON error envelope {"status":404,"code":10003}
+    - a genuine 404 from the API itself, which also confirms this host is a real Toast API endpoint.
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

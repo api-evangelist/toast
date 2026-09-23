@@ -1,0 +1,78 @@
+generated: '2026-08-27'
+method: searched
+source: https://doc.toasttab.com/doc/devguide/apiEnvironments.html
+docs:
+- https://doc.toasttab.com/doc/devguide/apiEnvironments.html
+- https://doc.toasttab.com/doc/devguide/integrationTestPlans.html
+- https://doc.toasttab.com/doc/devguide/apiIntegrationChecklists.html
+- https://doc.toasttab.com/doc/devguide/apiOrdersTryItOut.html
+provider: Toast
+providerId: toast
+present: true
+self_service: false
+summary: >-
+  Toast runs a real, separately-credentialled sandbox environment, but it is not self-service and its
+  hostname is not published. You register a separate API client account per environment, and the Toast
+  integrations team issues the sandbox hostname when you begin building; the production hostname
+  arrives when the integration is approved to go live. Sandbox access is limited to partner and custom
+  integrations - Standard API access and Analytics API access exist in production only.
+environments:
+- name: sandbox
+  purpose: Integration development and testing against a realistic Toast platform.
+  hostname_published: false
+  hostname_source: Issued by the Toast integrations team at the start of an integration build.
+  payment_processing: simulated
+  availability: 09:00-18:00 America/New_York; outside those hours the sandbox may be down for upgrades
+    and maintenance.
+  versioned: true
+  note: Sandbox public APIs are versioned and fully functional, matching production.
+- name: production
+  purpose: Live transactions at active restaurants.
+  hostname_published: false
+  hostname_source: Issued when the integration is approved to go live.
+  payment_processing: live
+key_prefixes:
+  published: false
+  note: >-
+    Toast does not distinguish test and live credentials by key prefix. Environments are separated by
+    HOSTNAME and by a separate API client account (clientId / clientSecret pair) per environment, not
+    by a prefix on the credential. There is nothing in a Toast credential that tells an agent which
+    environment it is pointed at - the hostname is the only signal.
+test_values:
+  test_cards: null
+  test_bank_accounts: null
+  magic_identifiers: null
+  note: >-
+    Toast publishes NO test card numbers, magic identifiers, or hosted test tokens. Sandbox payment
+    processing is described only as "simulated". This is a real gap for an agent or a new integrator:
+    there is no published fixture set to reason about, and test data comes from the sandbox restaurant
+    Toast provisions for you.
+test_clocks:
+  supported: false
+tooling:
+- name: Toast POS app sandbox build
+  description: >-
+    Toast publishes an Android APK installer of the Toast POS app configured to point at the sandbox
+    environment, so an integrator can drive real POS behaviour against their sandbox restaurant. The
+    download link rotates when the sandbox is upgraded; the version published at the time of this pass
+    was POS app 2.109.0.
+  source: https://doc.toasttab.com/doc/devguide/apiEnvironments.html
+- name: Try it out pages
+  description: >-
+    The developer guide ships walkthrough "try it out" pages for menus, orders, payments, stock,
+    cash entries, restaurant info and analytics that step through a first authenticated call.
+  source: https://doc.toasttab.com/doc/devguide/apiMenusTryItOut.html
+- name: Integration test plans and checklists
+  description: >-
+    Toast publishes per-domain integration checklists (accounting, delivery, employee, inventory,
+    ordering, payroll, reservation, shift, security) and formal test plans that an integration must
+    pass before go-live approval.
+  source: https://doc.toasttab.com/doc/cookbook/apiIntegrationChecklistTemplate.html
+console:
+  present: true
+  url: https://doc.toasttab.com/openapi/
+  note: The Toast API reference is a Redocly portal with per-operation request/response documentation.
+    It is a reference renderer, not an authenticated request console.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

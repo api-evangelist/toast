@@ -2,7 +2,17 @@ openapi: 3.2.0
 info:
   version: 1.1.0
   title: Cash Management Deposits API
-  description: "Provides information about cash operations that add cash to or \nremove cash from a restaurant cash drawer, separately from cash\ntransaction payments (customer payments for individual checks). \nCash entries are different than cash transactions, and affect \nthe overall amount of cash that the Toast POS accounts for in \na restaurant.\n"
+  description: 'Provides information about cash operations that add cash to or
+
+    remove cash from a restaurant cash drawer, separately from cash
+
+    transaction payments (customer payments for individual checks).
+
+    Cash entries are different than cash transactions, and affect
+
+    the overall amount of cash that the Toast POS accounts for in
+
+    a restaurant.'
   termsOfService: https://pos.toasttab.com/api-terms-of-use
 servers:
 - url: https://toast-api-server/cashmgmt/v1
@@ -11,10 +21,12 @@ tags:
 paths:
   /deposits:
     get:
-      summary: 'Get deposits
+      summary: Get deposits
+      description: 'Returns an array of `Deposit` objects containing information about
 
-        '
-      description: "Returns an array of `Deposit` objects containing information about\ncash removed from a restaurant to be deposited in a bank or \nother financial institution during one business day.\n"
+        cash removed from a restaurant to be deposited in a bank or
+
+        other financial institution during one business day.'
       operationId: depositsGet
       externalDocs:
         description: Getting cash deposit entries
@@ -83,28 +95,6 @@ components:
         entityType:
           description: The category of the Toast POS object.
           type: string
-    ExternalReference:
-      type: object
-      description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID or a partner's identifier.
-      allOf:
-      - $ref: '#/components/schemas/ToastReference'
-      - type: object
-        properties:
-          externalId:
-            description: External identifier string that is prefixed by the naming authority.
-            type: string
-    Error:
-      required:
-      - status
-      - message
-      properties:
-        status:
-          type: integer
-          format: int32
-          description: An HTTP status code.
-        message:
-          type: string
-          description: A message that describes the error.
     Deposit:
       type: object
       description: 'Information about an event in which a restaurant employee removes
@@ -143,6 +133,28 @@ components:
             $ref: '#/components/schemas/ExternalReference'
           creator:
             $ref: '#/components/schemas/ToastReference'
+    Error:
+      required:
+      - status
+      - message
+      properties:
+        status:
+          type: integer
+          format: int32
+          description: An HTTP status code.
+        message:
+          type: string
+          description: A message that describes the error.
+    ExternalReference:
+      type: object
+      description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID or a partner's identifier.
+      allOf:
+      - $ref: '#/components/schemas/ToastReference'
+      - type: object
+        properties:
+          externalId:
+            description: External identifier string that is prefixed by the naming authority.
+            type: string
   securitySchemes:
     cashMgmtRead:
       type: oauth2

@@ -1,0 +1,160 @@
+generated: '2026-08-27'
+method: derived
+source: openapi/*.yaml + openapi/*.yml in this repo (candidate tools derived from published
+  operationIds); discovery probes recorded below
+provider: Toast
+providerId: toast
+status: candidate
+summary: >-
+  Toast ships no MCP server. Nothing was found on a Toast host, in the toasttab GitHub organization, or
+  on any package registry. The tool list below is a DERIVED candidate mapped one-to-one onto real
+  operationIds in Toast's own published OpenAPI definitions - it is a proposal for what a Toast MCP
+  server would expose, not a description of something that exists.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: unknown
+  verified: derived
+discovery:
+  probed:
+  - url: https://mcp.toasttab.com/
+    status: '<no response - DNS did not resolve>'
+  - url: https://ws-api.toasttab.com/.well-known/oauth-authorization-server
+    status: 404
+  - url: https://ws-api.toasttab.com/.well-known/oauth-protected-resource
+    status: 404
+  - url: https://doc.toasttab.com/llms.txt
+    status: 403
+    note: S3 AccessDenied - the key does not exist.
+  - url: https://registry.npmjs.org/-/v1/search?text=@toasttab
+    status: 200
+    note: No @toasttab scope; no Toast-authored MCP package on npm.
+  - url: https://github.com/orgs/toasttab/repositories
+    status: 200
+    note: 30 public source repos, none an MCP server.
+  conclusion: No hosted MCP endpoint and no stdio MCP package published by Toast as of 2026-08-27.
+constraint:
+  note: >-
+    A Toast MCP server would face the same wall an agent does today - Toast does not publish its API
+    hostname, and every call requires a per-integration clientId/clientSecret plus a
+    Toast-Restaurant-External-ID for the target location. Any server would be configured per
+    integration, not shared.
+candidate_tool_count: 18
+candidate_tools:
+- name: toast_get_restaurant
+  description: Get business information for one restaurant location.
+  rest: restaurantsRestaurantGuidGet
+  spec: openapi/toast-restaurants-api-openapi.yml
+  scope: restaurants:read
+  consequence: read
+- name: toast_list_group_restaurants
+  description: List the restaurants in a management group.
+  rest: groupsManagementGroupGuidRestaurantsGet
+  spec: openapi/toast-restaurants-api-openapi.yml
+  scope: restaurants:read
+  consequence: read
+- name: toast_list_connected_restaurants
+  description: List the restaurants that have connected this partner integration.
+  rest: connectedRestaurantsGet
+  spec: openapi/toast-connectedrestaurants-api-openapi.yml
+  consequence: read
+- name: toast_get_menus
+  description: Retrieve the fully resolved published menu for a location.
+  rest: menusGet
+  spec: openapi/toast-menus-v3-openapi.yaml
+  scope: menus.channel:read (v3) or menus:read (v2)
+  consequence: read
+- name: toast_get_menu_metadata
+  description: Check whether a location's cached menu JSON is stale.
+  rest: metadataGet
+  spec: openapi/toast-menus-v3-openapi.yaml
+  consequence: read
+- name: toast_list_config_entities
+  description: Read restaurant configuration - dining options, discounts, revenue centers, service
+    areas, tables, tax rates, printers, cash drawers and 40 more collections.
+  rest: discountsGet, diningOptionsGet, revenueCentersGet, serviceAreasGet, tablesGet, taxRatesGet,
+    printersGet, cashDrawersGet, voidReasonsGet
+  spec: openapi/toast-configuration-openapi.yaml
+  scope: config:read
+  consequence: read
+- name: toast_price_order
+  description: Calculate prices, taxes and discounts for an order WITHOUT creating it.
+  rest: pricesPost
+  spec: openapi/toast-orders-api-openapi.yml
+  consequence: read
+  note: This is the dry-run rehearsal for toast_create_order.
+- name: toast_get_applicable_discounts
+  description: Return the discounts that would apply to an order.
+  rest: applicableDiscountsPost
+  spec: openapi/toast-discounts-api-openapi.yml
+  consequence: read
+- name: toast_create_order
+  description: Submit a new guest order to a restaurant location.
+  rest: ordersPost
+  spec: openapi/toast-orders-api-openapi.yml
+  scope: orders.orders:write
+  consequence: write-high
+  reversible_by: toast_void_order
+- name: toast_get_order
+  description: Retrieve one order by GUID.
+  rest: ordersGuidGet
+  spec: openapi/toast-orders-api-openapi.yml
+  scope: orders:read
+  consequence: read
+- name: toast_get_orders_bulk
+  description: Retrieve detailed information about multiple orders over a date range.
+  rest: ordersBulkGet
+  spec: openapi/toast-orders-api-openapi.yml
+  scope: orders:read
+  consequence: read
+  note: Rate limited to five requests per client per location per second.
+- name: toast_void_order
+  description: Void an order and its payments. The reversal path for toast_create_order.
+  rest: voidOrder
+  spec: openapi/toast-orders-api-openapi.yml
+  scope: orders.channel:void
+  consequence: write-high
+- name: toast_add_payment
+  description: Add a payment to an existing check.
+  rest: ordersChecksPaymentsPost
+  spec: openapi/toast-payments-api-openapi.yml
+  scope: orders.payments:write
+  consequence: write-irreversible
+  note: Toast publishes no refund or payment-reversal operation. Only the tip can be amended.
+- name: toast_get_inventory
+  description: Read menu item and modifier stock availability.
+  rest: getInventory
+  spec: openapi/toast-stock-api-openapi.yml
+  scope: stock:read
+  consequence: read
+- name: toast_update_inventory
+  description: Update stock status and quantity for menu items and modifier options.
+  rest: updateInventory
+  spec: openapi/toast-stock-api-openapi.yml
+  scope: stock:write
+  consequence: write
+- name: toast_list_employees
+  description: List employees at a location.
+  rest: employeesGet
+  spec: openapi/toast-employees-api-openapi.yml
+  scope: labor.employees:read
+  consequence: read
+- name: toast_get_time_entries
+  description: Retrieve employee time entries and breaks.
+  rest: timeEntriesGet
+  spec: openapi/toast-time-entries-api-openapi.yml
+  scope: labor:read
+  consequence: read
+- name: toast_request_analytics_report
+  description: Request and retrieve aggregated sales, check, labor, menu, payout or guest reporting
+    data for a management group.
+  rest: postMetricsReportingDataCustomTimeRangeRequest, getMetricsReportingData,
+    postCheckReportingDataSpecificTimeRangeRequest, getCheckReportingData
+  spec: openapi/toast-analytics-openapi.yaml
+  consequence: read
+  note: Two-step async pattern - POST returns a reportRequestGuid, GET retrieves the result.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

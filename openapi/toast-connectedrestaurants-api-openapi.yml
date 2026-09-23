@@ -1,27 +1,14 @@
-swagger: '2.0'
+openapi: 3.2.0
 info:
-  version: 1.0.0
-  title: Toast Authentication ConnectedRestaurants API
-  description: 'The authentication API returns an authentication token that you can present
+  version: 1.0.1
+  title: Partners Connected Restaurants API
+  description: 'Returns information about the Toast restaurants that a partner
 
-    when your integration client software uses other Toast APIs. For more
-
-    information about authentication, see [the Toast Developer
-
-    Guide](https://doc.toasttab.com/doc/devguide/authentication.html).
-
-    '
-  termsOfService: https://pos.toasttab.com/api-terms-of-use
+    API client can access.'
   contact:
     name: Toast developer support
-host: toast-api-server
-basePath: /authentication/v1
-schemes:
-- https
-consumes:
-- application/json
-produces:
-- application/json
+servers:
+- url: https://toast-api-server/partners/v1
 tags:
 - name: ConnectedRestaurants
 paths:
@@ -53,20 +40,17 @@ paths:
 
         results. You can also get the token strings for the first and next pages
 
-        from [the `link` response header
+        from the `link` response header
 
-        fields](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Link).
-
-        '
-      produces:
-      - application/json
+        fields.'
       parameters:
       - name: lastModified
         description: "Limits the return data to restaurants that changed their access\nconfiguration for your partner service after a specific date and\ntime. You can use this parameter to identify new or updated\nrestaurants connected to your partner service.\n\nThe restaurants included in the response data either:\n\n* Gave access to your integrated partner service after a specific\n  date and time.\n\n* Modified the configuration for your integrated partner service after\n  a specific date and time. \n\nYou must [specify the date and\ntime](https://doc.toasttab.com/doc/devguide/api_dates_and_timestamps.html)\nas a UTC timestamp in ISO 8601 format, for example:\n`2020-03-01T00:00:00.000-0000`. URL-encode the timestamp. For\nexample, `2020-03-01T00%3A00%3A00.000-0000`.\n"
         in: query
-        type: string
-        format: date
         required: false
+        schema:
+          type: string
+          format: date
       - name: pageSize
         description: 'Controls the number of `PartnerAccessExternalRep` objects that the
 
@@ -76,10 +60,11 @@ paths:
 
           '
         in: query
-        type: integer
         required: false
-        maximum: 200
-        minimum: 1
+        schema:
+          type: integer
+          maximum: 200
+          minimum: 1
       - name: pageToken
         description: 'Returns a specific set of restaurants in the response value. You get
 
@@ -95,8 +80,9 @@ paths:
 
           '
         in: query
-        type: string
         required: false
+        schema:
+          type: string
       responses:
         '200':
           description: 'Returns a `PaginatedResponse` object that contains a paginated array of
@@ -104,228 +90,236 @@ paths:
             the restaurants that have connected to your integrated partner service.
 
             '
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/PaginatedResponse'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PaginatedResponse'
         '403':
           description: "Your Toast API client does not have permission to use the \n`/connectedRestaurants` endpoint.\n"
       security:
       - oauth2: []
       tags:
       - ConnectedRestaurants
-definitions:
-  PaginatedResponse:
-    type: object
-    description: 'A wrapper object containing paginated sets of response data. The `results`
+components:
+  schemas:
+    PartnerAccessExternalRep:
+      type: object
+      description: 'Information about a Toast platform restaurant.
 
-      value is an array of `PartnerAccessExternalRep` objects, which hold
+        '
+      properties:
+        restaurantGuid:
+          type: string
+          format: uuid
+          description: 'The unique Toast POS identifier for the restaurant.
 
-      information about Toast platform restaurants. Also includes pagination
+            '
+          example: e728cd53-2fa7-4e63-8f8f-93e78ea66b03
+        managementGroupGuid:
+          type: string
+          format: uuid
+          description: 'The guid of the management group containing the restaurant.
 
-      details such as how many pages are included in the response, or the total
+            '
+          example: bdfda703-2a83-4e0f-9b8a-8ea0ee6cab79
+        deleted:
+          type: boolean
+          description: "Indicates whether the restaurant is actively using the Toast \nplatform. For example, if a restaurant is no longer operating, \nor is no longer using the Toast platform, this value is `true`.\n"
+        restaurantName:
+          type: string
+          description: 'The human-readable name of the restaurant location.
 
-      number of objects in the `results` array.
+            '
+          example: Main Street Cafe
+        locationName:
+          type: string
+          description: "The identifier of a specific restaurant location, set on the \n*Restaurant Info* page of Toast Web. \nFor example, a restaurant group might assign a location code \nsuch as #1234 to a specific location.\n"
+          example: 123 Main Street
+        createdByEmailAddress:
+          type: string
+          description: 'The email address of the restaurant employee who connected the
 
-      '
-    example:
-      currentPageNum: 1
-      results:
-      - restaurantGuid: 7ab295f6-8dc8-4cb6-8cdb-072b83e84184
-        managementGroupGuid: 75063706-dd6e-4da6-8bb6-3a99e218e686
-        restaurantName: Main Street Cafe
-        locationName: 123 Main Street
-        createdByEmailAddress: clefebvre@mainstreetcafe.com
-        externalGroupRef: ''
-        externalRestaurantRef: ''
-        modifiedDate: 1678823073353
-        createdDate: 1678823073353
-        isoModifiedDate: '2023-03-14T19:44:33.353Z'
-        isoCreatedDate: '2023-03-14T19:44:33.353Z'
-      totalResultCount: 3222
-      pageSize: 1
-      currentPageToken: cDoxLHM6MQ==
-      nextPageToken: cDoyLHM6MQ==
-      totalCount: 3222
-      nextPageNum: 2
-      lastPageNum: 3222
-    properties:
-      currentPageNum:
-        type: integer
-        description: 'The active page within all repsonse pages. You can see the total amount of pages at the end of the response in the `lastPageNum` field.
+            restaurant to your integrated partner service, or who edited the
 
-          '
-        example: 12
-      results:
-        type: array
-        description: 'An array of `PartnerAccessExternalRep` objects that include
+            connection details.
 
-          information about Toast platform restaurants.
+            '
+          example: clefebvre@mainstreetcafe.com
+        externalGroupRef:
+          type: string
+          description: 'An identifier for the restaurant group that is recognized by your
 
-          '
-        items:
-          $ref: '#/definitions/PartnerAccessExternalRep'
-      totalResultCount:
-        type: integer
-        description: 'The total number of records returned.
+            integrated partner service. This information is entered by the
 
-          '
-        example: 1234
-      pageSize:
-        type: integer
-        description: 'The number of restaurants returned in each page of response data.
+            restaurant administrator. If you need information about the restaurant
 
-          '
-        example: 100
-      currentPageToken:
-        type: string
-        description: 'A string that identifies the current page of response data.
+            group in this data string, you instruct the restaurant administrator
 
-          '
-        example: cDoxLHM6MQ==
-      nextPageToken:
-        type: string
-        description: 'A string that identifies the following page of response data.
+            to enter it in the Toast platform configuration for the integration
 
-          '
-        example: cDoyLHM6MQ==
-      totalCount:
-        type: integer
-        description: 'The total number of results within the response record.
+            partner connection.
 
-          '
-        example: 1234
-      nextPageNum:
-        type: integer
-        description: 'The next available page in the data. `Null` if the current page of
+            '
+        externalRestaurantRef:
+          type: string
+          description: 'An identifier for the restaurant location that is recognized by your
 
-          results is the last available page.
+            integrated partner service. This information is entered by the
 
-          '
-        example: 14
-      lastPageNum:
-        type: integer
-        description: 'The last page number in the response data.
+            restaurant administrator. If you need information about the restaurant
 
-          '
-        example: 13
-      previousPageNum:
-        type: integer
-        description: 'The page number for the page previous to your current page in
+            location in this data string, you instruct the restaurant
 
-          sequential order. `Null` if there are no pages previous to your
+            administrator to enter it in the Toast platform configuration for the
 
-          current page.
+            integration partner connection.
 
-          '
-        example: 12
-  PartnerAccessExternalRep:
-    type: object
-    description: 'Information about a Toast platform restaurant.
+            '
+        modifiedDate:
+          type: integer
+          format: int64
+          description: 'The most recent date and time that the partner connection
 
-      '
-    properties:
-      restaurantGuid:
-        type: string
-        format: uuid
-        description: 'The unique Toast POS identifier for the restaurant.
+            was edited in epoch time (milliseconds since 1970-01-01 00:00:00).
 
-          '
-        example: e728cd53-2fa7-4e63-8f8f-93e78ea66b03
-      managementGroupGuid:
-        type: string
-        format: uuid
-        description: 'The guid of the management group containing the restaurant.
+            '
+          example: 1678846869551
+        createdDate:
+          type: integer
+          format: int64
+          description: 'The date and time that the partner connection was created in epoch
 
-          '
-        example: bdfda703-2a83-4e0f-9b8a-8ea0ee6cab79
-      deleted:
-        type: boolean
-        description: "Indicates whether the restaurant is actively using the Toast \nplatform. For example, if a restaurant is no longer operating, \nor is no longer using the Toast platform, this value is `true`.\n"
-      restaurantName:
-        type: string
-        description: 'The human-readable name of the restaurant location.
+            time (milliseconds since 1970-01-01 00:00:00).
 
-          '
-        example: Main Street Cafe
-      locationName:
-        type: string
-        description: "The identifier of a specific restaurant location, set on the \n*Restaurant Info* page of Toast Web. \nFor example, a restaurant group might assign a location code \nsuch as #1234 to a specific location.\n"
-        example: 123 Main Street
-      createdByEmailAddress:
-        type: string
-        description: 'The email address of the restaurant employee who connected the
+            '
+          example: 1643858534451
+        isoModifiedDate:
+          type: string
+          description: 'The most recent date and time that the partner connection
 
-          restaurant to your integrated partner service, or who edited the
+            was edited in ISO8601 format.
 
-          connection details.
+            '
+          example: 2023-03-12 08:32:34.008000+00:00
+        isoCreatedDate:
+          type: string
+          description: 'The date and time that the partner connection was created in ISO8601
 
-          '
-        example: clefebvre@mainstreetcafe.com
-      externalGroupRef:
-        type: string
-        description: 'An identifier for the restaurant group that is recognized by your
+            format.
 
-          integrated partner service. This information is entered by the
+            '
+          example: 2022-05-17 10:21:38.008000+00:00
+    PaginatedResponse:
+      type: object
+      description: 'A wrapper object containing paginated sets of response data. The `results`
 
-          restaurant administrator. If you need information about the restaurant
+        value is an array of `PartnerAccessExternalRep` objects, which hold
 
-          group in this data string, you instruct the restaurant administrator
+        information about Toast platform restaurants. Also includes pagination
 
-          to enter it in the Toast platform configuration for the integration
+        details such as how many pages are included in the response, or the total
 
-          partner connection.
+        number of objects in the `results` array.
 
-          '
-      externalRestaurantRef:
-        type: string
-        description: 'An identifier for the restaurant location that is recognized by your
+        '
+      example:
+        currentPageNum: 1
+        results:
+        - restaurantGuid: 7ab295f6-8dc8-4cb6-8cdb-072b83e84184
+          managementGroupGuid: 75063706-dd6e-4da6-8bb6-3a99e218e686
+          restaurantName: Main Street Cafe
+          locationName: 123 Main Street
+          createdByEmailAddress: clefebvre@mainstreetcafe.com
+          externalGroupRef: ''
+          externalRestaurantRef: ''
+          modifiedDate: 1678823073353
+          createdDate: 1678823073353
+          isoModifiedDate: '2023-03-14T19:44:33.353Z'
+          isoCreatedDate: '2023-03-14T19:44:33.353Z'
+        totalResultCount: 3222
+        pageSize: 1
+        currentPageToken: cDoxLHM6MQ==
+        nextPageToken: cDoyLHM6MQ==
+        totalCount: 3222
+        nextPageNum: 2
+        lastPageNum: 3222
+      properties:
+        currentPageNum:
+          type: integer
+          description: 'The active page within all repsonse pages. You can see the total amount of pages at the end of the response in the `lastPageNum` field.
 
-          integrated partner service. This information is entered by the
+            '
+          example: 12
+        results:
+          type: array
+          description: 'An array of `PartnerAccessExternalRep` objects that include
 
-          restaurant administrator. If you need information about the restaurant
+            information about Toast platform restaurants.
 
-          location in this data string, you instruct the restaurant
+            '
+          items:
+            $ref: '#/components/schemas/PartnerAccessExternalRep'
+        totalResultCount:
+          type: integer
+          description: 'The total number of records returned.
 
-          administrator to enter it in the Toast platform configuration for the
+            '
+          example: 1234
+        pageSize:
+          type: integer
+          description: 'The number of restaurants returned in each page of response data.
 
-          integration partner connection.
+            '
+          example: 100
+        currentPageToken:
+          type: string
+          description: 'A string that identifies the current page of response data.
 
-          '
-      modifiedDate:
-        type: integer
-        format: int64
-        description: 'The most recent date and time that the partner connection
+            '
+          example: cDoxLHM6MQ==
+        nextPageToken:
+          type: string
+          description: 'A string that identifies the following page of response data.
 
-          was edited in epoch time (milliseconds since 1970-01-01 00:00:00).
+            '
+          example: cDoyLHM6MQ==
+        totalCount:
+          type: integer
+          description: 'The total number of results within the response record.
 
-          '
-        example: 1678846869551
-      createdDate:
-        type: integer
-        format: int64
-        description: 'The date and time that the partner connection was created in epoch
+            '
+          example: 1234
+        nextPageNum:
+          type: integer
+          description: 'The next available page in the data. `Null` if the current page of
 
-          time (milliseconds since 1970-01-01 00:00:00).
+            results is the last available page.
 
-          '
-        example: 1643858534451
-      isoModifiedDate:
-        type: string
-        description: 'The most recent date and time that the partner connection
+            '
+          example: 14
+        lastPageNum:
+          type: integer
+          description: 'The last page number in the response data.
 
-          was edited in ISO8601 format.
+            '
+          example: 13
+        previousPageNum:
+          type: integer
+          description: 'The page number for the page previous to your current page in
 
-          '
-        example: 2023-03-12 08:32:34.008000+00:00
-      isoCreatedDate:
-        type: string
-        description: 'The date and time that the partner connection was created in ISO8601
+            sequential order. `Null` if there are no pages previous to your
 
-          format.
+            current page.
 
-          '
-        example: 2022-05-17 10:21:38.008000+00:00
-externalDocs:
-  description: Authentication developer guide
-  url: https://doc.toasttab.com/doc/devguide/authentication.html
+            '
+          example: 12
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          scopes: {}
+          tokenUrl: https://toast-api-server/authentication/v1/authentication/login
+      description: "Access to Toast APIs, specific endpoints, \nand specific API endpoint operations is \ncontrolled by the scopes that are associated \nwith your API account. \nA full reference for Toast API scopes and \ntheir capabilities can be found in the\n[_Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html).\n"

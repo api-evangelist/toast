@@ -2,9 +2,7 @@ openapi: 3.2.0
 info:
   title: Kitchen Export API
   version: 1.0.2
-  description: 'Returns information about kitchen operations.
-
-    '
+  description: Returns information about kitchen operations.
   contact:
     name: Toast developer support
 servers:
@@ -16,9 +14,7 @@ paths:
     get:
       operationId: itemFulfillmentsGet
       summary: Get item fulfillments
-      description: 'Exports item fulfillments for a single, specified business date.
-
-        '
+      description: Exports item fulfillments for a single, specified business date.
       parameters:
       - name: businessDate
         in: query

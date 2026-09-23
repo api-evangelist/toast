@@ -1,3 +1,13 @@
+> **PROVENANCE WARNING — added 2026-08-27 by the API Evangelist enrichment pipeline.**
+> **Toast does not publish a GraphQL API.** This file and `toast-schema.graphql` are a CONCEPTUAL
+> schema someone authored from Toast's REST documentation; they describe no callable Toast endpoint.
+> Verified 2026-08-27 by POSTing an introspection query to `/graphql`, `/api/graphql` and
+> `/v1/graphql` on `ws-api.toasttab.com` (404, Toast JSON error envelope), `api.toasttab.com` and
+> `www.toasttab.com` (301/404). The 14 `type: GraphQL` pointers that previously appeared in
+> `apis.yml` have been REMOVED, because a pointer of that type asserts that Toast serves a GraphQL
+> API. Do not re-wire them. Toast's real machine-readable contracts are the 20 OpenAPI definitions in
+> `openapi/`.
+
 # Toast GraphQL Schema
 
 ## Overview

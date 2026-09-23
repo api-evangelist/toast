@@ -1,0 +1,26 @@
+# Front Door AI Index — toast — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: toast
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: pos.toasttab.com
+  final_host: pos.toasttab.com
+  ownership: own
+  owner: toast
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 6
+  host_score: 6
+  density: 4.4
+  words: 1363
+  tiers:
+    agentic: 2
+    core: 4
+    model: 0
+  ambiguous: 0
+  top_terms:
+    AI: 4
+    AI assistant: 2

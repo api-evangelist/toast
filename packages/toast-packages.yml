@@ -1,0 +1,52 @@
+generated: '2026-08-27'
+method: searched
+source: https://registry.npmjs.org/-/v1/search, https://pypi.org/pypi/, https://rubygems.org/api/v1/search.json,
+  https://packagist.org/search.json, https://github.com/orgs/toasttab/repositories
+provider: Toast
+providerId: toast
+summary: >-
+  Toast publishes no first-party client SDK on any public package registry. Every public registry was
+  queried unauthenticated on 2026-08-27 and none returned a Toast-authored client for the Toast platform
+  APIs. The `toasttab` GitHub organization is real and active but contains infrastructure forks
+  (terraform-provider-aws, pulsar-client-go, ReLinker, MaterialDateTimePicker, pg_partman, camel, spark)
+  rather than an API client library. Toast's own developer guide directs integrators to call the REST
+  endpoints directly with an OAuth 2.0 client-credentials bearer token; it never names an SDK.
+official_package_count: 0
+packages: []
+registries_searched:
+- registry: npm
+  query: '@toasttab, toasttab, toast-api'
+  endpoint: https://registry.npmjs.org/-/v1/search
+  status: 200
+  first_party_hits: 0
+  note: All hits are unrelated UI "toast notification" components (sonner, react-hot-toast,
+    @radix-ui/react-toast). No @toasttab scope exists.
+- registry: pypi
+  query: toast-api, toasttab, toast-pos, toast_api
+  endpoint: https://pypi.org/pypi/<name>/json
+  status: 404
+  first_party_hits: 0
+- registry: rubygems
+  query: toasttab
+  endpoint: https://rubygems.org/api/v1/search.json
+  status: 200
+  first_party_hits: 0
+  note: Empty result array.
+- registry: packagist
+  query: toasttab
+  endpoint: https://packagist.org/search.json
+  status: 200
+  first_party_hits: 0
+  note: Only third-party Laravel toast-notification packages.
+- registry: github
+  query: https://github.com/orgs/toasttab/repositories
+  status: 200
+  first_party_hits: 0
+  note: 30 public source repos, none an API client for the Toast platform APIs.
+finding: >-
+  This is a genuine absence, not an unchecked gap. A partner integrating with Toast writes its own HTTP
+  client. Because there is no first-party SDK, there is also no SDK release date to read as an
+  abandonment signal for the Toast API surface.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

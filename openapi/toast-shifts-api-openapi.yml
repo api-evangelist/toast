@@ -1,27 +1,20 @@
-swagger: '2.0'
+openapi: 3.2.0
 info:
-  version: 1.0.0
-  title: Toast Authentication Shifts API
-  description: 'The authentication API returns an authentication token that you can present
+  version: 1.9.0
+  title: Toast Labor Shifts API
+  description: 'Toast labor API is a set of REST web services that you can use to
 
-    when your integration client software uses other Toast APIs. For more
+    manage the employees, jobs, and shifts for your restaurant. The
 
-    information about authentication, see [the Toast Developer
+    labor API is intended for software engineers, managers, and
 
-    Guide](https://doc.toasttab.com/doc/devguide/authentication.html).
+    technical staff who are responsible for integrating third-party
 
-    '
-  termsOfService: https://pos.toasttab.com/api-terms-of-use
+    systems with the Toast platform.'
   contact:
     name: Toast developer support
-host: toast-api-server
-basePath: /authentication/v1
-schemes:
-- https
-consumes:
-- application/json
-produces:
-- application/json
+servers:
+- url: https://toast-api-server/labor/v1
 tags:
 - name: Shifts
 paths:
@@ -30,17 +23,18 @@ paths:
       tags:
       - Shifts
       summary: Toast Get Shifts
-      description: "Returns an array of `Shift` objects that contain information \nabout schedule shifts for restaurant employees.\n"
+      description: 'Returns an array of `Shift` objects that contain information
+
+        about schedule shifts for restaurant employees.'
       operationId: shiftsGet
-      produces:
-      - application/json
       parameters:
       - name: Toast-Restaurant-External-ID
         description: "The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n"
         in: header
-        type: string
-        format: string
         required: true
+        schema:
+          type: string
+          format: string
       - name: shiftIds
         description: 'An optional identifier that filters return values for a
 
@@ -56,29 +50,34 @@ paths:
 
           '
         in: query
-        type: string
-        format: string
         required: false
+        schema:
+          type: string
+          format: string
       - name: startDate
         description: "Optional start date and time of time period to match \nshifts. A shift matches the time period if the shift \n`inDate` is after (inclusive) the specified `startDate` and \nthe shift `outDate` is before the `endDate` (exclusive). \nThese parameters are required if the `shiftIds` parameter \nis not defined. The specified period cannot be longer than \none month.\n"
         in: query
-        type: string
-        format: ISO-8601
+        schema:
+          type: string
+          format: ISO-8601
       - name: endDate
         description: "Optional end date and time of time period to match shifts. \nA shift matches the time period if the shift `inDate` is \nafter (inclusive) the specified `startDate` and the shift \n`outDate` is before the `endDate` (exclusive). These \nparameters are required if the `shiftIds` parameter is not \ndefined. The specified period cannot be longer than one \nmonth.\n"
         in: query
-        type: string
-        format: ISO-8601
+        schema:
+          type: string
+          format: ISO-8601
       responses:
         '200':
           description: 'Returns the specified shifts in an unordered list.
 
             '
-          schema:
-            title: Response
-            type: array
-            items:
-              $ref: '#/definitions/Shift'
+          content:
+            application/json:
+              schema:
+                title: Response
+                type: array
+                items:
+                  $ref: '#/components/schemas/Shift'
         '500':
           description: "An unexpected internal error occurred. There is a \n`requestId` attached to this error that can be referenced \nby Toast support.\n"
       security:
@@ -88,51 +87,32 @@ paths:
       tags:
       - Shifts
       summary: Toast Create a Shift
-      description: 'Creates a schedule shift for a restaurant employee.
-
-        '
+      description: Creates a schedule shift for a restaurant employee.
       operationId: shiftsPost
-      produces:
-      - application/json
       parameters:
       - name: Toast-Restaurant-External-ID
         description: "The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n"
         in: header
-        type: string
-        format: string
-        required: true
-      - name: Content-Type
-        description: "The Internet Assigned Numbers Authority (IANA) media type \nof the message body data. The value must be \n`application/json`.\n"
-        in: header
-        type: string
-        format: string
-        required: true
-      - name: body
-        description: "A `Shift` object containing information about the shift, \nincluding the job identifier, the employee identifier, and \nthe start and end times.\n"
-        in: body
         required: true
         schema:
           type: string
-          example:
-            externalId: MyToastNamingAuthority:1234
-            entityType: Shift
-            jobReference:
-              guid: 678758d1-6aa8-494c-be55-0614f761d160
-              externalId: ''
-              entityType: RestaurantJob
-            employeeReference:
-              guid: 7030407f-761c-4d92-86d9-4e84bc700d0f
-              externalId: ''
-              entityType: RestaurantUser
-            inDate: 2015-10-10T06:00:00.000+0000
-            outDate: 2015-10-10T12:00:00.000+0000
+          format: string
+      - name: Content-Type
+        description: "The Internet Assigned Numbers Authority (IANA) media type \nof the message body data. The value must be \n`application/json`.\n"
+        in: header
+        required: true
+        schema:
+          type: string
+          format: string
       responses:
         '200':
           description: 'Creates a shift record and returns information about it.
 
             '
-          schema:
-            $ref: '#/definitions/Shift'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shift'
         '400':
           description: "The request contains data that is not supported by the \ncurrent version of the API as described.\n"
         '415':
@@ -142,34 +122,58 @@ paths:
       security:
       - oauth2:
         - labor.shifts:write
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+              example:
+                externalId: MyToastNamingAuthority:1234
+                entityType: Shift
+                jobReference:
+                  guid: 678758d1-6aa8-494c-be55-0614f761d160
+                  externalId: ''
+                  entityType: RestaurantJob
+                employeeReference:
+                  guid: 7030407f-761c-4d92-86d9-4e84bc700d0f
+                  externalId: ''
+                  entityType: RestaurantUser
+                inDate: 2015-10-10T06:00:00.000+0000
+                outDate: 2015-10-10T12:00:00.000+0000
+        description: "A `Shift` object containing information about the shift, \nincluding the job identifier, the employee identifier, and \nthe start and end times.\n"
+        required: true
   /shifts/{shiftId}:
     get:
       tags:
       - Shifts
       summary: Toast Get a Shift
-      description: "Returns a `Shift` object containing of information about one \nschedule shift for a restaurant employee.\n"
+      description: 'Returns a `Shift` object containing of information about one
+
+        schedule shift for a restaurant employee.'
       operationId: shiftsShiftIdGet
-      produces:
-      - application/json
       parameters:
       - name: Toast-Restaurant-External-ID
         description: "The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n"
         in: header
-        type: string
-        format: string
         required: true
+        schema:
+          type: string
+          format: string
       - name: shiftId
         description: "The Toast platform GUID or an external identifier for the \nshift.\n"
         in: path
-        type: string
         required: true
+        schema:
+          type: string
       responses:
         '200':
           description: 'Returns the specified shifts in an unordered list.
 
             '
-          schema:
-            $ref: '#/definitions/Shift'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shift'
         '400':
           description: 'The GUID or external identifier was malformed.
 
@@ -189,48 +193,36 @@ paths:
       tags:
       - Shifts
       summary: Toast Update a Shift
-      description: "Updates an existing schedule shift record for a restaurant \nemployee. A `PUT` request completely replaces the information \nin the existing record.\n"
+      description: 'Updates an existing schedule shift record for a restaurant
+
+        employee. A `PUT` request completely replaces the information
+
+        in the existing record.'
       operationId: shiftsShiftIdPut
-      produces:
-      - application/json
       parameters:
       - name: Toast-Restaurant-External-ID
         description: "The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n"
         in: header
-        type: string
-        format: string
-        required: true
-      - name: shiftId
-        description: "The shift identifier, either the Toast platform GUID or an \nexternal identifier.\n"
-        in: path
-        type: string
-        format: string
-        required: true
-      - name: body
-        description: "The shift information. The `externalId` identifier is not \nallowed for`PUT` requests.\n"
-        in: body
         required: true
         schema:
           type: string
-          example:
-            entityType: Shift
-            jobReference:
-              guid: 678758d1-6aa8-494c-be55-0614f761d160
-              externalId: ''
-              entityType: RestaurantJob
-            employeeReference:
-              guid: 7030407f-761c-4d92-86d9-4e84bc700d0f
-              externalId: ''
-              entityType: RestaurantUser
-            inDate: 2015-10-10T06:00:00.000+0000
-            outDate: 2015-10-10T12:00:00.000+0000
+          format: string
+      - name: shiftId
+        description: "The shift identifier, either the Toast platform GUID or an \nexternal identifier.\n"
+        in: path
+        required: true
+        schema:
+          type: string
+          format: string
       responses:
         '200':
           description: 'Returns the updated `Shift`.
 
             '
-          schema:
-            $ref: '#/definitions/Shift'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shift'
         '400':
           description: "The request contains data that is not supported by the \ncurrent version of the API as described.\n"
         '404':
@@ -246,32 +238,59 @@ paths:
       security:
       - oauth2:
         - labor.shifts:write
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+              example:
+                entityType: Shift
+                jobReference:
+                  guid: 678758d1-6aa8-494c-be55-0614f761d160
+                  externalId: ''
+                  entityType: RestaurantJob
+                employeeReference:
+                  guid: 7030407f-761c-4d92-86d9-4e84bc700d0f
+                  externalId: ''
+                  entityType: RestaurantUser
+                inDate: 2015-10-10T06:00:00.000+0000
+                outDate: 2015-10-10T12:00:00.000+0000
+        description: "The shift information. The `externalId` identifier is not \nallowed for`PUT` requests.\n"
+        required: true
     delete:
       tags:
       - Shifts
       summary: Toast Delete a Shift
-      description: "Marks an existing schedule shift record for a restaurant \nemployee as deleted. If the shift record was already deleted, \nthen the operation will succeed (HTTP 200 response code) and no \nchange will be made.\n"
+      description: 'Marks an existing schedule shift record for a restaurant
+
+        employee as deleted. If the shift record was already deleted,
+
+        then the operation will succeed (HTTP 200 response code) and no
+
+        change will be made.'
       operationId: shiftsShiftIdDelete
-      produces:
-      - application/json
       parameters:
       - name: Toast-Restaurant-External-ID
         description: "The Toast platform GUID of the restaurant that is the \ncontext for this operation.\n"
         in: header
-        type: string
-        format: string
         required: true
+        schema:
+          type: string
+          format: string
       - name: shiftId
         description: "The shift identifier, either the Toast platform GUID or an \nexternal identifier.\n"
         in: path
-        type: string
-        format: string
         required: true
+        schema:
+          type: string
+          format: string
       responses:
         '200':
           description: "Returns the specified shift, with the deleted flag set to \n`true`.\n"
-          schema:
-            $ref: '#/definitions/Shift'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shift'
         '400':
           description: "The Toast platform GUID or external identifier was \nmalformed.\n"
         '404':
@@ -281,127 +300,158 @@ paths:
       security:
       - oauth2:
         - labor.shifts:write
-definitions:
-  ExternalReference:
-    type: object
-    description: "A wrapper object with fields that allow reference to a Toast \nplatform entity by Toast GUID or an external identifier.\n"
-    allOf:
-    - $ref: '#/definitions/ToastReference'
-    - type: object
+components:
+  schemas:
+    Shift:
+      type: object
+      description: "A scheduled shift in the Toast platform used to enforce employee \nclock-in and clock outs. Shifts might be created in an external \nscheduling system and pushed to the Toast platform.\n"
+      allOf:
+      - $ref: '#/components/schemas/ExternalReference'
+      - type: object
+        properties:
+          createdDate:
+            type: string
+            format: date-time
+            description: 'Date created, in UTC format (read-only).
+
+              '
+          modifiedDate:
+            type: string
+            format: date-time
+            description: 'Date modified, in UTC format (read-only).
+
+              '
+          deletedDate:
+            type: string
+            format: date-time
+            description: 'Date deleted, in UTC format (read-only).
+
+              '
+          deleted:
+            type: boolean
+            description: 'If the shift is deleted in the Toast platform.
+
+              '
+          jobReference:
+            type: object
+            description: 'External reference to the job assigned to this shift.
+
+              '
+            $ref: '#/components/schemas/ExternalReference'
+          employeeReference:
+            type: object
+            description: 'External reference to the employee assigned to this shift.
+
+              '
+            $ref: '#/components/schemas/ExternalReference'
+          inDate:
+            type: string
+            format: date-time
+            description: "Timestamp of the beginning of the shift. This is when the \nemployee can clock in. Expressed in the UTC time zone.\n"
+          outDate:
+            type: string
+            format: date-time
+            description: "Timestamp of the end of the shift. This is when the \nemployee can clock out. Expressed in the UTC time zone.\n"
+          scheduleConfig:
+            type: object
+            description: 'Grace period scheduling configuration
+
+              '
+            $ref: '#/components/schemas/ScheduleConfig'
+    ToastReference:
+      type: object
+      description: "A wrapper object with fields that allow reference to a Toast \nplatform entity by Toast GUID.\n"
+      required:
+      - guid
+      - entityType
       properties:
-        externalId:
-          description: "External identifier string that is prefixed by the naming \nauthority. You can, for example, use the labor API to \n`POST` an `externalId` for an employee and then `GET` the \nemployee with that `externalId`.\n"
+        guid:
+          description: 'The GUID maintained by the Toast platform.
+
+            '
           type: string
-  Shift:
-    type: object
-    description: "A scheduled shift in the Toast platform used to enforce employee \nclock-in and clock outs. Shifts might be created in an external \nscheduling system and pushed to the Toast platform.\n"
-    allOf:
-    - $ref: '#/definitions/ExternalReference'
-    - type: object
+        entityType:
+          description: 'The type of object this is.
+
+            '
+          type: string
+    ExternalReference:
+      type: object
+      description: "A wrapper object with fields that allow reference to a Toast \nplatform entity by Toast GUID or an external identifier.\n"
+      allOf:
+      - $ref: '#/components/schemas/ToastReference'
+      - type: object
+        properties:
+          externalId:
+            description: "External identifier string that is prefixed by the naming \nauthority. You can, for example, use the labor API to \n`POST` an `externalId` for an employee and then `GET` the \nemployee with that `externalId`.\n"
+            type: string
+    ScheduleConfig:
+      type: object
+      description: 'Schedule configuration containing info about the clock in/clock out
+
+        grace period.
+
+        '
       properties:
-        createdDate:
+        guid:
+          description: 'The GUID maintained by the Toast platform.
+
+            '
           type: string
-          format: date-time
-          description: 'Date created, in UTC format (read-only).
+        minBeforeClockIn:
+          description: 'Grace period minutes before clock in
 
             '
-        modifiedDate:
-          type: string
-          format: date-time
-          description: 'Date modified, in UTC format (read-only).
+          type: number
+          format: double
+        minAfterClockIn:
+          description: 'Grace period minutes after clock in
 
             '
-        deletedDate:
-          type: string
-          format: date-time
-          description: 'Date deleted, in UTC format (read-only).
+          type: number
+          format: double
+        minBeforeClockOut:
+          description: 'Grace period minutes before clock out
 
             '
-        deleted:
-          type: boolean
-          description: 'If the shift is deleted in the Toast platform.
+          type: number
+          format: double
+        minAfterClockOut:
+          description: 'Grace period minutes after clock out
 
             '
-        jobReference:
-          type: object
-          description: 'External reference to the job assigned to this shift.
+          type: number
+          format: double
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          scopes:
+            labor.employees:read: 'Allows reading employee information from the labor API.
 
-            '
-          $ref: '#/definitions/ExternalReference'
-        employeeReference:
-          type: object
-          description: 'External reference to the employee assigned to this shift.
+              '
+            labor.employees:write: 'Allows updating employee information in the labor API.
 
-            '
-          $ref: '#/definitions/ExternalReference'
-        inDate:
-          type: string
-          format: date-time
-          description: "Timestamp of the beginning of the shift. This is when the \nemployee can clock in. Expressed in the UTC time zone.\n"
-        outDate:
-          type: string
-          format: date-time
-          description: "Timestamp of the end of the shift. This is when the \nemployee can clock out. Expressed in the UTC time zone.\n"
-        scheduleConfig:
-          type: object
-          description: 'Grace period scheduling configuration
+              '
+            employees.tax-identifier-unmasked:read: 'Allows reading full unmasked tax identifier (SSN) information for employees
 
-            '
-          $ref: '#/definitions/ScheduleConfig'
-  ScheduleConfig:
-    type: object
-    description: 'Schedule configuration containing info about the clock in/clock out
+              via expand parameter.
 
-      grace period.
+              '
+            employees.tax-identifier-masked:read: 'Allows reading masked tax identifier (SSN) information for employees via
 
-      '
-    properties:
-      guid:
-        description: 'The GUID maintained by the Toast platform.
+              expand parameter.
 
-          '
-        type: string
-      minBeforeClockIn:
-        description: 'Grace period minutes before clock in
+              '
+            labor:read: 'Allows reading all data except employees from the labor API.
 
-          '
-        type: number
-        format: double
-      minAfterClockIn:
-        description: 'Grace period minutes after clock in
+              '
+            labor.shifts:write: 'Allows updating shift information in the labor API.
 
-          '
-        type: number
-        format: double
-      minBeforeClockOut:
-        description: 'Grace period minutes before clock out
+              '
+            labor.jobs:write: 'Allows updating job information in the labor API.
 
-          '
-        type: number
-        format: double
-      minAfterClockOut:
-        description: 'Grace period minutes after clock out
-
-          '
-        type: number
-        format: double
-  ToastReference:
-    type: object
-    description: "A wrapper object with fields that allow reference to a Toast \nplatform entity by Toast GUID.\n"
-    required:
-    - guid
-    - entityType
-    properties:
-      guid:
-        description: 'The GUID maintained by the Toast platform.
-
-          '
-        type: string
-      entityType:
-        description: 'The type of object this is.
-
-          '
-        type: string
-externalDocs:
-  description: Authentication developer guide
-  url: https://doc.toasttab.com/doc/devguide/authentication.html
+              '
+          tokenUrl: https://toast-api-server/authentication/v1/authentication/login
+      description: "Access to Toast APIs, specific endpoints, \nand specific API endpoint operations is \ncontrolled by the scopes that are associated \nwith your API account. \nA full reference for Toast API scopes and \ntheir capabilities can be found in the\n[_Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html).\n"

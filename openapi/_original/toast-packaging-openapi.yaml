@@ -1,0 +1,117 @@
+openapi: 3.0.3
+info:
+  version: 1.0.0
+  title: Packaging configuration API
+  description: "The packaging configuration API allows you to retrieve a restaurant's packaging preferences\
+    \ configuration and apply it to a takeout or delivery order. \n\nPackaging preferences can be configured\
+    \ in Toast Web at **Takeout and Delivery > Packaging Preferences**. \n\nInformation on packaging includes:\n\
+    \  - A restaurant's overall packaging configuration.\n  - Specific packaging item identifiers that\
+    \ can be included in an order.\n  \n  Once you obtain a restaurant's packaging preference configuration,\
+    \ you can include applicable `PackagingItem` objects in orders for that restaurant. For more information\
+    \ about creating orders, and using the orders API, see [Orders API overview](https://doc.toasttab.com/doc/devguide/portalOrdersApiOverview.html).\n"
+  contact:
+    name: toast.org
+servers:
+- url: https://toast-api-server/packaging
+paths:
+  /v1/published/packagingConfig:
+    get:
+      summary: Get a restaurant's published packaging configuration
+      operationId: getPackagingConfig
+      security:
+      - OAuth2:
+        - packaging:read
+      parameters:
+      - in: header
+        name: Toast-Restaurant-External-ID
+        schema:
+          type: string
+        required: true
+      responses:
+        '200':
+          description: 'A restaurant''s packaging configuration. You can expect a `200` response
+
+            even if your restaurant does not have a published packaging configuration. If the restaurant
+            does not have a published configuration, an empty, disabled packaging config is returned.
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PackagingConfig'
+components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://toast-api-server/authentication/v1/authentication/login
+          scopes:
+            packaging:read: Allows to read from packaging service
+  schemas:
+    PackagingConfig:
+      type: object
+      description: Specific options for how a restaurant packages a guest's takeout or delivery order
+        based on guest requests or specifications.
+      required:
+      - enabled
+      - items
+      properties:
+        enabled:
+          type: boolean
+          description: "`TRUE`: packaging options should be shown to guests during\nthe online ordering\
+            \ checkout experience. \n\n`FALSE`: packaging options should not be shown to guests during\
+            \ the online ordering checkout experience. \n"
+        guestMessage:
+          type: string
+          description: 'An optional message that restaurants can use to describe the use for packaging
+            preferences. This field is not meant to individually reference packaging preference items
+            and instead should provide further details regarding the use of packaging preferences.
+
+            For example, a restaurant may want to communicate the following to their takeout guests, "California
+            law now requires us to ask if you want disposable items."
+
+            '
+        items:
+          type: array
+          description: Different types of packaging preference items such as utensils, napkins, straws,
+            bags, or condiments. Items are configured in Toast Web at **Takeout and Delivery > Packaging
+            Preferences**.
+          items:
+            $ref: '#/components/schemas/PackagingItem'
+    PackagingItem:
+      type: object
+      description: Configuration for a type of packaging
+      required:
+      - id
+      - itemTypes
+      - guestDisplayName
+      - guestInclusionType
+      properties:
+        id:
+          type: string
+          description: Unique identifier for a packaging item.
+        itemTypes:
+          type: array
+          description: The possible packaging values like UTENSILS, NAPKINS, BAGS, STRAWS or CONDIMENTS.
+            Packaging preferences can be configured in Toast Web at **Takeout and Delivery > Packaging
+            Preferences**.
+          items:
+            type: string
+        guestDisplayName:
+          type: string
+          description: A question to be shown to guests that asks if they want to include utensils in
+            their order. For example, "Include Utensils?"
+        guestDescription:
+          type: string
+          description: A longer description for the packaging item. Max 60 characters. This description
+            is optional.
+        guestInclusionType:
+          type: string
+          description: "`guestInclusionType` is an indication of what action the guest must take to include\
+            \ or exclude a packaging item.\n\nDetails:\n  * `OPT_IN` - The guest creating an order must\
+            \ take an action to receive the packaging item. For example, if there is a checkbox for \"\
+            UTENSILS\", and it is unchecked by default, the guest must check it for their order to include\
+            \ utensils.\n  * `OPT_OUT` - The guest creating an order must take an action to _not_ receive\
+            \ the packaging item. For example, if there is a checkbox for \"UTENSILS\", and it is checked\
+            \ by default, the guest must uncheck it for their order to not include utensils.\n"

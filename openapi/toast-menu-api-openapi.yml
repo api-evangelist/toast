@@ -1,7 +1,13 @@
 openapi: 3.2.0
 info:
   title: Analytics Menu API
-  description: "The analytics API provides an enterprise reporting and analytics service, \nand includes operations that retrieve information for all restaurants, or a\nsubset of restaurants, in a management group, create requests for reporting data, \nand retrieve the reporting data.\n\nThe types of reporting data include:\n* Aggregated sales reporting data covering sales and labor information.\n* Check reporting data providing information for each check.\n* Labor reporting data providing information for employees and jobs that are paid hourly.\n* Menu reporting data providing information for menu entities as they relate to sales.\n* Payout reporting data providing information for payouts organized either by settled date, payments, or sales date.\n* Guest reporting data providing information for guest's payment cards organized by payments.\n"
+  description: 'The analytics API provides an enterprise reporting and analytics service,
+
+    and includes operations that retrieve information for all restaurants, or a
+
+    subset of restaurants, in a management group, create requests for reporting data,
+
+    and retrieve the reporting data.'
   version: 1.0.0
   contact:
     name: Toast developer support
@@ -14,7 +20,18 @@ paths:
   /menu:
     post:
       summary: Post a menu data request for a custom time range
-      description: "Creates a menu reporting data request for a custom time range.\n\nUse the `onlyInactiveRestaurants` query parameter set to `true` to get data for inactive restaurants only.\n\nSpecify the `startBusinessDate` and `endBusinessDate` for the data in the message body.\n\nIdentify restaurants to include or exclude with the `restaurantIds` and \n`excludedRestaurantIds` properties. If left blank, all restaurants are included by default.\n"
+      description: 'Creates a menu reporting data request for a custom time range.
+
+
+        Use the `onlyInactiveRestaurants` query parameter set to `true` to get data for inactive restaurants only.
+
+
+        Specify the `startBusinessDate` and `endBusinessDate` for the data in the message body.
+
+
+        Identify restaurants to include or exclude with the `restaurantIds` and
+
+        `excludedRestaurantIds` properties. If left blank, all restaurants are included by default.'
       operationId: postMenuReportCustomTimeRange
       parameters:
       - name: onlyInactiveRestaurants
@@ -70,7 +87,26 @@ paths:
   /menu/{timeRange}:
     post:
       summary: Post a menu reporting data request for a specific time range
-      description: "Creates a menu reporting data request for a specific time range.\n\nSpecify the time range with the `timeRange` path parameter.\n\nSpecify whether to include data from inactive restaurants using the `onlyInactiveRestaurants` query parameter.\n\nSpecify the `startBusinessDate` and `endBusinessDate` for the menu data in the message body.\n\nInclude information about which restaurants to include or exclude with the \n`restaurantIds` and `excludedRestaurantIds` properties.\n\nInclude information about how to aggregate the data with the `groupBy` property. You can only use the `groupBy` property when requesting\ndata for a `day` or `week` time range.\n"
+      description: 'Creates a menu reporting data request for a specific time range.
+
+
+        Specify the time range with the `timeRange` path parameter.
+
+
+        Specify whether to include data from inactive restaurants using the `onlyInactiveRestaurants` query parameter.
+
+
+        Specify the `startBusinessDate` and `endBusinessDate` for the menu data in the message body.
+
+
+        Include information about which restaurants to include or exclude with the
+
+        `restaurantIds` and `excludedRestaurantIds` properties.
+
+
+        Include information about how to aggregate the data with the `groupBy` property. You can only use the `groupBy` property when requesting
+
+        data for a `day` or `week` time range.'
       operationId: postMenuReportSpecificTimeRange
       parameters:
       - name: timeRange
@@ -146,9 +182,7 @@ paths:
       description: 'Returns the menu data for the reporting data request.
 
 
-        Specify the `reportRequestGuid` for the reporting data.
-
-        '
+        Specify the `reportRequestGuid` for the reporting data.'
       operationId: getMenuReportingData
       parameters:
       - name: reportRequestGuid
@@ -195,26 +229,6 @@ paths:
       - Menu
 components:
   schemas:
-    ReportingDataInProgress:
-      description: The Toast platform is in the process of gathering the reporting data. Try the request again at a later time.
-      type: object
-      properties:
-        message:
-          description: A brief message describing that the reporting data is still in progress and to try again at a later time.
-          format: string
-          type: string
-        reportStatus:
-          description: Reflects the in progress status of the reporting data using the IN_PROGRESS value.
-          format: text
-          type: string
-        reportRequestGuid:
-          description: The Toast platform assigned identifier used to identify a specific analytics reporting data request.
-          format: UUID
-          type: string
-    ReportRequestGuid:
-      description: The Toast platform assigned identifier used to identify a specific analytics reporting data request.
-      format: UUID
-      type: string
     MenuReportingData:
       description: The menu reporting data.
       type: object
@@ -361,45 +375,21 @@ components:
           description: The name of the modifier. This property appears when the request for menu data includes the groupBy property with value MODIFIER.
           format: string
           type: string
-    ErrorMessage:
+    ReportingDataInProgress:
+      description: The Toast platform is in the process of gathering the reporting data. Try the request again at a later time.
       type: object
-      description: Information about an unsuccessful REST request.
       properties:
-        status:
-          description: The HTTP status code.
-          format: integer
-          type: number
-        code:
-          description: The service-specific result code.
-          format: integer
-          type: number
         message:
-          description: A brief message describing the error.
+          description: A brief message describing that the reporting data is still in progress and to try again at a later time.
+          format: string
           type: string
-        messageKey:
-          description: Reserved for future use.
+        reportStatus:
+          description: Reflects the in progress status of the reporting data using the IN_PROGRESS value.
+          format: text
           type: string
-        fieldName:
-          description: Reserved for future use.
-          type: string
-        link:
-          description: The URL of a Toast page that provides more information about the error.
-          format: URL
-          type: string
-        requestId:
-          description: The identifier of the HTTP request that generated the error.
+        reportRequestGuid:
+          description: The Toast platform assigned identifier used to identify a specific analytics reporting data request.
           format: UUID
-          type: string
-        developerMessage:
-          description: Optional, technical information to help a developer investigate the cause of the error.
-          type: string
-        errors:
-          description: A list of JSON `ErrorMessage` objects.
-          items:
-            type: string
-          type: array
-        canRetry:
-          description: Reserved for future use.
           type: string
     MenuReportingDataRequest:
       description: "Information about what the menu data covers and how it is presented. This includes \nthe starting and ending dates of the time range, the included or excluded restaurants, and \naggregation options.\n"
@@ -469,6 +459,50 @@ components:
       - excludedRestaurantIds
       - startBusinessDate
       - endBusinessDate
+    ErrorMessage:
+      type: object
+      description: Information about an unsuccessful REST request.
+      properties:
+        status:
+          description: The HTTP status code.
+          format: integer
+          type: number
+        code:
+          description: The service-specific result code.
+          format: integer
+          type: number
+        message:
+          description: A brief message describing the error.
+          type: string
+        messageKey:
+          description: Reserved for future use.
+          type: string
+        fieldName:
+          description: Reserved for future use.
+          type: string
+        link:
+          description: The URL of a Toast page that provides more information about the error.
+          format: URL
+          type: string
+        requestId:
+          description: The identifier of the HTTP request that generated the error.
+          format: UUID
+          type: string
+        developerMessage:
+          description: Optional, technical information to help a developer investigate the cause of the error.
+          type: string
+        errors:
+          description: A list of JSON `ErrorMessage` objects.
+          items:
+            type: string
+          type: array
+        canRetry:
+          description: Reserved for future use.
+          type: string
+    ReportRequestGuid:
+      description: The Toast platform assigned identifier used to identify a specific analytics reporting data request.
+      format: UUID
+      type: string
   securitySchemes:
     oauth2:
       description: "Access to Toast APIs, specific endpoints, \nand specific API endpoint operations is \ncontrolled by the scopes that are associated \nwith your API account. \n\nA full reference for Toast API scopes and \ntheir capabilities can be found in the\n[_Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html).\n"

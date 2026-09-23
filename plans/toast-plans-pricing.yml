@@ -4,57 +4,110 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Toast
 providerId: toast
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-05'
-reconciled: false
+modified: '2026-08-27'
+generated: '2026-08-27'
+method: searched
+source: https://doc.toasttab.com/doc/devguide/apiIntegrationTypes.html
+docs:
+- https://doc.toasttab.com/doc/devguide/apiIntegrationTypes.html
+- https://doc.toasttab.com/doc/devguide/apiPartnerIntegrationOverview.html
+- https://doc.toasttab.com/doc/devguide/apiCustomIntegrationOverview.html
+- https://doc.toasttab.com/doc/devguide/devApiAccessRequirements.html
+- https://doc.toasttab.com/doc/devguide/apiAnalyticsAccessOverview.html
+reconciled: true
 tags:
-  - Food Service
-  - Point of Sale
-  - Restaurants
-  - Hospitality
-description: Toast packages a restaurant POS, payment processing, hardware, and online-ordering platform.
-  Pricing is sales-led — the public pricing page returned 403 to automated retrieval, and Toast scopes
-  monthly software fees, hardware costs, and processing rates per restaurant in the sales conversation.
-  Toast's developer APIs (Orders, Menus, Labor, Stock, Restaurants, Partners) are exposed through the
-  Toast partner program rather than as a separate self-service tier with list pricing.
-sources:
-  - https://pos.toasttab.com/
-  - https://doc.toasttab.com/
-notes: Public pricing pages (https://pos.toasttab.com/pricing, https://www.toasttab.com/restaurant-pos-software)
-  returned HTTP 403 to WebFetch. API access is via Toast's partner-onboarding process; developer terms
-  and per-call pricing are not publicly reconcilable.
+- Food Service
+- Point of Sale
+- Restaurants
+- Hospitality
+description: >-
+  Toast publishes no list price for API access, but it does publish a clear four-way TIERING of how you
+  get it, and the tiers differ in capability, not just in price. This supersedes the 2026-05-04 bulk
+  sweep, which recorded only "contact sales" because the marketing pricing pages 403. The four
+  documented access types are Partner integration, Custom integration, Standard API access, and
+  Analytics API access. Only Standard API access is self-service purchasable - the customer buys it
+  through the Toast Shop with their Toast Web credentials and then creates credentials themselves - and
+  it buys a READ-ONLY endpoint subset. The two write-capable tiers both require Toast approval, and
+  neither publishes a fee. Toast's own POS subscription, hardware and card-processing rates remain
+  sales-configured per restaurant.
+plan_count: 4
+public_list_price: false
+pricing_page_status:
+  url: https://pos.toasttab.com/restaurant-pos-pricing
+  status: 403
+  note: Cloudflare bot interstitial ("Just a moment..."), not a 404. The page is not readable by an
+    automated client; a human browser reaches it.
 plans:
-  - id: toast-contact-sales
-    name: Toast Platform (Contact Sales)
-    type: enterprise
-    description: Toast subscription, hardware, and payment-processing pricing is configured per restaurant
-      via Toast's sales team. Partner / developer API access is provisioned through the Toast Partners
-      program. No public list price is available.
-    entries:
-      - label: Software, Hardware, Processing & API Access
-        name: full_offering
-        type: subscription
-        metric: varies
-        limit: -1
-        timeFrame: usage
-        geo: US
-        unit: 1
-        price: contact sales
-        userMultiplied: false
-    elements:
-      - name: Toast POS Software
-      - name: Hardware (terminals, KDS, handhelds)
-      - name: Payment Processing
-      - name: Online Ordering
-      - name: Toast Orders API
-      - name: Toast Menus API
-      - name: Toast Labor API
-      - name: Toast Restaurants API
-      - name: Toast Stock API
-      - name: Toast Partners API
-      - name: Toast Authentication API
+- id: toast-partner-integration
+  name: Partner integration
+  type: partnership
+  self_service: false
+  price: contact sales
+  description: >-
+    For technology providers extending the Toast platform for customers they share with Toast. Full
+    read and write API access across orders, menus, labor, stock, configuration and the outbound
+    integration surfaces, plus sandbox access. Requires a formal partnership and an approval process,
+    and access to each restaurant is granted by that restaurant.
+  environments:
+  - sandbox
+  - production
+  capabilities:
+  - read
+  - write
+  - webhooks
+  - outbound integrations
+- id: toast-custom-integration
+  name: Custom integration
+  type: enterprise
+  self_service: false
+  price: contact sales
+  description: >-
+    For a Toast customer building against their own locations with their own or a trusted developer's
+    team. Same API surface as a partner integration but scoped to the customer's own restaurants.
+    Sandbox access is available. Provisioned through the Toast developer portal.
+  environments:
+  - sandbox
+  - production
+  capabilities:
+  - read
+  - write
+  - webhooks
+- id: toast-standard-api-access
+  name: Standard API access
+  type: self-service add-on
+  self_service: true
+  purchase_channel: Toast Shop (sign in with Toast Web credentials)
+  price: not published
+  description: >-
+    A purchasable add-on for Toast customers with integration needs no existing partner covers. Grants
+    a set of READ-ONLY API endpoints using credentials the customer creates in their own Toast Web
+    account, plus self-service webhook subscriptions. Production only - there is no sandbox for this
+    tier. This is the only Toast API tier a customer can turn on without talking to Toast.
+  environments:
+  - production
+  capabilities:
+  - read
+  - webhooks
+  limits: Read-only endpoint subset; scopes are listed separately at
+    https://doc.toasttab.com/doc/devguide/devApiAccessScopes.html
+- id: toast-analytics-api-access
+  name: Analytics API access
+  type: add-on
+  self_service: false
+  price: not published
+  description: >-
+    Read-only access to a specialised reporting and operational data set (aggregated sales, check,
+    labor, menu, payout and guest reporting) across the locations of a management group, not available
+    through the other tiers. Production only. Separate credentials are created for it.
+  environments:
+  - production
+  capabilities:
+  - read
+  api: openapi/toast-analytics-openapi.yaml
+platform_pricing:
+  note: >-
+    Toast POS software subscription, hardware and payment-processing rates are quoted per restaurant by
+    Toast sales and are not reconcilable from a public page by an automated client.
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com

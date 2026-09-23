@@ -1,0 +1,233 @@
+generated: '2026-08-27'
+method: searched
+source: https://doc.toasttab.com/doc/devguide/apiUsingRestApis.html
+docs:
+- https://doc.toasttab.com/doc/devguide/authentication.html
+- https://doc.toasttab.com/doc/devguide/apiResponseDataPagination.html
+- https://doc.toasttab.com/doc/devguide/apiResponsesAndErrors.html
+- https://doc.toasttab.com/doc/devguide/apiRateLimiting.html
+- https://doc.toasttab.com/doc/devguide/apiVoidOrder.html
+- https://doc.toasttab.com/doc/devguide/apiHttpHeaders.html
+- https://doc.toasttab.com/doc/devguide/apiRetrySupport.html
+- https://doc.toasttab.com/doc/relnotes/devPortalApiChangeLog.html
+provider: Toast
+providerId: toast
+summary: >-
+  Cross-cutting runtime semantics for the Toast platform REST APIs, read from the Toast developer guide
+  and from the 20 OpenAPI definitions Toast publishes on doc.toasttab.com.
+
+authentication:
+  style: oauth2-client-credentials-bearer
+  token_endpoint: POST /authentication/v1/authentication/login
+  header: 'Authorization: Bearer <token>'
+  token_lifetime: 'Typically one day; the login response returns expires_in in seconds.'
+  tenancy_header: Toast-Restaurant-External-ID
+  tenancy_note: >-
+    Almost every Toast API call is scoped to one restaurant location by the
+    Toast-Restaurant-External-ID header carrying that location's GUID. The partners API and the
+    token request itself carry no restaurant context.
+  see: authentication/toast-authentication.yml
+
+base_url:
+  published: false
+  placeholder_in_spec: https://toast-api-server/<service>/<version>
+  placeholder_in_docs: https://[toast-api-hostname]/<service>/<version>
+  note: >-
+    Toast does NOT publish its API hostname. The developer guide states "To obtain hostnames and
+    authentication credentials, contact Toast" and the environments page says the sandbox hostname is
+    issued by the Toast integrations team when you begin building, with the production hostname issued
+    at go-live. Every published OpenAPI carries the literal placeholder host `toast-api-server` in
+    servers[], and every curl example in the guide uses `[toast-api-hostname]`. This is a deliberate
+    provider choice, not a gap in our harvest. An agent cannot construct a Toast request from the
+    public contract alone.
+  evidence:
+  - url: https://doc.toasttab.com/doc/devguide/apiExampleRequests.html
+    status: 200
+    quote: To obtain hostnames and authentication credentials, contact ...
+  - url: https://doc.toasttab.com/doc/devguide/apiEnvironments.html
+    status: 200
+
+idempotency:
+  supported: false
+  request_header: null
+  note: >-
+    Toast publishes no idempotency key header for its inbound REST APIs. No securityScheme, parameter,
+    or header named Idempotency-Key appears in any of the 20 published OpenAPI definitions, and the
+    developer guide never documents one. Duplicate suppression is instead pushed OUTBOUND onto the
+    partner: the loyalty integration specification requires the PARTNER's endpoint to be idempotent so
+    that a Toast retry after a network failure does not double-apply a loyalty transaction. Retry
+    behaviour on the Toast side is defined for webhooks only (see webhooks.retry below).
+  outbound_requirement:
+    applies_to: partner-hosted loyalty, gift card and tender endpoints
+    source: https://doc.toasttab.com/doc/devguide/apiLoyaltyIntegrationNetworkFailureAndIdempotence.html
+
+pagination:
+  style: opaque-page-token
+  request_param: pageToken
+  response_header: Toast-Next-Page-Token
+  terminator: Absence of the Toast-Next-Page-Token response header means there are no further pages.
+  deprecated:
+    params:
+    - pageSize
+    - page
+    scope: configuration API endpoints
+    note: The pageSize/page query parameters are deprecated and are being removed from the
+      configuration API in favour of the page-token scheme.
+  source: https://doc.toasttab.com/doc/devguide/apiResponseDataPagination.html
+
+field_expansion:
+  supported: false
+  note: No expand / fields / sparse-fieldset parameter is documented or present in any spec.
+
+metadata:
+  supported: partial
+  note: >-
+    Toast exposes an externalId write path on labor entities (POST/PUT
+    /labor/v1/employees/{id}/externalId and /labor/v1/jobs/{id}/externalId) so a partner can bind its
+    own identifier to a Toast record. There is no free-form metadata bag on Toast objects.
+
+identifiers:
+  primary: GUID (UUID)
+  note: >-
+    Toast entities are addressed by GUID. Menu entities additionally carry a multiLocationId that is
+    stable across the locations of a restaurant group.
+  source: https://doc.toasttab.com/doc/devguide/portalToastIdentifiers.html
+
+request_tracing:
+  header: null
+  response_field: requestId
+  note: >-
+    Toast error envelopes returned by the API gateway include a requestId value (observed on live
+    404 responses from ws-api.toasttab.com). There is no documented client-supplied correlation header.
+
+versioning:
+  style: path-segment
+  examples:
+  - /orders/v2
+  - /menus/v2
+  - /menus/v3
+  - /config/v2
+  - /labor/v1
+  - /era/v1
+  note: >-
+    Major version lives in the URL path immediately after the service name. Minor/patch versions
+    advance inside info.version of each published OpenAPI without a URL change (orders is v2 in the
+    path and 2.9.4 in the spec).
+  see: lifecycle/toast-lifecycle.yml
+
+error_envelope:
+  format: proprietary-json
+  rfc9457: false
+  content_type: application/json
+  schema_name: ErrorMessage
+  fields:
+  - status
+  - code
+  - message
+  - messageKey
+  - fieldName
+  - link
+  - requestId
+  - developerMessage
+  note: >-
+    Toast returns a serialized JSON ErrorMessage object on 4xx, not application/problem+json. The
+    envelope was observed live on ws-api.toasttab.com 404 responses.
+  see: errors/toast-problem-types.yml
+
+rate_limit_signaling:
+  headers:
+  - X-Toast-RateLimit-By
+  - X-Toast-RateLimit-Remaining
+  - X-Toast-RateLimit-Reset
+  status_code: 429
+  retry_after: false
+  see: rate-limits/toast-rate-limits.yml
+
+webhooks:
+  signing_header: Toast-Signature
+  signing: HMAC over the message body and timestamp using the per-subscription secret key
+  tenancy_header: Toast-Restaurant-External-ID
+  timeouts:
+    connection_seconds: 2
+    socket_seconds: 2
+    requirement: The partner endpoint must return 2xx within the 2-second window BEFORE doing any
+      business-logic processing.
+  retry: Toast retries webhook delivery; restaurant availability updates retry five times in a
+    minute. A partner endpoint may signal backpressure with 429.
+  see: asyncapi/toast-webhooks.yml
+
+dry_run_mode:
+  supported: partial
+  note: >-
+    Toast publishes a price-preview operation - POST /orders/v2/prices (operationId pricesPost) -
+    that returns the calculated prices, taxes and discounts for an order WITHOUT creating it, and
+    POST /orders/v2/applicableDiscounts (operationId applicableDiscountsPost) which returns the
+    discounts that would apply. Together these let an agent rehearse the money-affecting part of an
+    order before committing. There is no general dry-run flag across the rest of the platform.
+  operations:
+  - pricesPost
+  - applicableDiscountsPost
+  source: https://doc.toasttab.com/doc/devguide/apiOrderPrices.html
+
+reversibility:
+  grade: verified
+  applicable: true
+  summary: >-
+    Toast documents a real reversal path for its highest-consequence write - creating an order - and
+    states the conditions under which it works. It also ships an unarchive path for employees. Neither
+    reversal is expressed as a time window; both are expressed as state preconditions, which Toast
+    states explicitly.
+  surfaces:
+  - write_operation: ordersPost
+    write_path: POST /orders/v2/orders
+    reversal: void
+    reversal_operation: voidOrder
+    reversal_path: POST /orders/v2/orders/{orderGuid}/void
+    window: >-
+      No time limit is stated. Toast states the reversal is available while the order is not already
+      voided or deleted; once voided, the order can no longer be updated. The order must have been
+      placed with an "Other" payment option (not cash, not card, not a Toast gift card), must not be
+      restricted, and the caller must authenticate with the SAME clientId that created the order.
+    scope_required: orders.channel:void
+    body: '{"selections":{"voidAll":true},"payments":{"voidAll":true}}'
+    effects: >-
+      guestOrderStatus becomes VOIDED, order.voided becomes true, paymentStatus becomes VOIDED, each
+      selection.voided becomes true, and applied discounts move to processingState VOID or
+      PENDING_VOID. A VOIDED ticket prints and the order leaves the POS app. The voided order remains
+      retrievable via GET /orders/{guid} and /ordersBulk.
+    docs: https://doc.toasttab.com/doc/devguide/apiVoidOrder.html
+    verified: true
+  - write_operation: employeesEmployeeIdDelete
+    write_path: DELETE /labor/v1/employees/{employeeId}
+    reversal: unarchive
+    reversal_operation: employeesEmployeeIdUnarchivePut
+    reversal_path: PUT /labor/v1/employees/{employeeId}/unarchive
+    window: >-
+      No time limit is stated. DELETE archives the employee rather than destroying the record, and
+      the archived employee can be restored by the unarchive operation.
+    docs: https://doc.toasttab.com/doc/devguide/apiUnarchivingAnEmployee.html
+    verified: true
+  irreversible:
+  - operation: ordersOrderGuidChecksCheckGuidPaymentsPaymentGuidPatch
+    note: >-
+      Toast states an existing payment cannot be updated; only the tip amount can be changed. There
+      is no published refund or payment-reversal operation in the orders API - a refund is a Toast Web
+      / POS action, not an API operation. An agent that takes a card payment through
+      ordersChecksPaymentsPost cannot undo it through the public API.
+    docs: https://doc.toasttab.com/doc/devguide/apiUpdatingTipsInAPayment.html
+  - operation: updateInventory
+    note: Stock quantity updates are absolute state writes with no documented undo; reversal means
+      writing the prior value back, which the caller must have captured first.
+
+cross_links:
+  errors: errors/toast-problem-types.yml
+  decline_codes: errors/toast-decline-codes.yml
+  lifecycle: lifecycle/toast-lifecycle.yml
+  authentication: authentication/toast-authentication.yml
+  scopes: scopes/toast-scopes.yml
+  rate_limits: rate-limits/toast-rate-limits.yml
+  webhooks: asyncapi/toast-webhooks.yml
+
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

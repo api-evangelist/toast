@@ -8,17 +8,15 @@ info:
 servers:
 - url: https://toast-api-server/restaurant-availability/v1
 tags:
-- name: availability
+- name: Availability
 paths:
   /availability:
     get:
       operationId: availabilityGet
       summary: Get online ordering availability
-      description: 'Returns a restaurant''s current availability to accept online orders. A restaurant''s availability is either `ONLINE` or `OFFLINE`. When a restaurant is offline, you can still place orders via the orders API, however Toast support recommends waiting until the restaurant''s status is online.
-
-        '
+      description: Returns a restaurant's current availability to accept online orders. A restaurant's availability is either `ONLINE` or `OFFLINE`. When a restaurant is offline, you can still place orders via the orders API, however Toast support recommends waiting until the restaurant's status is online.
       tags:
-      - availability
+      - Availability
       parameters:
       - name: Toast-Restaurant-External-ID
         description: The Toast platform GUID of the restaurant that is the context for this operation.

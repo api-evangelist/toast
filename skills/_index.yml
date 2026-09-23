@@ -1,0 +1,57 @@
+generated: '2026-08-27'
+method: generated
+source: openapi/*.yml + openapi/*.yaml in this repo and the Toast developer guide at
+  https://doc.toasttab.com/doc/devguide/
+provider: Toast
+providerId: toast
+note: >-
+  Toast publishes no Agent Skills and no AGENTS.md of its own (searched on doc.toasttab.com,
+  github.com/toasttab and the marketing hosts, 2026-08-27). These four are generated from Toast's own
+  published OpenAPI definitions and developer guide. Every operationId named in them was grepped out of
+  a spec in this repository; none was invented.
+skill_count: 4
+skills:
+- name: toast-submit-and-void-order
+  file: toast-submit-and-void-order.md
+  api: Toast Orders API 2.9.4
+  flow: Price an order, submit it, read it back, take payment, void it if needed.
+  operations:
+  - pricesPost
+  - applicableDiscountsPost
+  - ordersPost
+  - ordersGuidGet
+  - ordersChecksPaymentsPost
+  - voidOrder
+- name: toast-sync-menu-and-stock
+  file: toast-sync-menu-and-stock.md
+  api: Toast Menus API 2.4.1/3.4.1, Stock API 1.0.0, Configuration API 2.5.0
+  flow: Pull the published menu, keep the cache fresh off metadata + webhooks, read and update stock.
+  operations:
+  - menusGet
+  - metadataGet
+  - getInventory
+  - postInventorySearch
+  - updateInventory
+  - discountsGet
+- name: toast-labor-and-analytics
+  file: toast-labor-and-analytics.md
+  api: Toast Labor API 1.9.0, Analytics API 1.0.0
+  flow: Payroll and workforce sync, employee archive/unarchive, and the two-step async reporting
+    pattern of the analytics API.
+  operations:
+  - employeesGet
+  - employeesPost
+  - employeesEmployeeIdDelete
+  - employeesEmployeeIdUnarchivePut
+  - timeEntriesGet
+  - postLaborReportingDataSpecificTimeRangeRequest
+  - getLaborReportingData
+- name: toast-receive-webhooks
+  file: toast-receive-webhooks.md
+  api: Toast webhooks (8 categories, 12 event types)
+  flow: Stand up a signed webhook endpoint that acknowledges inside Toast's 2-second timeout and
+    reconciles partner access.
+  operations: []
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

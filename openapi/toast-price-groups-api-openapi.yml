@@ -2,7 +2,18 @@ openapi: 3.2.0
 info:
   version: 2.5.0
   title: Configuration Price Groups API
-  description: "Returns information about the configuration of a restaurant and \nits menus, such as menu items and alternate payment types, as \nwell as physical configuration such as cash drawers and \nrestaurant tables.\n\nThe configuration API does not return information about entities that you have \nremoved from your restaurant configuration or archived.\n"
+  description: 'Returns information about the configuration of a restaurant and
+
+    its menus, such as menu items and alternate payment types, as
+
+    well as physical configuration such as cash drawers and
+
+    restaurant tables.
+
+
+    The configuration API does not return information about entities that you have
+
+    removed from your restaurant configuration or archived.'
   contact:
     name: Toast developer support
 servers:
@@ -15,16 +26,12 @@ paths:
       tags:
       - Price Groups
       operationId: priceGroupsGuidGet
-      summary: 'Get a price level for menu items
-
-        '
+      summary: Get a price level for menu items
       description: 'Returns a `PriceGroup` object
 
         containing information about a variable price level configured for
 
-        items at a restaurant.
-
-        '
+        items at a restaurant.'
       parameters:
       - name: Toast-Restaurant-External-ID
         description: 'The Toast POS GUID of the restaurant that the configuration
@@ -57,9 +64,7 @@ paths:
       tags:
       - Price Groups
       operationId: priceGroupsGet
-      summary: 'Get price levels for menu items
-
-        '
+      summary: Get price levels for menu items
       description: 'Returns an array of `PriceGroup` objects
 
         containing information about the variable price levels
@@ -68,9 +73,7 @@ paths:
 
         is specified, returns all objects that were created or modified
 
-        after that date.
-
-        '
+        after that date.'
       parameters:
       - name: Toast-Restaurant-External-ID
         description: 'The Toast POS GUID of the restaurant that the configuration

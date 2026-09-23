@@ -1,0 +1,169 @@
+generated: '2026-08-27'
+method: derived
+source: openapi/*.yaml + openapi/*.yml in this repo; enriched from the Toast developer guide
+docs:
+- https://doc.toasttab.com/doc/devguide/authentication.html
+- https://doc.toasttab.com/doc/devguide/apiScopes.html
+- https://doc.toasttab.com/doc/devguide/apiResponseDataPagination.html
+- https://doc.toasttab.com/doc/devguide/apiResponsesAndErrors.html
+- https://doc.toasttab.com/doc/devguide/apiMessageSigning.html
+provider: Toast
+providerId: toast
+summary: >-
+  Cross-cutting standards posture for the Toast platform APIs, asserted from what the 27 OpenAPI
+  definitions in this repo actually declare plus what the developer guide documents. Toast is a
+  restaurant point-of-sale and payment platform; the domain regime that applies to it is payments
+  (PCI-DSS, card-network rules, EMV), and its contract does carry payment-domain signatures.
+
+conformance:
+- id: oauth2
+  conforms: true
+  evidence: >-
+    Every inbound Toast API declares an oauth2 securityScheme with the clientCredentials flow and
+    tokenUrl /authentication/v1/authentication/login. Present in 24 of the 27 specs in this repo; the
+    three exceptions are the outbound partner-hosted specifications (gift cards, loyalty, tender) where
+    the partner, not Toast, is the server. The developer guide documents the flow end to end.
+  spec_locations:
+  - openapi/toast-configuration-openapi.yaml#/components/securitySchemes/oauth2
+  - openapi/toast-analytics-openapi.yaml#/components/securitySchemes/oauth2
+  docs: https://doc.toasttab.com/doc/devguide/authentication.html
+- id: oauth2-scopes
+  conforms: true
+  evidence: >-
+    26 named scopes are published in the developer guide scope reference and declared in the specs'
+    oauth2 flow scopes maps. Scopes are per-API and per-verb (config:read, orders.orders:write,
+    orders.channel:void, labor.employees:write, stock:write, menus.channel:read, ...).
+  docs: https://doc.toasttab.com/doc/devguide/apiScopes.html
+  see: scopes/toast-scopes.yml
+- id: oidc
+  conforms: false
+  evidence: >-
+    No OpenID Connect discovery document. /.well-known/openid-configuration returns 404 on
+    ws-api.toasttab.com and www.toasttab.com and is unreachable behind the Cloudflare challenge on
+    pos.toasttab.com. Toast issues opaque-to-the-client JWT access tokens via client credentials only;
+    there is no user-facing OIDC login for API clients.
+- id: rfc9457
+  conforms: false
+  evidence: >-
+    Toast returns a proprietary ErrorMessage JSON object with application/json, not
+    application/problem+json. 30 error responses across the specs declare application/json and none
+    declare a problem+json media type.
+  see: errors/toast-problem-types.yml
+- id: pagination
+  conforms: true
+  evidence: >-
+    Opaque forward-only page-token pagination - the Toast-Next-Page-Token response header carries the
+    cursor for the next page, replayed by the client in the pageToken query parameter; absence of the
+    header terminates the walk. The older pageSize/page parameters on the configuration API are
+    deprecated.
+  docs: https://doc.toasttab.com/doc/devguide/apiResponseDataPagination.html
+- id: idempotency
+  conforms: false
+  evidence: >-
+    No Idempotency-Key header, parameter or securityScheme appears in any of the 27 specs, and the
+    developer guide documents none for inbound calls. The credit cards API instead relies on the caller
+    supplying a unique paymentUuid and returns 409 when an authorization already exists for it. Toast
+    requires idempotency of the PARTNER's outbound loyalty endpoint, not of its own.
+  see: conventions/toast-conventions.yml
+- id: rate-limit-headers
+  conforms: true
+  standard: proprietary (not RFC 9331 RateLimit-*)
+  evidence: >-
+    X-Toast-RateLimit-By, X-Toast-RateLimit-Remaining and X-Toast-RateLimit-Reset are returned and
+    documented, with HTTP 429 on exhaustion. Toast does not implement the IETF RateLimit-* draft
+    header family and returns no Retry-After.
+  see: rate-limits/toast-rate-limits.yml
+- id: webhook-signing
+  conforms: true
+  standard: HMAC over body + timestamp, proprietary header
+  evidence: >-
+    Toast signs every webhook POST in the Toast-Signature header using the per-subscription secret
+    generated when the subscription is created. Not RFC 9421 HTTP Message Signatures.
+  docs: https://doc.toasttab.com/doc/devguide/apiMessageSigning.html
+- id: json-schema
+  conforms: true
+  evidence: All 20 published contracts are OpenAPI 3.0.0/3.0.1/3.0.3 with components.schemas; 27
+    definitions in this repo parse.
+- id: fhir
+  conforms: false
+  evidence: Not applicable - Toast is not a healthcare provider.
+- id: scim
+  conforms: false
+  evidence: >-
+    Toast manages employees through its own labor API (/labor/v1/employees with create, patch,
+    archive-by-DELETE, unarchive and externalId binding). No urn:ietf:params:scim:schemas:* URN appears
+    in any spec, so an HR or identity system integrating with Toast needs a bespoke connector rather
+    than a SCIM one. This is a real gap for a payroll or workforce vendor, and the closest Toast comes
+    to a provisioning standard.
+- id: odata
+  conforms: false
+  evidence: No $metadata surface and no OData query parameters.
+- id: fapi
+  conforms: false
+  evidence: No FAPI profile claim; client credentials with a bearer token, no mTLS or DPoP binding
+    declared in any securityScheme.
+- id: psd2
+  conforms: false
+  evidence: Not applicable - Toast is a US-centred restaurant platform; no PSD2/SCA surface is
+    declared.
+
+domain_standards:
+- id: pci-dss
+  regime: payments
+  conforms: partial
+  signature: contract-declared
+  evidence: >-
+    The device details API contract declares per-device PCI compliance state on the Device object:
+    `pciCompliant` (boolean, tri-state with null meaning not reported) and `pciNonComplianceReason`
+    (string, populated when pciCompliant is false). That is a PCI-DSS signature IN THE CONTRACT, not a
+    marketing claim - an integrator can read a location's device-level PCI posture over the API. Toast
+    itself publishes no PCI-DSS Attestation of Compliance or trust-centre certificate list at a URL we
+    could reach, so the attestation half of the check is unmet.
+  spec_location: openapi/toast-device-details-openapi.yaml#/components/schemas -> Device.pciCompliant,
+    Device.pciNonComplianceReason
+  api: Device details API 1.0.0
+- id: emv
+  regime: payments
+  conforms: true
+  signature: contract-declared
+  evidence: >-
+    The tender and loyalty integration contracts declare an EMV card-entry mode in the cardEntryMode
+    enum - SWIPED, KEYED, ONLINE, EMV_CHIP_SIGN, TOKENIZED, PRE_AUTHED, SAVED_CARD, FUTURE_ORDER - so a
+    tender or loyalty partner receives the EMV entry method with each payment rather than having to
+    infer it. The card-brand and authorization metadata on the credit cards API (cardBrand,
+    authorizationCode, last4) follow card-network conventions.
+  spec_location: openapi/toast-tender-openapi.yaml -> cardEntryMode enum;
+    openapi/toast-loyalty-openapi.yaml -> cardEntryMode enum;
+    openapi/toast-credit-cards-openapi.yaml#/components/schemas/AuthorizationMetadata
+- id: iso-20022
+  regime: payments
+  conforms: false
+  evidence: No ISO 20022 message types appear in any Toast contract. Toast settles through card
+    networks and its own payout reporting, not through ISO 20022 messaging.
+- id: 3-d-secure
+  regime: payments
+  conforms: false
+  evidence: >-
+    No 3-D Secure / SCA challenge surface is declared. Toast's card-present model is EMV at the
+    terminal; the credit cards API authorizes a payment already captured by the partner's terminal.
+
+certifications_published:
+  found: false
+  note: >-
+    No trust centre and no published certification list. trust.toasttab.com and security.toasttab.com
+    do not resolve. pos.toasttab.com/security is behind a Cloudflare interstitial (403) so its content
+    could not be read on this pass; the 2026-07-11 pass recorded it as a disclosure page. Because no
+    named certification (SOC 2, ISO 27001, PCI AoC, HIPAA, FedRAMP) could be read from a Toast URL on
+    this pass, NO `Compliance` pointer is emitted - the device-level pciCompliant field is a data field
+    about a restaurant's terminals, not an attestation by Toast about Toast.
+  probed:
+  - url: https://trust.toasttab.com/
+    status: '<no response - DNS did not resolve>'
+  - url: https://security.toasttab.com/
+    status: '<no response - DNS did not resolve>'
+  - url: https://pos.toasttab.com/security
+    status: 403
+
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

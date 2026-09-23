@@ -1,0 +1,144 @@
+generated: '2026-08-27'
+method: searched
+source: https://doc.toasttab.com/doc/platformguide/adminCreditCardDeclinedMessageReference.html
+docs:
+- https://doc.toasttab.com/doc/platformguide/adminCreditCardDeclinedMessageReference.html
+- https://doc.toasttab.com/doc/devguide/authorizingCcPayments.html
+provider: Toast
+providerId: toast
+summary: Toast publishes a reference of the decline messages a Toast POS terminal displays when a card
+  payment is refused. Toast states explicitly that these messages and descriptions are produced by the
+  CARD PROCESSOR, not by Toast, and are subject to change by the card network without notice - so they
+  are a display vocabulary a partner should recognise, not a stable Toast API enum. They are the surface
+  a guest and a server actually see; the Toast credit cards API returns its own ErrorMessage envelope
+  (see errors/toast-problem-types.yml) rather than these strings.
+envelope_field: Toast POS decline message (terminal display string)
+api_surface: PUT /ccpartner/v1/merchants/{merchantUuid}/payments/{paymentUuid} - the credit cards API
+  authorization operation - returns 400/404/409/422/500 with a Toast ErrorMessage. The decline strings
+  below are the processor-originated messages shown on the terminal, not values of the API error code.
+masked_to_buyer: Toast does not publish a mapping of which decline reasons are masked from the guest.
+  The messages below are what the POS shows to the restaurant operator.
+decline_code_count: 28
+decline_codes:
+- code: '*REQUEST DENIED*'
+  meaning: Do not honor
+  action: Ask the guest for another form of payment; the reason originates with the card issuer or network
+    and cannot be resolved by retrying the same card.
+- code: AUTH DECLINED
+  meaning: Do not honor Transaction not permitted to issuer/cardholder Exceeds withdrawal limit Domain
+    Restriction Controls Fail Declined-transaction in violation of law Declined PIN attempts
+  action: Ask the guest for another form of payment; the reason originates with the card issuer or network
+    and cannot be resolved by retrying the same card.
+- code: AUTH TRN NO AL'W
+  meaning: Auth transaction not allowed for this payment
+  action: Ask the guest for another form of payment; the reason originates with the card issuer or network
+    and cannot be resolved by retrying the same card.
+- code: CALL OPER
+  meaning: Refer to card issuer Refer to call center
+  action: Ask the guest for another form of payment; the reason originates with the card issuer or network
+    and cannot be resolved by retrying the same card.
+- code: CALL VOICE OPER
+  meaning: Refer to card issuer Re-enter transaction
+  action: Ask the guest for another form of payment; the reason originates with the card issuer or network
+    and cannot be resolved by retrying the same card.
+- code: CARD EXPIRED
+  meaning: Expiration date check failed Expired card Card expiry date less than current date
+  action: Ask the guest for another form of payment; the reason originates with the card issuer or network
+    and cannot be resolved by retrying the same card.
+- code: CARDHLDR DECLINE
+  meaning: Declined per cardholder request
+  action: Ask the guest for another form of payment; the reason originates with the card issuer or network
+    and cannot be resolved by retrying the same card.
+- code: CVD ERROR
+  meaning: Do not honor
+  action: Ask the guest for another form of payment; the reason originates with the card issuer or network
+    and cannot be resolved by retrying the same card.
+- code: DECLINED
+  meaning: Declined by user Invalid effective date on card
+  action: Ask the guest for another form of payment; the reason originates with the card issuer or network
+    and cannot be resolved by retrying the same card.
+- code: ERR PROC FIELD
+  meaning: Format error, invalid value in message
+  action: Ask the guest for another form of payment; the reason originates with the card issuer or network
+    and cannot be resolved by retrying the same card.
+- code: HOLD - CALL
+  meaning: Pick up
+  action: Ask the guest for another form of payment; the reason originates with the card issuer or network
+    and cannot be resolved by retrying the same card.
+- code: INV CARD NUMBER
+  meaning: Invalid cardholder account Account number not found in BIN table
+  action: Ask the guest for another form of payment; the reason originates with the card issuer or network
+    and cannot be resolved by retrying the same card.
+- code: INVALID AMOUNT
+  meaning: Invalid amount
+  action: Ask the guest for another form of payment; the reason originates with the card issuer or network
+    and cannot be resolved by retrying the same card.
+- code: INVALID CARD
+  meaning: Invalid card number
+  action: Ask the guest for another form of payment; the reason originates with the card issuer or network
+    and cannot be resolved by retrying the same card.
+- code: INVALID CARD NO
+  meaning: Invalid card number
+  action: Ask the guest for another form of payment; the reason originates with the card issuer or network
+    and cannot be resolved by retrying the same card.
+- code: INVALID EXP DATE
+  meaning: Invalid expiry date
+  action: Ask the guest for another form of payment; the reason originates with the card issuer or network
+    and cannot be resolved by retrying the same card.
+- code: INVALID FUNCTION
+  meaning: Transaction not permitted to terminal
+  action: Ask the guest for another form of payment; the reason originates with the card issuer or network
+    and cannot be resolved by retrying the same card.
+- code: INVALID MERC NO
+  meaning: Invalid merchant or terminal
+  action: Ask the guest for another form of payment; the reason originates with the card issuer or network
+    and cannot be resolved by retrying the same card.
+- code: INVALID PIN
+  meaning: Invalid pin
+  action: Ask the guest for another form of payment; the reason originates with the card issuer or network
+    and cannot be resolved by retrying the same card.
+- code: LOST/STOLEN CARD
+  meaning: Lost or stolen card
+  action: Ask the guest for another form of payment; the reason originates with the card issuer or network
+    and cannot be resolved by retrying the same card.
+- code: NO CHECKING ACCT
+  meaning: Error
+  action: Ask the guest for another form of payment; the reason originates with the card issuer or network
+    and cannot be resolved by retrying the same card.
+- code: PICK UP CARD
+  meaning: Pick up card Decline - pick up card Pick up card - No Fraud Pick up card (Special Condition)
+    Pick up card (Special Condition)(Fraud Account) Lost card - pick up Stolen card - pick up
+  action: Ask the guest for another form of payment; the reason originates with the card issuer or network
+    and cannot be resolved by retrying the same card.
+- code: PIN TRIES EXCEED
+  meaning: Re-enter transaction
+  action: Ask the guest for another form of payment; the reason originates with the card issuer or network
+    and cannot be resolved by retrying the same card.
+- code: PROC ERROR 13
+  meaning: System error
+  action: Ask the guest for another form of payment; the reason originates with the card issuer or network
+    and cannot be resolved by retrying the same card.
+- code: SECURITY VIOLATION
+  meaning: Security violation
+  action: Ask the guest for another form of payment; the reason originates with the card issuer or network
+    and cannot be resolved by retrying the same card.
+- code: TRAN NOT ALLOWED
+  meaning: Transaction not permitted to terminal
+  action: Ask the guest for another form of payment; the reason originates with the card issuer or network
+    and cannot be resolved by retrying the same card.
+- code: TRANS DENIED
+  meaning: Do not honor Invalid cardholder account Unable to locate record Insufficient funds Restricted
+    card Security violation Account activity limit exceeded Allowable number of PIN entry tries exceeded
+    One or more errors in message File is unavailable No credit account Fraudulent activity detected
+  action: Ask the guest for another form of payment; the reason originates with the card issuer or network
+    and cannot be resolved by retrying the same card.
+- code: TRANS NOT ALLOW
+  meaning: Transactions not allowed to cardholder Transactions not allowed to terminal Illegal transaction
+    - violation of law Capture transactions not allowed for this payment type Capture transaction on authorization
+    only terminal Private label transaction not allowed for terminal Store reporting transactions not
+    allowed
+  action: Ask the guest for another form of payment; the reason originates with the card issuer or network
+    and cannot be resolved by retrying the same card.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,32 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Toast Tender Integration API
+  version: 1.0.0
+  description: Overlay of API Evangelist annotations for Toast's published Toast Tender Integration API
+    0.1.0. It adds provenance, the documented cross-cutting runtime semantics Toast publishes only in
+    prose, and an explicit warning that the servers[] host is a placeholder. It adds nothing that Toast
+    does not itself publish and it does not modify the original definition, which stays verbatim at the
+    extends target.
+extends: openapi/toast-tender-openapi.yaml
+x-generated: '2026-08-27'
+x-method: generated
+actions:
+- target: $.info
+  update:
+    x-api-evangelist:
+      harvested: '2026-08-27'
+      harvested-from: https://doc.toasttab.com/openapi/page-data/tender/overview/page-data.json
+      provider: Toast
+      provider-id: toast
+      note: Verbatim from the Redocly-rendered Toast API reference on Toast's own documentation host.
+- target: $.servers[0]
+  update:
+    x-host-not-published: true
+    x-host-note: This outbound specification declares a relative server path only - the PARTNER hosts
+      the endpoint and chooses its own hostname. The path segment is Toast's placeholder (`/yourapiname/v1`),
+      which the partner replaces.
+- target: $.info
+  update:
+    x-direction: outbound
+    x-direction-note: Toast is the CLIENT for this specification and the partner implements the server.
+      The partner's endpoint must be idempotent - Toast retries on network failure. See https://doc.toasttab.com/doc/devguide/apiUsingToastOutboundApis.html

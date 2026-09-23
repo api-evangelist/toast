@@ -1,11 +1,11 @@
-generated: '2026-07-11'
+generated: '2026-08-27'
 method: probed
 source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
 hosts:
 - host: pos.toasttab.com
   https: true
   tls_version: TLSv1.3
-  cert_expires: Sep 25 19:10:05 2026 GMT
+  cert_expires: Nov 23 19:27:13 2026 GMT
   hsts: true
   hsts_max_age: 31536000
 - host: doc.toasttab.com

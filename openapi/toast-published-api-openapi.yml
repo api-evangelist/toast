@@ -13,15 +13,13 @@ paths:
     get:
       operationId: prepStationsGet
       summary: Get all prep stations
-      description: 'Returns the configuration for every prep station that has been created for the specified restaurant. A prep station represents the location of a kitchen printer or KDS device that receives orders for fulfillment. You can use optional query parameters to paginate the results. If a `lastModified` date is specified, returns all objects that were created or modified after that date.<br>
+      description: 'Returns the configuration for every prep station that has been created for the specified restaurant. A prep station represents the location of a kitchen printer or KDS device that receives orders for fulfillment. You can use optional query parameters to paginate the results. If a `lastModified` date is specified, returns all objects that were created or modified after that date.
 
-        <br>
 
-        *Related topics:*<br>
+        *Related topics:*
 
-        <a href="https://doc.toasttab.com/doc/platformguide/platformKitchenRoutingOverview.html#adminRoutingToPrepStations">Routing to prep stations</a>
 
-        '
+        Routing to prep stations'
       parameters:
       - name: pageToken
         in: query
@@ -83,15 +81,13 @@ paths:
     get:
       operationId: prepStationsGuidGet
       summary: Get a prep station
-      description: 'Returns the configuration for a single prep station that has been defined for the specified restaurant. A prep station represents the location of a kitchen printer or KDS device that receives orders for fulfillment.<br>
+      description: 'Returns the configuration for a single prep station that has been defined for the specified restaurant. A prep station represents the location of a kitchen printer or KDS device that receives orders for fulfillment.
 
-        <br>
 
-        *Related topics:*<br>
+        *Related topics:*
 
-        <a href="https://doc.toasttab.com/doc/platformguide/platformKitchenRoutingOverview.html#adminRoutingToPrepStations">Routing to prep stations</a>
 
-        '
+        Routing to prep stations'
       parameters:
       - name: Toast-Restaurant-External-ID
         in: header

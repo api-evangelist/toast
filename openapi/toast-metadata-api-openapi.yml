@@ -1,27 +1,15 @@
-swagger: '2.0'
+openapi: 3.2.0
 info:
-  version: 1.0.0
-  title: Toast Authentication Metadata API
-  description: 'The authentication API returns an authentication token that you can present
+  version: 2.4.1
+  title: Menus Metadata API
+  description: 'Returns information about a restaurant''s menus.
 
-    when your integration client software uses other Toast APIs. For more
 
-    information about authentication, see [the Toast Developer
-
-    Guide](https://doc.toasttab.com/doc/devguide/authentication.html).
-
-    '
-  termsOfService: https://pos.toasttab.com/api-terms-of-use
+    _Important:_ Ordering integrations should use menus API V3. Other integration types should continue to use menus API V2 until further notice. See Comparing menus API V2 and V3 for more information.'
   contact:
     name: Toast developer support
-host: toast-api-server
-basePath: /authentication/v1
-schemes:
-- https
-consumes:
-- application/json
-produces:
-- application/json
+servers:
+- url: https://toast-api-server/menus/v2
 tags:
 - name: Metadata
 paths:
@@ -29,46 +17,54 @@ paths:
     get:
       operationId: metadataGet
       summary: Toast Get Menu Last Modified Timestamp
-      description: 'A lightweight endpoint that allows you to determine if a restaurant''s menu data has been updated. Toast support strongly recommends that you do not make a call to the `/menus` endpoint unless the date and time returned by the `/metadata` endpoint is more recent than the `lastUpdated` date and time. While this recommendation applies to all clients of the menus API, it is particularly important for clients that have limited bandwidth.
-
-        '
-      produces:
-      - application/json
+      description: A lightweight endpoint that allows you to determine if a restaurant's menu data has been updated. Toast support strongly recommends that you do not make a call to the `/menus` endpoint unless the date and time returned by the `/metadata` endpoint is more recent than the `lastUpdated` date and time. While this recommendation applies to all clients of the menus API, it is particularly important for clients that have limited bandwidth.
       parameters:
       - name: Toast-Restaurant-External-ID
         description: The identifier for the restaurant.
         in: header
         required: true
-        type: string
-        format: uuid
+        schema:
+          type: string
+          format: uuid
       responses:
         '200':
           description: successful operation
-          schema:
-            $ref: '#/definitions/Metadata'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metadata'
       security:
       - oauth2:
         - menus:read
       tags:
       - Metadata
-definitions:
-  Metadata:
-    type: object
-    description: 'Information about the last date and time that this restaurant''s menu data was updated.
+components:
+  schemas:
+    Metadata:
+      type: object
+      description: 'Information about the last date and time that this restaurant''s menu data was updated.
 
-      '
-    properties:
-      restaurantGuid:
-        description: 'A unique identifier for this restaurant, assigned by the Toast POS system.
+        '
+      properties:
+        restaurantGuid:
+          description: 'A unique identifier for this restaurant, assigned by the Toast POS system.
 
-          '
-        type: string
-        format: uuid
-      lastUpdated:
-        description: 'The most recent date and time that this menu''s data was published. Use this value to determine if you need to refresh your menu data. The `lastUpdated` value uses the absolute timestamp format describe in the <a href="https://doc.toasttab.com/doc/devguide/api_dates_and_timestamps.html">Dates and timestamps</a> section of the Toast Developer Guide.
+            '
+          type: string
+          format: uuid
+        lastUpdated:
+          description: 'The most recent date and time that this menu''s data was published. Use this value to determine if you need to refresh your menu data. The `lastUpdated` value uses the absolute timestamp format describe in the <a href="https://doc.toasttab.com/doc/devguide/api_dates_and_timestamps.html">Dates and timestamps</a> section of the Toast Developer Guide.
 
-          '
-        type: string
-externalDocs:
-  description: Authentication developer guide
-  url: https://doc.toasttab.com/doc/devguide/authentication.html
+            '
+          type: string
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          scopes:
+            menus:read: 'Allows reading from menus API V2.
+
+              '
+          tokenUrl: https://toast-api-server/authentication/v1/authentication/login
+      description: "Access to Toast APIs, specific endpoints, \nand specific API endpoint operations is \ncontrolled by the scopes that are associated \nwith your API account. \n\nA full reference for Toast API scopes and \ntheir capabilities can be found in the\n[_Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html).\n"

@@ -4,35 +4,100 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Toast
 providerId: toast
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-05'
-reconciled: false
+modified: '2026-08-27'
+generated: '2026-08-27'
+method: searched
+source: https://doc.toasttab.com/doc/devguide/apiRateLimiting.html
+docs:
+- https://doc.toasttab.com/doc/devguide/apiRateLimiting.html
+- https://doc.toasttab.com/doc/devguide/apiAuthenticationRateLimit.html
+- https://doc.toasttab.com/doc/devguide/apiResponseDataPagination.html
+- https://doc.toasttab.com/doc/devguide/apiRetrySupport.html
+reconciled: true
 tags:
-  - Food Service
-  - Point of Sale
-  - Restaurants
-  - Hospitality
-  - Rate Limiting
-description: Toast's developer documentation does not expose per-second/per-minute rate limits in publicly
-  retrievable form. Access to Toast APIs is restricted to vetted partners under the Toast Partners program,
-  and rate-limit terms are part of partner onboarding rather than a public spec. WebFetch on documentation
-  endpoints did not return rate-limit data.
-sources:
-  - https://doc.toasttab.com/
-notes: doc.toasttab.com pages did not return rate-limit specifications via WebFetch (403/no content).
-  Partners receive limits in the developer agreement.
+- Food Service
+- Point of Sale
+- Restaurants
+- Hospitality
+- Rate Limiting
+description: >-
+  Toast publishes its API rate limits openly in the developer guide, and returns runtime rate-limit
+  signal on every response via three X-Toast-RateLimit-* headers. Limits are enforced per restaurant
+  location when the Toast-Restaurant-External-ID header is present, and per source IP address when it is
+  absent (for example, the partners API and authentication token requests, which carry no restaurant
+  context). Requests over a limit are rejected with HTTP 429. This supersedes the 2026-05-04 bulk-sweep
+  note that recorded Toast limits as "not publicly published" - they are published, on the rate limiting
+  page of the developer guide.
+limit_count: 5
+status_code_on_exhaustion: 429
+headers:
+- name: X-Toast-RateLimit-By
+  description: Which limit dimension the request was counted against (for example, API).
+  observed: documented
+- name: X-Toast-RateLimit-Remaining
+  description: Requests remaining in the current window.
+  observed: documented
+- name: X-Toast-RateLimit-Reset
+  description: Unix epoch seconds at which the current window resets.
+  observed: documented
+retry_after_header: false
 limits:
-  - name: Toast partner API limits
-    scope: partner-account
-    metric: varies
-    limit: not publicly published; defined per partner agreement
+- name: Global rate limit
+  scope: per-client (all Toast APIs collectively)
+  window: 1 second
+  limit: 20
+  note: 20 requests per second across every Toast API combined.
+- name: Global rate limit (long window)
+  scope: per-client (all Toast APIs collectively)
+  window: 15 minutes
+  limit: 10000
+- name: Default API rate limit
+  scope: per-api per-client
+  window: 1 second
+  limit: 20
+  burst: null
+  note: 20 rps / 10,000 per 15 minutes against an individual Toast API. Currently identical to
+    the global limit; Toast states the two may diverge in future.
+- name: Menus API GET /menus endpoint limit
+  scope: per-endpoint per-client per-location
+  window: 1 second
+  limit: 1
+  endpoint: GET /menus/v2/menus
+  note: One request per second per restaurant location. Requests for one restaurant do not
+    consume another restaurant's allowance.
+- name: Orders API GET /ordersBulk endpoint limit
+  scope: per-endpoint per-client per-location
+  window: 1 second
+  limit: 5
+  endpoint: GET /orders/v2/ordersBulk
+  note: >-
+    Historical pulls using startDate/endDate must not span more than one month per request and
+    calls should be spaced 5-10 seconds apart. Toast support recommends the orders updated webhook
+    instead of polling /ordersBulk.
 policies:
-  - name: Partner Program Limits
-    description: Rate limits for Toast Orders, Menus, Labor, Stock, Restaurants, and Partners APIs are
-      negotiated and communicated through Toast's Partner program. Public reconciliation is not possible
-      without partner credentials.
+- name: Per-restaurant vs per-IP enforcement
+  description: >-
+    When Toast-Restaurant-External-ID is present on the request, the limit is applied per restaurant
+    location, so exhausting Restaurant A's allowance does not block requests for Restaurant B. When the
+    header is absent - the partners API and authentication token requests - the limit is applied per
+    source IP address.
+  source: https://doc.toasttab.com/doc/devguide/apiRateLimiting.html
+- name: Account rate limits
+  description: >-
+    An API account integrating with many restaurant locations may be given an additional
+    account-specific limit that tracks total requests across all locations. Toast states it contacts the
+    integration provider directly before applying one; the value is not published.
+  source: https://doc.toasttab.com/doc/devguide/apiRateLimiting.html
+- name: Authentication token reuse
+  description: >-
+    Authentication tokens are typically valid for one day; the token response carries expires_in.
+    Toast asks clients to request no more than one or two tokens per day and to reuse a token for at
+    least 30 minutes. The authentication API enforces the global limit by IP address on token requests.
+  source: https://doc.toasttab.com/doc/devguide/apiAuthenticationRateLimit.html
+- name: Custom per-API limits
+  description: Toast states there are currently no custom rate limits for specific APIs beyond the
+    endpoint limits listed above.
+  source: https://doc.toasttab.com/doc/devguide/apiRateLimiting.html
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com

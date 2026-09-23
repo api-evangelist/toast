@@ -2,9 +2,7 @@ openapi: 3.2.0
 info:
   version: 1.0.0
   title: Device details API
-  description: 'Returns information about devices for a single restaurant.
-
-    '
+  description: Returns information about devices for a single restaurant.
   contact:
     name: Enterprise Reporting
   termsOfService: https://pos.toasttab.com/api-terms-of-use
@@ -19,9 +17,7 @@ paths:
       - Device details
       operationId: getDeviceInfo
       summary: Get device details for a restaurant
-      description: 'Get details for the devices at a location. This includes POS terminal and handheld devices, and printers.
-
-        '
+      description: Get details for the devices at a location. This includes POS terminal and handheld devices, and printers.
       security:
       - oauth2:
         - device-details.info:read
@@ -54,6 +50,46 @@ paths:
           description: An unexpected error occurred.
 components:
   schemas:
+    PrinterDeviceInfo:
+      type: object
+      description: 'Device details for printers identified by the Toast platform. The `deviceType` value for the
+
+        containing `Device` object must be `PRINTER`.
+
+        '
+      properties:
+        deviceName:
+          type: string
+          description: The custom name assigned to the printer device in the Toast Web configuration.
+        lastSyncedAt:
+          type: string
+          format: date-time
+          description: The date and time when the device was last synchronized with the Toast platform, in ISO-8601 format and UTC.
+        firmwareVersion:
+          type: string
+          description: The firmware version of the printer. This value is `null` if it's not reported.
+        ipAddress:
+          type: string
+          description: The IP address of the network used by the printer.
+        ipType:
+          type: string
+          description: The type of IP address assigned to the printer.
+          enum:
+          - DHCP
+          - STATIC
+          - UNKNOWN
+        macAddress:
+          type: string
+          description: The MAC address of the network interface controller used by the printer.
+        gatewayAddress:
+          type: string
+          description: The default gateway IP address of the network interface controller.
+        netmaskAddress:
+          type: string
+          description: The subnet mask used by the printer.
+        printerPort:
+          type: string
+          description: The transmission control protocol (TCP) port used for network printing. For example, 9100.
     PosDeviceInfo:
       type: object
       description: 'Device details for devices using the Toast POS app. The `deviceType` value for the
@@ -268,46 +304,6 @@ components:
           $ref: '#/components/schemas/PosDeviceInfo'
         printerDeviceInfo:
           $ref: '#/components/schemas/PrinterDeviceInfo'
-    PrinterDeviceInfo:
-      type: object
-      description: 'Device details for printers identified by the Toast platform. The `deviceType` value for the
-
-        containing `Device` object must be `PRINTER`.
-
-        '
-      properties:
-        deviceName:
-          type: string
-          description: The custom name assigned to the printer device in the Toast Web configuration.
-        lastSyncedAt:
-          type: string
-          format: date-time
-          description: The date and time when the device was last synchronized with the Toast platform, in ISO-8601 format and UTC.
-        firmwareVersion:
-          type: string
-          description: The firmware version of the printer. This value is `null` if it's not reported.
-        ipAddress:
-          type: string
-          description: The IP address of the network used by the printer.
-        ipType:
-          type: string
-          description: The type of IP address assigned to the printer.
-          enum:
-          - DHCP
-          - STATIC
-          - UNKNOWN
-        macAddress:
-          type: string
-          description: The MAC address of the network interface controller used by the printer.
-        gatewayAddress:
-          type: string
-          description: The default gateway IP address of the network interface controller.
-        netmaskAddress:
-          type: string
-          description: The subnet mask used by the printer.
-        printerPort:
-          type: string
-          description: The transmission control protocol (TCP) port used for network printing. For example, 9100.
   securitySchemes:
     oauth2:
       description: 'Access to Toast APIs, specific endpoints,

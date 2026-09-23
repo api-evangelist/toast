@@ -2,7 +2,18 @@ openapi: 3.2.0
 info:
   version: 2.5.0
   title: Configuration Pre Modifier Groups API
-  description: "Returns information about the configuration of a restaurant and \nits menus, such as menu items and alternate payment types, as \nwell as physical configuration such as cash drawers and \nrestaurant tables.\n\nThe configuration API does not return information about entities that you have \nremoved from your restaurant configuration or archived.\n"
+  description: 'Returns information about the configuration of a restaurant and
+
+    its menus, such as menu items and alternate payment types, as
+
+    well as physical configuration such as cash drawers and
+
+    restaurant tables.
+
+
+    The configuration API does not return information about entities that you have
+
+    removed from your restaurant configuration or archived.'
   contact:
     name: Toast developer support
 servers:
@@ -15,14 +26,10 @@ paths:
       tags:
       - Pre Modifier Groups
       operationId: preModifierGroupsGuidGet
-      summary: 'Get a pre-modifier group
-
-        '
+      summary: Get a pre-modifier group
       description: 'Returns a `PreModifierGroup` object
 
-        containing information about a pre modifier group.
-
-        '
+        containing information about a pre modifier group.'
       parameters:
       - name: Toast-Restaurant-External-ID
         description: 'The Toast POS GUID of the restaurant that the configuration
@@ -55,16 +62,12 @@ paths:
       tags:
       - Pre Modifier Groups
       operationId: preModifierGroupsGet
-      summary: 'Get pre modifier groups
-
-        '
+      summary: Get pre modifier groups
       description: 'Returns an array of `PreModifierGroup` objects
 
         containing information about PreModifierGroup configured
 
-        for a restaurant.
-
-        '
+        for a restaurant.'
       parameters:
       - name: Toast-Restaurant-External-ID
         description: 'The Toast POS GUID of the restaurant that the configuration

@@ -1,7 +1,13 @@
 openapi: 3.2.0
 info:
   title: Analytics Restaurants information API
-  description: "The analytics API provides an enterprise reporting and analytics service, \nand includes operations that retrieve information for all restaurants, or a\nsubset of restaurants, in a management group, create requests for reporting data, \nand retrieve the reporting data.\n\nThe types of reporting data include:\n* Aggregated sales reporting data covering sales and labor information.\n* Check reporting data providing information for each check.\n* Labor reporting data providing information for employees and jobs that are paid hourly.\n* Menu reporting data providing information for menu entities as they relate to sales.\n* Payout reporting data providing information for payouts organized either by settled date, payments, or sales date.\n* Guest reporting data providing information for guest's payment cards organized by payments.\n"
+  description: 'The analytics API provides an enterprise reporting and analytics service,
+
+    and includes operations that retrieve information for all restaurants, or a
+
+    subset of restaurants, in a management group, create requests for reporting data,
+
+    and retrieve the reporting data.'
   version: 1.0.0
   contact:
     name: Toast developer support
@@ -16,9 +22,7 @@ paths:
       summary: Get management group restaurant information
       description: 'Returns an array of `RestaurantInfo` objects containing the GUID and guest-facing name for each
 
-        restaurant in the associated management group, and whether or not the restaurant is activated, in test mode, or archived.
-
-        '
+        restaurant in the associated management group, and whether or not the restaurant is activated, in test mode, or archived.'
       operationId: getManagementGroupRestaurantsInformation
       responses:
         '200':

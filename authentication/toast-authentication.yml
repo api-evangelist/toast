@@ -1,26 +1,116 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/toast-labor-openapi.yaml, openapi/toast-menus-openapi.yaml, openapi/toast-orders-openapi.yaml,
-  openapi/toast-partners-openapi.yaml, openapi/toast-restaurants-openapi.yaml, openapi/toast-stock-openapi.yaml
+generated: '2026-08-27'
+method: searched
+source: https://doc.toasttab.com/doc/devguide/authentication.html
+docs:
+- https://doc.toasttab.com/doc/devguide/authentication.html
+- https://doc.toasttab.com/doc/devguide/apiAuthTokenRefresh.html
+- https://doc.toasttab.com/doc/devguide/apiAuthenticationRateLimit.html
+- https://doc.toasttab.com/doc/devguide/apiAuthenticatingRequestsFromToastApiClients.html
+- https://doc.toasttab.com/doc/devguide/apiClientAccounts.html
+- https://doc.toasttab.com/doc/devguide/apiScopes.html
+provider: Toast
+providerId: toast
 summary:
   types:
   - oauth2
   oauth2_flows:
   - clientCredentials
+  primary: OAuth 2.0 client credentials, bearer token
+  tenancy: Toast-Restaurant-External-ID request header
+description: >-
+  Toast APIs use the OAuth 2.0 client-credentials grant. A client POSTs its clientId and clientSecret in
+  the message body to /authentication/v1/authentication/login and receives a JWT bearer token, which it
+  places in the Authorization header of every subsequent request. There is no user-facing authorization
+  code flow, no OIDC discovery document, and no scope parameter on the token request - the scopes a
+  client holds are provisioned onto its API client account and encoded inside the returned token. A
+  separate API client account is registered for each environment (sandbox, production).
 schemes:
 - name: oauth2
   type: oauth2
   flows:
   - flow: clientCredentials
-    tokenUrl: https://toast-api-server/authentication/v1/authentication/login
-    scopes: 7
-  description: "Access to Toast APIs, specific endpoints, \nand specific API endpoint operations\
-    \ is \ncontrolled by the scopes that are associated \nwith your API account. \nA full reference\
-    \ for Toast API scopes and \ntheir capabilities can be found in the\n[_Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html)."
+    tokenUrl: /authentication/v1/authentication/login
+    tokenUrl_note: >-
+      Every published spec renders this as https://toast-api-server/authentication/v1/authentication/login
+      - `toast-api-server` is Toast's placeholder for the hostname it issues to you privately. The path is
+      real; the host is not.
+    scopes: 26
+  credential_delivery: request body (clientId + clientSecret), not HTTP Basic
+  token_type: JWT bearer
+  request_header: 'Authorization: Bearer <token>'
+  description: >-
+    Access to Toast APIs, specific endpoints, and specific API endpoint operations is controlled by the
+    scopes associated with the API account. The full scope reference is published in the Toast developer
+    guide.
   sources:
-  - openapi/toast-labor-openapi.yaml
-  - openapi/toast-menus-openapi.yaml
-  - openapi/toast-orders-openapi.yaml
-  - openapi/toast-partners-openapi.yaml
-  - openapi/toast-restaurants-openapi.yaml
-  - openapi/toast-stock-openapi.yaml
+  - openapi/toast-analytics-openapi.yaml
+  - openapi/toast-configuration-openapi.yaml
+  - openapi/toast-credit-cards-openapi.yaml
+  - openapi/toast-device-details-openapi.yaml
+  - openapi/toast-kitchen-openapi.yaml
+  - openapi/toast-menus-v3-openapi.yaml
+  - openapi/toast-ordermgmt-configuration-openapi.yaml
+  - openapi/toast-packaging-openapi.yaml
+  - openapi/toast-restaurant-availability-openapi.yaml
+  - openapi/toast-orders-api-openapi.yml
+  - openapi/toast-employees-api-openapi.yml
+  - openapi/toast-stock-api-openapi.yml
+- name: cashMgmtRead
+  type: oauth2
+  flows:
+  - flow: implicit
+    authorizationUrl: /authentication/v1/authentication/login
+    scopes: 1
+  note: >-
+    A spec-level artefact, not a second real auth model. The cash management OpenAPI names its
+    securityScheme cashMgmtRead and declares it as an implicit flow pointing at the same
+    client-credentials login endpoint. Toast's documented model for every API is client credentials;
+    treat this as a spec authoring inconsistency to raise with Toast, not as an implicit grant.
+  sources:
+  - openapi/toast-cash-management-openapi.yaml
+token:
+  lifetime: Typically one day. The login response returns expires_in in seconds; Toast's example shows
+    3599 for a one-hour token, so the value must be read rather than assumed.
+  refresh: >-
+    There is no refresh token. Clients re-authenticate at the same login endpoint. Toast asks that a
+    client reuse a token for at least 30 minutes and request no more than one or two tokens per day.
+  reuse_required: true
+  contents: >-
+    The token is a JWT encoding the granted scopes, the restaurant/naming authority and the clientId.
+    Decoding it is the documented way for a client to discover its own permissions.
+  legacy: >-
+    An earlier Toast authentication service is deprecated. Integrations still on the legacy endpoint
+    must migrate to /authentication/v1/authentication/login.
+tenancy:
+  header: Toast-Restaurant-External-ID
+  value: The GUID of the restaurant location the request applies to.
+  required: >-
+    On almost every API. Omitted for the partners API and for the token request itself, which carry no
+    restaurant context. Its presence also switches rate limiting from per-IP to per-restaurant.
+  access_grant: >-
+    A partner integration can only send this header for a restaurant that has connected the partner; the
+    connected set is read from GET /partners/v1/restaurants and
+    GET /partners/v1/connectedRestaurants, and changes are announced on the partners webhook.
+mutual_tls: false
+api_keys: false
+openid_connect: false
+oidc_discovery:
+  probed:
+  - url: https://ws-api.toasttab.com/.well-known/openid-configuration
+    status: 404
+  - url: https://www.toasttab.com/.well-known/openid-configuration
+    status: 404
+  result: absent
+credential_provisioning:
+  partner_and_custom: Issued by the Toast integrations team as part of the integration approval process,
+    one account per environment.
+  standard_api_access: Self-service - the customer creates credentials in their Toast Web account after
+    purchasing Standard API access through the Toast Shop.
+  analytics_api_access: Separate credentials created for analytics API access; production only.
+  docs: https://doc.toasttab.com/doc/devguide/devApiAccessCredentials.html
+see_also:
+  scopes: scopes/toast-scopes.yml
+  conventions: conventions/toast-conventions.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

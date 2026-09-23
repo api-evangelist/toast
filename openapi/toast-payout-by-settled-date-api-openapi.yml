@@ -1,7 +1,13 @@
 openapi: 3.2.0
 info:
   title: Analytics Payout by settled date API
-  description: "The analytics API provides an enterprise reporting and analytics service, \nand includes operations that retrieve information for all restaurants, or a\nsubset of restaurants, in a management group, create requests for reporting data, \nand retrieve the reporting data.\n\nThe types of reporting data include:\n* Aggregated sales reporting data covering sales and labor information.\n* Check reporting data providing information for each check.\n* Labor reporting data providing information for employees and jobs that are paid hourly.\n* Menu reporting data providing information for menu entities as they relate to sales.\n* Payout reporting data providing information for payouts organized either by settled date, payments, or sales date.\n* Guest reporting data providing information for guest's payment cards organized by payments.\n"
+  description: 'The analytics API provides an enterprise reporting and analytics service,
+
+    and includes operations that retrieve information for all restaurants, or a
+
+    subset of restaurants, in a management group, create requests for reporting data,
+
+    and retrieve the reporting data.'
   version: 1.0.0
   contact:
     name: Toast developer support
@@ -14,7 +20,21 @@ paths:
   /payout/{timeRange}:
     post:
       summary: Post a payout data request organized by settled date for a specific time range
-      description: "Creates a payout reporting data organized by settled date request for a specific time range.\n\nSpecify the time range with the `timeRange` path parameter.\n\nSpecify whether to include data from inactive restaurants using the `onlyInactiveRestaurants` query parameter.\n\nSpecify the `startDate` and `endDate` for the payout data in the message body.\n\nInclude information about which restaurants to include or exclude with the \n`restaurantIds` and `excludedRestaurantIds` properties.\n"
+      description: 'Creates a payout reporting data organized by settled date request for a specific time range.
+
+
+        Specify the time range with the `timeRange` path parameter.
+
+
+        Specify whether to include data from inactive restaurants using the `onlyInactiveRestaurants` query parameter.
+
+
+        Specify the `startDate` and `endDate` for the payout data in the message body.
+
+
+        Include information about which restaurants to include or exclude with the
+
+        `restaurantIds` and `excludedRestaurantIds` properties.'
       operationId: postPayoutReportSettledDateSpecificTimeRange
       parameters:
       - name: timeRange
@@ -88,9 +108,7 @@ paths:
       description: 'Returns the payout data organized by settled date for the reporting data request.
 
 
-        Specify the `reportRequestGuid` for the reporting data.
-
-        '
+        Specify the `reportRequestGuid` for the reporting data.'
       operationId: getPayoutSettledDateReportingData
       parameters:
       - name: reportRequestGuid
@@ -137,6 +155,105 @@ paths:
       - Payout by settled date
 components:
   schemas:
+    ReportingDataInProgress:
+      description: The Toast platform is in the process of gathering the reporting data. Try the request again at a later time.
+      type: object
+      properties:
+        message:
+          description: A brief message describing that the reporting data is still in progress and to try again at a later time.
+          format: string
+          type: string
+        reportStatus:
+          description: Reflects the in progress status of the reporting data using the IN_PROGRESS value.
+          format: text
+          type: string
+        reportRequestGuid:
+          description: The Toast platform assigned identifier used to identify a specific analytics reporting data request.
+          format: UUID
+          type: string
+    ErrorMessage:
+      type: object
+      description: Information about an unsuccessful REST request.
+      properties:
+        status:
+          description: The HTTP status code.
+          format: integer
+          type: number
+        code:
+          description: The service-specific result code.
+          format: integer
+          type: number
+        message:
+          description: A brief message describing the error.
+          type: string
+        messageKey:
+          description: Reserved for future use.
+          type: string
+        fieldName:
+          description: Reserved for future use.
+          type: string
+        link:
+          description: The URL of a Toast page that provides more information about the error.
+          format: URL
+          type: string
+        requestId:
+          description: The identifier of the HTTP request that generated the error.
+          format: UUID
+          type: string
+        developerMessage:
+          description: Optional, technical information to help a developer investigate the cause of the error.
+          type: string
+        errors:
+          description: A list of JSON `ErrorMessage` objects.
+          items:
+            type: string
+          type: array
+        canRetry:
+          description: Reserved for future use.
+          type: string
+    ReportRequestGuid:
+      description: The Toast platform assigned identifier used to identify a specific analytics reporting data request.
+      format: UUID
+      type: string
+    PayoutSettledDateReportingDataRequest:
+      description: "Information about what the payout data organized by settled date covers and how it is presented. This includes \nthe starting and ending dates of the time range and the included or excluded restaurants.\n"
+      type: object
+      properties:
+        startDate:
+          description: 'The starting date of the time range for the reporting data.
+
+
+            Specify the date in the format YYYYMMDD. For example, `20220824`.
+
+            '
+          format: integer
+          type: number
+        endDate:
+          description: 'The ending date of the time range for the reporting data.
+
+
+            Specify the date in the format YYYYMMDD. For example, `20220824`.
+
+            '
+          format: integer
+          type: number
+        restaurantIds:
+          description: "The `restaurantGuid` values of specific restaurants in the management group to include in the \nreporting data. If used, only the data for listed restaurants in the management group \nthat are identified by `restaurantGuid` is included. If left blank, all restaurants are included \nby default.\n"
+          items:
+            format: uuid
+            type: string
+          type: array
+        excludedRestaurantIds:
+          description: "The `restaurantGuid` values of specific restaurants in the management group to exclude from the \nreporting data. If used, the data for listed restaurants in the management group \nthat are identified by `restaurantGuid` is excluded. If left blank, all restaurants are included \nby default.\n"
+          items:
+            format: UUID
+            type: string
+          type: array
+      required:
+      - restaurantIds
+      - excludedRestaurantIds
+      - startDate
+      - endDate
     PayoutSettledDateReportingData:
       description: The payout reporting data organized by settled date.
       type: object
@@ -234,105 +351,6 @@ components:
 
             '
           format: string
-          type: string
-    PayoutSettledDateReportingDataRequest:
-      description: "Information about what the payout data organized by settled date covers and how it is presented. This includes \nthe starting and ending dates of the time range and the included or excluded restaurants.\n"
-      type: object
-      properties:
-        startDate:
-          description: 'The starting date of the time range for the reporting data.
-
-
-            Specify the date in the format YYYYMMDD. For example, `20220824`.
-
-            '
-          format: integer
-          type: number
-        endDate:
-          description: 'The ending date of the time range for the reporting data.
-
-
-            Specify the date in the format YYYYMMDD. For example, `20220824`.
-
-            '
-          format: integer
-          type: number
-        restaurantIds:
-          description: "The `restaurantGuid` values of specific restaurants in the management group to include in the \nreporting data. If used, only the data for listed restaurants in the management group \nthat are identified by `restaurantGuid` is included. If left blank, all restaurants are included \nby default.\n"
-          items:
-            format: uuid
-            type: string
-          type: array
-        excludedRestaurantIds:
-          description: "The `restaurantGuid` values of specific restaurants in the management group to exclude from the \nreporting data. If used, the data for listed restaurants in the management group \nthat are identified by `restaurantGuid` is excluded. If left blank, all restaurants are included \nby default.\n"
-          items:
-            format: UUID
-            type: string
-          type: array
-      required:
-      - restaurantIds
-      - excludedRestaurantIds
-      - startDate
-      - endDate
-    ReportRequestGuid:
-      description: The Toast platform assigned identifier used to identify a specific analytics reporting data request.
-      format: UUID
-      type: string
-    ErrorMessage:
-      type: object
-      description: Information about an unsuccessful REST request.
-      properties:
-        status:
-          description: The HTTP status code.
-          format: integer
-          type: number
-        code:
-          description: The service-specific result code.
-          format: integer
-          type: number
-        message:
-          description: A brief message describing the error.
-          type: string
-        messageKey:
-          description: Reserved for future use.
-          type: string
-        fieldName:
-          description: Reserved for future use.
-          type: string
-        link:
-          description: The URL of a Toast page that provides more information about the error.
-          format: URL
-          type: string
-        requestId:
-          description: The identifier of the HTTP request that generated the error.
-          format: UUID
-          type: string
-        developerMessage:
-          description: Optional, technical information to help a developer investigate the cause of the error.
-          type: string
-        errors:
-          description: A list of JSON `ErrorMessage` objects.
-          items:
-            type: string
-          type: array
-        canRetry:
-          description: Reserved for future use.
-          type: string
-    ReportingDataInProgress:
-      description: The Toast platform is in the process of gathering the reporting data. Try the request again at a later time.
-      type: object
-      properties:
-        message:
-          description: A brief message describing that the reporting data is still in progress and to try again at a later time.
-          format: string
-          type: string
-        reportStatus:
-          description: Reflects the in progress status of the reporting data using the IN_PROGRESS value.
-          format: text
-          type: string
-        reportRequestGuid:
-          description: The Toast platform assigned identifier used to identify a specific analytics reporting data request.
-          format: UUID
           type: string
   securitySchemes:
     oauth2:

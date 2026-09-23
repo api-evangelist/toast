@@ -2,7 +2,18 @@ openapi: 3.2.0
 info:
   version: 2.5.0
   title: Configuration Tax Rates API
-  description: "Returns information about the configuration of a restaurant and \nits menus, such as menu items and alternate payment types, as \nwell as physical configuration such as cash drawers and \nrestaurant tables.\n\nThe configuration API does not return information about entities that you have \nremoved from your restaurant configuration or archived.\n"
+  description: 'Returns information about the configuration of a restaurant and
+
+    its menus, such as menu items and alternate payment types, as
+
+    well as physical configuration such as cash drawers and
+
+    restaurant tables.
+
+
+    The configuration API does not return information about entities that you have
+
+    removed from your restaurant configuration or archived.'
   contact:
     name: Toast developer support
 servers:
@@ -15,16 +26,12 @@ paths:
       tags:
       - Tax Rates
       operationId: taxRatesGuidGet
-      summary: 'Get a tax rate
-
-        '
+      summary: Get a tax rate
       description: 'Returns a `TaxRate` object
 
         containing information about a form of taxation applied to
 
-        sales at a restaurant.
-
-        '
+        sales at a restaurant.'
       parameters:
       - name: Toast-Restaurant-External-ID
         description: 'The Toast POS GUID of the restaurant that the configuration
@@ -57,9 +64,7 @@ paths:
       tags:
       - Tax Rates
       operationId: taxRatesGet
-      summary: 'Get tax rates
-
-        '
+      summary: Get tax rates
       description: 'Returns an array of `TaxRate` objects
 
         containing information about the forms of taxation applied to
@@ -68,9 +73,7 @@ paths:
 
         specified, returns all objects that were created or modified
 
-        after that date.
-
-        '
+        after that date.'
       parameters:
       - name: Toast-Restaurant-External-ID
         description: 'The Toast POS GUID of the restaurant that the configuration
@@ -122,59 +125,6 @@ paths:
         - config:read
 components:
   schemas:
-    ToastReference:
-      type: object
-      description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID.
-      required:
-      - guid
-      - entityType
-      properties:
-        guid:
-          description: The GUID maintained by the Toast POS.
-          type: string
-        entityType:
-          description: The type of object this is.
-          type: string
-    TaxTableRow:
-      type: object
-      description: A closed sale amount range that corresponds to a specific tax amount in a tax table.
-      properties:
-        start:
-          description: The start of a sale amount range that corresponds to a specific tax amount in a tax table.
-          type: number
-          format: currency
-        end:
-          description: The end of a sale amount range that corresponds to a specific tax amount in a tax table.
-          type: number
-          format: currency
-        tax:
-          description: The tax amount for the tax table row.
-          type: number
-          format: currency
-        pattern:
-          description: Specifies whether the price range is part of an incomplete set of ranges that establish an algorithm that you can use to calculate tax amounts.
-          type: boolean
-    ConditionalTaxRate:
-      type: object
-      description: 'A conditional tax rate that overrides the default `rate`
-
-        for a `TaxRate` in
-
-        specific situations. For example, a conditional rate
-
-        might override the default rate when a `TaxRate` is
-
-        applied for a specific dining option, such as takeout.
-
-        '
-      properties:
-        condition:
-          description: A string describing the condition for the tax rate
-          type: string
-        rate:
-          description: The percentage rate of the conditional tax rate
-          type: number
-          format: double
     TaxRate:
       type: object
       allOf:
@@ -264,6 +214,59 @@ components:
               '
             items:
               $ref: '#/components/schemas/ConditionalTaxRate'
+    ToastReference:
+      type: object
+      description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID.
+      required:
+      - guid
+      - entityType
+      properties:
+        guid:
+          description: The GUID maintained by the Toast POS.
+          type: string
+        entityType:
+          description: The type of object this is.
+          type: string
+    TaxTableRow:
+      type: object
+      description: A closed sale amount range that corresponds to a specific tax amount in a tax table.
+      properties:
+        start:
+          description: The start of a sale amount range that corresponds to a specific tax amount in a tax table.
+          type: number
+          format: currency
+        end:
+          description: The end of a sale amount range that corresponds to a specific tax amount in a tax table.
+          type: number
+          format: currency
+        tax:
+          description: The tax amount for the tax table row.
+          type: number
+          format: currency
+        pattern:
+          description: Specifies whether the price range is part of an incomplete set of ranges that establish an algorithm that you can use to calculate tax amounts.
+          type: boolean
+    ConditionalTaxRate:
+      type: object
+      description: 'A conditional tax rate that overrides the default `rate`
+
+        for a `TaxRate` in
+
+        specific situations. For example, a conditional rate
+
+        might override the default rate when a `TaxRate` is
+
+        applied for a specific dining option, such as takeout.
+
+        '
+      properties:
+        condition:
+          description: A string describing the condition for the tax rate
+          type: string
+        rate:
+          description: The percentage rate of the conditional tax rate
+          type: number
+          format: double
   securitySchemes:
     oauth2:
       description: "Access to Toast APIs, specific endpoints, \nand specific API endpoint operations is \ncontrolled by the scopes that are associated \nwith your API account. \nA full reference for Toast API scopes and \ntheir capabilities can be found in the\n[_Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html).\n"

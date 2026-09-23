@@ -1,0 +1,1557 @@
+openapi: 3.0.0
+info:
+  version: 1.1.0
+  title: Toast Loyalty Integration API
+  description: "This API specification describes the interface that the Toast POS \nsystem will call when\
+    \ it processes loyalty transactions.\n\nImplement this REST API to allow the Toast POS system to process\
+    \ \nloyalty transactions using a loyalty provider that it does not \ncurrently support.\n"
+  contact:
+    name: Toast API Support
+paths:
+  /yourendpointname:
+    post:
+      summary: 'Provide information on a loyalty transaction
+
+        '
+      description: "Provides information about a loyalty transaction processed by \nthe Toast platform.\
+        \ The transaction information in the \nmessage body is intended to allow a loyalty provider to\
+        \ \nperform corresponding operations on the loyalty account, \nmaintained by that provider.\n\n\
+        You define the endpoint name for this implementation. The Toast \nPOS system makes requests to\
+        \ the REST path that you supply \nduring integration setup.\n\nEach `POST` request to the endpoint\
+        \ includes a \n`Toast-Transaction-Type` header parameter value to indicate the \ntype of loyalty\
+        \ transaction it represents. The possible \ntransaction types are:\n\n* Inquire to get information\
+        \ about a given loyalty account\n  given the items currently on the check.\n* Search for a loyalty\
+        \ account.\n* Signup to create a new loyalty account.\n* Redeem offers.\n* Accrue rewards based\
+        \ on a given check.\n* Reverse a previous redeem or accrue transaction.\n\nThe `LoyaltyTransaction`\
+        \ \nobject in the message body includes a set of information that \nis specific for each transaction\
+        \ type.\n\nThe response time for a loyalty transaction request must be \nless than 500ms on average.\
+        \ A response time of greater than\n5000ms will be considered a timeout and will be retried. There\n\
+        is a limit on the number of retries which depends on the context\nof the call.\n\nAll loyalty\
+        \ transactions must be considered idempotent. The \nimplementation must handle multiple requests\
+        \ with the same \n`Toast-Transaction-GUID` *and* the same `loyaltyIdentifier`.\n"
+      operationId: yourEndpointNamePost
+      parameters:
+      - name: Toast-Transaction-GUID
+        description: "A unique identifier of the loyalty transaction, defined \nby the Toast POS system.\n"
+        in: header
+        schema:
+          type: string
+      - name: Toast-Restaurant-External-ID
+        description: "The unique identifier of the restaurant, defined by the \nToast POS system.\n"
+        in: header
+        schema:
+          type: string
+      - name: Toast-Transaction-Type
+        description: "The type of loyalty transaction that occurred. Values are:\n<ul>\n  <li>LOYALTY_INQUIRE</li>\n\
+          \  <li>LOYALTY_SEARCH</li>\n  <li>LOYALTY_SIGNUP</li>\n  <li>LOYALTY_REDEEM</li>\n  <li>LOYALTY_ACCRUE</li>\n\
+          \  <li>LOYALTY_REVERSE</li>\n  <li>LOYALTY_TRANSFER</li>\n</ul>\n"
+        in: header
+        schema:
+          type: string
+          enum:
+          - LOYALTY_INQUIRE
+          - LOYALTY_SEARCH
+          - LOYALTY_SIGNUP
+          - LOYALTY_REDEEM
+          - LOYALTY_ACCRUE
+          - LOYALTY_REVERSE
+          - LOYALTY_TRANSFER
+      - name: Authorization
+        description: "A JSON Web Token (JWT) that you can use to authenticate the request. \nVerify the\
+          \ token using the public key that you get from the Toast user management service.\n"
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoyaltyTransaction'
+        description: "A `LoyaltyTransaction` \nobject containing information about the loyalty \ntransaction\
+          \ that the Toast POS system processed.\n"
+      responses:
+        '200':
+          description: "OK. The `transactionStatus` value of the \n`LoyaltyTransactionResponse` object\
+            \ is `ACCEPT`.\n"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoyaltyTransactionResponse'
+        '400':
+          description: 'Bad request. The `transactionStatus` value of the
+
+            `LoyaltyTransactionResponse` object is one of:
+
+
+            * `ERROR_INVALID_TOAST_TRANSACTION_TYPE`
+
+            * `ERROR_ACCOUNT_INVALID`
+
+            * `ERROR_INVALID_INPUT_PROPERTIES`
+
+            * `ERROR_TRANSACTION_DOES_NOT_EXIST`
+
+            * `ERROR_INVALID_TOKEN`
+
+            * `ERROR_TRANSACTION_CANNOT_BE_REVERSED`
+
+            * `ERROR_INVALID_RESTAURANT`
+
+            * `ERROR_ALREADY_REGISTERED`
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoyaltyTransactionResponse'
+        '500':
+          description: Internal server error.
+servers:
+- url: https://toast-api-server/yourapiname/v1
+components:
+  schemas:
+    LoyaltyTransaction:
+      type: object
+      description: "Information about a loyalty transaction in the Toast POS \nsystem. Loyalty providers\
+        \ are expected to handle that \ntransaction.\n\nThe set of information in this object depends\
+        \ on the loyalty \ntransaction type. The transaction type is specified in the \n`Toast-Transaction-Type`\
+        \ header parameter for the request, \nand within the body of the request.\n\nThe `LoyaltyTransaction`\
+        \ object includes the `toastTransactionType`\nvalue, which will be the same as the value in the\
+        \ header. It will also\ninclude one of the following values depending on the transaction type:\n\
+        \n* `LOYALTY_INQUIRE` - checkTransactionInformation\n* `LOYALTY_SEARCH` - searchTransactionInformation\n\
+        * `LOYALTY_SIGNUP` - signupTransactionInformation\n* `LOYALTY_REDEEM` - checkTransactionInformation\n\
+        * `LOYALTY_ACCRUE` - checkTransactionInformation\n* `LOYALTY_REVERSE` - reverseTransactionInformation\n\
+        * `LOYALTY_TRANSFER` - transferTransactionInformation\n"
+      properties:
+        toastTransactionType:
+          description: 'The transaction type that is included in the header is duplicated here in the
+            body of the request.
+
+            '
+          type: string
+          enum:
+          - LOYALTY_INQUIRE
+          - LOYALTY_SEARCH
+          - LOYALTY_SIGNUP
+          - LOYALTY_REDEEM
+          - LOYALTY_ACCRUE
+          - LOYALTY_REVERSE
+          - LOYALTY_TRANSFER
+        searchTransactionInformation:
+          $ref: '#/components/schemas/TransactionInformationSearch'
+        signupTransactionInformation:
+          $ref: '#/components/schemas/TransactionInformationSignup'
+        checkTransactionInformation:
+          $ref: '#/components/schemas/TransactionInformationCheck'
+        reverseTransactionInformation:
+          $ref: '#/components/schemas/TransactionInformationReverse'
+        transferTransactionInformation:
+          $ref: '#/components/schemas/TransactionInformationTransfer'
+    TransactionInformationSearch:
+      type: object
+      description: 'Information needed to complete a search transaction. Included if the toastTransactionType
+        is
+
+        LOYALTY_SEARCH, absent otherwise.
+
+        '
+      properties:
+        searchCriteria:
+          $ref: '#/components/schemas/AccountSearchCriteria'
+    TransactionInformationSignup:
+      type: object
+      description: 'Information needed to complete a signup transaction. Included if the toastTransactionType
+        is
+
+        LOYALTY_SIGNUP, absent otherwise. Requires exactly one of email or phone to be provided (not both,
+
+        not neither).
+
+        '
+      properties:
+        phone:
+          description: 'A telephone number for the customer to create the loyalty account. This number
+
+            will be ten digits with no other characters. Either phone or email must be provided, but not
+            both.
+
+            '
+          type: string
+        email:
+          description: 'An email address for the customer to create the loyalty account. Either phone
+            or email must be
+
+            provided, but not both.
+
+            '
+          type: string
+    TransactionInformationCheck:
+      type: object
+      description: "Information needed to complete an inquire, redeem, or accrue transaction. Included\
+        \ if the \ntoastTransactionType is one of LOYALTY_INQUIRE, LOYALTY_REDEEM, or LOYALTY_ACCRUE,\n\
+        absent otherwise.\n"
+      properties:
+        loyaltyIdentifier:
+          description: Unique identifier of the loyalty account. Format will vary by provider.
+          type: string
+        orderGuid:
+          description: The Toast POS system identifier for the order that contains the check.
+          type: string
+        check:
+          $ref: '#/components/schemas/Check'
+        redemptions:
+          description: 'List of offers to be redeemed, or already redeemed on a check. If this is the
+
+            first time this particular Redemption has been present in a request (as part of
+
+            this customer interaction), it will be present in this list but not on the Check.
+
+            If a Redemption has been previously validated, it will be present both in this list
+
+            and on the Check as an `AppliedDiscount`.
+
+            '
+          type: array
+          items:
+            $ref: '#/components/schemas/Redemption'
+    TransactionInformationReverse:
+      type: object
+      description: 'Information needed to complete a reverse transaction. Included if the toastTransactionType
+        is
+
+        LOYALTY_REVERSE, absent otherwise.
+
+        '
+      properties:
+        loyaltyIdentifier:
+          description: Unique identifier of the loyalty account. Format will vary by provider.
+          type: string
+        transactionId:
+          description: Id of a previous transaction to reverse.
+          type: string
+        redemptions:
+          description: If the transaction to be reversed was a LOYALTY_REDEEM transaction, this array
+            optional includes the list of redemptions from that transaction to reverse. If this field
+            is absent, all redemptions from the transaction should be reversed.
+          type: array
+          items:
+            $ref: '#/components/schemas/Redemption'
+    TransactionInformationTransfer:
+      type: object
+      description: 'Information needed to complete a transfer transaction. Included if the toastTransactionType
+        is
+
+        LOYALTY_TRANSFER, absent otherwise.
+
+        '
+      properties:
+        fromLoyaltyIdentifier:
+          description: Unique identifier of the current loyalty account. Format will vary by provider.
+          type: string
+        toLoyaltyIdentifier:
+          description: Unique identifier of the loyalty account that the user wants to transfer to. Format
+            will vary by provider.
+          type: string
+    AccountSearchCriteria:
+      type: object
+      description: "A set of possible criteria to be used to search for a given loyalty account. The provider\n\
+        must return a list of loyalty accounts that match the criteria given so the customer can\nselect\
+        \ the correct one. All of the fields are optional, though at least one will be \npopulated.\n"
+      properties:
+        firstName:
+          description: The first or given name of the customer attached to the loyalty account.
+          type: string
+        lastName:
+          description: The last or family name of the customer attached to the loyalty account.
+          type: string
+        email:
+          description: An email address for the customer attached to the loyalty account.
+          type: string
+        phone:
+          description: 'A telephone number for the customer attached to the loyalty account. This number
+
+            will be ten digits with no other characters.
+
+            '
+          type: string
+    Redemption:
+      type: object
+      description: 'Information about an offer to be redeemed (or that was redeemed) to a check.
+
+        '
+      properties:
+        identifier:
+          description: "Identifier of the `Offer` to be redeemed. The \nOffer must be one that was returned\
+            \ by the provider in response to an inquiry\nrequest.\n"
+          type: string
+        selectionGuid:
+          description: 'If this is an item level discount, the guid of the selection that this redemption
+            is
+
+            attached to. If this redemption has not been added to a specific selection yet, this
+
+            field will be absent.
+
+            '
+          type: string
+        appliedDiscountGuid:
+          description: "The GUID of the `AppliedDiscount` on the `Check` or `Selection` object corresponding\
+            \ to the discount.\nThis is required if the `Redemption` object is contained within the `RejectionRedemption`\
+            \ \nobject and identifies the rejected redemption.\nThis is included to differentiate if multiple\
+            \ redemptions of the same type are applied to the\nsame check or item.\n"
+          type: string
+        multiItemDiscountGuid:
+          description: 'The GUID of a Multi Item Redemption. A Multi Item Redemption is a single loyalty
+            redemption that applied to
+
+            multiple items on the check. For instance, a "$3 off burgers, $2 off fries, and $1 off a drink"
+            would be a
+
+            single loyalty redemption that applies to 3 separate items. This field is an identifier for
+            a Multi Item
+
+            redemption, but does not correspond to any one object on the `Check`. To see what items were
+            discounted,
+
+            refer to the `itemApplication` field.
+
+            '
+          type: string
+        amount:
+          description: 'The dollar (or other currency) amount that this offer actually discounts.
+
+            '
+          type: number
+        itemApplication:
+          type: array
+          description: 'If this offer this object is redeeming is of type MULTI_ITEM, this array includes
+            the selections
+
+            to which the offer has been applied, along with the amounts applied to each selection and
+            the identifier
+
+            of the discounts applied to each selection. If this field is present, the `selectionGuid`,
+
+            `appliedDiscountGuid`, and `amount` fields will be null, as the values in this array convey
+            that
+
+            information.
+
+            '
+          items:
+            $ref: '#/components/schemas/ItemRedemptionInfo'
+        quantity:
+          description: 'The number of times the offer has been applied to the item or check. For example,
+            if an offer is
+
+            a stackable "$5 off check" discount, this field could indicate that multiple copies of that
+            offer
+
+            have been applied.
+
+            '
+          type: number
+        name:
+          description: 'Human-readable name of the offer being redeemed. Used to identify the
+
+            specific offer on POS, Kiosk, and Guest Display. Maximum 200 characters.
+
+            '
+          type: string
+          maxLength: 200
+    RejectedRedemption:
+      type: object
+      required:
+      - redemption
+      description: 'A redemption that was included in a list of redemptions to redeem, but is not valid
+
+        based on the partner''s validation logic.
+
+        '
+      properties:
+        redemption:
+          $ref: '#/components/schemas/Redemption'
+        message:
+          description: An explanation of why the discount was rejected.
+          type: string
+    AccountInfo:
+      type: object
+      description: 'Identifying information about a specific loyalty account.
+
+        '
+      properties:
+        identifier:
+          description: A unique identifer for this account.
+          type: string
+        firstName:
+          description: First or given name of the account holder
+          type: string
+        lastName:
+          description: Last or family name of the account holder
+          type: string
+        phone:
+          description: Phone number of the account holder
+          type: string
+        email:
+          description: Email address of the account holder
+          type: string
+        pointsBalance:
+          description: "If the loyalty program tracks points, use this field to report the \ncurrent points\
+            \ available to the account owner. This field only displays on \nthe POS in `LOYALTY_INQUIRE`\
+            \ workflows. If absent, no value is displayed. Optional.\n"
+          type: string
+    Offer:
+      type: object
+      description: "Information about a potential discount or other benefit available to the holder of\
+        \ \na loyalty account. Contrast with a `Redemption`,\nwhich is an Offer that is applied to a `Check`.\n"
+      properties:
+        identifier:
+          description: 'A unique identifier for this offer. Each offer must have a unique
+
+            identifier. The Toast platform will not apply discounts correctly if
+
+            your integration uses an identifier for more than one offer on a
+
+            check.
+
+            '
+          type: string
+        name:
+          description: 'The name of this discount. This should be a human readable description of the
+            order.
+
+            Examples include "5% off your entire order" or "Free small cheese pizza".
+
+            '
+          type: string
+        applicable:
+          description: 'true if this offer can be applied to the check submitted with the request,
+
+            false otherwise
+
+            '
+          type: boolean
+        selectionType:
+          description: "Describes what this offer covers. A `CHECK` level discount applies to the entire\n\
+            check, without requirements on the items contained within the check. An `ITEM` \nlevel discount\
+            \ applies to a specific item on the check. \n"
+          type: string
+          enum:
+          - CHECK
+          - ITEM
+          - MULTI_ITEM
+        itemApplication:
+          type: array
+          description: 'If this offer is of type ITEM or MULTI_ITEM, this array includes the selection
+            or selections
+
+            to which the offer can be applied. Required if applicable is true, optional otherwise.
+
+            '
+          items:
+            $ref: '#/components/schemas/ItemRedemptionInfo'
+        amount:
+          description: 'The currency amount of the discount when applied based on the current check information.
+
+            This value can be updated in future calls based on updated check information (for example,
+
+            a 10% off offer will change based on the check total). This field is optional in response
+            to
+
+            LOYALTY_INQUIRE requests and required in response to LOYALTY_REDEEM requests. If the selection
+            type
+
+            is ITEM or MULTI_ITEM, this amount should be the sum of the amounts on each ItemRedemptionInfo
+            in
+
+            the itemApplication array.
+
+            '
+          type: number
+        quantity:
+          description: 'The quantity of this reward available to the account owner. This is informational
+            to display to the
+
+            user. It does not necessarily mean the offer is redeemable multiple times (for example, a
+            guest may
+
+            have two "10% off your entire check" offers, but only one can be redeemed per visit).
+
+            '
+          type: number
+        expiration:
+          type: array
+          description: If this offer will expire, expiration dates can be included in this element to
+            indicate on which date(s) this offer will expire. The next upcoming expiration date will be
+            displayed for the offer on the POS. Optional.
+          items:
+            $ref: '#/components/schemas/ExpirationData'
+        description:
+          type: string
+          description: 'Optional description providing additional context about the offer, such as requirements
+
+            or restrictions. This text will be displayed on the Customer''s Reward Screen to help guests
+
+            understand offer eligibility before attempting redemption. Examples include "Requires additional
+
+            purchase of $0.50" or "Valid on dine-in orders only". Maximum 200 characters. Optional.
+
+            '
+        autoApply:
+          description: 'Indicates whether the offer should be automatically applied to the check without
+            requiring explicit
+
+            action from a guest or employee. When `true`, the Toast platform will automatically apply
+            the offer.
+
+            If you do not provide an `autoApply` value, the Toast platform uses the default value `false`.
+            This
+
+            Toast platform feature is in limited release. Not all Toast POS locations will automatically
+            apply
+
+            offers in response to this value.
+
+            '
+          type: boolean
+          default: false
+    ItemRedemptionInfo:
+      type: object
+      description: Information about the application of a `Redemption` to a specific item.
+      properties:
+        selectionIdentifier:
+          description: 'The identifier of the selection that discount is applied to. This will correspond
+            to the `guid`
+
+            field on the `Selection` object that is included with the `Check`. Toast uses these values
+            to determine
+
+            which item(s) will have the offer applied.
+
+            '
+          type: string
+        amount:
+          description: 'The currency amount of the discount applied to this item. This value can be updated
+            in future calls.
+
+            This field is optional in response to LOYALTY_INQUIRE requests and required in response to
+            LOYALTY_REDEEM requests.
+
+            '
+          type: number
+        appliedDiscountIdentifier:
+          description: 'If this redemption has been applied, this is the identifier of the applied discount
+            created for this offer
+
+            on this selection. It will correspond to the `guid` field of the `AppliedDiscount` object
+            on the Selection.
+
+            Response only.
+
+            '
+    ExpirationData:
+      type: object
+      description: If an offer will expire, this can detail information of when that offer is set to expire.
+      properties:
+        date:
+          description: "The date at which the offer will expire. Optional. <a\nhref=\"https://dev.toasttab.com/Ie5QH/api_dates_and_timestamps.html\"\
+            >Use \nISO 8601 date and time format for all Toast APIs.</a>\n"
+          type: string
+          format: date-time
+        quantity:
+          description: The quantity of the offer that will expire at the expiration date. If not present
+            assumes the entire offer will expire at the expiration date. Optional.
+          format: number
+    Check:
+      type: object
+      description: Represents a single check within an order.
+      allOf:
+      - $ref: '#/components/schemas/ExternalReference'
+      - type: object
+        required:
+        - selections
+        properties:
+          openedDate:
+            description: "The date at which this check was opened. <a \nhref=\"https://dev.toasttab.com/Ie5QH/api_dates_and_timestamps.html\"\
+              >Use \nISO 8601 date and time format for all Toast APIs.</a>\n"
+            type: string
+            format: date-time
+          closedDate:
+            type: string
+            format: date-time
+            description: "The most recent date at which this check's payment status \nwas set to CLOSED.\
+              \ <a \nhref=\"https://dev.toasttab.com/Ie5QH/api_dates_and_timestamps.html\">Use \nISO 8601\
+              \ date and time format for all Toast APIs.</a>\n"
+          modifiedDate:
+            type: string
+            format: date-time
+            description: "The most recent date at which this check was modified. <a \nhref=\"https://dev.toasttab.com/Ie5QH/api_dates_and_timestamps.html\"\
+              >Use \nISO 8601 date and time format for all Toast APIs.</a>\n"
+          deletedDate:
+            type: string
+            format: date-time
+            description: "The date at which this check was deleted. `deletedDate` \nis only applicable\
+              \ when deleted is true (by default the \nvalue will be set to 1970-01-01T00:00:00.000+0000).\
+              \ <a \nhref=\"https://dev.toasttab.com/Ie5QH/api_dates_and_timestamps.html\">Use \nISO 8601\
+              \ date and time format for all Toast APIs.</a>\n"
+          deleted:
+            type: boolean
+            description: True if this check has been deleted.
+          selections:
+            type: array
+            items:
+              $ref: '#/components/schemas/Selection'
+          appliedLoyaltyInfo:
+            $ref: '#/components/schemas/AppliedLoyaltyInfo'
+          taxExempt:
+            type: boolean
+            default: false
+            description: True if this check is tax exempt. Tax exempt number is not yet supported.
+          displayNumber:
+            type: string
+            description: Generally starts at one each day and counts up. Not guaranteed to be unique.
+          appliedServiceCharges:
+            type: array
+            description: Any restaurant-configured service charges that applied to this check.
+            items:
+              $ref: '#/components/schemas/AppliedServiceCharge'
+          amount:
+            type: number
+            format: double
+            description: The dollar amount due on this check in USD, after discounts but before tax.
+          taxAmount:
+            type: number
+            format: double
+            description: The computed tax amount in USD. Includes service charge and item level taxes.
+          totalAmount:
+            type: number
+            format: double
+            description: The total amount due on this check in USD, including discounts and taxes.
+          payments:
+            type: array
+            description: Payments made on this check
+            minItems: 0
+            items:
+              $ref: '#/components/schemas/Payment'
+          tabName:
+            type: string
+            description: The name of the tab on this check. This will show up on the KDS (Kitchen Display
+              System) for pending orders. The tabName's length can be up to 255 characters.
+          paymentStatus:
+            type: string
+            description: The payment status of this check. OPEN means there is outstanding balance. PAID
+              means a credit card payment has been applied but the tip has not been adjusted. CLOSED means
+              there is no remaining amount due on this check. Toast does not prevent a CLOSED check from
+              transitioning back to OPEN or PAID.
+            enum:
+            - OPEN
+            - PAID
+            - CLOSED
+          appliedDiscounts:
+            type: array
+            description: The discounts applied to this check.
+            minItems: 0
+            items:
+              $ref: '#/components/schemas/AppliedDiscount'
+          voided:
+            type: boolean
+            description: True if this check has been voided.
+          voidDate:
+            type: string
+            format: date-time
+            description: "The date at which this check was voided. <a \nhref=\"https://dev.toasttab.com/Ie5QH/api_dates_and_timestamps.html\"\
+              >Use \nISO 8601 date and time format for all Toast APIs.</a>\n"
+          voidBusinessDate:
+            type: integer
+            description: "The business date (yyyyMMdd) on which this check was \nvoided.\n"
+          paidDate:
+            type: string
+            format: date-time
+            description: "The most recent date at which this check received \npayment. <a \nhref=\"https://dev.toasttab.com/Ie5QH/api_dates_and_timestamps.html\"\
+              >Use \nISO 8601 date and time format for all Toast APIs.</a>\n"
+          createdDevice:
+            $ref: '#/components/schemas/Device'
+          lastModifiedDevice:
+            $ref: '#/components/schemas/Device'
+    ConfigReference:
+      type: object
+      description: 'A wrapper object containing identifier values for Toast platform entities.
+
+        '
+      allOf:
+      - $ref: '#/components/schemas/ToastReference'
+      - type: object
+        properties:
+          multiLocationId:
+            description: 'A consistent identifier for Toast platform entities, such
+
+              as menu items, that applies to all versions of a shared
+
+              entity at all locations in a restaurant group. For
+
+              example, you can use the `multiLocationId` value to
+
+              identify menu entities that are versions of a shared menu
+
+              entity. The `multiLocationId` value in the orders API
+
+              corresponds to the `masterId` value for menu
+
+              configuration entities in the menus API. For more
+
+              information about the menus API `masterId` value, see
+
+              [the _Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiUnderstandingGuidsEntityIdentifiersAndMultilocationIds_V2.html#apiMultilocationIdValues_V2).
+
+              type: string
+
+              '
+          externalId:
+            description: 'An external identifier that is prefixed by a naming
+
+              authority. Deprecated for use in `ConfigReference`.
+
+              '
+            type: string
+    AppliedLoyaltyInfo:
+      type: object
+      description: Information about the customer loyalty program account associated with a check.
+      required:
+      - loyaltyIdentifier
+      - vendor
+      allOf:
+      - $ref: '#/components/schemas/ToastReference'
+      - type: object
+        properties:
+          loyaltyIdentifier:
+            type: string
+            description: An identifier for the loyalty program account.
+          vendor:
+            type: string
+            description: The specific loyalty program service provider that supports the loyalty account.
+              For all interactions with the Loyalty Integration API, this value will be INTEGRATION.
+            enum:
+            - INTEGRATION
+          accrualFamilyGuid:
+            type: string
+            description: An internal Toast POS identifier for loyalty program transactions.
+          accrualText:
+            type: string
+            description: A description of the loyalty program transaction that will be printed on the
+              customer's reciept. For example, "Earned 27 points." The maximum length of the description
+              string is 255 characters.
+    Selection:
+      type: object
+      description: 'A Selection object can represent either a primary item (i.e. Check.selections) or
+        a modifier (Selection.modifiers) selection. Quantity defaults to 1. <br><br> Specify a modifier
+        selection by adding it to the `modifiers` list of another selection. For each modifier selection,
+        its optionGroup field must be set correctly, because a MenuItem can be included in multiple MenuOptionGroups,
+        potentially with different prices or sizing. '
+      allOf:
+      - $ref: '#/components/schemas/ExternalReference'
+      - type: object
+        required:
+        - item
+        - quantity
+        properties:
+          item:
+            $ref: '#/components/schemas/ConfigReference'
+          itemGroup:
+            $ref: '#/components/schemas/ConfigReference'
+          optionGroup:
+            $ref: '#/components/schemas/ConfigReference'
+          preModifier:
+            $ref: '#/components/schemas/ConfigReference'
+          quantity:
+            type: number
+            format: double
+            description: Quantity ordered. A decimal number for items sold by weight; a counting number
+              for discrete items.
+          unitOfMeasure:
+            type: string
+            description: The unit of measure required for weighing the item. Default is NONE, which means
+              the item is not meant to be weighed.
+            enum:
+            - NONE
+            - LB
+            - OZ
+            - KG
+            - G
+          selectionType:
+            type: string
+            description: Specifies whether this selection is a special request or other off-menu sale.
+              If left null or NONE, describes a normal modifier or item selection.
+            enum:
+            - NONE
+            - OPEN_ITEM
+            - SPECIAL_REQUEST
+            - PORTION
+            - HOUSE_ACCOUNT_PAY_BALANCE
+          salesCategory:
+            $ref: '#/components/schemas/ConfigReference'
+          appliedDiscounts:
+            type: array
+            description: The itemized discounts applied to this item.
+            minItems: 0
+            items:
+              $ref: '#/components/schemas/AppliedDiscount'
+          deferred:
+            type: boolean
+            description: Whether this selection is a deferred revenue transaction, e.g. gift card sales.
+          preDiscountPrice:
+            type: number
+            description: Gross sale price for this selection. Excludes tax.
+            format: double
+          price:
+            type: number
+            format: double
+            description: Net price for this selection. The final price of the item after considering discounts
+              (including discounts at the check level), quantity adjustments, and modifier prices at the
+              time the item was selected for purchase.
+          tax:
+            type: number
+            format: double
+            description: The total tax amount for this selection.
+          voided:
+            type: boolean
+            description: True if this selection has been voided.
+          voidDate:
+            type: string
+            format: date-time
+            description: "The date at which this selection was voided. <a \nhref=\"https://dev.toasttab.com/Ie5QH/api_dates_and_timestamps.html\"\
+              >Use \nISO 8601 date and time format for all Toast APIs.</a>\n"
+          voidBusinessDate:
+            type: integer
+            description: "The business date (yyyyMMdd) on which this selection was \nvoided.\n"
+          voidReason:
+            $ref: '#/components/schemas/ExternalReference'
+          displayName:
+            type: string
+            description: The display name of the selection. This field can be used to set a special request
+              value, otherwise it will be generated from this Selection's item property.
+          createdDate:
+            type: string
+            format: date-time
+            description: "The date at which this selection was created. Defaults to \ncurrent time if\
+              \ not specified. <a \nhref=\"https://dev.toasttab.com/Ie5QH/api_dates_and_timestamps.html\"\
+              >Use \nISO 8601 date and time format for all Toast APIs.</a>\n"
+          modifiedDate:
+            type: string
+            format: date-time
+            description: "The date at which this selection was last modified. \nDefaults to current time\
+              \ if not specified. <a \nhref=\"https://dev.toasttab.com/Ie5QH/api_dates_and_timestamps.html\"\
+              >Use \nISO 8601 date and time format for all Toast APIs.</a>\n"
+          modifiers:
+            type: array
+            description: A list of modifiers applying to this selection.
+            items:
+              $ref: '#/components/schemas/Selection'
+          fulfillmentStatus:
+            type: string
+            default: NEW
+            description: "Indicates the stage of the preparation workflow that the \nmenu item selection\
+              \ is in. The `fulfillmentStatus` of a \nmenu item selection changes as restaurant employees\
+              \ move \nthe item through the functions of the Toast POS, for \nexample order entry and\
+              \ the kitchen display system (KDS).\nResponse only. \n<ul>\n  <li>`NEW` - the menu item\
+              \ selection has been added to a \n    check but has not been sent to the KDS for \n    preparation.</li>\n\
+              \  <li>`HOLD` - a restaurant employee has paused the menu \n    item selection so that it\
+              \ does not appear in the \n    KDS for preparation.</li>\n  <li>`SENT` - the menu item selection\
+              \ has been fired and \n    appears in the KDS for preparation.</li>\n  <li>`READY` - preparation\
+              \ is complete, the menu item \n    selection has been fulfilled and no longer appears in\
+              \ \n    the KDS. If your restaurant does not use the Toast POS \n    KDS, items in an order\
+              \ will not reach the `READY` \n    status.</li>\n</ul>\n"
+            enum:
+            - NEW
+            - HOLD
+            - SENT
+            - READY
+          taxInclusion:
+            type: string
+            description: "Indicates whether the menu item price includes one or more tax\namounts. If\
+              \ the menu item is a modifier for another menu item\nselection, it always inherits the tax\
+              \ inclusion behavior of the menu\nitem it applies to. Values are:\n* `INCLUDED` - the menu\
+              \ item price includes one or more tax amounts.\n* `NOT_INCLUDED` - the menu item price does\
+              \ not include any tax\n  amounts.\n* `INHERITED` - the menu item is a modifier for another\
+              \ menu item\n  selection in the check. The `taxInclusion` value of the parent menu\n  item\
+              \ selection applies to the modifier. If a menu item selection\n  *that is not a modifier*\
+              \ inherits tax inclusion behavior from a\n  menu or menu group, the `taxInclusion` value\
+              \ will be either\n  `INCLUDED` or `NOT_INCLUDED`.\n"
+            enum:
+            - INCLUDED
+            - NOT_INCLUDED
+            - INHERITED
+          appliedTaxes:
+            type: array
+            description: An array of AppliedTaxRate objects that contain information about tax payments
+              made for the selection.
+            items:
+              $ref: '#/components/schemas/AppliedTaxRate'
+          plu:
+            type: string
+            description: 'The price look-up (PLU) code for the menu item selection used for
+
+              pricing and inventory management. This value is null if the menu
+
+              item does not have a PLU code configured. For information about
+
+              configuring PLUs for menu items, see [Toast product
+
+              documentation](https://doc.toasttab.com/doc/platformguide/platformMenuManagerWorkingWithMenuItems.html#platformMenuManagerSpecifyingAPluOrSkuForAMenuItem).
+
+              '
+    Payment:
+      type: object
+      description: Defines a payment.
+      allOf:
+      - $ref: '#/components/schemas/ExternalReference'
+      - type: object
+        required:
+        - type
+        - amount
+        - tipAmount
+        properties:
+          paidDate:
+            description: "The date at which the payment was made. <a \nhref=\"https://dev.toasttab.com/Ie5QH/api_dates_and_timestamps.html\"\
+              >Use \nISO 8601 date and time format for all Toast APIs.</a>\n"
+            type: string
+            format: date-time
+          paidBusinessDate:
+            description: "The business date (yyyyMMdd) on which this payment was \nfirst applied.\n"
+            type: integer
+          type:
+            type: string
+            description: The payment method.
+            enum:
+            - CASH
+            - CREDIT
+            - GIFTCARD
+            - HOUSE_ACCOUNT
+            - REWARDCARD
+            - LEVELUP
+            - OTHER
+            - UNDETERMINED
+          cardEntryMode:
+            type: string
+            description: Indicates how credit card data was obtained. Response only.
+            enum:
+            - SWIPED
+            - KEYED
+            - ONLINE
+            - EMV_CHIP_SIGN
+            - TOKENIZED
+            - PRE_AUTHED
+            - SAVED_CARD
+            - FUTURE_ORDER
+            - CONTACTLESS
+            - APPLE_PAY_CNP
+            - GOOGLE_PAY_CNP
+            - CLICK_TO_PAY_CNP
+            - INCREMENTAL_PRE_AUTHED
+            - PARTNER_ECOM_COF
+          amount:
+            type: number
+            format: double
+            description: The amount of this payment, excluding tips.
+          tipAmount:
+            type: number
+            format: double
+            description: The amount tipped on this payment.
+          amountTendered:
+            type: number
+            format: double
+            description: The amount tendered for this payment.
+          cardType:
+            type: string
+            description: The type of card used.
+            enum:
+            - VISA
+            - MASTERCARD
+            - AMEX
+            - DISCOVER
+            - JCB
+            - DINERS
+            - CIT
+            - MAESTRO
+            - LASER
+            - SOLO
+            - INTERAC
+            - UNKNOWN
+          last4Digits:
+            type: string
+            description: The last 4 digits of the card used.
+          originalProcessingFee:
+            type: number
+            format: double
+            description: The original processing fee for this payment. The original processing fee value
+              is populated after the payment has been captured.
+          server:
+            $ref: '#/components/schemas/ExternalReference'
+          cashDrawer:
+            $ref: '#/components/schemas/ExternalReference'
+          refundStatus:
+            type: string
+            enum:
+            - NONE
+            - PARTIAL
+            - FULL
+          refund:
+            $ref: '#/components/schemas/Refund'
+          paymentStatus:
+            type: string
+            description: The status of this payment when the type is CREDIT.
+            enum:
+            - OPEN
+            - PROCESSING
+            - AUTHORIZED_AT_RISK
+            - AUTHORIZED
+            - ERROR
+            - DENIED
+            - VOIDED_AT_RISK
+            - CANCELLED
+            - CAPTURE_IN_PROGRESS
+            - CAPTURED
+            - VOIDED
+            - PROCESSING_VOID
+          voidInfo:
+            $ref: '#/components/schemas/VoidInformation'
+          houseAccount:
+            $ref: '#/components/schemas/ExternalReference'
+          otherPayment:
+            $ref: '#/components/schemas/ExternalReference'
+          createdDevice:
+            $ref: '#/components/schemas/Device'
+          lastModifiedDevice:
+            $ref: '#/components/schemas/Device'
+          mcaRepaymentAmount:
+            description: 'The total currency amount withheld as repayment for a merchant
+
+              cash advance (MCA). The MCA repayment amount is set at the time
+
+              the payment is captured, and then updated when settlement occurs.
+
+              '
+            type: number
+            format: double
+    DeliveryInfo:
+      type: object
+      description: Required if the dining option behavior is DELIVERY
+      required:
+      - address1
+      - city
+      - state
+      - zipCode
+      properties:
+        address1:
+          type: string
+          description: 'The first line of the street address of the delivery destination.
+
+            '
+        address2:
+          type: string
+          description: 'The second line of the street address of the delivery destination.
+
+            '
+        city:
+          type: string
+          description: 'The name of the city or town of the delivery destination.
+
+            '
+        state:
+          type: string
+          format: ISO 3166-2
+          description: "The postal abbreviation of the state or province of the \ndelivery destination.\
+            \ The abbreviation must be in ISO 3166-2 \nformat (two capital letters).\n"
+        zipCode:
+          type: string
+          description: 'The postal or zip code of the delivery destination.
+
+            '
+        latitude:
+          type: number
+          format: double
+          description: "The north/south geographic coordinate of the delivery \ndestination, in decimal\
+            \ format.\n"
+        longitude:
+          type: number
+          format: double
+          description: "The east/west geographic coordinate of the delivery \ndestination, in decimal\
+            \ format.\n"
+        notes:
+          description: 'Additional instructions or information about the delivery.
+
+            '
+          type: string
+        deliveredDate:
+          type: string
+          format: date-time
+          description: "The date and time that the delivery employee indicated that \nthe order was delivered\
+            \ in the Toast POS. Response only. This \nvalue is only set when the dining option for the\
+            \ order is \n`DELIVERY`. For other dining options, the value is `null`. <a \nhref=\"https://dev.toasttab.com/Ie5QH/api_dates_and_timestamps.html\"\
+            >Use \nISO 8601 date and time format for all Toast APIs.</a>\n"
+        dispatchedDate:
+          type: string
+          format: date-time
+          description: "The date and time that the restaurant indicated that the \norder was available\
+            \ for delivery and assigned to a delivery \nemployee in the Toast POS. This value is only\
+            \ set when the \ndining option for the order is `DELIVERY`. For other dining \noptions, the\
+            \ value is `null`. <a \nhref=\"https://dev.toasttab.com/Ie5QH/api_dates_and_timestamps.html\"\
+            >Use \nISO 8601 date and time format for all Toast APIs.</a>\n"
+        deliveryEmployee:
+          $ref: '#/components/schemas/ExternalReference'
+    AppliedServiceCharge:
+      type: object
+      description: A percentage/open/fixed service charge added to a check which could represent in general
+        an upcharge like a gratuity or delivery fee. Whether the upcharge is taxable is defined in the
+        restaurant-configured serviceCharge. The fields on the AppliedServiceCharge are computed based
+        on the referenced ServiceCharge configuration.
+      allOf:
+      - $ref: '#/components/schemas/ExternalReference'
+      - type: object
+        required:
+        - serviceCharge
+        properties:
+          chargeAmount:
+            type: number
+            format: double
+            description: The final applied amount excluding tax. This is required if the amountType is
+              OPEN.
+          serviceCharge:
+            $ref: '#/components/schemas/ExternalReference'
+          chargeType:
+            description: Derived from serviceCharge. An OPEN service charge can either be a dollar amount
+              or a percentage.
+            type: string
+            enum:
+            - FIXED
+            - PERCENT
+            - OPEN
+          name:
+            description: Derived from serviceCharge - the configured human readable label for the service
+              charge.
+            type: string
+          delivery:
+            description: Derived from serviceCharge - whether this service charge is a delivery charge.
+            type: boolean
+          gratuity:
+            description: Derived from serviceCharge - whether this service charge is a gratuity. Can be
+              used to derive required tip amount on the check.
+            type: boolean
+          taxable:
+            description: Derived from serviceCharge - whether this service charge is taxable.
+            type: boolean
+          appliedTaxes:
+            type: array
+            description: Derived from serviceCharge - the taxes applied to the service
+            items:
+              $ref: '#/components/schemas/AppliedTaxRate'
+    AppliedTaxRate:
+      type: object
+      description: A tax rate applied to an Item or ServiceCharge.
+      required:
+      - taxRate
+      allOf:
+      - $ref: '#/components/schemas/ToastReference'
+      - type: object
+        properties:
+          entityType:
+            description: The type of object this is.
+            type: string
+          taxRate:
+            $ref: '#/components/schemas/ToastReference'
+          name:
+            type: string
+            description: The name of the tax rate.
+          rate:
+            type: number
+            format: double
+            description: The tax rate, which can be a fixed amount, a percentage, or null.
+          taxAmount:
+            type: number
+            format: double
+            description: The tax amount that was actually applied.
+          type:
+            type: string
+            description: The type of the tax rate. Default is percent if no tax rate config
+            enum:
+            - PERCENT
+            - FIXED
+            - NONE
+            - TABLE
+            - EXTERNAL
+    AppliedDiscountTrigger:
+      type: object
+      description: The Selection which triggered the application of this discount
+      properties:
+        selection:
+          $ref: '#/components/schemas/ExternalReference'
+        quantity:
+          type: number
+          format: double
+          description: The amount of the selection used to trigger the applied discount.
+    AppliedDiscount:
+      type: object
+      description: 'A discount applied to a check or item. The Toast POS system calculates service
+
+        charges before applying discounts. The system calculates tax after applying
+
+        discounts. In a `POST` request, the type of the discount must be fixed amount
+
+        or fixed percentage, and the discount must be applied to a check. See
+
+        [Applying Discounts to a Check in an Order](https://doc.toasttab.com/Ie5QH/apiApplyingDiscountsToACheck.html).
+
+        '
+      allOf:
+      - $ref: '#/components/schemas/ToastReference'
+      - type: object
+        properties:
+          name:
+            type: string
+            description: The name of the applied discount.
+          discountAmount:
+            type: number
+            format: double
+            description: The discount amount in USD. This amount will be subtracted from the check or
+              item.
+          nonTaxDiscountAmount:
+            type: number
+            format: double
+            description: "The amount that a discount reduces a menu item price,\nexcluding any discount\
+              \ amount applied to taxes. In most\ncases, a discount only applies to the menu item price\
+              \ and\nthe `nonTaxDiscountAmount` is the same as the `discountAmount`. \nIf you apply a\
+              \ discount to a menu item that includes tax in \nits price, the `nonTaxDiscountAmount` is\
+              \ less than the full \ndiscount amount.\n"
+          discount:
+            $ref: '#/components/schemas/ToastReference'
+          triggers:
+            type: array
+            description: Optional items which triggered this discount.
+            items:
+              $ref: '#/components/schemas/AppliedDiscountTrigger'
+          approver:
+            $ref: '#/components/schemas/ExternalReference'
+          processingState:
+            type: string
+            description: "Applies to loyalty program discounts only. Loyalty\nprogram reward discounts\
+              \ are validated and then applied,\nor redeemed, by the third-party loyalty program service\n\
+              provider depending on the state of the Toast POS order.\nThis value indicates the state\
+              \ of the discount in that\nvalidation and application process. Response only. The\n`processingState`\
+              \ may be one of the following enumerated\nvalues.\n<ul>\n  <li><code>PENDING_APPLIED</code>\
+              \ - The loyalty program\n  service provider has confirmed that the reward discount\n  is\
+              \ valid for the order and customer. The reward has not\n  been redeemed, or applied to the\
+              \ customer's loyalty\n  account.</li>\n  <li><code>APPLIED</code> - The reward discount\
+              \ has been\n  redeemed. The reward is no longer available from the\n  customer's loyalty\
+              \ program account.</li>\n  <li><code>PENDING_VOID</code> - The reward discount has been\n\
+              \  removed from the Toast POS order. The reward is not\n  available from the customer's\
+              \ loyalty program account\n  until the loyalty program service provider processes\n  the\
+              \ void operation.</li>\n  <li><code>VOID</code> - The reward discount has been removed\n\
+              \  from the Toast POS order and the reward is available from\n  the customer's loyalty program\
+              \ account again.</li>\n</ul>\n"
+            enum:
+            - PENDING_APPLIED
+            - APPLIED
+            - PENDING_VOID
+            - VOID
+          loyaltyDetails:
+            $ref: '#/components/schemas/LoyaltyDetails'
+          comboItems:
+            type: array
+            description: A List of Menu Item Selections that this discount is applied to (empty for NonCombo
+              Discounts).
+            items:
+              $ref: '#/components/schemas/ExternalReference'
+          appliedPromoCode:
+            type: string
+            description: The promo code that was applied for this discount.
+    LoyaltyDetails:
+      type: object
+      description: Information about the loyalty program discount applied to a check. The loyalty program
+        account is identified in the AppliedLoyaltyInfo value for the check.
+      required:
+      - vendor
+      - referenceId
+      properties:
+        vendor:
+          type: string
+          description: The specific loyalty program service provider that supports the loyalty account.
+          enum:
+          - INTEGRATION
+        referenceId:
+          type: string
+          description: The identifier of the loyalty program discount that is recognized by the loyalty
+            program service provider. The Toast POS transmits the discount identifier to the service provider
+            to determine the validity and amount of the discount.
+    Refund:
+      type: object
+      description: A discount applied to a check or item.
+      properties:
+        refundAmount:
+          type: number
+          format: double
+          description: The amount of the refund excluding the tip.
+        tipRefundAmount:
+          type: number
+          format: double
+          description: The amount of the tip refund.
+        refundDate:
+          description: "The date and time the refund was made. <a \n    href=\"https://dev.toasttab.com/Ie5QH/api_dates_and_timestamps.html\"\
+            >Use \n    ISO 8601 date and time format for all Toast APIs.</a>\n"
+          type: string
+          format: date-time
+        refundBusinessDate:
+          description: "The business date (yyyyMMdd) on which this refund was \ncreated.\n"
+          type: integer
+    Device:
+      type: object
+      description: The *Device ID* value that the Toast POS system assigns to a specific Toast POS device.
+        The `id` value is a unique identifier for a device. To find the ID for a Toast POS device, do
+        the following. From the overflow  menu (⋮) select *Device Status* and then select the *Device*
+        tab.
+      properties:
+        id:
+          type: string
+          description: The physical id of the device
+    VoidInformation:
+      type: object
+      description: Information about a void applied to a check or item.
+      properties:
+        voidUser:
+          $ref: '#/components/schemas/ExternalReference'
+        voidApprover:
+          $ref: '#/components/schemas/ExternalReference'
+        voidDate:
+          description: "The date at which the refund was made. <a \nhref=\"https://dev.toasttab.com/Ie5QH/api_dates_and_timestamps.html\"\
+            >Use \nISO 8601 date and time format for all Toast APIs.</a>\n"
+          type: string
+          format: date-time
+        voidBusinessDate:
+          description: 'The business date (yyyyMMdd) on which this void was made.
+
+            '
+          type: integer
+        voidReason:
+          $ref: '#/components/schemas/ExternalReference'
+    ExternalReference:
+      type: object
+      description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID or
+        a partner's identifier.
+      allOf:
+      - $ref: '#/components/schemas/ToastReference'
+      - type: object
+        properties:
+          externalId:
+            description: External identifier string that is prefixed by the naming authority.
+            type: string
+    ToastReference:
+      type: object
+      description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID.
+      required:
+      - guid
+      - entityType
+      properties:
+        guid:
+          description: The GUID maintained by Toast.
+          type: string
+        entityType:
+          description: The type of object this is.
+          type: string
+    LoyaltyTransactionResponse:
+      type: object
+      description: "Information about a loyalty transaction from the loyalty provider. The Toast POS system\n\
+        uses this information to complete guests' loyalty transactions.\n\nThe set of information in this\
+        \ object depends on the loyalty \ntransaction type. The transaction type is specified in the \n\
+        `Toast-Transaction-Type` header parameter for the request.\n\nAll `LoyaltyTransactionResponse`\
+        \ objects must include a\n`transactionStatus` value. The object must include one of\nthe following\
+        \ additional values depending on the transaction type:\n\n* `LOYALTY_INQUIRE` - checkResponse\n\
+        * `LOYALTY_SEARCH` - searchResponse\n* `LOYALTY_SIGNUP` - signupResponse\n* `LOYALTY_REDEEM` -\
+        \ checkResponse\n* `LOYALTY_ACCRUE` - checkResponse\n* `LOYALTY_REVERSE` - none\n* `LOYALTY_TRANSFER`\
+        \ - transferResponse\n"
+      properties:
+        transactionStatus:
+          description: "Indicates the result of a loyalty transaction, reported by the\nloyalty service\
+            \ provider. Possible values are:\n\n<ul>\n  <li>`ACCEPT` - The loyalty service provider processed\
+            \ the transaction successfully.</li>\n  <li>`ERROR_INVALID_TOAST_TRANSACTION_TYPE` - The requested\
+            \ Toast-Transaction-Type is not valid.</li>\n  <li>`ERROR_ACCOUNT_INVALID` - The loyalty account\
+            \ is not recognized or is not valid at the current restaurant.</li>\n  <li>`ERROR_INVALID_INPUT_PROPERTIES`\
+            \ - The specified JSON properties in the request body are not valid.</li>\n  <li>`ERROR_TRANSACTION_DOES_NOT_EXIST`\
+            \ - The transaction that is being requested to be reversed does not exist.\n    Only occurs\
+            \ on a `LOYALTY_REVERSE` transaction.</li>\n  <li>`ERROR_INVALID_TOKEN` - The token supplied\
+            \ in the `Authorization` header field is invalid or cannot be validated.</li>\n  <li>`ERROR_TRANSACTION_CANNOT_BE_REVERSED`\
+            \ - The specified transaction cannot be reversed. Only `LOYALTY_REDEEM`\n    and `LOYALTY_ACCRUE`\
+            \ transactions can be reversed.</li>\n  <li>`ERROR_INVALID_RESTAURANT` - The restaurant specified\
+            \ by the `Toast-Restaurant-External-ID` is invalid.</li>\n  <li>`ERROR_INVALID_TRANSFER` -\
+            \ The cards that is being requested to be Transfer could not be completed.</li>\n  <li>`ERROR_ALREADY_REGISTERED`\
+            \ - The phone number or email address used is already registered to a different account.\n\
+            \    Only occurs on a `LOYALTY_SIGNUP` transaction.</li>\n</ul>\n"
+          type: string
+          enum:
+          - ACCEPT
+          - ERROR_INVALID_TOAST_TRANSACTION_TYPE
+          - ERROR_ACCOUNT_INVALID
+          - ERROR_INVALID_INPUT_PROPERTIES
+          - ERROR_TRANSACTION_DOES_NOT_EXIST
+          - ERROR_INVALID_TOKEN
+          - ERROR_TRANSACTION_CANNOT_BE_REVERSED
+          - ERROR_INVALID_RESTAURANT
+          - ERROR_INVALID_TRANSFER
+          - ERROR_ALREADY_REGISTERED
+        searchResponse:
+          $ref: '#/components/schemas/ResponseSearch'
+        signupResponse:
+          $ref: '#/components/schemas/ResponseSignup'
+        checkResponse:
+          $ref: '#/components/schemas/ResponseCheck'
+        transferResponse:
+          $ref: '#/components/schemas/ResponseTransfer'
+    ResponseSearch:
+      description: 'Response to a search request. Contains the array of account information matching the
+        search
+
+        criteria. If no matching accounts were found, the service should return a 404 response.
+
+        '
+      properties:
+        accounts:
+          description: 'A list of loyalty accounts that match the criteria from the search request.
+
+            '
+          type: array
+          items:
+            $ref: '#/components/schemas/AccountInfo'
+    ResponseCheck:
+      description: "Response to an inquire, redeem, or accure request. For an inquire response this field\
+        \ is requried.\nFor all other responses it is optional unless any of the redemptions were rejected.\
+        \ If the \naccount corresponding to the identifier was not found, the service should return a\
+        \ 404 response.\n"
+      properties:
+        accountInfo:
+          $ref: '#/components/schemas/AccountInfo'
+        offers:
+          description: An array of offers that are currently available to the holder of this account.
+          type: array
+          items:
+            $ref: '#/components/schemas/Offer'
+        rejectedRedemptions:
+          description: "A list of redemptions that were submitted as part of a LOYALTY_INQUIRE or LOYALTY_REDEEM\n\
+            request that are not valid for the given loyalty account and the contents of the check. \n"
+          type: array
+          items:
+            $ref: '#/components/schemas/RejectedRedemption'
+        appliedRedemptions:
+          description: 'A list of redemptions that were submitted as part of a LOYALTY_INQUIRE or LOYALTY_REDEEM
+
+            request that are valid for the given loyalty account and the contents of the check. For item
+            level redemptions the
+
+            `selectionGuid` will be set to indicate which item it applies to.
+
+            '
+          type: array
+          items:
+            $ref: '#/components/schemas/Redemption'
+        userMessage:
+          description: 'An optional message to be relayed to the guest at the restaurant.
+
+            Examples could include "Visit http://www.website.com to check your points balance" or
+
+            "You will accrue 15 points with this transaction!"
+
+            '
+          type: string
+        redemptionLimit:
+          $ref: '#/components/schemas/RedemptionLimit'
+    ResponseTransfer:
+      description: Response to a transfer request. For a transfer response this field is required. Contains
+        the loyalty identifier that the old account transferred to.
+      properties:
+        loyaltyIdentifier:
+          description: 'A unique identifier for the new account.
+
+            '
+          type: string
+    ResponseSignup:
+      description: 'Response to a signup request. For a signup response this field is required.
+
+        Contains the loyalty identifier of the newly created account.
+
+        '
+      required:
+      - loyaltyIdentifier
+      properties:
+        loyaltyIdentifier:
+          description: 'The identifier of the loyalty account that was created. This identifier will be
+            used
+
+            in subsequent loyalty transactions to identify this account.
+
+            '
+          type: string
+    RedemptionLimit:
+      type: object
+      required:
+      - maxRedemptions
+      description: 'Controls the maximum number of rewards a guest can redeem for this check.
+
+
+        When this object is present (non-`null`), the Toast POS enforces the limit
+
+        you specify by disabling the ability to select additional rewards once the
+
+        limit is reached. Guests can always deselect rewards to choose different
+
+        ones.
+
+
+        The effective limit accounts for rewards that are already applied. If you
+
+        return `maxRedemptions` = 3 and the guest has 1 reward already applied,
+
+        the guest can select 2 more rewards.
+
+
+        When this object is absent or `null`, the Toast POS applies no redemption
+
+        restrictions.
+
+
+        The Toast POS does NOT validate that the `appliedRedemptions` array length
+
+        matches the `maxRedemptions` value. You are responsible for ensuring
+
+        consistency in your responses. If you send `maxRedemptions` = 2 but
+
+        include 5 items in `appliedRedemptions`, the Toast POS may behave
+
+        unexpectedly.
+
+
+        This object applies to `LOYALTY_INQUIRE` responses. For other transaction
+
+        types, this object should be absent or `null`.
+
+        '
+      properties:
+        maxRedemptions:
+          type: integer
+          minimum: 0
+          description: 'The maximum number of rewards the guest may redeem for this check.
+
+
+            **Required field**, but the value may be `null`. The meaning of each value:
+
+
+            - `null`: Explicitly allow unlimited redemptions
+
+            - `0`: No rewards can be redeemed
+
+            - N (N > 0): Guest can redeem up to N rewards
+
+
+            You must include this field when providing a `RedemptionLimit` object.
+
+            You can adjust this value on each `LOYALTY_INQUIRE` response based on
+
+            business rules specific to your loyalty program.
+
+            '
+          nullable: true

@@ -1,0 +1,161 @@
+generated: '2026-08-27'
+method: derived
+source: openapi/*.yaml + openapi/*.yml (27 Toast OpenAPI definitions in this repo);
+  enriched from https://doc.toasttab.com/doc/devguide/apiResponsesAndErrors.html and
+  https://doc.toasttab.com/doc/devguide/apiOrdersErrors.html
+docs:
+- https://doc.toasttab.com/doc/devguide/apiResponsesAndErrors.html
+- https://doc.toasttab.com/doc/devguide/apiOrdersErrors.html
+provider: Toast
+providerId: toast
+format: proprietary-json
+rfc9457: false
+content_type: application/json
+summary: >-
+  Toast does not use RFC 9457 application/problem+json. Every 4xx/5xx across the Toast platform returns
+  a serialized JSON ErrorMessage object (a handful of newer surfaces name the same shape ToastError).
+  157 4xx/5xx responses are declared across the 27 OpenAPI definitions in this repo, all with
+  application/json bodies. The three outbound partner-hosted specifications (gift cards, loyalty,
+  tender) invert this: the PARTNER returns its own transaction-response envelope carrying a failure
+  reason back to Toast.
+envelope:
+  schema: ErrorMessage
+  alias_schema: ToastError
+  fields:
+  - name: status
+    description: HTTP status code, repeated in the body.
+  - name: code
+    description: Toast-internal numeric error code (for example 10003 not-found, 10022 service
+      unavailable, observed live on ws-api.toasttab.com).
+  - name: message
+    description: Human-readable error message. The orders API messages are individually documented.
+  - name: messageKey
+    description: Stable machine key for the message, where one exists.
+  - name: fieldName
+    description: The request field that failed validation, where the error is field-scoped.
+  - name: link
+    description: Documentation link for the error, where one exists.
+  - name: requestId
+    description: Correlation identifier. Toast support asks for this value when investigating a 5xx.
+  - name: developerMessage
+    description: Additional detail intended for the integrator.
+status_codes:
+- code: '400'
+  occurrences: 45
+  title: Bad request
+  meaning: The request contains invalid information - a required field is missing, an argument is
+    malformed, or the restaurant header is missing or invalid.
+  remediation: Fix the request. Read fieldName in the envelope to find the offending field.
+- code: '401'
+  occurrences: 4
+  title: Unauthorized
+  meaning: No valid OAuth 2.0 bearer token was supplied, the token is unrecognized, or the client
+    credentials in an authentication request are not valid.
+  remediation: Request a fresh token from POST /authentication/v1/authentication/login and retry.
+    Tokens are valid roughly one day; reuse them rather than re-authenticating per call.
+- code: '403'
+  occurrences: 6
+  title: Forbidden
+  meaning: The API client lacks the scope for the operation, or lacks access to the restaurant named
+    in Toast-Restaurant-External-ID.
+  remediation: Check the scope reference. Common causes are a missing orders:read, orders.channel:read,
+    or orders.channel:void scope, or a restaurant that has not granted the partner access.
+  see: scopes/toast-scopes.yml
+- code: '404'
+  occurrences: 26
+  title: Not found
+  meaning: The GUID or external identifier does not match any entity at the current restaurant, or the
+    endpoint path does not exist.
+  remediation: Verify the GUID and the restaurant context. Toast returns code 10003 for an unknown
+    path and 10022 for an unrouted service.
+- code: '409'
+  occurrences: 10
+  title: Conflict
+  meaning: >-
+    A duplicate or conflicting request. On the credit cards API this specifically means an
+    authorization request was already made for this payment UUID; on the analytics API it means the
+    reportRequestGuid can no longer be processed.
+  remediation: >-
+    Generate a unique payment UUID per authorization, or request a new reportRequestGuid. This is the
+    closest thing Toast has to duplicate-request protection - there is no Idempotency-Key header.
+- code: '413'
+  occurrences: 2
+  title: Payload too large
+  meaning: The number of checks in the submitted order exceeds the platform limit.
+  remediation: Split the order across fewer checks.
+- code: '415'
+  occurrences: 5
+  title: Unsupported media type
+  meaning: The request did not carry application/json in the Content-Type header.
+  remediation: Set Content-Type&#58; application/json on every request with a body.
+- code: '422'
+  occurrences: 1
+  title: Unprocessable entity
+  meaning: The request failed structural validation on the credit cards API.
+  remediation: Read the returned message; the structure of the payment object is wrong.
+- code: '429'
+  occurrences: 1
+  title: Too many requests
+  meaning: A rate limit was exceeded.
+  remediation: >-
+    Back off using X-Toast-RateLimit-Reset. Note that only the device details API declares 429 in its
+    spec, but Toast documents 429 as the platform-wide response to any rate-limit breach, so a client
+    must handle it on every endpoint.
+  see: rate-limits/toast-rate-limits.yml
+- code: '500'
+  occurrences: 46
+  title: Internal server error
+  meaning: An unexpected internal error in the Toast platform.
+  remediation: Retry with backoff and capture requestId - Toast support uses it to trace the failure.
+- code: '503'
+  occurrences: 2
+  title: Service unavailable
+  meaning: Menus could not be retrieved for the restaurant because of a service outage.
+  remediation: Check status.toasttab.com and retry.
+- code: '504'
+  occurrences: 9
+  title: Gateway timeout
+  meaning: Internal Toast services took too long to respond, most often on analytics report retrieval.
+  remediation: Retry the report retrieval; do not resubmit the report request.
+documented_messages:
+  scope: orders API
+  source: https://doc.toasttab.com/doc/devguide/apiOrdersErrors.html
+  count: 14
+  note: Toast publishes an alphabetical table of orders API error messages with a resolution for
+    each. Representative entries are captured below; the table is the authoritative list.
+  entries:
+  - message: 'accrualFamilyGuid in request is not a valid GUID'
+    resolution: Correct the value or omit the field.
+  - message: Address 1 for delivery address cannot be empty
+    resolution: Populate deliveryInfo.address1.
+  - message: 'Cannot find Check with Id: checkGuid'
+    resolution: No check exists for the checkGuid in the request path. Verify the value.
+  - message: Check (checkGuid) has been deleted
+    resolution: The check has been deleted and can no longer be updated.
+  - message: EITHER (startDate and endDate) OR businessDate is required
+    resolution: Supply either a start/end date pair or a business date.
+  - message: Input startDate must be before endDate
+    resolution: Correct the ordering of the timestamps.
+  - message: Item ({item GUID}) does not belong to the group ({item group GUID})
+    resolution: Update the menu item's menuGroups; look values up with GET /menus/v2/menus.
+  - message: Loyalty identifier is required in the request
+    resolution: Add loyaltyIdentifier to the request body.
+  - message: Referenced entity (type=Discount) must contain a GUID
+    resolution: Look the discount GUID up with GET /config/v2/discounts.
+  - message: Referenced entity (type=MenuItem) must contain either a GUID or MultiLocationId
+    resolution: Supply a GUID or multiLocationId from the menus API.
+  - message: Restaurant({restaurant GUID}) has been deleted
+    resolution: Stop all API requests to this restaurant.
+outbound_error_handling:
+  note: >-
+    For the outbound integration specifications (gift cards, loyalty, tender) Toast is the CLIENT and
+    the partner is the server. The partner returns GiftCardTransactionResponse /
+    LoyaltyTransactionResponse / TenderTransactionResponse carrying its own failure reason rather than
+    a Toast ErrorMessage. Toast documents required latency and error-handling behaviour for these
+    endpoints separately.
+  docs:
+  - https://doc.toasttab.com/doc/devguide/apiLoyaltyErrorHandling.html
+  - https://doc.toasttab.com/doc/devguide/apiLoyaltyLatencyRequirements.html
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
