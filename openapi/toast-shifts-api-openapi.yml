@@ -302,6 +302,23 @@ paths:
         - labor.shifts:write
 components:
   schemas:
+    ToastReference:
+      type: object
+      description: "A wrapper object with fields that allow reference to a Toast \nplatform entity by Toast GUID.\n"
+      required:
+      - guid
+      - entityType
+      properties:
+        guid:
+          description: 'The GUID maintained by the Toast platform.
+
+            '
+          type: string
+        entityType:
+          description: 'The type of object this is.
+
+            '
+          type: string
     Shift:
       type: object
       description: "A scheduled shift in the Toast platform used to enforce employee \nclock-in and clock outs. Shifts might be created in an external \nscheduling system and pushed to the Toast platform.\n"
@@ -358,23 +375,6 @@ components:
 
               '
             $ref: '#/components/schemas/ScheduleConfig'
-    ToastReference:
-      type: object
-      description: "A wrapper object with fields that allow reference to a Toast \nplatform entity by Toast GUID.\n"
-      required:
-      - guid
-      - entityType
-      properties:
-        guid:
-          description: 'The GUID maintained by the Toast platform.
-
-            '
-          type: string
-        entityType:
-          description: 'The type of object this is.
-
-            '
-          type: string
     ExternalReference:
       type: object
       description: "A wrapper object with fields that allow reference to a Toast \nplatform entity by Toast GUID or an external identifier.\n"

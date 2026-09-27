@@ -123,19 +123,6 @@ paths:
         - config:read
 components:
   schemas:
-    ToastReference:
-      type: object
-      description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID.
-      required:
-      - guid
-      - entityType
-      properties:
-        guid:
-          description: The GUID maintained by the Toast POS.
-          type: string
-        entityType:
-          description: The type of object this is.
-          type: string
     MenuGroup:
       type: object
       allOf:
@@ -327,6 +314,19 @@ components:
       properties:
         url:
           description: The web address of the image.
+          type: string
+    ToastReference:
+      type: object
+      description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID.
+      required:
+      - guid
+      - entityType
+      properties:
+        guid:
+          description: The GUID maintained by the Toast POS.
+          type: string
+        entityType:
+          description: The type of object this is.
           type: string
   securitySchemes:
     oauth2:

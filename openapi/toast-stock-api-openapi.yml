@@ -179,107 +179,6 @@ paths:
         - stock:write
 components:
   schemas:
-    ErrorMessage:
-      type: object
-      description: 'An object that contains information about one or more errors that the
-
-        Toast platform encountered when processing your API request. For more
-
-        information, see [API responses and errors in the _Toast Developer
-
-        Guide_](https://doc.toasttab.com/doc/devguide/apiResponsesAndErrors.html).
-
-        '
-      properties:
-        status:
-          type: integer
-          format: int32
-          description: 'The HTTP status code of the response.
-
-            '
-        code:
-          type: integer
-          format: int32
-          description: 'A numeric identifier for the error condition.
-
-            '
-        message:
-          type: string
-          description: 'A description of the error condition.
-
-            '
-        messageKey:
-          type: string
-          description: 'Reserved for future use.
-
-            '
-        fieldName:
-          type: string
-          description: 'Reserved for future use.
-
-            '
-        link:
-          type: string
-          description: 'The URL of a resource that provides more information about the error
-
-            condition.
-
-            '
-        requestId:
-          type: string
-          description: 'The unique identifier of the HTTP request that your client sent to
-
-            the Toast API.
-
-            '
-        developerMessage:
-          type: string
-          description: 'Additional detail about the error condition, if it is available.
-
-            '
-        errors:
-          type: array
-          description: 'A JSON array of `ErrorMessage` objects.
-
-            '
-          items:
-            $ref: '#/components/schemas/ErrorMessage'
-    InventorySearchRequest:
-      type: object
-      properties:
-        guids:
-          type: array
-          description: 'An array of menu item GUIDs. The `/inventory/search` endpoint tries to
-
-            find menu items with matching GUIDs.
-
-            '
-          items:
-            type: string
-            format: uuid
-        multiLocationIds:
-          type: array
-          description: 'An array of menu item multi-location IDs. The `/inventory/search` endpoint
-
-            tries to find menu items with matching multi-location IDs.
-
-
-            See <a
-
-            href="https://doc.toasttab.com/doc/devguide/portalToastIdentifiers.html">Toast
-
-            identifiers</a> for more information on multi-location IDs.
-
-            '
-          items:
-            type: string
-        versionIds:
-          type: array
-          description: For future use.
-          items:
-            type: string
-            format: uuid
-      description: Contains search parameters for retrieving menu item inventory information.
     MenuItemInventory:
       type: object
       properties:
@@ -354,6 +253,107 @@ components:
             '
           format: uuid
       description: Contains the stock status and quantity information for a menu item.
+    InventorySearchRequest:
+      type: object
+      properties:
+        guids:
+          type: array
+          description: 'An array of menu item GUIDs. The `/inventory/search` endpoint tries to
+
+            find menu items with matching GUIDs.
+
+            '
+          items:
+            type: string
+            format: uuid
+        multiLocationIds:
+          type: array
+          description: 'An array of menu item multi-location IDs. The `/inventory/search` endpoint
+
+            tries to find menu items with matching multi-location IDs.
+
+
+            See <a
+
+            href="https://doc.toasttab.com/doc/devguide/portalToastIdentifiers.html">Toast
+
+            identifiers</a> for more information on multi-location IDs.
+
+            '
+          items:
+            type: string
+        versionIds:
+          type: array
+          description: For future use.
+          items:
+            type: string
+            format: uuid
+      description: Contains search parameters for retrieving menu item inventory information.
+    ErrorMessage:
+      type: object
+      description: 'An object that contains information about one or more errors that the
+
+        Toast platform encountered when processing your API request. For more
+
+        information, see [API responses and errors in the _Toast Developer
+
+        Guide_](https://doc.toasttab.com/doc/devguide/apiResponsesAndErrors.html).
+
+        '
+      properties:
+        status:
+          type: integer
+          format: int32
+          description: 'The HTTP status code of the response.
+
+            '
+        code:
+          type: integer
+          format: int32
+          description: 'A numeric identifier for the error condition.
+
+            '
+        message:
+          type: string
+          description: 'A description of the error condition.
+
+            '
+        messageKey:
+          type: string
+          description: 'Reserved for future use.
+
+            '
+        fieldName:
+          type: string
+          description: 'Reserved for future use.
+
+            '
+        link:
+          type: string
+          description: 'The URL of a resource that provides more information about the error
+
+            condition.
+
+            '
+        requestId:
+          type: string
+          description: 'The unique identifier of the HTTP request that your client sent to
+
+            the Toast API.
+
+            '
+        developerMessage:
+          type: string
+          description: 'Additional detail about the error condition, if it is available.
+
+            '
+        errors:
+          type: array
+          description: 'A JSON array of `ErrorMessage` objects.
+
+            '
+          items:
+            $ref: '#/components/schemas/ErrorMessage'
   securitySchemes:
     oauth2:
       type: oauth2

@@ -136,16 +136,6 @@ components:
         entityType:
           description: The type of object this is.
           type: string
-    ExternalReference:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/ToastReference'
-      - type: object
-        properties:
-          externalId:
-            description: External identifier string, prefixed by the naming authority.
-            type: string
-        description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID or a partner's identifier.
     MenuItem:
       type: object
       allOf:
@@ -321,6 +311,16 @@ components:
               from its parent `MenuGroup`.
 
               '
+    ExternalReference:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ToastReference'
+      - type: object
+        properties:
+          externalId:
+            description: External identifier string, prefixed by the naming authority.
+            type: string
+        description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID or a partner's identifier.
     Image:
       type: object
       description: Information about an image associated with a menu or menu item.

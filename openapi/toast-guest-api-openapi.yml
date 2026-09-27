@@ -151,6 +151,10 @@ paths:
       - Guest
 components:
   schemas:
+    ReportRequestGuid:
+      description: The Toast platform assigned identifier used to identify a specific analytics reporting data request.
+      format: UUID
+      type: string
     ReportingDataInProgress:
       description: The Toast platform is in the process of gathering the reporting data. Try the request again at a later time.
       type: object
@@ -207,10 +211,6 @@ components:
         canRetry:
           description: Reserved for future use.
           type: string
-    ReportRequestGuid:
-      description: The Toast platform assigned identifier used to identify a specific analytics reporting data request.
-      format: UUID
-      type: string
     GuestPaymentsReportingData:
       description: The guest reporting data organized by payment.
       type: object

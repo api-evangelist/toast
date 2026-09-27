@@ -1903,6 +1903,10 @@ apis:
   baseURL: https://ws-api.toasttab.com/kitchen/v1
   tags:
   - Kitchen
+  - Ticketing
+  - Prep
+  tags_raw:
+  - Kitchen
   - Tickets
   - Prep
   properties:

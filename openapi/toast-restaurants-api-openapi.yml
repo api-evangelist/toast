@@ -226,232 +226,6 @@ components:
 
             '
           example: 2022-05-17 10:21:38.008000+00:00
-    DaySchedule:
-      type: object
-      description: 'Information about the services and hours that are scheduled for a
-
-        restaurant during a type of day. For example, a restaurant might
-
-        have different services available on a type of day named
-
-        `weekday` than it does on a type of day named `weekend`.
-
-        '
-      properties:
-        scheduleName:
-          type: string
-          description: The name of the type of day. For example, `weekday`.
-        services:
-          type: array
-          items:
-            $ref: '#/components/schemas/Service'
-          description: 'An array of `Service` objects that are available during the
-
-            type of day.
-
-            '
-        openTime:
-          type: string
-          description: 'The time of day that the first service for the type of day
-
-            begins. For example, the first service might begin at
-
-            `06:00:00.000`.
-
-            '
-        closeTime:
-          type: string
-          description: 'The time of day that the last service for the type of day
-
-            ends. For example, the last service might end at
-
-            `02:00:00.000`.
-
-            '
-    PrepTimes:
-      type: object
-      description: 'Information about the scheduled availability of the dining
-
-        options that are provided by the restaurant.
-
-        '
-      properties:
-        deliveryPrepTime:
-          type: integer
-          format: int32
-          description: 'The amount of time, in minutes, that it takes to prepare an
-
-            online delivery order.
-
-            '
-        deliveryTimeAfterOpen:
-          type: integer
-          format: int32
-          description: 'The amount of time, in minutes, that it takes for delivery
-
-            service to become available after the restaurant opens.
-
-            '
-        deliveryTimeBeforeClose:
-          type: integer
-          format: int32
-          description: 'The amount of time, in minutes, before the restaurant closing
-
-            time that delivery service becomes unavailable.
-
-            '
-        takeoutPrepTime:
-          type: integer
-          format: int32
-          description: 'The amount of time, in minutes, that it takes to prepare an
-
-            online takeout order.
-
-            '
-        takeoutTimeAfterOpen:
-          type: integer
-          format: int32
-          description: 'The amount of time, in minutes, that it takes for takeout
-
-            service to become available after the restaurant opens.
-
-            '
-        takeoutTimeBeforeClose:
-          type: integer
-          format: int32
-          description: 'The amount of time, in minutes, before the restaurant closing
-
-            time that takeout service becomes unavailable.
-
-            '
-        takeoutThrottlingTime:
-          type: integer
-          description: 'The amount of time, in minutes, that an online takeout order
-
-            is delayed before the Toast POS fires it in the kitchen.
-
-            '
-        deliveryThrottlingTime:
-          type: integer
-          description: 'The amount of time, in minutes, that an online delivery order
-
-            is delayed before the Toast POS fires it in the kitchen.
-
-            '
-    WeekSchedule:
-      type: object
-      description: "The day schedule used for each day of the week. A day schedule is \nthe set of services (for example, \"lunch\") that a restaurant \noffers and the hours that it offers each one. If a day of the \nweek value in this object is `null`, the restaurant is closed on \nthat day. Values for each day of the week are identifiers for day \nschedules in the map of `DaySchedule` objects in the \n`daySchedules` value of the `Schedules` object.\n"
-      properties:
-        monday:
-          type: string
-          description: 'A key identifier for the `DaySchedule` object
-
-            that represents the services and hours for the restaurant on
-
-            this day of the week.
-
-            '
-        tuesday:
-          type: string
-          description: 'A key identifier for the `DaySchedule` object
-
-            that represents the services and hours for the restaurant on
-
-            this day of the week.
-
-            '
-        wednesday:
-          type: string
-          description: 'A key identifier for the `DaySchedule` object
-
-            that represents the services and hours for the restaurant on
-
-            this day of the week.
-
-            '
-        thursday:
-          type: string
-          description: 'A key identifier for the `DaySchedule` object
-
-            that represents the services and hours for the restaurant on
-
-            this day of the week.
-
-            '
-        friday:
-          type: string
-          description: 'A key identifier for the `DaySchedule` object
-
-            that represents the services and hours for the restaurant on
-
-            this day of the week.
-
-            '
-        saturday:
-          type: string
-          description: 'A key identifier for the `DaySchedule` object
-
-            that represents the services and hours for the restaurant on
-
-            this day of the week.
-
-            '
-        sunday:
-          type: string
-          description: 'A key identifier for the `DaySchedule` object
-
-            that represents the services and hours for the restaurant on
-
-            this day of the week.
-
-            '
-    OnlineOrdering:
-      type: object
-      description: 'Information about the web-based ordering configuration for the
-
-        restaurant.
-
-        '
-      properties:
-        enabled:
-          type: boolean
-          description: "Indicates whether the restaurant has enabled the Toast online \nordering module. This value is `true` if the module has ever \nbeen enabled. The value _does not_ indicate that a restaurant \nis accepting online orders or that the restaurant is using \nthe Toast online ordering feature.\n"
-        scheduling:
-          type: boolean
-          description: 'Indicates whether the online ordering function for the
-
-            restaurant allows guests to place orders that will be
-
-            fulfilled in the future. If this value is `false`, orders
-
-            will be fulfilled as soon as possible.
-
-            '
-        specialRequests:
-          type: boolean
-          description: 'Indicates whether the online ordering function for the
-
-            restaurant allows guests to include written notes with
-
-            additional instructions for their orders.
-
-            '
-        specialRequestsMessage:
-          type: string
-          description: 'A written message that is shown to guests when they
-
-            include additional instructions with an order. For example,
-
-            the message might be "no substitutions."
-
-            '
-        paymentOptions:
-          $ref: '#/components/schemas/PaymentOptions'
-          description: 'Information about the forms of payment that the restaurant
-
-            accepts for online orders.
-
-            '
     General:
       type: object
       description: 'General information about a restaurant location.
@@ -557,39 +331,129 @@ components:
             `[[42.36083,-71.14798],[42.34028,-71.15673],[42.3272,-71.14386]]`.
 
             '
-    DeliveryPaymentOptions:
+    RestaurantInfo:
       type: object
-      description: 'Information about the forms of payment that the restaurant will
+      description: 'Information about the configuration of a restaurant in the Toast
 
-        accept for delivery orders.
+        POS.
 
         '
       properties:
-        cash:
-          type: boolean
-          description: 'Indicates whether the restaurant accepts cash payment for
+        guid:
+          type: string
+        general:
+          $ref: '#/components/schemas/General'
+        urls:
+          $ref: '#/components/schemas/URLs'
+        location:
+          $ref: '#/components/schemas/Location'
+        schedules:
+          $ref: '#/components/schemas/Schedules'
+        delivery:
+          $ref: '#/components/schemas/Delivery'
+        onlineOrdering:
+          $ref: '#/components/schemas/OnlineOrdering'
+        prepTimes:
+          $ref: '#/components/schemas/PrepTimes'
+    WeekSchedule:
+      type: object
+      description: "The day schedule used for each day of the week. A day schedule is \nthe set of services (for example, \"lunch\") that a restaurant \noffers and the hours that it offers each one. If a day of the \nweek value in this object is `null`, the restaurant is closed on \nthat day. Values for each day of the week are identifiers for day \nschedules in the map of `DaySchedule` objects in the \n`daySchedules` value of the `Schedules` object.\n"
+      properties:
+        monday:
+          type: string
+          description: 'A key identifier for the `DaySchedule` object
 
-            delivery orders that are placed online.
+            that represents the services and hours for the restaurant on
+
+            this day of the week.
 
             '
-        ccSameDay:
-          type: boolean
-          description: 'Indicates whether the restaurant accepts online credit card
+        tuesday:
+          type: string
+          description: 'A key identifier for the `DaySchedule` object
 
-            payment for delivery orders that are delivered on the same
+            that represents the services and hours for the restaurant on
 
-            day.
-
-            '
-        ccFuture:
-          type: boolean
-          description: 'Indicates whether the restaurant accepts online credit card
-
-            payment for delivery orders that are to be delivered on a day
-
-            after the guest places the order.
+            this day of the week.
 
             '
+        wednesday:
+          type: string
+          description: 'A key identifier for the `DaySchedule` object
+
+            that represents the services and hours for the restaurant on
+
+            this day of the week.
+
+            '
+        thursday:
+          type: string
+          description: 'A key identifier for the `DaySchedule` object
+
+            that represents the services and hours for the restaurant on
+
+            this day of the week.
+
+            '
+        friday:
+          type: string
+          description: 'A key identifier for the `DaySchedule` object
+
+            that represents the services and hours for the restaurant on
+
+            this day of the week.
+
+            '
+        saturday:
+          type: string
+          description: 'A key identifier for the `DaySchedule` object
+
+            that represents the services and hours for the restaurant on
+
+            this day of the week.
+
+            '
+        sunday:
+          type: string
+          description: 'A key identifier for the `DaySchedule` object
+
+            that represents the services and hours for the restaurant on
+
+            this day of the week.
+
+            '
+    PaymentOptions:
+      type: object
+      description: 'Information about the forms of payment that the restaurant will
+
+        accept for orders.
+
+        '
+      properties:
+        delivery:
+          $ref: '#/components/schemas/DeliveryPaymentOptions'
+        takeout:
+          $ref: '#/components/schemas/TakeoutPaymentOptions'
+        ccTip:
+          type: boolean
+          description: enables credit card tips
+    Service:
+      type: object
+      description: 'A time-based division of the operation of the restaurant. For
+
+        example, a service might be named `lunch` and it might be
+
+        available between specific hours during the day.
+
+        '
+      properties:
+        name:
+          type: string
+        hours:
+          $ref: '#/components/schemas/Hours'
+        overnight:
+          type: boolean
+          description: "Indicates whether any portion of the period of time that a\nservice is available occurs after 00:00 (midnight) and before\nthe business day cutoff time for the restaurant which is \navailable in the `closeoutHour` property. An\novernight shift spans two calendar dates but occurs during\none business day.\n"
     Schedules:
       type: object
       description: 'Describes the types of service and hours of operation for the
@@ -620,102 +484,22 @@ components:
             $ref: '#/components/schemas/DaySchedule'
         weekSchedule:
           $ref: '#/components/schemas/WeekSchedule'
-    RestaurantInfo:
+    Hours:
       type: object
-      description: 'Information about the configuration of a restaurant in the Toast
+      description: 'The period of time that the restaurant offers a service. For
 
-        POS.
+        example, a service might be named "lunch" and it might be offered
+
+        between `10:00:00.000` and `16:00:00.000`.
 
         '
       properties:
-        guid:
+        startTime:
           type: string
-        general:
-          $ref: '#/components/schemas/General'
-        urls:
-          $ref: '#/components/schemas/URLs'
-        location:
-          $ref: '#/components/schemas/Location'
-        schedules:
-          $ref: '#/components/schemas/Schedules'
-        delivery:
-          $ref: '#/components/schemas/Delivery'
-        onlineOrdering:
-          $ref: '#/components/schemas/OnlineOrdering'
-        prepTimes:
-          $ref: '#/components/schemas/PrepTimes'
-    Service:
-      type: object
-      description: 'A time-based division of the operation of the restaurant. For
-
-        example, a service might be named `lunch` and it might be
-
-        available between specific hours during the day.
-
-        '
-      properties:
-        name:
+          description: The time of day that the service begins.
+        endTime:
           type: string
-        hours:
-          $ref: '#/components/schemas/Hours'
-        overnight:
-          type: boolean
-          description: "Indicates whether any portion of the period of time that a\nservice is available occurs after 00:00 (midnight) and before\nthe business day cutoff time for the restaurant which is \navailable in the `closeoutHour` property. An\novernight shift spans two calendar dates but occurs during\none business day.\n"
-    TakeoutPaymentOptions:
-      type: object
-      description: 'Information about the forms of payment that the restaurant will
-
-        accept for orders that a guest picks up in person.
-
-        '
-      properties:
-        cash:
-          type: boolean
-          description: 'Indicates whether the restaurant accepts cash payment for
-
-            takeout orders that are placed online.
-
-            '
-        ccSameDay:
-          type: boolean
-          description: 'Indicates whether the restaurant accepts online credit card
-
-            payment for takeout orders that the guest will pick up on
-
-            the same day.
-
-            '
-        ccFuture:
-          type: boolean
-          description: 'Indicates whether the restaurant accepts online credit card
-
-            payment for takeout orders that the guest will pick up on
-
-            a day after the guest places the order.
-
-            '
-        ccInStore:
-          type: boolean
-          description: 'Indicates whether the restaurant accepts credit card payment
-
-            at the time the guest picks up a takeout order.
-
-            '
-    PaymentOptions:
-      type: object
-      description: 'Information about the forms of payment that the restaurant will
-
-        accept for orders.
-
-        '
-      properties:
-        delivery:
-          $ref: '#/components/schemas/DeliveryPaymentOptions'
-        takeout:
-          $ref: '#/components/schemas/TakeoutPaymentOptions'
-        ccTip:
-          type: boolean
-          description: enables credit card tips
+          description: The time of day that the service ends.
     URLs:
       type: object
       description: Web addresses for the restaurant.
@@ -738,22 +522,6 @@ components:
         checkGiftCard:
           type: string
           description: A URL for a site at which guests can find balances and other information about gift cards.
-    Hours:
-      type: object
-      description: 'The period of time that the restaurant offers a service. For
-
-        example, a service might be named "lunch" and it might be offered
-
-        between `10:00:00.000` and `16:00:00.000`.
-
-        '
-      properties:
-        startTime:
-          type: string
-          description: The time of day that the service begins.
-        endTime:
-          type: string
-          description: The time of day that the service ends.
     Location:
       type: object
       description: Information about the physical location of a restaurant.
@@ -803,6 +571,238 @@ components:
           type: number
           format: double
           description: The east/west geographic coordinate of the restaurant, in decimal degrees.
+    DeliveryPaymentOptions:
+      type: object
+      description: 'Information about the forms of payment that the restaurant will
+
+        accept for delivery orders.
+
+        '
+      properties:
+        cash:
+          type: boolean
+          description: 'Indicates whether the restaurant accepts cash payment for
+
+            delivery orders that are placed online.
+
+            '
+        ccSameDay:
+          type: boolean
+          description: 'Indicates whether the restaurant accepts online credit card
+
+            payment for delivery orders that are delivered on the same
+
+            day.
+
+            '
+        ccFuture:
+          type: boolean
+          description: 'Indicates whether the restaurant accepts online credit card
+
+            payment for delivery orders that are to be delivered on a day
+
+            after the guest places the order.
+
+            '
+    PrepTimes:
+      type: object
+      description: 'Information about the scheduled availability of the dining
+
+        options that are provided by the restaurant.
+
+        '
+      properties:
+        deliveryPrepTime:
+          type: integer
+          format: int32
+          description: 'The amount of time, in minutes, that it takes to prepare an
+
+            online delivery order.
+
+            '
+        deliveryTimeAfterOpen:
+          type: integer
+          format: int32
+          description: 'The amount of time, in minutes, that it takes for delivery
+
+            service to become available after the restaurant opens.
+
+            '
+        deliveryTimeBeforeClose:
+          type: integer
+          format: int32
+          description: 'The amount of time, in minutes, before the restaurant closing
+
+            time that delivery service becomes unavailable.
+
+            '
+        takeoutPrepTime:
+          type: integer
+          format: int32
+          description: 'The amount of time, in minutes, that it takes to prepare an
+
+            online takeout order.
+
+            '
+        takeoutTimeAfterOpen:
+          type: integer
+          format: int32
+          description: 'The amount of time, in minutes, that it takes for takeout
+
+            service to become available after the restaurant opens.
+
+            '
+        takeoutTimeBeforeClose:
+          type: integer
+          format: int32
+          description: 'The amount of time, in minutes, before the restaurant closing
+
+            time that takeout service becomes unavailable.
+
+            '
+        takeoutThrottlingTime:
+          type: integer
+          description: 'The amount of time, in minutes, that an online takeout order
+
+            is delayed before the Toast POS fires it in the kitchen.
+
+            '
+        deliveryThrottlingTime:
+          type: integer
+          description: 'The amount of time, in minutes, that an online delivery order
+
+            is delayed before the Toast POS fires it in the kitchen.
+
+            '
+    TakeoutPaymentOptions:
+      type: object
+      description: 'Information about the forms of payment that the restaurant will
+
+        accept for orders that a guest picks up in person.
+
+        '
+      properties:
+        cash:
+          type: boolean
+          description: 'Indicates whether the restaurant accepts cash payment for
+
+            takeout orders that are placed online.
+
+            '
+        ccSameDay:
+          type: boolean
+          description: 'Indicates whether the restaurant accepts online credit card
+
+            payment for takeout orders that the guest will pick up on
+
+            the same day.
+
+            '
+        ccFuture:
+          type: boolean
+          description: 'Indicates whether the restaurant accepts online credit card
+
+            payment for takeout orders that the guest will pick up on
+
+            a day after the guest places the order.
+
+            '
+        ccInStore:
+          type: boolean
+          description: 'Indicates whether the restaurant accepts credit card payment
+
+            at the time the guest picks up a takeout order.
+
+            '
+    OnlineOrdering:
+      type: object
+      description: 'Information about the web-based ordering configuration for the
+
+        restaurant.
+
+        '
+      properties:
+        enabled:
+          type: boolean
+          description: "Indicates whether the restaurant has enabled the Toast online \nordering module. This value is `true` if the module has ever \nbeen enabled. The value _does not_ indicate that a restaurant \nis accepting online orders or that the restaurant is using \nthe Toast online ordering feature.\n"
+        scheduling:
+          type: boolean
+          description: 'Indicates whether the online ordering function for the
+
+            restaurant allows guests to place orders that will be
+
+            fulfilled in the future. If this value is `false`, orders
+
+            will be fulfilled as soon as possible.
+
+            '
+        specialRequests:
+          type: boolean
+          description: 'Indicates whether the online ordering function for the
+
+            restaurant allows guests to include written notes with
+
+            additional instructions for their orders.
+
+            '
+        specialRequestsMessage:
+          type: string
+          description: 'A written message that is shown to guests when they
+
+            include additional instructions with an order. For example,
+
+            the message might be "no substitutions."
+
+            '
+        paymentOptions:
+          $ref: '#/components/schemas/PaymentOptions'
+          description: 'Information about the forms of payment that the restaurant
+
+            accepts for online orders.
+
+            '
+    DaySchedule:
+      type: object
+      description: 'Information about the services and hours that are scheduled for a
+
+        restaurant during a type of day. For example, a restaurant might
+
+        have different services available on a type of day named
+
+        `weekday` than it does on a type of day named `weekend`.
+
+        '
+      properties:
+        scheduleName:
+          type: string
+          description: The name of the type of day. For example, `weekday`.
+        services:
+          type: array
+          items:
+            $ref: '#/components/schemas/Service'
+          description: 'An array of `Service` objects that are available during the
+
+            type of day.
+
+            '
+        openTime:
+          type: string
+          description: 'The time of day that the first service for the type of day
+
+            begins. For example, the first service might begin at
+
+            `06:00:00.000`.
+
+            '
+        closeTime:
+          type: string
+          description: 'The time of day that the last service for the type of day
+
+            ends. For example, the last service might end at
+
+            `02:00:00.000`.
+
+            '
   securitySchemes:
     oauth2:
       type: oauth2

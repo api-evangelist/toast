@@ -108,18 +108,16 @@ components:
         entityType:
           description: The category of the Toast POS object.
           type: string
-    Error:
-      required:
-      - status
-      - message
-      properties:
-        status:
-          type: integer
-          format: int32
-          description: An HTTP status code.
-        message:
-          type: string
-          description: A message that describes the error.
+    ExternalReference:
+      type: object
+      description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID or a partner's identifier.
+      allOf:
+      - $ref: '#/components/schemas/ToastReference'
+      - type: object
+        properties:
+          externalId:
+            description: External identifier string that is prefixed by the naming authority.
+            type: string
     CashEntry:
       type: object
       description: 'Information about an event in which a restaurant employee puts
@@ -199,16 +197,18 @@ components:
             $ref: '#/components/schemas/ToastReference'
           approverOrShiftReviewSubject:
             $ref: '#/components/schemas/ToastReference'
-    ExternalReference:
-      type: object
-      description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID or a partner's identifier.
-      allOf:
-      - $ref: '#/components/schemas/ToastReference'
-      - type: object
-        properties:
-          externalId:
-            description: External identifier string that is prefixed by the naming authority.
-            type: string
+    Error:
+      required:
+      - status
+      - message
+      properties:
+        status:
+          type: integer
+          format: int32
+          description: An HTTP status code.
+        message:
+          type: string
+          description: A message that describes the error.
   securitySchemes:
     cashMgmtRead:
       type: oauth2

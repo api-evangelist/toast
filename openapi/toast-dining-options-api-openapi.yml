@@ -142,6 +142,16 @@ components:
         entityType:
           description: The type of object this is.
           type: string
+    ExternalReference:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ToastReference'
+      - type: object
+        properties:
+          externalId:
+            description: External identifier string, prefixed by the naming authority.
+            type: string
+        description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID or a partner's identifier.
     DiningOption:
       type: object
       allOf:
@@ -171,16 +181,6 @@ components:
               provide identifying information such as a description of their vehicle.
 
               '
-    ExternalReference:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/ToastReference'
-      - type: object
-        properties:
-          externalId:
-            description: External identifier string, prefixed by the naming authority.
-            type: string
-        description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID or a partner's identifier.
   securitySchemes:
     oauth2:
       description: "Access to Toast APIs, specific endpoints, \nand specific API endpoint operations is \ncontrolled by the scopes that are associated \nwith your API account. \nA full reference for Toast API scopes and \ntheir capabilities can be found in the\n[_Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html).\n"

@@ -243,6 +243,28 @@ components:
             description: The name of this prep station.
           kitchenPrinter:
             $ref: '#/components/schemas/ToastReference'
+    PackagingConfig:
+      type: object
+      description: Specific options for how a restaurant packages a guest's takeout or delivery order based on guest requests or specifications.
+      required:
+      - enabled
+      - items
+      properties:
+        enabled:
+          type: boolean
+          description: "`TRUE`: packaging options should be shown to guests during\nthe online ordering checkout experience. \n\n`FALSE`: packaging options should not be shown to guests during the online ordering checkout experience. \n"
+        guestMessage:
+          type: string
+          description: 'An optional message that restaurants can use to describe the use for packaging preferences. This field is not meant to individually reference packaging preference items and instead should provide further details regarding the use of packaging preferences.
+
+            For example, a restaurant may want to communicate the following to their takeout guests, "California law now requires us to ask if you want disposable items."
+
+            '
+        items:
+          type: array
+          description: Different types of packaging preference items such as utensils, napkins, straws, bags, or condiments. Items are configured in Toast Web at **Takeout and Delivery > Packaging Preferences**.
+          items:
+            $ref: '#/components/schemas/PackagingItem'
     PackagingItem:
       type: object
       description: Configuration for a type of packaging
@@ -269,28 +291,6 @@ components:
         guestInclusionType:
           type: string
           description: "`guestInclusionType` is an indication of what action the guest must take to include or exclude a packaging item.\n\nDetails:\n  * `OPT_IN` - The guest creating an order must take an action to receive the packaging item. For example, if there is a checkbox for \"UTENSILS\", and it is unchecked by default, the guest must check it for their order to include utensils.\n  * `OPT_OUT` - The guest creating an order must take an action to _not_ receive the packaging item. For example, if there is a checkbox for \"UTENSILS\", and it is checked by default, the guest must uncheck it for their order to not include utensils.\n"
-    PackagingConfig:
-      type: object
-      description: Specific options for how a restaurant packages a guest's takeout or delivery order based on guest requests or specifications.
-      required:
-      - enabled
-      - items
-      properties:
-        enabled:
-          type: boolean
-          description: "`TRUE`: packaging options should be shown to guests during\nthe online ordering checkout experience. \n\n`FALSE`: packaging options should not be shown to guests during the online ordering checkout experience. \n"
-        guestMessage:
-          type: string
-          description: 'An optional message that restaurants can use to describe the use for packaging preferences. This field is not meant to individually reference packaging preference items and instead should provide further details regarding the use of packaging preferences.
-
-            For example, a restaurant may want to communicate the following to their takeout guests, "California law now requires us to ask if you want disposable items."
-
-            '
-        items:
-          type: array
-          description: Different types of packaging preference items such as utensils, napkins, straws, bags, or condiments. Items are configured in Toast Web at **Takeout and Delivery > Packaging Preferences**.
-          items:
-            $ref: '#/components/schemas/PackagingItem'
   securitySchemes:
     oauth2:
       description: "Access to Toast APIs, specific endpoints, \nand specific API endpoint operations is \ncontrolled by the scopes that are associated \nwith your API account. \n\nA full reference for Toast API scopes and \ntheir capabilities can be found in the\n[_Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html).\n\nThe `/kitchen/v1/export/itemFulfillments` endpoint requires an active subscription\nto <a href=\"https://www.toasttab.com/customers/shop/software-services/restaurant-management-suite?tier=Pro\">Toast Restaurant Management Suite Pro or higher</a> \nto retrieve the data.\n"

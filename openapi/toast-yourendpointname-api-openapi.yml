@@ -127,16 +127,46 @@ paths:
       - Yourendpointname
 components:
   schemas:
-    TransactionInformationReverse:
+    TransactionResponseRedeem:
       type: object
-      description: "Information about a gift card transaction in the Toast  \nplatform that undoes a previous transaction. Gift card providers \nare expected to handle the transaction. The only types of\ntransactions that can be reversed are `GIFTCARD_ADD_VALUE`,\n`GIFTCARD_REDEEM`, and `GIFTCARD_ACTIVATE`.\nIf a `GIFTCARD_ADD_VALUE` is reversed then the amount of the\noriginal transaction should be deducted from the card's balance.\nIf a `GIFTCARD_REDEEM` is reversed then the amount of the\noriginal transaction should be added to the card's balance.\nIf a `GIFTCARD_ACTIVATE` is reversed then the card should be\nset to inactive and its balance set to `0.00`.\n`GIFTCARD_GET_BALANCE` and `GIFTCARD_REVERSE` cannot be reversed.\n"
+      description: "Information about a gift card transaction from the gift card \nservice provider that reduces the balance of funds available from \nthe card. For example, when the gift card is used for a purchase. \nThe Toast platform uses this information to complete guests' \ngift card transactions.\n"
+      properties:
+        currentBalance:
+          description: 'The currency amount of the funds available from the gift card.
+
+            '
+          type: number
+          format: double
+        redeemedValue:
+          type: number
+          format: double
+          description: "The currency amount of the funds that were redeemed from the \ngift card. This value may be different than the \n`redeemedValue` in a gift card transaction request. For \nexample, if the card balance is less than the redeem value \nrequested by the Toast platform, the `redeemedValue` in the \nresponse will be less than the `redeemedValue in the request.\n"
+    TransactionInformationGetBalance:
+      type: object
+      description: "Information about a gift card transaction in the Toast  \nplatform that requests the currency value of the funds available \nfrom the gift card. Gift card providers are expected to handle \nthe transaction.\n"
       allOf:
       - $ref: '#/components/schemas/TransactionInformation'
-      properties:
-        previousTransaction:
-          description: "The identifier of an earlier gift card transaction. This \nidentifier is provided in the `Toast-Transaction-GUID` header \nparameter.\n"
-          type: string
-          format: guid
+    TransactionInformationActivate:
+      allOf:
+      - $ref: '#/components/schemas/TransactionInformation'
+      - type: object
+        description: "Information about a gift card transaction in the Toast  \nplatform that activates a new card. Gift card providers are \nexpected to handle the transaction.\n"
+        properties:
+          initialBalance:
+            description: 'The currency amount of the funds available from the gift card.
+
+              '
+            type: number
+            format: double
+          checkIdentifier:
+            description: 'The unique identifier of the check that this gift card transaction
+
+              is part of. No action needs to be taken based on this identifier,
+
+              it is just provided for tracking purposes.
+
+              '
+            type: string
     GiftCardTransactionResponse:
       type: object
       description: "Information about a gift card transaction from the gift \ncard provider. The Toast platform uses this information to \ncomplete guests' gift card transactions.\n\nThe set of information in this object depends on the gift card \ntransaction type. The transaction type is specified in the \n`Toast-Transaction-Type` header parameter for the request.\n\nAll `GiftCardTransactionResponse` objects must include a \n`transactionStatus` value.\n\nThe `GiftCardTransactionResponse` object includes the following \nadditional values for specific transaction types:\n\n* `GIFTCARD_ACTIVATE` - includes an `activateResponse` value.\n* `GIFTCARD_ADD_VALUE` - includes an `addValueResponse` value.\n* `GIFTCARD_GET_BALANCE` - includes a `getBalanceResponse` value.\n* `GIFTCARD_REDEEM` - includes a `redeemResponse` value.\n* `GIFTCARD_REVERSE` - includes a `reverseResponse` value.\n\nFor \nexample, the response object for a `GIFTCARD_ACTIVATE` transaction \nincludes an `activateResponse` value.\n"
@@ -168,6 +198,36 @@ components:
           $ref: '#/components/schemas/TransactionResponseRedeem'
         reverseResponse:
           $ref: '#/components/schemas/TransactionResponseReverse'
+    TransactionResponseReverse:
+      type: object
+      description: "Information about a gift card transaction from the gift card \nservice provider that undoes a previous gift card transaction. \nThe Toast platform uses this information to complete guests' \ngift card transactions.\n"
+      properties:
+        currentBalance:
+          description: 'The currency amount of the funds available from the gift card.
+
+            '
+          type: number
+          format: double
+    TransactionResponseGetBalance:
+      type: object
+      description: "Information about a gift card transaction from the gift card \nservice provider for get balance transactions. The Toast POS \nsystem uses this information to complete guests' gift card \ntransactions.\n"
+      properties:
+        currentBalance:
+          description: 'The currency amount of the funds available from the gift card.
+
+            '
+          type: number
+          format: double
+    TransactionInformationReverse:
+      type: object
+      description: "Information about a gift card transaction in the Toast  \nplatform that undoes a previous transaction. Gift card providers \nare expected to handle the transaction. The only types of\ntransactions that can be reversed are `GIFTCARD_ADD_VALUE`,\n`GIFTCARD_REDEEM`, and `GIFTCARD_ACTIVATE`.\nIf a `GIFTCARD_ADD_VALUE` is reversed then the amount of the\noriginal transaction should be deducted from the card's balance.\nIf a `GIFTCARD_REDEEM` is reversed then the amount of the\noriginal transaction should be added to the card's balance.\nIf a `GIFTCARD_ACTIVATE` is reversed then the card should be\nset to inactive and its balance set to `0.00`.\n`GIFTCARD_GET_BALANCE` and `GIFTCARD_REVERSE` cannot be reversed.\n"
+      allOf:
+      - $ref: '#/components/schemas/TransactionInformation'
+      properties:
+        previousTransaction:
+          description: "The identifier of an earlier gift card transaction. This \nidentifier is provided in the `Toast-Transaction-GUID` header \nparameter.\n"
+          type: string
+          format: guid
     TransactionInformationAddValue:
       allOf:
       - $ref: '#/components/schemas/TransactionInformation'
@@ -189,9 +249,9 @@ components:
 
               '
             type: string
-    TransactionResponseGetBalance:
+    TransactionResponseActivate:
       type: object
-      description: "Information about a gift card transaction from the gift card \nservice provider for get balance transactions. The Toast POS \nsystem uses this information to complete guests' gift card \ntransactions.\n"
+      description: "Information about a gift card transaction from the gift card \nservice provider for activating a new gift card. The Toast POS \nsystem uses this information to complete guests' gift card \ntransactions.\n"
       properties:
         currentBalance:
           description: 'The currency amount of the funds available from the gift card.
@@ -199,30 +259,20 @@ components:
             '
           type: number
           format: double
-    TransactionResponseRedeem:
+    GiftCardTransaction:
       type: object
-      description: "Information about a gift card transaction from the gift card \nservice provider that reduces the balance of funds available from \nthe card. For example, when the gift card is used for a purchase. \nThe Toast platform uses this information to complete guests' \ngift card transactions.\n"
+      description: "Information about a gift card transaction in the Toast  \nplatform. Gift card providers are expected to handle that \ntransaction.\n\nThe set of information in this object depends on the gift card \ntransaction type. The transaction type is specified in the \n`Toast-Transaction-Type` header parameter for the request.\n\nThe `GiftCardTransaction` object includes the following values \nfor specific transaction types:\n\n* `GIFTCARD_ACTIVATE` - includes an `activateTransactionInformation` value.\n* `GIFTCARD_ADD_VALUE` - includes an `addValueTransactionInformation` value.\n* `GIFTCARD_GET_BALANCE` - includes a `getBalanceTransactionInformation` value.\n* `GIFTCARD_REDEEM` - includes a `redeemTransactionInformation` value.\n* `GIFTCARD_REVERSE` - includes a `reverseTransactionInformation` value.\n"
       properties:
-        currentBalance:
-          description: 'The currency amount of the funds available from the gift card.
-
-            '
-          type: number
-          format: double
-        redeemedValue:
-          type: number
-          format: double
-          description: "The currency amount of the funds that were redeemed from the \ngift card. This value may be different than the \n`redeemedValue` in a gift card transaction request. For \nexample, if the card balance is less than the redeem value \nrequested by the Toast platform, the `redeemedValue` in the \nresponse will be less than the `redeemedValue in the request.\n"
-    TransactionResponseAddValue:
-      type: object
-      description: "Information about a gift card transaction from the gift card \nservice provider for add value transactions. The Toast platform \nuses this information to complete guests' gift card transactions.\n"
-      properties:
-        currentBalance:
-          description: 'The currency amount of the funds available from the gift card.
-
-            '
-          type: number
-          format: double
+        activateTransactionInformation:
+          $ref: '#/components/schemas/TransactionInformationActivate'
+        addValueTransactionInformation:
+          $ref: '#/components/schemas/TransactionInformationAddValue'
+        getBalanceTransactionInformation:
+          $ref: '#/components/schemas/TransactionInformationGetBalance'
+        redeemTransactionInformation:
+          $ref: '#/components/schemas/TransactionInformationRedeem'
+        reverseTransactionInformation:
+          $ref: '#/components/schemas/TransactionInformationReverse'
     TransactionInformationRedeem:
       allOf:
       - $ref: '#/components/schemas/TransactionInformation'
@@ -268,66 +318,6 @@ components:
 
               '
             type: string
-    TransactionResponseActivate:
-      type: object
-      description: "Information about a gift card transaction from the gift card \nservice provider for activating a new gift card. The Toast POS \nsystem uses this information to complete guests' gift card \ntransactions.\n"
-      properties:
-        currentBalance:
-          description: 'The currency amount of the funds available from the gift card.
-
-            '
-          type: number
-          format: double
-    GiftCardTransaction:
-      type: object
-      description: "Information about a gift card transaction in the Toast  \nplatform. Gift card providers are expected to handle that \ntransaction.\n\nThe set of information in this object depends on the gift card \ntransaction type. The transaction type is specified in the \n`Toast-Transaction-Type` header parameter for the request.\n\nThe `GiftCardTransaction` object includes the following values \nfor specific transaction types:\n\n* `GIFTCARD_ACTIVATE` - includes an `activateTransactionInformation` value.\n* `GIFTCARD_ADD_VALUE` - includes an `addValueTransactionInformation` value.\n* `GIFTCARD_GET_BALANCE` - includes a `getBalanceTransactionInformation` value.\n* `GIFTCARD_REDEEM` - includes a `redeemTransactionInformation` value.\n* `GIFTCARD_REVERSE` - includes a `reverseTransactionInformation` value.\n"
-      properties:
-        activateTransactionInformation:
-          $ref: '#/components/schemas/TransactionInformationActivate'
-        addValueTransactionInformation:
-          $ref: '#/components/schemas/TransactionInformationAddValue'
-        getBalanceTransactionInformation:
-          $ref: '#/components/schemas/TransactionInformationGetBalance'
-        redeemTransactionInformation:
-          $ref: '#/components/schemas/TransactionInformationRedeem'
-        reverseTransactionInformation:
-          $ref: '#/components/schemas/TransactionInformationReverse'
-    TransactionInformationActivate:
-      allOf:
-      - $ref: '#/components/schemas/TransactionInformation'
-      - type: object
-        description: "Information about a gift card transaction in the Toast  \nplatform that activates a new card. Gift card providers are \nexpected to handle the transaction.\n"
-        properties:
-          initialBalance:
-            description: 'The currency amount of the funds available from the gift card.
-
-              '
-            type: number
-            format: double
-          checkIdentifier:
-            description: 'The unique identifier of the check that this gift card transaction
-
-              is part of. No action needs to be taken based on this identifier,
-
-              it is just provided for tracking purposes.
-
-              '
-            type: string
-    TransactionResponseReverse:
-      type: object
-      description: "Information about a gift card transaction from the gift card \nservice provider that undoes a previous gift card transaction. \nThe Toast platform uses this information to complete guests' \ngift card transactions.\n"
-      properties:
-        currentBalance:
-          description: 'The currency amount of the funds available from the gift card.
-
-            '
-          type: number
-          format: double
-    TransactionInformationGetBalance:
-      type: object
-      description: "Information about a gift card transaction in the Toast  \nplatform that requests the currency value of the funds available \nfrom the gift card. Gift card providers are expected to handle \nthe transaction.\n"
-      allOf:
-      - $ref: '#/components/schemas/TransactionInformation'
     TransactionInformation:
       type: object
       properties:
@@ -382,3 +372,13 @@ components:
               - SWIPED
               - VERIFIED
               - UNKNOWN
+    TransactionResponseAddValue:
+      type: object
+      description: "Information about a gift card transaction from the gift card \nservice provider for add value transactions. The Toast platform \nuses this information to complete guests' gift card transactions.\n"
+      properties:
+        currentBalance:
+          description: 'The currency amount of the funds available from the gift card.
+
+            '
+          type: number
+          format: double

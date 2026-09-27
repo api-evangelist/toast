@@ -90,6 +90,47 @@ components:
         printerPort:
           type: string
           description: The transmission control protocol (TCP) port used for network printing. For example, 9100.
+    Device:
+      type: object
+      description: 'Device details for a device. This device either uses the Toast POS app or is a printer
+
+        used by the Toast platform.
+
+
+        Depending on the `deviceType` (either `POS` or `PRINTER`), it will include either the
+
+        `PosDeviceInfo` object, or the `PrinterDeviceInfo` object respectively. Only one of
+
+        these two objects is used for each device.
+
+        '
+      required:
+      - serialNumber
+      - deviceType
+      properties:
+        deviceModel:
+          type: string
+          description: The hardware model of the device. For example, TT200, TG3, TP200, and so on.
+          example: TT200
+        deviceModelName:
+          type: string
+          description: The model name of the device. For example, Toast Terminal, Toast Go 3, and so on.
+          example: Toast Terminal
+        serialNumber:
+          type: string
+          description: The serial number of the hardware device.
+          example: cb5f9ea
+        deviceType:
+          type: string
+          description: "The type of device.\n\nThe values include:\n\n* `POS` - Devices that use the Toast POS app. The `PosDeviceInfo` object is used with this value.\n  This value includes terminal and handheld devices, which are identified using the `posType`\n  value in the `PosDeviceInfo` object.\n\n* `PRINTER` - Devices that are printers. The `PrinterDeviceInfo` object is used with this value.\n"
+          enum:
+          - POS
+          - PRINTER
+          example: POS
+        posDeviceInfo:
+          $ref: '#/components/schemas/PosDeviceInfo'
+        printerDeviceInfo:
+          $ref: '#/components/schemas/PrinterDeviceInfo'
     PosDeviceInfo:
       type: object
       description: 'Device details for devices using the Toast POS app. The `deviceType` value for the
@@ -263,47 +304,6 @@ components:
             For example, 2025-10-05.
 
             '
-    Device:
-      type: object
-      description: 'Device details for a device. This device either uses the Toast POS app or is a printer
-
-        used by the Toast platform.
-
-
-        Depending on the `deviceType` (either `POS` or `PRINTER`), it will include either the
-
-        `PosDeviceInfo` object, or the `PrinterDeviceInfo` object respectively. Only one of
-
-        these two objects is used for each device.
-
-        '
-      required:
-      - serialNumber
-      - deviceType
-      properties:
-        deviceModel:
-          type: string
-          description: The hardware model of the device. For example, TT200, TG3, TP200, and so on.
-          example: TT200
-        deviceModelName:
-          type: string
-          description: The model name of the device. For example, Toast Terminal, Toast Go 3, and so on.
-          example: Toast Terminal
-        serialNumber:
-          type: string
-          description: The serial number of the hardware device.
-          example: cb5f9ea
-        deviceType:
-          type: string
-          description: "The type of device.\n\nThe values include:\n\n* `POS` - Devices that use the Toast POS app. The `PosDeviceInfo` object is used with this value.\n  This value includes terminal and handheld devices, which are identified using the `posType`\n  value in the `PosDeviceInfo` object.\n\n* `PRINTER` - Devices that are printers. The `PrinterDeviceInfo` object is used with this value.\n"
-          enum:
-          - POS
-          - PRINTER
-          example: POS
-        posDeviceInfo:
-          $ref: '#/components/schemas/PosDeviceInfo'
-        printerDeviceInfo:
-          $ref: '#/components/schemas/PrinterDeviceInfo'
   securitySchemes:
     oauth2:
       description: 'Access to Toast APIs, specific endpoints,

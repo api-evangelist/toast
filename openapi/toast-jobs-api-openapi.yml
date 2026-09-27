@@ -281,6 +281,16 @@ components:
           excludeFromReporting:
             type: boolean
             description: "Indicates whether labor summary reports should include hours and pay \nfor this job. Restaurant employees set this configuration option for a job \non the **Jobs** page of Toast Web.\n"
+    ExternalReference:
+      type: object
+      description: "A wrapper object with fields that allow reference to a Toast \nplatform entity by Toast GUID or an external identifier.\n"
+      allOf:
+      - $ref: '#/components/schemas/ToastReference'
+      - type: object
+        properties:
+          externalId:
+            description: "External identifier string that is prefixed by the naming \nauthority. You can, for example, use the labor API to \n`POST` an `externalId` for an employee and then `GET` the \nemployee with that `externalId`.\n"
+            type: string
     ToastReference:
       type: object
       description: "A wrapper object with fields that allow reference to a Toast \nplatform entity by Toast GUID.\n"
@@ -298,16 +308,6 @@ components:
 
             '
           type: string
-    ExternalReference:
-      type: object
-      description: "A wrapper object with fields that allow reference to a Toast \nplatform entity by Toast GUID or an external identifier.\n"
-      allOf:
-      - $ref: '#/components/schemas/ToastReference'
-      - type: object
-        properties:
-          externalId:
-            description: "External identifier string that is prefixed by the naming \nauthority. You can, for example, use the labor API to \n`POST` an `externalId` for an employee and then `GET` the \nemployee with that `externalId`.\n"
-            type: string
   securitySchemes:
     oauth2:
       type: oauth2

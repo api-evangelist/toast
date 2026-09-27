@@ -637,23 +637,6 @@ paths:
         required: true
 components:
   schemas:
-    JobWageOverride:
-      type: object
-      description: "The overriding job wage, for an employee that has a wage that \ndiffers from the job's default wage.\n"
-      required:
-      - wage
-      - jobReference
-      properties:
-        wage:
-          type: number
-          format: double
-          description: 'Required currency value of the employee''s overriding job wage.
-
-            '
-        jobReference:
-          type: object
-          description: "Required external reference to the job to which this wage \napplies overridden\n"
-          $ref: '#/components/schemas/ExternalReference'
     ToastReference:
       type: object
       description: "A wrapper object with fields that allow reference to a Toast \nplatform entity by Toast GUID.\n"
@@ -671,6 +654,33 @@ components:
 
             '
           type: string
+    JobWageOverride:
+      type: object
+      description: "The overriding job wage, for an employee that has a wage that \ndiffers from the job's default wage.\n"
+      required:
+      - wage
+      - jobReference
+      properties:
+        wage:
+          type: number
+          format: double
+          description: 'Required currency value of the employee''s overriding job wage.
+
+            '
+        jobReference:
+          type: object
+          description: "Required external reference to the job to which this wage \napplies overridden\n"
+          $ref: '#/components/schemas/ExternalReference'
+    ExternalReference:
+      type: object
+      description: "A wrapper object with fields that allow reference to a Toast \nplatform entity by Toast GUID or an external identifier.\n"
+      allOf:
+      - $ref: '#/components/schemas/ToastReference'
+      - type: object
+        properties:
+          externalId:
+            description: "External identifier string that is prefixed by the naming \nauthority. You can, for example, use the labor API to \n`POST` an `externalId` for an employee and then `GET` the \nemployee with that `externalId`.\n"
+            type: string
     Employee:
       type: object
       description: A restaurant employee
@@ -752,16 +762,6 @@ components:
           v2EmployeeGuid:
             type: string
             description: "This value is included for future use. An alternate Toast \nplatform GUID for the employee that will be used in \nupcoming labor API functionality.\n"
-    ExternalReference:
-      type: object
-      description: "A wrapper object with fields that allow reference to a Toast \nplatform entity by Toast GUID or an external identifier.\n"
-      allOf:
-      - $ref: '#/components/schemas/ToastReference'
-      - type: object
-        properties:
-          externalId:
-            description: "External identifier string that is prefixed by the naming \nauthority. You can, for example, use the labor API to \n`POST` an `externalId` for an employee and then `GET` the \nemployee with that `externalId`.\n"
-            type: string
   securitySchemes:
     oauth2:
       type: oauth2

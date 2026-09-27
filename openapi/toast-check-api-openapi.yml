@@ -149,6 +149,10 @@ paths:
       - Check
 components:
   schemas:
+    ReportRequestGuid:
+      description: The Toast platform assigned identifier used to identify a specific analytics reporting data request.
+      format: UUID
+      type: string
     ReportingDataInProgress:
       description: The Toast platform is in the process of gathering the reporting data. Try the request again at a later time.
       type: object
@@ -164,46 +168,6 @@ components:
         reportRequestGuid:
           description: The Toast platform assigned identifier used to identify a specific analytics reporting data request.
           format: UUID
-          type: string
-    ErrorMessage:
-      type: object
-      description: Information about an unsuccessful REST request.
-      properties:
-        status:
-          description: The HTTP status code.
-          format: integer
-          type: number
-        code:
-          description: The service-specific result code.
-          format: integer
-          type: number
-        message:
-          description: A brief message describing the error.
-          type: string
-        messageKey:
-          description: Reserved for future use.
-          type: string
-        fieldName:
-          description: Reserved for future use.
-          type: string
-        link:
-          description: The URL of a Toast page that provides more information about the error.
-          format: URL
-          type: string
-        requestId:
-          description: The identifier of the HTTP request that generated the error.
-          format: UUID
-          type: string
-        developerMessage:
-          description: Optional, technical information to help a developer investigate the cause of the error.
-          type: string
-        errors:
-          description: A list of JSON `ErrorMessage` objects.
-          items:
-            type: string
-          type: array
-        canRetry:
-          description: Reserved for future use.
           type: string
     CheckReportingData:
       description: The check reporting data.
@@ -311,10 +275,46 @@ components:
             '
           format: string
           type: string
-    ReportRequestGuid:
-      description: The Toast platform assigned identifier used to identify a specific analytics reporting data request.
-      format: UUID
-      type: string
+    ErrorMessage:
+      type: object
+      description: Information about an unsuccessful REST request.
+      properties:
+        status:
+          description: The HTTP status code.
+          format: integer
+          type: number
+        code:
+          description: The service-specific result code.
+          format: integer
+          type: number
+        message:
+          description: A brief message describing the error.
+          type: string
+        messageKey:
+          description: Reserved for future use.
+          type: string
+        fieldName:
+          description: Reserved for future use.
+          type: string
+        link:
+          description: The URL of a Toast page that provides more information about the error.
+          format: URL
+          type: string
+        requestId:
+          description: The identifier of the HTTP request that generated the error.
+          format: UUID
+          type: string
+        developerMessage:
+          description: Optional, technical information to help a developer investigate the cause of the error.
+          type: string
+        errors:
+          description: A list of JSON `ErrorMessage` objects.
+          items:
+            type: string
+          type: array
+        canRetry:
+          description: Reserved for future use.
+          type: string
     CheckReportingDataRequest:
       description: 'Information about what the check reporting data covers and how it is presented. This includes
 

@@ -95,6 +95,16 @@ components:
         entityType:
           description: The category of the Toast POS object.
           type: string
+    ExternalReference:
+      type: object
+      description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID or a partner's identifier.
+      allOf:
+      - $ref: '#/components/schemas/ToastReference'
+      - type: object
+        properties:
+          externalId:
+            description: External identifier string that is prefixed by the naming authority.
+            type: string
     Deposit:
       type: object
       description: 'Information about an event in which a restaurant employee removes
@@ -145,16 +155,6 @@ components:
         message:
           type: string
           description: A message that describes the error.
-    ExternalReference:
-      type: object
-      description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID or a partner's identifier.
-      allOf:
-      - $ref: '#/components/schemas/ToastReference'
-      - type: object
-        properties:
-          externalId:
-            description: External identifier string that is prefixed by the naming authority.
-            type: string
   securitySchemes:
     cashMgmtRead:
       type: oauth2

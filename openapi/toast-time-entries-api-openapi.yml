@@ -213,73 +213,6 @@ paths:
         - labor:read
 components:
   schemas:
-    TimeEntryBreak:
-      type: object
-      description: 'Information about a period of time that an employee is not
-
-        working during a shift. For example, an employee might take a
-
-        break to eat at some time during a shift. An employee can be paid
-
-        or unpaid for the break period.
-
-        '
-      properties:
-        guid:
-          description: 'The GUID maintained by the Toast platform.
-
-            '
-          type: string
-        breakType:
-          type: object
-          description: "Optional, Toast platform reference to the break type \nassociated with this time entry.\n"
-          $ref: '#/components/schemas/ToastReference'
-        paid:
-          type: boolean
-          description: 'Indicates whether the employee was paid for the break.
-
-            * `true` - The break was a paid break.
-
-            * `false` - The break was an unpaid break.
-
-            '
-        inDate:
-          type: string
-          format: date-time
-          description: 'The date and time that the employee started the break period,
-
-            in UTC.
-
-            '
-        outDate:
-          type: string
-          format: date-time
-          description: 'The date and time that the employee ended the break period
-
-            and returned to work, in UTC.
-
-            '
-        missed:
-          type: boolean
-          description: 'Indicates whether the break was a missed break.
-
-            * `true` - The break was missed.
-
-            * `false` - The break was taken.
-
-            '
-        waived:
-          type: boolean
-          description: 'Indicates whether the break was waived by the employee.
-
-            * `true` - The break was waived.
-
-            * `false` - The break was not waived.
-
-            '
-        auditResponse:
-          type: boolean
-          description: "Indicates whether the employee was asked to take the break.\n\n* `true` - The employee was asked to take the break.\n* `false` - The employee was not asked to take the break.\n\nNull for break types that do not use break acknowledgement \ntracking or when the employee did not complete the audit \nresponse prompt.\n"
     ToastReference:
       type: object
       description: "A wrapper object with fields that allow reference to a Toast \nplatform entity by Toast GUID.\n"
@@ -297,16 +230,6 @@ components:
 
             '
           type: string
-    ExternalReference:
-      type: object
-      description: "A wrapper object with fields that allow reference to a Toast \nplatform entity by Toast GUID or an external identifier.\n"
-      allOf:
-      - $ref: '#/components/schemas/ToastReference'
-      - type: object
-        properties:
-          externalId:
-            description: "External identifier string that is prefixed by the naming \nauthority. You can, for example, use the labor API to \n`POST` an `externalId` for an employee and then `GET` the \nemployee with that `externalId`.\n"
-            type: string
     TimeEntry:
       type: object
       description: "A `TimeEntry` captures the actual time an employee worked or took \na break. Typically, a time entry is one-to-one with a scheduled \nshift, but it is possible in the Toast platform for an employee \nto clock-in and clock-out without a shift.\n"
@@ -495,6 +418,83 @@ components:
             type: number
             format: double
             description: "The currency amount of sales paid for in cash during the \ntime entry. The value includes the order amounts and tax.\nIt does not include tips.\n\nIf the employee has not closed the shift, \nthis value is `0`. If the `outDate` value is set, \nthen the `cashSales` value is final.\n"
+    ExternalReference:
+      type: object
+      description: "A wrapper object with fields that allow reference to a Toast \nplatform entity by Toast GUID or an external identifier.\n"
+      allOf:
+      - $ref: '#/components/schemas/ToastReference'
+      - type: object
+        properties:
+          externalId:
+            description: "External identifier string that is prefixed by the naming \nauthority. You can, for example, use the labor API to \n`POST` an `externalId` for an employee and then `GET` the \nemployee with that `externalId`.\n"
+            type: string
+    TimeEntryBreak:
+      type: object
+      description: 'Information about a period of time that an employee is not
+
+        working during a shift. For example, an employee might take a
+
+        break to eat at some time during a shift. An employee can be paid
+
+        or unpaid for the break period.
+
+        '
+      properties:
+        guid:
+          description: 'The GUID maintained by the Toast platform.
+
+            '
+          type: string
+        breakType:
+          type: object
+          description: "Optional, Toast platform reference to the break type \nassociated with this time entry.\n"
+          $ref: '#/components/schemas/ToastReference'
+        paid:
+          type: boolean
+          description: 'Indicates whether the employee was paid for the break.
+
+            * `true` - The break was a paid break.
+
+            * `false` - The break was an unpaid break.
+
+            '
+        inDate:
+          type: string
+          format: date-time
+          description: 'The date and time that the employee started the break period,
+
+            in UTC.
+
+            '
+        outDate:
+          type: string
+          format: date-time
+          description: 'The date and time that the employee ended the break period
+
+            and returned to work, in UTC.
+
+            '
+        missed:
+          type: boolean
+          description: 'Indicates whether the break was a missed break.
+
+            * `true` - The break was missed.
+
+            * `false` - The break was taken.
+
+            '
+        waived:
+          type: boolean
+          description: 'Indicates whether the break was waived by the employee.
+
+            * `true` - The break was waived.
+
+            * `false` - The break was not waived.
+
+            '
+        auditResponse:
+          type: boolean
+          description: "Indicates whether the employee was asked to take the break.\n\n* `true` - The employee was asked to take the break.\n* `false` - The employee was not asked to take the break.\n\nNull for break types that do not use break acknowledgement \ntracking or when the employee did not complete the audit \nresponse prompt.\n"
   securitySchemes:
     oauth2:
       type: oauth2

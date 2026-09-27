@@ -141,15 +141,6 @@ paths:
         - config:read
 components:
   schemas:
-    AlternatePaymentType:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/ExternalReference'
-      - type: object
-        properties:
-          name:
-            type: string
-            description: The name of the alternate payment type.
     ToastReference:
       type: object
       description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID.
@@ -163,6 +154,15 @@ components:
         entityType:
           description: The type of object this is.
           type: string
+    AlternatePaymentType:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ExternalReference'
+      - type: object
+        properties:
+          name:
+            type: string
+            description: The name of the alternate payment type.
     ExternalReference:
       type: object
       allOf:
