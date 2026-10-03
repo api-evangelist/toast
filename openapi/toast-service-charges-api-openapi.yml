@@ -133,25 +133,6 @@ paths:
         - config:read
 components:
   schemas:
-    TaxTableRow:
-      type: object
-      description: A closed sale amount range that corresponds to a specific tax amount in a tax table.
-      properties:
-        start:
-          description: The start of a sale amount range that corresponds to a specific tax amount in a tax table.
-          type: number
-          format: currency
-        end:
-          description: The end of a sale amount range that corresponds to a specific tax amount in a tax table.
-          type: number
-          format: currency
-        tax:
-          description: The tax amount for the tax table row.
-          type: number
-          format: currency
-        pattern:
-          description: Specifies whether the price range is part of an incomplete set of ranges that establish an algorithm that you can use to calculate tax amounts.
-          type: boolean
     ToastReference:
       type: object
       description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID.
@@ -186,6 +167,81 @@ components:
           description: The percentage rate of the conditional tax rate
           type: number
           format: double
+    ServiceCharge:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ExternalReference'
+      - type: object
+        description: Any charge applied to a check for something other than menu item. Typical examples include gratuity and delivery fees.
+        properties:
+          name:
+            type: string
+            description: The name of this service charge.
+          amountType:
+            type: string
+            description: The type of service charge.
+            enum:
+            - FIXED
+            - PERCENT
+            - OPEN
+          amount:
+            type: number
+            format: double
+            description: Amount in USD to be applied for `FIXED` type service charges.
+          percent:
+            type: number
+            format: double
+            description: 'Percent fee to be applied for `PERCENT` type service
+
+              charges, based on pre-discount check amount. Must be a
+
+              number between 0 and 100.
+
+              '
+          criteria:
+            $ref: '#/components/schemas/ServiceChargeCriteria'
+          gratuity:
+            type: boolean
+            description: True if the service charge is a gratuity and is assigned to the owner of the check.
+          taxable:
+            type: boolean
+            description: True if tax should be applied to the service charge.
+          applicableTaxes:
+            type: array
+            description: A reference to the taxes applied to the service charge, if the service charge is taxable.
+            items:
+              $ref: '#/components/schemas/TaxRate'
+          serviceChargeCalculation:
+            type: string
+            description: Defines whether or not the service charge is applied before (PRE) or after (POST) discounts. This field is null for non-percent service charges.
+            enum:
+            - PRE_DISCOUNT
+            - POST_DISCOUNT
+          destination:
+            type: string
+            description: 'Final recipient of the funds from this service charge.
+
+
+              * `RESTAURANT` - The business owner of the restaurant receives the service charge funds.
+
+              * `SERVER` - Restaurant employees receive the service charge funds e.g. gratuity.
+
+              * `TOAST` - Toast receives the service charge funds.
+
+              * `THIRD_PARTY` - A third party receives the service charge funds e.g. fundraising funds go to charity.
+
+              '
+            enum:
+            - RESTAURANT
+            - SERVER
+            - TOAST
+            - THIRD_PARTY
+          taxInclusive:
+            type: boolean
+            description: Supports future functionality.
+          taxProrated:
+            type: boolean
+            description: Supports future functionality.
     ServiceChargeCriteria:
       description: Describes thresholds for when a service charge should be applied to a check.
       properties:
@@ -210,6 +266,35 @@ components:
         dineIn:
           type: boolean
           description: Indicates whether the service charge is applied to orders that have the dine-in dining option behavior.
+    TaxTableRow:
+      type: object
+      description: A closed sale amount range that corresponds to a specific tax amount in a tax table.
+      properties:
+        start:
+          description: The start of a sale amount range that corresponds to a specific tax amount in a tax table.
+          type: number
+          format: currency
+        end:
+          description: The end of a sale amount range that corresponds to a specific tax amount in a tax table.
+          type: number
+          format: currency
+        tax:
+          description: The tax amount for the tax table row.
+          type: number
+          format: currency
+        pattern:
+          description: Specifies whether the price range is part of an incomplete set of ranges that establish an algorithm that you can use to calculate tax amounts.
+          type: boolean
+    ExternalReference:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ToastReference'
+      - type: object
+        properties:
+          externalId:
+            description: External identifier string, prefixed by the naming authority.
+            type: string
+        description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID or a partner's identifier.
     TaxRate:
       type: object
       allOf:
@@ -299,91 +384,6 @@ components:
               '
             items:
               $ref: '#/components/schemas/ConditionalTaxRate'
-    ServiceCharge:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/ExternalReference'
-      - type: object
-        description: Any charge applied to a check for something other than menu item. Typical examples include gratuity and delivery fees.
-        properties:
-          name:
-            type: string
-            description: The name of this service charge.
-          amountType:
-            type: string
-            description: The type of service charge.
-            enum:
-            - FIXED
-            - PERCENT
-            - OPEN
-          amount:
-            type: number
-            format: double
-            description: Amount in USD to be applied for `FIXED` type service charges.
-          percent:
-            type: number
-            format: double
-            description: 'Percent fee to be applied for `PERCENT` type service
-
-              charges, based on pre-discount check amount. Must be a
-
-              number between 0 and 100.
-
-              '
-          criteria:
-            $ref: '#/components/schemas/ServiceChargeCriteria'
-          gratuity:
-            type: boolean
-            description: True if the service charge is a gratuity and is assigned to the owner of the check.
-          taxable:
-            type: boolean
-            description: True if tax should be applied to the service charge.
-          applicableTaxes:
-            type: array
-            description: A reference to the taxes applied to the service charge, if the service charge is taxable.
-            items:
-              $ref: '#/components/schemas/TaxRate'
-          serviceChargeCalculation:
-            type: string
-            description: Defines whether or not the service charge is applied before (PRE) or after (POST) discounts. This field is null for non-percent service charges.
-            enum:
-            - PRE_DISCOUNT
-            - POST_DISCOUNT
-          destination:
-            type: string
-            description: 'Final recipient of the funds from this service charge.
-
-
-              * `RESTAURANT` - The business owner of the restaurant receives the service charge funds.
-
-              * `SERVER` - Restaurant employees receive the service charge funds e.g. gratuity.
-
-              * `TOAST` - Toast receives the service charge funds.
-
-              * `THIRD_PARTY` - A third party receives the service charge funds e.g. fundraising funds go to charity.
-
-              '
-            enum:
-            - RESTAURANT
-            - SERVER
-            - TOAST
-            - THIRD_PARTY
-          taxInclusive:
-            type: boolean
-            description: Supports future functionality.
-          taxProrated:
-            type: boolean
-            description: Supports future functionality.
-    ExternalReference:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/ToastReference'
-      - type: object
-        properties:
-          externalId:
-            description: External identifier string, prefixed by the naming authority.
-            type: string
-        description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID or a partner's identifier.
   securitySchemes:
     oauth2:
       description: "Access to Toast APIs, specific endpoints, \nand specific API endpoint operations is \ncontrolled by the scopes that are associated \nwith your API account. \nA full reference for Toast API scopes and \ntheir capabilities can be found in the\n[_Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html).\n"

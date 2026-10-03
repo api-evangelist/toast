@@ -213,23 +213,16 @@ paths:
         - labor:read
 components:
   schemas:
-    ToastReference:
+    ExternalReference:
       type: object
-      description: "A wrapper object with fields that allow reference to a Toast \nplatform entity by Toast GUID.\n"
-      required:
-      - guid
-      - entityType
-      properties:
-        guid:
-          description: 'The GUID maintained by the Toast platform.
-
-            '
-          type: string
-        entityType:
-          description: 'The type of object this is.
-
-            '
-          type: string
+      description: "A wrapper object with fields that allow reference to a Toast \nplatform entity by Toast GUID or an external identifier.\n"
+      allOf:
+      - $ref: '#/components/schemas/ToastReference'
+      - type: object
+        properties:
+          externalId:
+            description: "External identifier string that is prefixed by the naming \nauthority. You can, for example, use the labor API to \n`POST` an `externalId` for an employee and then `GET` the \nemployee with that `externalId`.\n"
+            type: string
     TimeEntry:
       type: object
       description: "A `TimeEntry` captures the actual time an employee worked or took \na break. Typically, a time entry is one-to-one with a scheduled \nshift, but it is possible in the Toast platform for an employee \nto clock-in and clock-out without a shift.\n"
@@ -418,16 +411,23 @@ components:
             type: number
             format: double
             description: "The currency amount of sales paid for in cash during the \ntime entry. The value includes the order amounts and tax.\nIt does not include tips.\n\nIf the employee has not closed the shift, \nthis value is `0`. If the `outDate` value is set, \nthen the `cashSales` value is final.\n"
-    ExternalReference:
+    ToastReference:
       type: object
-      description: "A wrapper object with fields that allow reference to a Toast \nplatform entity by Toast GUID or an external identifier.\n"
-      allOf:
-      - $ref: '#/components/schemas/ToastReference'
-      - type: object
-        properties:
-          externalId:
-            description: "External identifier string that is prefixed by the naming \nauthority. You can, for example, use the labor API to \n`POST` an `externalId` for an employee and then `GET` the \nemployee with that `externalId`.\n"
-            type: string
+      description: "A wrapper object with fields that allow reference to a Toast \nplatform entity by Toast GUID.\n"
+      required:
+      - guid
+      - entityType
+      properties:
+        guid:
+          description: 'The GUID maintained by the Toast platform.
+
+            '
+          type: string
+        entityType:
+          description: 'The type of object this is.
+
+            '
+          type: string
     TimeEntryBreak:
       type: object
       description: 'Information about a period of time that an employee is not

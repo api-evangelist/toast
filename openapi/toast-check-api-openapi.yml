@@ -149,10 +149,49 @@ paths:
       - Check
 components:
   schemas:
-    ReportRequestGuid:
-      description: The Toast platform assigned identifier used to identify a specific analytics reporting data request.
-      format: UUID
-      type: string
+    CheckReportingDataRequest:
+      description: 'Information about what the check reporting data covers and how it is presented. This includes
+
+        the starting and ending dates of the time range, and the included or excluded restaurants.
+
+        '
+      type: object
+      properties:
+        startBusinessDate:
+          description: 'The starting date of the time range for the reporting data.
+
+
+            Specify the business day in the format YYYYMMDD. For example, `20220824`.
+
+            '
+          format: integer
+          type: number
+        endBusinessDate:
+          description: 'The ending date of the time range for the reporting data.
+
+
+            Specify the business day in the format YYYYMMDD. For example, `20220824`.
+
+            '
+          format: integer
+          type: number
+        restaurantIds:
+          description: "The `restaurantGuid` values of specific restaurants in the management group to include in the \nreporting data. If used, only the data for listed restaurants in the management group \nthat are identified by `restaurantGuid` is included. If left blank, all restaurants are included \nby default.\n"
+          items:
+            format: uuid
+            type: string
+          type: array
+        excludedRestaurantIds:
+          description: "The `restaurantGuid` values of specific restaurants in the management group to exclude from the \nreporting data. If used, the data for listed restaurants in the management group \nthat are identified by `restaurantGuid` is excluded. If left blank, all restaurants are included \nby default.\n"
+          items:
+            format: UUID
+            type: string
+          type: array
+      required:
+      - restaurantIds
+      - excludedRestaurantIds
+      - startBusinessDate
+      - endBusinessDate
     ReportingDataInProgress:
       description: The Toast platform is in the process of gathering the reporting data. Try the request again at a later time.
       type: object
@@ -315,49 +354,10 @@ components:
         canRetry:
           description: Reserved for future use.
           type: string
-    CheckReportingDataRequest:
-      description: 'Information about what the check reporting data covers and how it is presented. This includes
-
-        the starting and ending dates of the time range, and the included or excluded restaurants.
-
-        '
-      type: object
-      properties:
-        startBusinessDate:
-          description: 'The starting date of the time range for the reporting data.
-
-
-            Specify the business day in the format YYYYMMDD. For example, `20220824`.
-
-            '
-          format: integer
-          type: number
-        endBusinessDate:
-          description: 'The ending date of the time range for the reporting data.
-
-
-            Specify the business day in the format YYYYMMDD. For example, `20220824`.
-
-            '
-          format: integer
-          type: number
-        restaurantIds:
-          description: "The `restaurantGuid` values of specific restaurants in the management group to include in the \nreporting data. If used, only the data for listed restaurants in the management group \nthat are identified by `restaurantGuid` is included. If left blank, all restaurants are included \nby default.\n"
-          items:
-            format: uuid
-            type: string
-          type: array
-        excludedRestaurantIds:
-          description: "The `restaurantGuid` values of specific restaurants in the management group to exclude from the \nreporting data. If used, the data for listed restaurants in the management group \nthat are identified by `restaurantGuid` is excluded. If left blank, all restaurants are included \nby default.\n"
-          items:
-            format: UUID
-            type: string
-          type: array
-      required:
-      - restaurantIds
-      - excludedRestaurantIds
-      - startBusinessDate
-      - endBusinessDate
+    ReportRequestGuid:
+      description: The Toast platform assigned identifier used to identify a specific analytics reporting data request.
+      format: UUID
+      type: string
   securitySchemes:
     oauth2:
       description: "Access to Toast APIs, specific endpoints, \nand specific API endpoint operations is \ncontrolled by the scopes that are associated \nwith your API account. \n\nA full reference for Toast API scopes and \ntheir capabilities can be found in the\n[_Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html).\n"

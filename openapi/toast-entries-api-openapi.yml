@@ -93,6 +93,18 @@ paths:
       - Entries
 components:
   schemas:
+    Error:
+      required:
+      - status
+      - message
+      properties:
+        status:
+          type: integer
+          format: int32
+          description: An HTTP status code.
+        message:
+          type: string
+          description: A message that describes the error.
     ToastReference:
       type: object
       description: 'Identifying information about a Toast POS entity.
@@ -197,18 +209,6 @@ components:
             $ref: '#/components/schemas/ToastReference'
           approverOrShiftReviewSubject:
             $ref: '#/components/schemas/ToastReference'
-    Error:
-      required:
-      - status
-      - message
-      properties:
-        status:
-          type: integer
-          format: int32
-          description: An HTTP status code.
-        message:
-          type: string
-          description: A message that describes the error.
   securitySchemes:
     cashMgmtRead:
       type: oauth2

@@ -179,80 +179,6 @@ paths:
         - stock:write
 components:
   schemas:
-    MenuItemInventory:
-      type: object
-      properties:
-        guid:
-          type: string
-          description: 'The unique GUID assigned to the menu item by the Toast platform.
-
-            '
-          format: uuid
-        itemGuidValidity:
-          type: string
-          description: "Indicates whether a menu item identifier that you included in your request is valid or not.\n\n`INVALID` indicates the stock API did not find a matching menu item for the  identifier you supplied in the search or update request. This means either the menu item does not exist at the location being queried or it has been archived.\n            \n`VALID` indicates that the item in the API response is a valid item at the restaurant location.\n\nFor more information, see <a\nhref=\"https://doc.toasttab.com/doc/devguide/apiUsingTheStockApi.html\">Getting stock information using the stock API</a> and <a\nhref=\"https://doc.toasttab.com/doc/devguide/apiUpdatingInventoryInformation.html\">Updating stock API</a>.          \n"
-          readOnly: true
-          enum:
-          - VALID
-          - INVALID
-        status:
-          type: string
-          description: 'The inventory status of the menu item. The `status` value can be:
-
-
-            * `IN_STOCK` - The menu item is in stock in the restaurant.
-
-
-            * `QUANTITY` - The menu item is in limited supply. The amount
-
-            of remaining items is indicated by the `quantity` value.
-
-
-            * `OUT_OF_STOCK` - The menu item is no longer in stock and cannot
-
-            be selected for an order.
-
-            '
-          enum:
-          - IN_STOCK
-          - QUANTITY
-          - OUT_OF_STOCK
-        quantity:
-          type:
-          - number
-          - 'null'
-          description: 'Contains the amount of stock remaining when the menu item
-
-            `status` is `QUANTITY`.
-
-
-            This value is `null` for menu items
-
-            that have a stock staus of `IN_STOCK` or `OUT_OF_STOCK`.
-
-            '
-          format: double
-        multiLocationId:
-          type: string
-          description: 'A consistent identifier that applies to all versions of a menu item
-
-            that is shared across locations.
-
-
-            See <a
-
-            href="https://doc.toasttab.com/doc/devguide/portalToastIdentifiers.html">Toast
-
-            identifiers</a> for more information.
-
-            '
-        versionId:
-          type: string
-          description: 'For future use.
-
-            '
-          format: uuid
-      description: Contains the stock status and quantity information for a menu item.
     InventorySearchRequest:
       type: object
       properties:
@@ -354,6 +280,80 @@ components:
             '
           items:
             $ref: '#/components/schemas/ErrorMessage'
+    MenuItemInventory:
+      type: object
+      properties:
+        guid:
+          type: string
+          description: 'The unique GUID assigned to the menu item by the Toast platform.
+
+            '
+          format: uuid
+        itemGuidValidity:
+          type: string
+          description: "Indicates whether a menu item identifier that you included in your request is valid or not.\n\n`INVALID` indicates the stock API did not find a matching menu item for the  identifier you supplied in the search or update request. This means either the menu item does not exist at the location being queried or it has been archived.\n            \n`VALID` indicates that the item in the API response is a valid item at the restaurant location.\n\nFor more information, see <a\nhref=\"https://doc.toasttab.com/doc/devguide/apiUsingTheStockApi.html\">Getting stock information using the stock API</a> and <a\nhref=\"https://doc.toasttab.com/doc/devguide/apiUpdatingInventoryInformation.html\">Updating stock API</a>.          \n"
+          readOnly: true
+          enum:
+          - VALID
+          - INVALID
+        status:
+          type: string
+          description: 'The inventory status of the menu item. The `status` value can be:
+
+
+            * `IN_STOCK` - The menu item is in stock in the restaurant.
+
+
+            * `QUANTITY` - The menu item is in limited supply. The amount
+
+            of remaining items is indicated by the `quantity` value.
+
+
+            * `OUT_OF_STOCK` - The menu item is no longer in stock and cannot
+
+            be selected for an order.
+
+            '
+          enum:
+          - IN_STOCK
+          - QUANTITY
+          - OUT_OF_STOCK
+        quantity:
+          type:
+          - number
+          - 'null'
+          description: 'Contains the amount of stock remaining when the menu item
+
+            `status` is `QUANTITY`.
+
+
+            This value is `null` for menu items
+
+            that have a stock staus of `IN_STOCK` or `OUT_OF_STOCK`.
+
+            '
+          format: double
+        multiLocationId:
+          type: string
+          description: 'A consistent identifier that applies to all versions of a menu item
+
+            that is shared across locations.
+
+
+            See <a
+
+            href="https://doc.toasttab.com/doc/devguide/portalToastIdentifiers.html">Toast
+
+            identifiers</a> for more information.
+
+            '
+        versionId:
+          type: string
+          description: 'For future use.
+
+            '
+          format: uuid
+      description: Contains the stock status and quantity information for a menu item.
   securitySchemes:
     oauth2:
       type: oauth2

@@ -387,10 +387,110 @@ paths:
       - Aggregated sales
 components:
   schemas:
-    ReportRequestGuid:
-      description: The Toast platform assigned identifier used to identify a specific analytics reporting data request.
-      format: UUID
-      type: string
+    MetricsReportingData:
+      description: The aggregated sales reporting data.
+      type: object
+      properties:
+        restaurantGuid:
+          description: 'The identifier assigned by the Toast platform used to identify a restaurant location.
+
+            '
+          format: UUID
+          type: string
+        businessDate:
+          description: "The date for the aggregated reporting data. The business \nday uses the YYYYMMDD format. For example, `20220824`.\n"
+          format: integer
+          type: string
+        guestCount:
+          description: 'The total number of guests recorded across all orders.
+
+            '
+          format: integer
+          type: number
+        voidOrdersCount:
+          description: The total number of orders with at least one voided item.
+          format: integer
+          type: number
+        discountOrderCount:
+          description: The total number of orders that have at least one discount.
+          format: integer
+          type: number
+        ordersCount:
+          description: 'The total number of orders that were not voided.
+
+            '
+          format: integer
+          type: number
+        openOrderCount:
+          description: The total number of open orders.
+          format: integer
+          type: number
+        closedOrderCount:
+          description: The total number of closed orders.
+          format: integer
+          type: number
+        netSalesAmount:
+          description: "The total sales, excluding tax, gratuity, tips, discounts, refunds, and \ndeferred amounts.\n"
+          format: double
+          type: number
+        grossSalesAmount:
+          description: The total sales, including discounts and refunds.
+          format: double
+          type: number
+        discountAmount:
+          description: The total amount of discounts for orders.
+          format: double
+          type: number
+        voidOrdersAmount:
+          description: The total amount of voided items.
+          format: double
+          type: number
+        refundAmount:
+          description: The total amount of refunded sales.
+          format: double
+          type: number
+        avgOrderValue:
+          description: The average amount for an order.
+          format: double
+          type: number
+        revenueCenter:
+          description: "The revenue center for the data. This property only appears when the \nrequest for reporting data includes the `groupBy` property with\nvalue `REVENUE_CENTER`.\n"
+          type: string
+        diningOption:
+          description: "The dining option for the data. This property only appears when the \nrequest for reporting data includes the `groupBy` property with\nvalue `DINING_OPTION`.\n"
+          type: string
+        orderSource:
+          description: "The method used to place an order, also known as the order source. This property\nonly appears when the request for reporting data includes the `groupBy` property \nwith value `ORDER_SOURCE`.\n\nValid values:\n* `API`\n* `BRANDED_ONLINE_ORDERING`\n* `CALLER_ID`\n* `CATERING`\n* `CATERING_ONLINE_ORDERING`\n* `GOOGLE`\n* `GRUBHUB` (deprecated)\n* `IN_STORE`\n* `INVOICE`\n* `KIOSK`\n* `ONLINE`\n* `ORDER_AND_PAY_AT_TABLE`\n* `TOAST_LOCAL`\n* `TOAST_PICKUP_APP`\n* `TOAST_TABLES`\n"
+        businessHour:
+          description: "The hour the data represents. This property only appears when the `aggregateBy` \nquery parameter is set to `HOUR` in the `POST` request for creating the reporting\nmetrics request. The hour number corresponds to the 24 hours of the day, starting \nat 0 and ending at 23.\n"
+          format: integer
+          type: string
+        hourlyJobTotalHours:
+          description: 'The total hours worked by employees with hourly jobs. This does not include breaks.
+
+            '
+          format: double
+          type: string
+        hourlyJobTotalPay:
+          description: 'The total wages earned by employees with hourly jobs, including overtime pay. This does not include tips.
+
+            '
+          format: double
+          type: string
+        hourlyJobSalesPerLaborHour:
+          description: 'The average net sales for each hour worked by employees with hourly jobs.
+
+            '
+          format: double
+          type: string
+        restaurantName:
+          description: 'The restaurant''s name. This property is only included when
+
+            the `fetchRestaurantNames` parameter is set to `true` in the `GET` request.
+
+            '
+          format: string
+          type: string
     ReportingDataInProgress:
       description: The Toast platform is in the process of gathering the reporting data. Try the request again at a later time.
       type: object
@@ -507,110 +607,10 @@ components:
         canRetry:
           description: Reserved for future use.
           type: string
-    MetricsReportingData:
-      description: The aggregated sales reporting data.
-      type: object
-      properties:
-        restaurantGuid:
-          description: 'The identifier assigned by the Toast platform used to identify a restaurant location.
-
-            '
-          format: UUID
-          type: string
-        businessDate:
-          description: "The date for the aggregated reporting data. The business \nday uses the YYYYMMDD format. For example, `20220824`.\n"
-          format: integer
-          type: string
-        guestCount:
-          description: 'The total number of guests recorded across all orders.
-
-            '
-          format: integer
-          type: number
-        voidOrdersCount:
-          description: The total number of orders with at least one voided item.
-          format: integer
-          type: number
-        discountOrderCount:
-          description: The total number of orders that have at least one discount.
-          format: integer
-          type: number
-        ordersCount:
-          description: 'The total number of orders that were not voided.
-
-            '
-          format: integer
-          type: number
-        openOrderCount:
-          description: The total number of open orders.
-          format: integer
-          type: number
-        closedOrderCount:
-          description: The total number of closed orders.
-          format: integer
-          type: number
-        netSalesAmount:
-          description: "The total sales, excluding tax, gratuity, tips, discounts, refunds, and \ndeferred amounts.\n"
-          format: double
-          type: number
-        grossSalesAmount:
-          description: The total sales, including discounts and refunds.
-          format: double
-          type: number
-        discountAmount:
-          description: The total amount of discounts for orders.
-          format: double
-          type: number
-        voidOrdersAmount:
-          description: The total amount of voided items.
-          format: double
-          type: number
-        refundAmount:
-          description: The total amount of refunded sales.
-          format: double
-          type: number
-        avgOrderValue:
-          description: The average amount for an order.
-          format: double
-          type: number
-        revenueCenter:
-          description: "The revenue center for the data. This property only appears when the \nrequest for reporting data includes the `groupBy` property with\nvalue `REVENUE_CENTER`.\n"
-          type: string
-        diningOption:
-          description: "The dining option for the data. This property only appears when the \nrequest for reporting data includes the `groupBy` property with\nvalue `DINING_OPTION`.\n"
-          type: string
-        orderSource:
-          description: "The method used to place an order, also known as the order source. This property\nonly appears when the request for reporting data includes the `groupBy` property \nwith value `ORDER_SOURCE`.\n\nValid values:\n* `API`\n* `BRANDED_ONLINE_ORDERING`\n* `CALLER_ID`\n* `CATERING`\n* `CATERING_ONLINE_ORDERING`\n* `GOOGLE`\n* `GRUBHUB` (deprecated)\n* `IN_STORE`\n* `INVOICE`\n* `KIOSK`\n* `ONLINE`\n* `ORDER_AND_PAY_AT_TABLE`\n* `TOAST_LOCAL`\n* `TOAST_PICKUP_APP`\n* `TOAST_TABLES`\n"
-        businessHour:
-          description: "The hour the data represents. This property only appears when the `aggregateBy` \nquery parameter is set to `HOUR` in the `POST` request for creating the reporting\nmetrics request. The hour number corresponds to the 24 hours of the day, starting \nat 0 and ending at 23.\n"
-          format: integer
-          type: string
-        hourlyJobTotalHours:
-          description: 'The total hours worked by employees with hourly jobs. This does not include breaks.
-
-            '
-          format: double
-          type: string
-        hourlyJobTotalPay:
-          description: 'The total wages earned by employees with hourly jobs, including overtime pay. This does not include tips.
-
-            '
-          format: double
-          type: string
-        hourlyJobSalesPerLaborHour:
-          description: 'The average net sales for each hour worked by employees with hourly jobs.
-
-            '
-          format: double
-          type: string
-        restaurantName:
-          description: 'The restaurant''s name. This property is only included when
-
-            the `fetchRestaurantNames` parameter is set to `true` in the `GET` request.
-
-            '
-          format: string
-          type: string
+    ReportRequestGuid:
+      description: The Toast platform assigned identifier used to identify a specific analytics reporting data request.
+      format: UUID
+      type: string
   securitySchemes:
     oauth2:
       description: "Access to Toast APIs, specific endpoints, \nand specific API endpoint operations is \ncontrolled by the scopes that are associated \nwith your API account. \n\nA full reference for Toast API scopes and \ntheir capabilities can be found in the\n[_Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html).\n"

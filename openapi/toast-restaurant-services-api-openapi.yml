@@ -131,19 +131,6 @@ paths:
         - config:read
 components:
   schemas:
-    ToastReference:
-      type: object
-      description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID.
-      required:
-      - guid
-      - entityType
-      properties:
-        guid:
-          description: The GUID maintained by the Toast POS.
-          type: string
-        entityType:
-          description: The type of object this is.
-          type: string
     RestaurantService:
       type: object
       allOf:
@@ -157,6 +144,19 @@ components:
               `Dinner`).
 
               '
+    ToastReference:
+      type: object
+      description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID.
+      required:
+      - guid
+      - entityType
+      properties:
+        guid:
+          description: The GUID maintained by the Toast POS.
+          type: string
+        entityType:
+          description: The type of object this is.
+          type: string
   securitySchemes:
     oauth2:
       description: "Access to Toast APIs, specific endpoints, \nand specific API endpoint operations is \ncontrolled by the scopes that are associated \nwith your API account. \nA full reference for Toast API scopes and \ntheir capabilities can be found in the\n[_Toast Developer Guide_](https://doc.toasttab.com/doc/devguide/apiScopes.html).\n"

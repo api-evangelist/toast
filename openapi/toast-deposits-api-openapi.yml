@@ -80,31 +80,6 @@ paths:
       - Deposits
 components:
   schemas:
-    ToastReference:
-      type: object
-      description: 'Identifying information about a Toast POS entity.
-
-        '
-      required:
-      - guid
-      - entityType
-      properties:
-        guid:
-          description: The GUID assigned to the entity by the Toast POS.
-          type: string
-        entityType:
-          description: The category of the Toast POS object.
-          type: string
-    ExternalReference:
-      type: object
-      description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID or a partner's identifier.
-      allOf:
-      - $ref: '#/components/schemas/ToastReference'
-      - type: object
-        properties:
-          externalId:
-            description: External identifier string that is prefixed by the naming authority.
-            type: string
     Deposit:
       type: object
       description: 'Information about an event in which a restaurant employee removes
@@ -143,6 +118,16 @@ components:
             $ref: '#/components/schemas/ExternalReference'
           creator:
             $ref: '#/components/schemas/ToastReference'
+    ExternalReference:
+      type: object
+      description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID or a partner's identifier.
+      allOf:
+      - $ref: '#/components/schemas/ToastReference'
+      - type: object
+        properties:
+          externalId:
+            description: External identifier string that is prefixed by the naming authority.
+            type: string
     Error:
       required:
       - status
@@ -155,6 +140,21 @@ components:
         message:
           type: string
           description: A message that describes the error.
+    ToastReference:
+      type: object
+      description: 'Identifying information about a Toast POS entity.
+
+        '
+      required:
+      - guid
+      - entityType
+      properties:
+        guid:
+          description: The GUID assigned to the entity by the Toast POS.
+          type: string
+        entityType:
+          description: The category of the Toast POS object.
+          type: string
   securitySchemes:
     cashMgmtRead:
       type: oauth2

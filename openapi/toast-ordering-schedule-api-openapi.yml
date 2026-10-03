@@ -38,6 +38,56 @@ paths:
         - digital_schedule:read
 components:
   schemas:
+    DayPeriod:
+      type: object
+      description: 'Holds information about the specific day and time range when the restaurant location accepts online orders.
+
+        '
+      properties:
+        day:
+          description: The day the online ordering schedule is returned for.
+          type: string
+          enum:
+          - MONDAY
+          - TUESDAY
+          - WEDNESDAY
+          - THURSDAY
+          - FRIDAY
+          - SATURDAY
+          - SUNDAY
+        timeRanges:
+          description: Contains a key value pair detailing the start and end time for online ordering in HH:MM format.
+          type: array
+          items:
+            $ref: '#/components/schemas/TimeRange'
+    OverrideTimeRanges:
+      type: object
+      description: 'The time range when the planned override starts and ends.
+
+        '
+      properties:
+        start:
+          description: The local time in HH:MM format when the override starts.
+          type: string
+          format: time
+        end:
+          description: The local time in HH:MM format when the override ends.
+          type: string
+          format: time
+    TimeRange:
+      type: object
+      description: 'The time range when the restaurant is accepting online orders.
+
+        '
+      properties:
+        start:
+          type: string
+          format: time
+          description: The local time in HH:MM format when the restaurant's online ordering hours start.
+        end:
+          type: string
+          format: time
+          description: The local time in HH:MM format when the restaurant's online ordering hours end.
     ServicePeriod:
       type: object
       description: 'An array of `servicePeriods` objects that contain information about the days and times when the restaurant location accepts online orders.
@@ -84,42 +134,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OverrideTimeRanges'
-    DayPeriod:
-      type: object
-      description: 'Holds information about the specific day and time range when the restaurant location accepts online orders.
-
-        '
-      properties:
-        day:
-          description: The day the online ordering schedule is returned for.
-          type: string
-          enum:
-          - MONDAY
-          - TUESDAY
-          - WEDNESDAY
-          - THURSDAY
-          - FRIDAY
-          - SATURDAY
-          - SUNDAY
-        timeRanges:
-          description: Contains a key value pair detailing the start and end time for online ordering in HH:MM format.
-          type: array
-          items:
-            $ref: '#/components/schemas/TimeRange'
-    OverrideTimeRanges:
-      type: object
-      description: 'The time range when the planned override starts and ends.
-
-        '
-      properties:
-        start:
-          description: The local time in HH:MM format when the override starts.
-          type: string
-          format: time
-        end:
-          description: The local time in HH:MM format when the override ends.
-          type: string
-          format: time
     OrderingSchedule:
       type: object
       description: 'A representation of an array of `servicePeriods` objects.
@@ -164,20 +178,6 @@ components:
             '
           type: string
           example: America/New_York
-    TimeRange:
-      type: object
-      description: 'The time range when the restaurant is accepting online orders.
-
-        '
-      properties:
-        start:
-          type: string
-          format: time
-          description: The local time in HH:MM format when the restaurant's online ordering hours start.
-        end:
-          type: string
-          format: time
-          description: The local time in HH:MM format when the restaurant's online ordering hours end.
   securitySchemes:
     oauth2:
       description: 'Access to Toast APIs, specific endpoints,
