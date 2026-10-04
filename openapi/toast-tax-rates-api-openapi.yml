@@ -144,19 +144,6 @@ components:
         pattern:
           description: Specifies whether the price range is part of an incomplete set of ranges that establish an algorithm that you can use to calculate tax amounts.
           type: boolean
-    ToastReference:
-      type: object
-      description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID.
-      required:
-      - guid
-      - entityType
-      properties:
-        guid:
-          description: The GUID maintained by the Toast POS.
-          type: string
-        entityType:
-          description: The type of object this is.
-          type: string
     TaxRate:
       type: object
       allOf:
@@ -246,6 +233,19 @@ components:
               '
             items:
               $ref: '#/components/schemas/ConditionalTaxRate'
+    ToastReference:
+      type: object
+      description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID.
+      required:
+      - guid
+      - entityType
+      properties:
+        guid:
+          description: The GUID maintained by the Toast POS.
+          type: string
+        entityType:
+          description: The type of object this is.
+          type: string
     ConditionalTaxRate:
       type: object
       description: 'A conditional tax rate that overrides the default `rate`

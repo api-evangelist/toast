@@ -38,6 +38,27 @@ paths:
         - digital_schedule:read
 components:
   schemas:
+    ServicePeriod:
+      type: object
+      description: 'An array of `servicePeriods` objects that contain information about the days and times when the restaurant location accepts online orders.
+
+        '
+      properties:
+        diningOptionBehavior:
+          description: 'The dining option behavior the online ordering schedule is returned for. Options are TAKE_OUT or DELIVERY. First-party delivery must be enabled to display DELIVERY hours.
+
+            '
+          type: string
+          enum:
+          - TAKE_OUT
+          - DELIVERY
+        dayPeriods:
+          description: 'An array of `DayPeriods` objects that contain information about the specific day and time range when the restaurant accepts online orders.
+
+            '
+          type: array
+          items:
+            $ref: '#/components/schemas/DayPeriod'
     DayPeriod:
       type: object
       description: 'Holds information about the specific day and time range when the restaurant location accepts online orders.
@@ -60,80 +81,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TimeRange'
-    OverrideTimeRanges:
-      type: object
-      description: 'The time range when the planned override starts and ends.
-
-        '
-      properties:
-        start:
-          description: The local time in HH:MM format when the override starts.
-          type: string
-          format: time
-        end:
-          description: The local time in HH:MM format when the override ends.
-          type: string
-          format: time
-    TimeRange:
-      type: object
-      description: 'The time range when the restaurant is accepting online orders.
-
-        '
-      properties:
-        start:
-          type: string
-          format: time
-          description: The local time in HH:MM format when the restaurant's online ordering hours start.
-        end:
-          type: string
-          format: time
-          description: The local time in HH:MM format when the restaurant's online ordering hours end.
-    ServicePeriod:
-      type: object
-      description: 'An array of `servicePeriods` objects that contain information about the days and times when the restaurant location accepts online orders.
-
-        '
-      properties:
-        diningOptionBehavior:
-          description: 'The dining option behavior the online ordering schedule is returned for. Options are TAKE_OUT or DELIVERY. First-party delivery must be enabled to display DELIVERY hours.
-
-            '
-          type: string
-          enum:
-          - TAKE_OUT
-          - DELIVERY
-        dayPeriods:
-          description: 'An array of `DayPeriods` objects that contain information about the specific day and time range when the restaurant accepts online orders.
-
-            '
-          type: array
-          items:
-            $ref: '#/components/schemas/DayPeriod'
-    DateOverride:
-      type: object
-      description: 'An array of `Overrides` objects that indicate the specific days and times when the restaurant''s online ordering schedule is different from its hours of operation.
-
-        '
-      properties:
-        description:
-          description: Description of the planned override.
-          type: string
-        diningOptionBehavior:
-          description: The `diningOptionBehavior` the override applies to. Can be TAKE_OUT or DELIVERY or both.
-          type: array
-          items:
-            type: string
-            enum:
-            - TAKE_OUT
-            - DELIVERY
-        businessDate:
-          description: The day when the override applies in YYYYMMDD format.
-          type: integer
-        timeRanges:
-          description: The time range when the override starts and ends.
-          type: array
-          items:
-            $ref: '#/components/schemas/OverrideTimeRanges'
     OrderingSchedule:
       type: object
       description: 'A representation of an array of `servicePeriods` objects.
@@ -178,6 +125,59 @@ components:
             '
           type: string
           example: America/New_York
+    TimeRange:
+      type: object
+      description: 'The time range when the restaurant is accepting online orders.
+
+        '
+      properties:
+        start:
+          type: string
+          format: time
+          description: The local time in HH:MM format when the restaurant's online ordering hours start.
+        end:
+          type: string
+          format: time
+          description: The local time in HH:MM format when the restaurant's online ordering hours end.
+    OverrideTimeRanges:
+      type: object
+      description: 'The time range when the planned override starts and ends.
+
+        '
+      properties:
+        start:
+          description: The local time in HH:MM format when the override starts.
+          type: string
+          format: time
+        end:
+          description: The local time in HH:MM format when the override ends.
+          type: string
+          format: time
+    DateOverride:
+      type: object
+      description: 'An array of `Overrides` objects that indicate the specific days and times when the restaurant''s online ordering schedule is different from its hours of operation.
+
+        '
+      properties:
+        description:
+          description: Description of the planned override.
+          type: string
+        diningOptionBehavior:
+          description: The `diningOptionBehavior` the override applies to. Can be TAKE_OUT or DELIVERY or both.
+          type: array
+          items:
+            type: string
+            enum:
+            - TAKE_OUT
+            - DELIVERY
+        businessDate:
+          description: The day when the override applies in YYYYMMDD format.
+          type: integer
+        timeRanges:
+          description: The time range when the override starts and ends.
+          type: array
+          items:
+            $ref: '#/components/schemas/OverrideTimeRanges'
   securitySchemes:
     oauth2:
       description: 'Access to Toast APIs, specific endpoints,

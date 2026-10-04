@@ -226,86 +226,60 @@ components:
 
             '
           example: 2022-05-17 10:21:38.008000+00:00
-    RestaurantInfo:
+    Delivery:
       type: object
-      description: 'Information about the configuration of a restaurant in the Toast
-
-        POS.
-
-        '
+      description: Information about delivery service provided by the restaurant.
       properties:
-        guid:
-          type: string
-        general:
-          $ref: '#/components/schemas/General'
-        urls:
-          $ref: '#/components/schemas/URLs'
-        location:
-          $ref: '#/components/schemas/Location'
-        schedules:
-          $ref: '#/components/schemas/Schedules'
-        delivery:
-          $ref: '#/components/schemas/Delivery'
-        onlineOrdering:
-          $ref: '#/components/schemas/OnlineOrdering'
-        prepTimes:
-          $ref: '#/components/schemas/PrepTimes'
-    Hours:
-      type: object
-      description: 'The period of time that the restaurant offers a service. For
+        enabled:
+          type: boolean
+          description: 'Indicates whether the restaurant provides delivery service
 
-        example, a service might be named "lunch" and it might be offered
-
-        between `10:00:00.000` and `16:00:00.000`.
-
-        '
-      properties:
-        startTime:
-          type: string
-          description: The time of day that the service begins.
-        endTime:
-          type: string
-          description: The time of day that the service ends.
-    DaySchedule:
-      type: object
-      description: 'Information about the services and hours that are scheduled for a
-
-        restaurant during a type of day. For example, a restaurant might
-
-        have different services available on a type of day named
-
-        `weekday` than it does on a type of day named `weekend`.
-
-        '
-      properties:
-        scheduleName:
-          type: string
-          description: The name of the type of day. For example, `weekday`.
-        services:
-          type: array
-          items:
-            $ref: '#/components/schemas/Service'
-          description: 'An array of `Service` objects that are available during the
-
-            type of day.
+            and has enabled the delivery configuration in Toast Web.
 
             '
-        openTime:
-          type: string
-          description: 'The time of day that the first service for the type of day
+        minimum:
+          type: number
+          format: double
+          description: 'The minimum order price that is qualified for delivery. For
 
-            begins. For example, the first service might begin at
+            example, a restaurant might not deliver orders that cost less
 
-            `06:00:00.000`.
+            than $25.00.
 
             '
-        closeTime:
+        area:
           type: string
-          description: 'The time of day that the last service for the type of day
+          description: 'The geographic area in which the restaurant provides delivery
 
-            ends. For example, the last service might end at
+            service. The delivery area is represented by an encoded set
 
-            `02:00:00.000`.
+            of latitude and longitude coordinates that describe a polygon
+
+            area on a map. The coordinates are encoded using the Google
+
+            maps encoded polyline algorithm format. See [more information
+
+            about the way that the encoded polyline algorithm format
+
+            encodes location coordinates]
+
+            (https://developers.google.com/maps/documentation/utilities/polylinealgorithm).
+
+            You can decode the coordinates of the delivery area using any
+
+            software that supports the encoded polyline algorithm format.
+
+            For example, you can decode the coordinates using [the Mapline
+
+            Polyline decoding program]
+
+            (https://github.com/mapbox/polyline). The delivery area
+
+            coordinates are a JSON array of decimal degree latitude and
+
+            longitude pairs. For example,
+
+            `[[42.36083,-71.14798],[42.34028,-71.15673],[42.3272,-71.14386]]`.
 
             '
     PaymentOptions:
@@ -393,288 +367,46 @@ components:
             is delayed before the Toast POS fires it in the kitchen.
 
             '
-    Location:
+    DaySchedule:
       type: object
-      description: Information about the physical location of a restaurant.
-      properties:
-        address1:
-          type: string
-          description: The first line of the street address of the restaurant.
-        address2:
-          type: string
-          description: The second line of the street address of the restaurant.
-        city:
-          type: string
-          description: The city or town of the restaurant. restaurant.
-        stateCode:
-          type: string
-          description: 'Deprecated. Get the state or province of a restaurant in the
+      description: 'Information about the services and hours that are scheduled for a
 
-            `administrativeArea` value.
+        restaurant during a type of day. For example, a restaurant might
 
+        have different services available on a type of day named
 
-            The abbreviation of the state or province of the restaurant.
-
-            '
-        administrativeArea:
-          type: string
-          description: 'The name of the geographical division (for example, state, province,
-
-            or county) that the restaurant is located in.
-
-            '
-        zipCode:
-          type: string
-          description: The ZIP or postal code of the restaurant.
-        country:
-          type: string
-          description: The nation of the restaurant.
-        phone:
-          type: string
-        phoneCountryCode:
-          type: string
-          description: "A numeric code corresponding to one or more countries,\nused as a telephone number prefix when making \ninternational telephone calls.\n"
-        latitude:
-          type: number
-          format: double
-          description: The north/south geographic coordinate of the restaurant, in decimal degrees.
-        longitude:
-          type: number
-          format: double
-          description: The east/west geographic coordinate of the restaurant, in decimal degrees.
-    Service:
-      type: object
-      description: 'A time-based division of the operation of the restaurant. For
-
-        example, a service might be named `lunch` and it might be
-
-        available between specific hours during the day.
+        `weekday` than it does on a type of day named `weekend`.
 
         '
       properties:
-        name:
+        scheduleName:
           type: string
-        hours:
-          $ref: '#/components/schemas/Hours'
-        overnight:
-          type: boolean
-          description: "Indicates whether any portion of the period of time that a\nservice is available occurs after 00:00 (midnight) and before\nthe business day cutoff time for the restaurant which is \navailable in the `closeoutHour` property. An\novernight shift spans two calendar dates but occurs during\none business day.\n"
-    URLs:
-      type: object
-      description: Web addresses for the restaurant.
-      properties:
-        website:
+          description: The name of the type of day. For example, `weekday`.
+        services:
+          type: array
+          items:
+            $ref: '#/components/schemas/Service'
+          description: 'An array of `Service` objects that are available during the
+
+            type of day.
+
+            '
+        openTime:
           type: string
-          description: The primary website for the restaurant.
-        facebook:
+          description: 'The time of day that the first service for the type of day
+
+            begins. For example, the first service might begin at
+
+            `06:00:00.000`.
+
+            '
+        closeTime:
           type: string
-          description: A Facebook™ page for the restaurant.
-        twitter:
-          type: string
-          description: A Twitter™ handle for the restaurant.
-        orderOnline:
-          type: string
-          description: A URL for the online ordering site for the restaurant.
-        purchaseGiftCard:
-          type: string
-          description: A URL for the gift card purchasing site for the restaurant.
-        checkGiftCard:
-          type: string
-          description: A URL for a site at which guests can find balances and other information about gift cards.
-    Delivery:
-      type: object
-      description: Information about delivery service provided by the restaurant.
-      properties:
-        enabled:
-          type: boolean
-          description: 'Indicates whether the restaurant provides delivery service
+          description: 'The time of day that the last service for the type of day
 
-            and has enabled the delivery configuration in Toast Web.
+            ends. For example, the last service might end at
 
-            '
-        minimum:
-          type: number
-          format: double
-          description: 'The minimum order price that is qualified for delivery. For
-
-            example, a restaurant might not deliver orders that cost less
-
-            than $25.00.
-
-            '
-        area:
-          type: string
-          description: 'The geographic area in which the restaurant provides delivery
-
-            service. The delivery area is represented by an encoded set
-
-            of latitude and longitude coordinates that describe a polygon
-
-            area on a map. The coordinates are encoded using the Google
-
-            maps encoded polyline algorithm format. See [more information
-
-            about the way that the encoded polyline algorithm format
-
-            encodes location coordinates]
-
-            (https://developers.google.com/maps/documentation/utilities/polylinealgorithm).
-
-            You can decode the coordinates of the delivery area using any
-
-            software that supports the encoded polyline algorithm format.
-
-            For example, you can decode the coordinates using [the Mapline
-
-            Polyline decoding program]
-
-            (https://github.com/mapbox/polyline). The delivery area
-
-            coordinates are a JSON array of decimal degree latitude and
-
-            longitude pairs. For example,
-
-            `[[42.36083,-71.14798],[42.34028,-71.15673],[42.3272,-71.14386]]`.
-
-            '
-    WeekSchedule:
-      type: object
-      description: "The day schedule used for each day of the week. A day schedule is \nthe set of services (for example, \"lunch\") that a restaurant \noffers and the hours that it offers each one. If a day of the \nweek value in this object is `null`, the restaurant is closed on \nthat day. Values for each day of the week are identifiers for day \nschedules in the map of `DaySchedule` objects in the \n`daySchedules` value of the `Schedules` object.\n"
-      properties:
-        monday:
-          type: string
-          description: 'A key identifier for the `DaySchedule` object
-
-            that represents the services and hours for the restaurant on
-
-            this day of the week.
-
-            '
-        tuesday:
-          type: string
-          description: 'A key identifier for the `DaySchedule` object
-
-            that represents the services and hours for the restaurant on
-
-            this day of the week.
-
-            '
-        wednesday:
-          type: string
-          description: 'A key identifier for the `DaySchedule` object
-
-            that represents the services and hours for the restaurant on
-
-            this day of the week.
-
-            '
-        thursday:
-          type: string
-          description: 'A key identifier for the `DaySchedule` object
-
-            that represents the services and hours for the restaurant on
-
-            this day of the week.
-
-            '
-        friday:
-          type: string
-          description: 'A key identifier for the `DaySchedule` object
-
-            that represents the services and hours for the restaurant on
-
-            this day of the week.
-
-            '
-        saturday:
-          type: string
-          description: 'A key identifier for the `DaySchedule` object
-
-            that represents the services and hours for the restaurant on
-
-            this day of the week.
-
-            '
-        sunday:
-          type: string
-          description: 'A key identifier for the `DaySchedule` object
-
-            that represents the services and hours for the restaurant on
-
-            this day of the week.
-
-            '
-    DeliveryPaymentOptions:
-      type: object
-      description: 'Information about the forms of payment that the restaurant will
-
-        accept for delivery orders.
-
-        '
-      properties:
-        cash:
-          type: boolean
-          description: 'Indicates whether the restaurant accepts cash payment for
-
-            delivery orders that are placed online.
-
-            '
-        ccSameDay:
-          type: boolean
-          description: 'Indicates whether the restaurant accepts online credit card
-
-            payment for delivery orders that are delivered on the same
-
-            day.
-
-            '
-        ccFuture:
-          type: boolean
-          description: 'Indicates whether the restaurant accepts online credit card
-
-            payment for delivery orders that are to be delivered on a day
-
-            after the guest places the order.
-
-            '
-    TakeoutPaymentOptions:
-      type: object
-      description: 'Information about the forms of payment that the restaurant will
-
-        accept for orders that a guest picks up in person.
-
-        '
-      properties:
-        cash:
-          type: boolean
-          description: 'Indicates whether the restaurant accepts cash payment for
-
-            takeout orders that are placed online.
-
-            '
-        ccSameDay:
-          type: boolean
-          description: 'Indicates whether the restaurant accepts online credit card
-
-            payment for takeout orders that the guest will pick up on
-
-            the same day.
-
-            '
-        ccFuture:
-          type: boolean
-          description: 'Indicates whether the restaurant accepts online credit card
-
-            payment for takeout orders that the guest will pick up on
-
-            a day after the guest places the order.
-
-            '
-        ccInStore:
-          type: boolean
-          description: 'Indicates whether the restaurant accepts credit card payment
-
-            at the time the guest picks up a takeout order.
+            `02:00:00.000`.
 
             '
     Schedules:
@@ -754,6 +486,185 @@ components:
             accepts for online orders.
 
             '
+    Service:
+      type: object
+      description: 'A time-based division of the operation of the restaurant. For
+
+        example, a service might be named `lunch` and it might be
+
+        available between specific hours during the day.
+
+        '
+      properties:
+        name:
+          type: string
+        hours:
+          $ref: '#/components/schemas/Hours'
+        overnight:
+          type: boolean
+          description: "Indicates whether any portion of the period of time that a\nservice is available occurs after 00:00 (midnight) and before\nthe business day cutoff time for the restaurant which is \navailable in the `closeoutHour` property. An\novernight shift spans two calendar dates but occurs during\none business day.\n"
+    DeliveryPaymentOptions:
+      type: object
+      description: 'Information about the forms of payment that the restaurant will
+
+        accept for delivery orders.
+
+        '
+      properties:
+        cash:
+          type: boolean
+          description: 'Indicates whether the restaurant accepts cash payment for
+
+            delivery orders that are placed online.
+
+            '
+        ccSameDay:
+          type: boolean
+          description: 'Indicates whether the restaurant accepts online credit card
+
+            payment for delivery orders that are delivered on the same
+
+            day.
+
+            '
+        ccFuture:
+          type: boolean
+          description: 'Indicates whether the restaurant accepts online credit card
+
+            payment for delivery orders that are to be delivered on a day
+
+            after the guest places the order.
+
+            '
+    URLs:
+      type: object
+      description: Web addresses for the restaurant.
+      properties:
+        website:
+          type: string
+          description: The primary website for the restaurant.
+        facebook:
+          type: string
+          description: A Facebook™ page for the restaurant.
+        twitter:
+          type: string
+          description: A Twitter™ handle for the restaurant.
+        orderOnline:
+          type: string
+          description: A URL for the online ordering site for the restaurant.
+        purchaseGiftCard:
+          type: string
+          description: A URL for the gift card purchasing site for the restaurant.
+        checkGiftCard:
+          type: string
+          description: A URL for a site at which guests can find balances and other information about gift cards.
+    WeekSchedule:
+      type: object
+      description: "The day schedule used for each day of the week. A day schedule is \nthe set of services (for example, \"lunch\") that a restaurant \noffers and the hours that it offers each one. If a day of the \nweek value in this object is `null`, the restaurant is closed on \nthat day. Values for each day of the week are identifiers for day \nschedules in the map of `DaySchedule` objects in the \n`daySchedules` value of the `Schedules` object.\n"
+      properties:
+        monday:
+          type: string
+          description: 'A key identifier for the `DaySchedule` object
+
+            that represents the services and hours for the restaurant on
+
+            this day of the week.
+
+            '
+        tuesday:
+          type: string
+          description: 'A key identifier for the `DaySchedule` object
+
+            that represents the services and hours for the restaurant on
+
+            this day of the week.
+
+            '
+        wednesday:
+          type: string
+          description: 'A key identifier for the `DaySchedule` object
+
+            that represents the services and hours for the restaurant on
+
+            this day of the week.
+
+            '
+        thursday:
+          type: string
+          description: 'A key identifier for the `DaySchedule` object
+
+            that represents the services and hours for the restaurant on
+
+            this day of the week.
+
+            '
+        friday:
+          type: string
+          description: 'A key identifier for the `DaySchedule` object
+
+            that represents the services and hours for the restaurant on
+
+            this day of the week.
+
+            '
+        saturday:
+          type: string
+          description: 'A key identifier for the `DaySchedule` object
+
+            that represents the services and hours for the restaurant on
+
+            this day of the week.
+
+            '
+        sunday:
+          type: string
+          description: 'A key identifier for the `DaySchedule` object
+
+            that represents the services and hours for the restaurant on
+
+            this day of the week.
+
+            '
+    Hours:
+      type: object
+      description: 'The period of time that the restaurant offers a service. For
+
+        example, a service might be named "lunch" and it might be offered
+
+        between `10:00:00.000` and `16:00:00.000`.
+
+        '
+      properties:
+        startTime:
+          type: string
+          description: The time of day that the service begins.
+        endTime:
+          type: string
+          description: The time of day that the service ends.
+    RestaurantInfo:
+      type: object
+      description: 'Information about the configuration of a restaurant in the Toast
+
+        POS.
+
+        '
+      properties:
+        guid:
+          type: string
+        general:
+          $ref: '#/components/schemas/General'
+        urls:
+          $ref: '#/components/schemas/URLs'
+        location:
+          $ref: '#/components/schemas/Location'
+        schedules:
+          $ref: '#/components/schemas/Schedules'
+        delivery:
+          $ref: '#/components/schemas/Delivery'
+        onlineOrdering:
+          $ref: '#/components/schemas/OnlineOrdering'
+        prepTimes:
+          $ref: '#/components/schemas/PrepTimes'
     General:
       type: object
       description: 'General information about a restaurant location.
@@ -803,6 +714,95 @@ components:
 
             '
           default: false
+    Location:
+      type: object
+      description: Information about the physical location of a restaurant.
+      properties:
+        address1:
+          type: string
+          description: The first line of the street address of the restaurant.
+        address2:
+          type: string
+          description: The second line of the street address of the restaurant.
+        city:
+          type: string
+          description: The city or town of the restaurant. restaurant.
+        stateCode:
+          type: string
+          description: 'Deprecated. Get the state or province of a restaurant in the
+
+            `administrativeArea` value.
+
+
+            The abbreviation of the state or province of the restaurant.
+
+            '
+        administrativeArea:
+          type: string
+          description: 'The name of the geographical division (for example, state, province,
+
+            or county) that the restaurant is located in.
+
+            '
+        zipCode:
+          type: string
+          description: The ZIP or postal code of the restaurant.
+        country:
+          type: string
+          description: The nation of the restaurant.
+        phone:
+          type: string
+        phoneCountryCode:
+          type: string
+          description: "A numeric code corresponding to one or more countries,\nused as a telephone number prefix when making \ninternational telephone calls.\n"
+        latitude:
+          type: number
+          format: double
+          description: The north/south geographic coordinate of the restaurant, in decimal degrees.
+        longitude:
+          type: number
+          format: double
+          description: The east/west geographic coordinate of the restaurant, in decimal degrees.
+    TakeoutPaymentOptions:
+      type: object
+      description: 'Information about the forms of payment that the restaurant will
+
+        accept for orders that a guest picks up in person.
+
+        '
+      properties:
+        cash:
+          type: boolean
+          description: 'Indicates whether the restaurant accepts cash payment for
+
+            takeout orders that are placed online.
+
+            '
+        ccSameDay:
+          type: boolean
+          description: 'Indicates whether the restaurant accepts online credit card
+
+            payment for takeout orders that the guest will pick up on
+
+            the same day.
+
+            '
+        ccFuture:
+          type: boolean
+          description: 'Indicates whether the restaurant accepts online credit card
+
+            payment for takeout orders that the guest will pick up on
+
+            a day after the guest places the order.
+
+            '
+        ccInStore:
+          type: boolean
+          description: 'Indicates whether the restaurant accepts credit card payment
+
+            at the time the guest picks up a takeout order.
+
+            '
   securitySchemes:
     oauth2:
       type: oauth2

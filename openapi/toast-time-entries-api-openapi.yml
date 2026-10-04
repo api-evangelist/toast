@@ -213,6 +213,73 @@ paths:
         - labor:read
 components:
   schemas:
+    TimeEntryBreak:
+      type: object
+      description: 'Information about a period of time that an employee is not
+
+        working during a shift. For example, an employee might take a
+
+        break to eat at some time during a shift. An employee can be paid
+
+        or unpaid for the break period.
+
+        '
+      properties:
+        guid:
+          description: 'The GUID maintained by the Toast platform.
+
+            '
+          type: string
+        breakType:
+          type: object
+          description: "Optional, Toast platform reference to the break type \nassociated with this time entry.\n"
+          $ref: '#/components/schemas/ToastReference'
+        paid:
+          type: boolean
+          description: 'Indicates whether the employee was paid for the break.
+
+            * `true` - The break was a paid break.
+
+            * `false` - The break was an unpaid break.
+
+            '
+        inDate:
+          type: string
+          format: date-time
+          description: 'The date and time that the employee started the break period,
+
+            in UTC.
+
+            '
+        outDate:
+          type: string
+          format: date-time
+          description: 'The date and time that the employee ended the break period
+
+            and returned to work, in UTC.
+
+            '
+        missed:
+          type: boolean
+          description: 'Indicates whether the break was a missed break.
+
+            * `true` - The break was missed.
+
+            * `false` - The break was taken.
+
+            '
+        waived:
+          type: boolean
+          description: 'Indicates whether the break was waived by the employee.
+
+            * `true` - The break was waived.
+
+            * `false` - The break was not waived.
+
+            '
+        auditResponse:
+          type: boolean
+          description: "Indicates whether the employee was asked to take the break.\n\n* `true` - The employee was asked to take the break.\n* `false` - The employee was not asked to take the break.\n\nNull for break types that do not use break acknowledgement \ntracking or when the employee did not complete the audit \nresponse prompt.\n"
     ExternalReference:
       type: object
       description: "A wrapper object with fields that allow reference to a Toast \nplatform entity by Toast GUID or an external identifier.\n"
@@ -428,73 +495,6 @@ components:
 
             '
           type: string
-    TimeEntryBreak:
-      type: object
-      description: 'Information about a period of time that an employee is not
-
-        working during a shift. For example, an employee might take a
-
-        break to eat at some time during a shift. An employee can be paid
-
-        or unpaid for the break period.
-
-        '
-      properties:
-        guid:
-          description: 'The GUID maintained by the Toast platform.
-
-            '
-          type: string
-        breakType:
-          type: object
-          description: "Optional, Toast platform reference to the break type \nassociated with this time entry.\n"
-          $ref: '#/components/schemas/ToastReference'
-        paid:
-          type: boolean
-          description: 'Indicates whether the employee was paid for the break.
-
-            * `true` - The break was a paid break.
-
-            * `false` - The break was an unpaid break.
-
-            '
-        inDate:
-          type: string
-          format: date-time
-          description: 'The date and time that the employee started the break period,
-
-            in UTC.
-
-            '
-        outDate:
-          type: string
-          format: date-time
-          description: 'The date and time that the employee ended the break period
-
-            and returned to work, in UTC.
-
-            '
-        missed:
-          type: boolean
-          description: 'Indicates whether the break was a missed break.
-
-            * `true` - The break was missed.
-
-            * `false` - The break was taken.
-
-            '
-        waived:
-          type: boolean
-          description: 'Indicates whether the break was waived by the employee.
-
-            * `true` - The break was waived.
-
-            * `false` - The break was not waived.
-
-            '
-        auditResponse:
-          type: boolean
-          description: "Indicates whether the employee was asked to take the break.\n\n* `true` - The employee was asked to take the break.\n* `false` - The employee was not asked to take the break.\n\nNull for break types that do not use break acknowledgement \ntracking or when the employee did not complete the audit \nresponse prompt.\n"
   securitySchemes:
     oauth2:
       type: oauth2
