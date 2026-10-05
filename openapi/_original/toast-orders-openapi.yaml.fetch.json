@@ -1,0 +1,12 @@
+{
+ "url": "https://doc.toasttab.com/toast-api-specifications/toast-orders-api.yaml",
+ "requested_url": "https://doc.toasttab.com/toast-api-specifications/toast-orders-api.yaml",
+ "status": 200,
+ "content_type": "binary/octet-stream",
+ "bytes": 140585,
+ "sha256": "b18bcf7b919bd9932d188ccc2eb83ea3a3e7b9ca2b64b5a64928674a720aa6ad",
+ "fetched_at": "2026-10-04",
+ "fetched_by": "APIEvangelist-Harvest/1.0 (+https://apievangelist.com)",
+ "match": "equivalent",
+ "note": "Re-fetched from the provider by verify-openapi-sources.py; the provider's current document describes the same operations (Jaccard 0.938), but the bytes differ, so the archive is an earlier or reformatted copy."
+}
