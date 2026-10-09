@@ -111,3 +111,34 @@ platform_pricing:
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - negotiated
+  units: []
+  plans:
+  - name: Partner integration
+    access: partner
+    model: negotiated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Custom integration
+    access: enterprise
+    model: negotiated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Standard API access
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
+  - name: Analytics API access
+    access: addon
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
