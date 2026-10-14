@@ -1,0 +1,3347 @@
+generated: '2026-10-14'
+method: searched
+checked:
+- https://pos.toasttab.com/partners/directory
+marketplace_apps:
+- marketplace: own
+  channel: partner-built
+  app: toast
+  url: https://pos.toasttab.com/partners/directory
+  app_count: 191
+  adapter: sweep-restaurant-pos.py:gatsby-page-data
+  listed: 191
+  source: https://d2a0efs422ycyj.cloudfront.net/main/1791996119283/public/page-data/partners/directory/page-data.json
+  note: '5 Channel Partners (food-service distributors) counted, not written: resellers, not integrations'
+edges:
+- partner_name: eCard Systems
+  app: eCard Systems
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/ecardsystems
+  category: Loyalty
+  partner_domain: ecardsystems.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Loyalty
+  - Gift Cards
+- partner_name: Kintow
+  app: Kintow
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/kintow
+  category: Accounting
+  partner_domain: kintow.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Accounting
+  - Analytics
+  - Inventory
+- partner_name: Ring
+  app: Ring
+  partner: ring
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/ring
+  category: Kiosk
+  partner_domain: ring.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Kiosk
+  - Labor
+- partner_name: Thanx
+  app: Thanx
+  partner: thanx
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/thanx
+  category: Marketing & CRM
+  partner_domain: thanx.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Marketing & CRM
+  - Loyalty
+  - Gift Cards
+- partner_name: Voicify
+  app: Voicify
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/voicify
+  category: Menu Management
+  partner_domain: voicify.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Menu Management
+  - Online Ordering
+- partner_name: Palona AI
+  app: Palona AI
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/Palonaai
+  category: Marketing & CRM
+  partner_domain: palona.ai
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Marketing & CRM
+  - Online Ordering
+  - Analytics
+- partner_name: Flybuy
+  app: Flybuy
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/flybuy
+  category: Online Ordering
+  partner_domain: flybuy.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Food Rescue US
+  app: Food Rescue US
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/Food-Rescue-US
+  category: Analytics
+  partner_domain: foodrescue.us
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Analytics
+  - Inventory
+  - Accounting
+- partner_name: Nory
+  app: Nory
+  partner: nory
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/nory
+  category: Labor
+  partner_domain: nory.ai
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Labor
+  - Payroll
+  - Inventory
+- partner_name: xtraCHEF for QuickBooks Online
+  app: xtraCHEF for QuickBooks Online
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: provider-built
+  relationship: platform-app
+  direction: provider-built
+  evidence: https://pos.toasttab.com/partners/directory/xtrachef-sync-for-quickbooks-online
+  category: Accounting
+  partner_domain: xtrachef.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Resy
+  app: Resy
+  partner: resy
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/resy
+  category: Reservations
+  partner_domain: resy.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: eTip
+  app: eTip
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/eTip
+  category: Analytics
+  partner_domain: etip.io
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Analytics
+  - Labor
+  - Payroll
+- partner_name: Uber Direct
+  app: Uber Direct
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: provider-built
+  relationship: platform-app
+  direction: provider-built
+  evidence: https://pos.toasttab.com/partners/directory/uber-direct
+  category: Online Ordering
+  partner_domain: toasttab.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Online Ordering
+  - Delivery
+- partner_name: Up 'n Go
+  app: Up 'n Go
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/up-n-go
+  category: Marketing & CRM
+  partner_domain: upngo.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Marketing & CRM
+  - Mobile Pay
+  - Loyalty
+  - Gift Cards
+- partner_name: 'Instacart Business '
+  app: 'Instacart Business '
+  partner: instacart
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/instacartbusiness
+  category: Food Service Distributor
+  partner_domain: instacart.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Food Service Distributor
+  - Inventory
+- partner_name: WineView
+  app: WineView
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/wineview
+  category: Labor
+  partner_domain: wineview.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Labor
+  - Inventory
+  - Analytics
+  - Loyalty
+  - Gift Cards
+  - Property Management
+- partner_name: Onosys
+  app: Onosys
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/Onosys
+  category: Menu Management
+  partner_domain: onosys.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Menu Management
+  - Online Ordering
+- partner_name: unPLUG Dining Inc.
+  app: unPLUG Dining Inc.
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/unplugdining
+  category: Loyalty
+  partner_domain: unplugdining.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Loyalty
+  - Gift Cards
+  - Marketing & CRM
+  - Online Ordering
+- partner_name: Tabbi
+  app: Tabbi
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/tabbi
+  category: Marketing & CRM
+  partner_domain: tabbi.app
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Marketing & CRM
+  - Loyalty
+  - Mobile Pay
+- partner_name: UKG
+  app: UKG
+  partner: ukg
+  partner_match: domain+name-among-holders
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/UKG
+  category: Payroll
+  partner_domain: ukg.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Payroll
+  - Analytics
+  - Labor
+- partner_name: ClassPass
+  app: ClassPass
+  partner: classpass
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/classpass
+  category: Online Ordering
+  partner_domain: classpass.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Online Ordering
+  - Reservations
+- partner_name: Tabbed
+  app: Tabbed
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/tabbed
+  category: Loyalty
+  partner_domain: tabbedinc.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Loyalty
+  - Marketing & CRM
+  - Gift Cards
+  - Mobile Pay
+- partner_name: Gratis
+  app: Gratis
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/gratis
+  category: Gift Cards
+  partner_domain: gratisiq.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Gift Cards
+  - Marketing & CRM
+  - Loyalty
+- partner_name: Crunchtime
+  app: Crunchtime
+  partner: crunchtime
+  partner_match: domain+name-among-holders
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/crunchtime
+  category: Labor
+  partner_domain: crunchtime.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Labor
+  - Analytics
+  - KDS
+- partner_name: Bookkeep
+  app: Bookkeep
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/Bookkeep
+  category: Analytics
+  partner_domain: bookkeep.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Analytics
+  - Accounting
+- partner_name: Actual (formerly Atlas)
+  app: Actual (formerly Atlas)
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/actual
+  category: Payroll
+  partner_domain: onactual.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Payroll
+  - Accounting
+  - Analytics
+- partner_name: Vistify Inc
+  app: Vistify Inc
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/vistify
+  category: Menu Management
+  partner_domain: vistifyinc.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Menu Management
+  - Digital Signage
+- partner_name: MustHaveMenus
+  app: MustHaveMenus
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/musthavemenus
+  category: Marketing & CRM
+  partner_domain: musthavemenus.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Marketing & CRM
+  - Digital Signage
+- partner_name: Loman Ai
+  app: Loman Ai
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/lomanai
+  category: Marketing & CRM
+  partner_domain: loman.ai
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Marketing & CRM
+  - Mobile Pay
+  - Online Ordering
+- partner_name: Yellow Dog Software
+  app: Yellow Dog Software
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/yellowdogsoftware
+  category: Inventory
+  partner_domain: yellowdogsoftware.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Paylocity
+  app: Paylocity
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/paylocity
+  category: Payroll
+  partner_domain: null
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Zuppler
+  app: Zuppler
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/zuppler
+  category: Loyalty
+  partner_domain: zuppler.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Loyalty
+  - Gift Cards
+  - Marketing & CRM
+  - Online Ordering
+- partner_name: eGiftify
+  app: eGiftify
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/eGiftify
+  category: Loyalty
+  partner_domain: egiftify.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Loyalty
+  - Marketing & CRM
+  - Gift Cards
+  - Mobile Pay
+- partner_name: Apicbase
+  app: Apicbase
+  partner: apicbase
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/Apicbase
+  category: Analytics
+  partner_domain: apicbase.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Analytics
+  - Inventory
+  - Menu Management
+- partner_name: Guesst
+  app: Guesst
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/Guesst
+  category: Analytics
+  partner_domain: guesst.co
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Analytics
+  - Accounting
+  - Management
+- partner_name: Intercard
+  app: Intercard
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/Intercard
+  category: Loyalty
+  partner_domain: intercardinc.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Loyalty
+  - Gift Cards
+  - Kiosk
+- partner_name: Rosnet
+  app: Rosnet
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/rosnet
+  category: Analytics
+  partner_domain: rosnet.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Analytics
+  - Inventory
+  - Labor
+- partner_name: Untappd for Business
+  app: Untappd for Business
+  partner: untappd
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/Untappd for Business
+  category: Marketing & CRM
+  partner_domain: untappd.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Marketing & CRM
+  - Analytics
+  - Digital Signage
+  - Menu Management
+- partner_name: WineEmotion USA
+  app: WineEmotion USA
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/WineEmotion USA
+  category: Loyalty
+  partner_domain: wineemotionusa.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Loyalty
+  - Gift Cards
+- partner_name: Wenodo
+  app: Wenodo
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/wenodo
+  category: Analytics
+  partner_domain: wenodo.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Analytics
+  - Accounting
+  - Labor
+- partner_name: Forte
+  app: Forte
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/Forte
+  category: Analytics
+  partner_domain: fortesg.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Analytics
+  - Payroll
+  - Labor
+- partner_name: Twism
+  app: Twism
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/twism
+  category: Loyalty
+  partner_domain: twism.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Loyalty
+  - Gift Cards
+- partner_name: Evention
+  app: Evention
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/evention
+  category: Accounting
+  partner_domain: eventionllc.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Accounting
+  - Analytics
+  - Payroll
+- partner_name: Boxie
+  app: Boxie
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/boxie
+  category: Online Ordering
+  partner_domain: boxielockers.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Online Ordering
+  - Kiosk
+- partner_name: WAND Digital
+  app: WAND Digital
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/wand-digital
+  category: Marketing & CRM
+  partner_domain: wanddigital.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Marketing & CRM
+  - Menu Management
+- partner_name: Incept AI
+  app: Incept AI
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/Incept AI
+  category: Marketing & CRM
+  partner_domain: incept.ai
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Marketing & CRM
+  - Online Ordering
+  - Labor
+- partner_name: Factor4
+  app: Factor4
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/factor4
+  category: Gift Cards
+  partner_domain: factor4gift.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Z Order
+  app: Z Order
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/Z Order
+  category: Kiosk
+  partner_domain: zorder.net
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Kiosk
+  - Labor
+  - Mobile Pay
+- partner_name: Open
+  app: Open
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/Open
+  category: Online Ordering
+  partner_domain: getopen.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Online Ordering
+  - Loyalty
+  - Gift Cards
+  - Marketing & CRM
+- partner_name: Bite
+  app: Bite
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/Bite
+  category: Kiosk
+  partner_domain: getbite.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Resort Data Processing
+  app: Resort Data Processing
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/Resort Data Processing
+  category: Reservations
+  partner_domain: resortdata.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Reservations
+  - Property Management
+- partner_name: WE SCAN
+  app: WE SCAN
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/WE SCAN
+  category: Analytics
+  partner_domain: wescanids.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Analytics
+  - Labor
+  - Security
+- partner_name: Tacit
+  app: Tacit
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/Tacit
+  category: Online Ordering
+  partner_domain: tacitcorporation.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Online Ordering
+  - Mobile Pay
+  - Kiosk
+- partner_name: Trove
+  app: Trove
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/Trove
+  category: Online Ordering
+  partner_domain: paywithtrove.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Online Ordering
+  - Analytics
+- partner_name: DRYVER
+  app: DRYVER
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/DRYVER
+  category: Marketing & CRM
+  partner_domain: repeatreturns.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Marketing & CRM
+  - Loyalty
+  - Gift Cards
+- partner_name: Workstream
+  app: Workstream
+  partner: workstream
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/workstream
+  category: Labor
+  partner_domain: workstream.us
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Labor
+  - Payroll
+- partner_name: Fantuan
+  app: Fantuan
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/fantuan
+  category: Marketing & CRM
+  partner_domain: fantuan.ca
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Marketing & CRM
+  - Online Ordering
+  - Delivery
+  badges:
+  - Featured
+- partner_name: Voucher Connect
+  app: Voucher Connect
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/Voucher Connect
+  category: Loyalty
+  partner_domain: voucherconnect.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Loyalty
+  - Gift Cards
+- partner_name: Edify Systems
+  app: Edify Systems
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/Edify Systems
+  category: Analytics
+  partner_domain: edifysystems.io
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Analytics
+  - Inventory
+- partner_name: Leat
+  app: Leat
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/Leat
+  category: Gift Cards
+  partner_domain: leat.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Gift Cards
+  - Loyalty
+  - Marketing & CRM
+- partner_name: DeliverThat
+  app: DeliverThat
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/DeliverThat
+  category: Delivery
+  partner_domain: ideliverthat.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: ElectriCard Solutions, Inc.
+  app: ElectriCard Solutions, Inc.
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/ElectriCard Solutions, Inc.
+  category: Loyalty
+  partner_domain: electricard.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Loyalty
+  - Gift Cards
+- partner_name: First Delivery
+  app: First Delivery
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/first-delivery
+  category: Delivery
+  partner_domain: firstdelivery.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Lexi
+  app: Lexi
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/lexi
+  category: Marketing & CRM
+  partner_domain: hilexi.ai
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Marketing & CRM
+  - Online Ordering
+- partner_name: Marqii
+  app: Marqii
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/marqii
+  category: Menu Management
+  partner_domain: marqii.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Menu Management
+  - Marketing & CRM
+- partner_name: INFI
+  app: INFI
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/INFI
+  category: Mobile Pay
+  partner_domain: hsforms.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Mobile Pay
+  - Online Ordering
+  - Kiosk
+- partner_name: Menuboard Manager
+  app: Menuboard Manager
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/menuboardmanager
+  category: Digital Signage
+  partner_domain: menuboardmanager.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: EmployeeMetrics
+  app: EmployeeMetrics
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/EmployeeMetrics
+  category: Labor
+  partner_domain: null
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Momos
+  app: Momos
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/Momos
+  category: Analytics
+  partner_domain: momos.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Analytics
+  - Online Ordering
+  - Marketing & CRM
+- partner_name: Paperchase
+  app: Paperchase
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/Paperchase
+  category: Accounting
+  partner_domain: paperchase.ac
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Accounting
+  - Analytics
+  - Payroll
+- partner_name: My Wine Guide
+  app: My Wine Guide
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/my-wine-guide
+  category: Inventory
+  partner_domain: mywineguide.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Inventory
+  - Online Ordering
+  - Menu Management
+- partner_name: Raydiant
+  app: Raydiant
+  partner: raydiant
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/raydiant
+  category: Digital Signage
+  partner_domain: displai.ai
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Nash
+  app: Nash
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/nash
+  category: Delivery
+  partner_domain: usenash.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Boomerang
+  app: Boomerang
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/boomerang
+  category: Loyalty
+  partner_domain: boomerangme.biz
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Peoplevine
+  app: Peoplevine
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/peoplevine
+  category: Marketing & CRM
+  partner_domain: peoplevine.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Marketing & CRM
+  - Loyalty
+  - Mobile Pay
+- partner_name: Fountain
+  app: Fountain
+  partner: fountain-com
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/fountain
+  category: Labor
+  partner_domain: fountain.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: TimeForge
+  app: TimeForge
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/timeforge
+  category: Analytics
+  partner_domain: timeforge.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Analytics
+  - Labor
+- partner_name: Froogal
+  app: Froogal
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/froogal
+  category: Loyalty
+  partner_domain: null
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Loyalty
+  - Marketing & CRM
+  - Gift Cards
+  - Online Ordering
+- partner_name: Appfront
+  app: Appfront
+  partner: null
+  partner_match: null
+  partner_candidate: beengo
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/appfront
+  category: Marketing & CRM
+  partner_domain: appfront.ai
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Marketing & CRM
+  - Loyalty
+  - Online Ordering
+- partner_name: Yelp for restaurants
+  app: Yelp for restaurants
+  partner: yelp
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/yelp-for-restaurants
+  category: Reservations
+  partner_domain: yelp.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Chowly
+  app: Chowly
+  partner: chowly
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/chowly
+  category: Marketing & CRM
+  partner_domain: chowly.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Marketing & CRM
+  - Online Ordering
+- partner_name: Restaurant365
+  app: Restaurant365
+  partner: restaurant365
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/restaurant365
+  category: Inventory
+  partner_domain: restaurant365.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Inventory
+  - Accounting
+- partner_name: TipHaus
+  app: TipHaus
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/tiphaus
+  category: Labor
+  partner_domain: tiphaus.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Labor
+  - Accounting
+- partner_name: DTiQ
+  app: DTiQ
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/dtiq
+  category: Accounting
+  partner_domain: dtiq.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Accounting
+  - Security
+  - Analytics
+- partner_name: Sagacity Golf
+  app: Sagacity Golf
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/sagacity-golf
+  category: Reservations
+  partner_domain: sagacitygolf.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Reservations
+  - Marketing & CRM
+  badges:
+  - Featured
+- partner_name: Cartwheel
+  app: Cartwheel
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/cartwheel
+  category: Delivery
+  partner_domain: trycartwheel.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: GiftRocker
+  app: GiftRocker
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/giftrocker
+  category: Loyalty
+  partner_domain: giftrocker.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Loyalty
+  - Gift Cards
+- partner_name: Uber Eats
+  app: Uber Eats
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: provider-built
+  relationship: platform-app
+  direction: provider-built
+  evidence: https://pos.toasttab.com/partners/directory/uber-eats
+  category: Online Ordering
+  partner_domain: toasttab.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: PreciTaste
+  app: PreciTaste
+  partner: precitaste
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/precitaste
+  category: null
+  partner_domain: precitaste.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  badges:
+  - Featured
+- partner_name: Kickfin
+  app: Kickfin
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/kickfin
+  category: Labor
+  partner_domain: kickfin.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Labor
+  - Payroll
+- partner_name: Stocktake Online
+  app: Stocktake Online
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/stocktake-online
+  category: Inventory
+  partner_domain: stocktake-online.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Opsi
+  app: Opsi
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/opsi
+  category: null
+  partner_domain: opsi.io
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: PourThat
+  app: PourThat
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/pourthat
+  category: Mobile Pay
+  partner_domain: pourthat.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: me&u
+  app: me&u
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/me-u
+  category: Marketing & CRM
+  partner_domain: meandu.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Marketing & CRM
+  - Mobile Pay
+  - Online Ordering
+- partner_name: Checkmate
+  app: Checkmate
+  partner: itsacheckmate
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/itsacheckmate
+  category: Online Ordering
+  partner_domain: itsacheckmate.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Solink
+  app: Solink
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/solink
+  category: Security
+  partner_domain: solink.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Loyalist
+  app: Loyalist
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/loyalist
+  category: Marketing & CRM
+  partner_domain: null
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Butter
+  app: Butter
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/butter
+  category: null
+  partner_domain: butterme.ai
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Tock
+  app: Tock
+  partner: tock
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/tock
+  category: Reservations
+  partner_domain: exploretock.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Reservations
+  - Inventory
+  - Online Ordering
+- partner_name: Red Onion
+  app: Red Onion
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/red-onion
+  category: Analytics
+  partner_domain: redonion.ai
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Analytics
+  - Marketing & CRM
+- partner_name: Bilt Rewards
+  app: Bilt Rewards
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/bilt-rewards
+  category: Loyalty
+  partner_domain: biltrewards.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Adentro
+  app: Adentro
+  partner: adentro
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/adentro
+  category: Analytics
+  partner_domain: adentro.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Analytics
+  - Marketing & CRM
+- partner_name: Incentivio
+  app: Incentivio
+  partner: incentivio
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/incentivio
+  category: Loyalty
+  partner_domain: incentivio.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Loyalty
+  - Gift Cards
+  - Online Ordering
+- partner_name: Klaviyo
+  app: Klaviyo
+  partner: klaviyo
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/klaviyo
+  category: Analytics
+  partner_domain: klaviyo.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Analytics
+  - Marketing & CRM
+- partner_name: Wallboard
+  app: Wallboard
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/wallboard
+  category: Digital Signage
+  partner_domain: wallboard.us
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Drink Exchange
+  app: Drink Exchange
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/drink-exchange
+  category: Inventory
+  partner_domain: 2ly.link
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Inventory
+  - Analytics
+- partner_name: Homebase
+  app: Homebase
+  partner: homebase
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/homebase
+  category: Labor
+  partner_domain: joinhomebase.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Labor
+  - Accounting
+  - Payroll
+- partner_name: NEON
+  app: NEON
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/neonscreens
+  category: Digital Signage
+  partner_domain: null
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Zignyl
+  app: Zignyl
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/zignyl
+  category: Labor
+  partner_domain: zignyl.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Labor
+  - Payroll
+- partner_name: BeerSAVER Systems
+  app: BeerSAVER Systems
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/beersaver-systems
+  category: Inventory
+  partner_domain: usbeersaver.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Inventory
+  - Analytics
+- partner_name: Beverage Metrics
+  app: Beverage Metrics
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/beverage-metrics
+  category: Inventory
+  partner_domain: beveragemetrics.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Inventory
+  - Accounting
+  - Analytics
+- partner_name: WISK
+  app: WISK
+  partner: wisk-ai
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/wisk
+  category: Inventory
+  partner_domain: wisk.ai
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Inventory
+  - Accounting
+  - Analytics
+- partner_name: Savi
+  app: Savi
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/savi
+  category: Security
+  partner_domain: getsavi.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Security
+  - Analytics
+- partner_name: Favor Delivery
+  app: Favor Delivery
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/favor-delivery
+  category: Online Ordering
+  partner_domain: favordelivery.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Push Operations
+  app: Push Operations
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/push-operations
+  category: Labor
+  partner_domain: pushoperations.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Labor
+  - Payroll
+- partner_name: ExpandShare
+  app: ExpandShare
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/expandshare
+  category: Labor
+  partner_domain: expandshare.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Hang
+  app: Hang
+  partner: hang
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/hang
+  category: Analytics
+  partner_domain: hang.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Analytics
+  - Marketing & CRM
+  - Loyalty
+- partner_name: Zero-In
+  app: Zero-In
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/zero-in
+  category: Analytics
+  partner_domain: zero-in.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Analytics
+  - Kiosk
+- partner_name: NEXT
+  app: NEXT
+  partner: null
+  partner_match: null
+  partner_candidate: calendly
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/next
+  category: Accounting
+  partner_domain: calendly.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Accounting
+  - Payroll
+  - Services
+- partner_name: DAVO Sales Tax
+  app: DAVO Sales Tax
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/davo
+  category: Accounting
+  partner_domain: davosalestax.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Craver
+  app: Craver
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/craver
+  category: Mobile Pay
+  partner_domain: hubs.li
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Mobile Pay
+  - Online Ordering
+- partner_name: SoundHound
+  app: SoundHound
+  partner: soundhound
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/soundhound
+  category: Online Ordering
+  partner_domain: soundhound.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: CityCheers
+  app: CityCheers
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/citycheers
+  category: Marketing & CRM
+  partner_domain: citycheersmedia.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Marketing & CRM
+  - Mobile Pay
+- partner_name: Valutec
+  app: Valutec
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/valutec
+  category: Loyalty
+  partner_domain: valuteccardsolutions.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Loyalty
+  - Gift Cards
+- partner_name: Stream
+  app: Stream
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/stream
+  category: Inventory
+  partner_domain: streamorders.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Inventory
+  - Online Ordering
+- partner_name: Deliverect
+  app: Deliverect
+  partner: deliverect
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/deliverect
+  category: Inventory
+  partner_domain: deliverect.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Inventory
+  - Analytics
+  - Online Ordering
+- partner_name: Shipday
+  app: Shipday
+  partner: shipday
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/shipday
+  category: Delivery
+  partner_domain: shipday.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: SynergySuite
+  app: SynergySuite
+  partner: synergysuite
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/synergysuite
+  category: Labor
+  partner_domain: synergysuite.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Labor
+  - Inventory
+  - Analytics
+- partner_name: Spendgo
+  app: Spendgo
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/spendgo
+  category: Marketing & CRM
+  partner_domain: spendgo.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Marketing & CRM
+  - Loyalty
+- partner_name: DoorDash
+  app: DoorDash
+  partner: doordash
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/doordash
+  category: Online Ordering
+  partner_domain: doordash.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: VROMO
+  app: VROMO
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/vromo
+  category: Delivery
+  partner_domain: vromo.io
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Bloom Intelligence
+  app: Bloom Intelligence
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/bloom-intelligence
+  category: Analytics
+  partner_domain: bloomintelligence.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Analytics
+  - Marketing & CRM
+  - Gift Cards
+- partner_name: Omniboost
+  app: Omniboost
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/omniboost
+  category: Hotel
+  partner_domain: null
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Stayntouch
+  app: Stayntouch
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/stayntouch
+  category: Hotel
+  partner_domain: stayntouch.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Mews
+  app: Mews
+  partner: mews-com
+  partner_match: domain+name-among-holders
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/mews
+  category: Hotel
+  partner_domain: mews.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Cloudbeds
+  app: Cloudbeds
+  partner: cloudbeds
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/cloudbeds
+  category: Hotel
+  partner_domain: cloudbeds.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Axial Shift
+  app: Axial Shift
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/axial-shift
+  category: Labor
+  partner_domain: axialshift.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Labor
+  - Accounting
+  - Analytics
+- partner_name: DeliverZero
+  app: DeliverZero
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/deliverzero
+  category: Online Ordering
+  partner_domain: deliverzero.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: ChowNow
+  app: ChowNow
+  partner: chownow
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/chownow
+  category: Marketing & CRM
+  partner_domain: chownow.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Marketing & CRM
+  - Online Ordering
+- partner_name: xtraCHEF
+  app: xtraCHEF
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: provider-built
+  relationship: platform-app
+  direction: provider-built
+  evidence: https://pos.toasttab.com/partners/directory/xtrachef
+  category: Inventory
+  partner_domain: xtrachef.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Inventory
+  - Accounting
+  - Analytics
+- partner_name: Staples
+  app: Staples
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/staples
+  category: Services
+  partner_domain: staplesconnect.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Marketman
+  app: Marketman
+  partner: marketman
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/marketman
+  category: Inventory
+  partner_domain: marketman.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Craftable
+  app: Craftable
+  partner: craftable
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/craftable
+  category: Labor
+  partner_domain: craftable.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Labor
+  - Inventory
+  - Analytics
+- partner_name: SparkPlug
+  app: SparkPlug
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/sparkplug
+  category: Labor
+  partner_domain: sparkplug.app
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Labor
+  - Analytics
+  - Payroll
+- partner_name: Rooam
+  app: Rooam
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/rooam
+  category: Mobile Pay
+  partner_domain: rooam.co
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Mobile Pay
+  - Online Ordering
+- partner_name: Recipe Costing
+  app: Recipe Costing
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/recipe-costing
+  category: Inventory
+  partner_domain: recipe-costing.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Inventory
+  - Accounting
+  - Online Ordering
+- partner_name: Backbar
+  app: Backbar
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/backbar
+  category: Inventory
+  partner_domain: getbackbar.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Inventory
+  - Accounting
+  - Analytics
+- partner_name: Tenzo
+  app: Tenzo
+  partner: tenzo
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/tenzo
+  category: Analytics
+  partner_domain: gotenzo.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Grubhub
+  app: Grubhub
+  partner: grubhub
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/grubhub
+  category: Online Ordering
+  partner_domain: grubhub.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: BeerBoard
+  app: BeerBoard
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/beerboard
+  category: Inventory
+  partner_domain: beerboard.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Inventory
+  - Analytics
+  - Online Ordering
+- partner_name: Ovation
+  app: Ovation
+  partner: ovation
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/ovation
+  category: null
+  partner_domain: ovationup.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: OpenTable
+  app: OpenTable
+  partner: opentable
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/opentable
+  category: Reservations
+  partner_domain: opentable.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: CustomerX.i
+  app: CustomerX.i
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/customerxi
+  category: Analytics
+  partner_domain: customerxi.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Analytics
+  - Marketing & CRM
+- partner_name: Gratuity Solutions
+  app: Gratuity Solutions
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/gratuity-solutions
+  category: Labor
+  partner_domain: gratuitysolutions.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Labor
+  - Accounting
+- partner_name: Mr Yum
+  app: Mr Yum
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/mr-yum
+  category: Marketing & CRM
+  partner_domain: mryum.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Marketing & CRM
+  - Mobile Pay
+- partner_name: MarginEdge
+  app: MarginEdge
+  partner: marginedge
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/marginedge
+  category: Inventory
+  partner_domain: marginedge.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Inventory
+  - Accounting
+  - Analytics
+- partner_name: BarTrack
+  app: BarTrack
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/bartrack
+  category: Inventory
+  partner_domain: null
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Inventory
+  - Analytics
+- partner_name: Lunchbox
+  app: Lunchbox
+  partner: lunchbox
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/lunchbox
+  category: Loyalty
+  partner_domain: lunchbox.io
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Loyalty
+  - Gift Cards
+  - Online Ordering
+- partner_name: Yumpingo
+  app: Yumpingo
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/yumpingo
+  category: Analytics
+  partner_domain: yumpingo.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Punchh
+  app: Punchh
+  partner: punchh
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/punchh
+  category: Marketing & CRM
+  partner_domain: punchh.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Marketing & CRM
+  - Loyalty
+- partner_name: SpeedETab
+  app: SpeedETab
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/speedetab
+  category: Mobile Pay
+  partner_domain: speedetab.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: CIRRUS
+  app: CIRRUS
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/cirrus
+  category: Services
+  partner_domain: cirrusled.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Services
+  - Digital Signage
+- partner_name: Fisherman Websites
+  app: Fisherman Websites
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/fisherman-websites
+  category: Online Ordering
+  partner_domain: gofisherman.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: KitchenSync
+  app: KitchenSync
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/kitchensync
+  category: Inventory
+  partner_domain: kitchensync.us
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Inventory
+  - Accounting
+  - Payroll
+- partner_name: sunday
+  app: sunday
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/sunday
+  category: Mobile Pay
+  partner_domain: sundayapp.link
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Peachworks
+  app: Peachworks
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/peachworks
+  category: Labor
+  partner_domain: getbeyond.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Labor
+  - Inventory
+  - Payroll
+- partner_name: Popmenu
+  app: Popmenu
+  partner: popmenu
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/popmenu
+  category: Marketing & CRM
+  partner_domain: popmenu.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Marketing & CRM
+  - Online Ordering
+- partner_name: inKind Capital
+  app: inKind Capital
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/inkind-capital
+  category: Accounting
+  partner_domain: inkindcapital.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Accounting
+  - Loyalty
+  - Mobile Pay
+- partner_name: Shogo
+  app: Shogo
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/shogo
+  category: Accounting
+  partner_domain: shogo.io
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: 7shifts
+  app: 7shifts
+  partner: 7shifts
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/7shifts
+  category: Labor
+  partner_domain: 7shifts.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Sauce
+  app: Sauce
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/sauce
+  category: null
+  partner_domain: getsauce.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Vestwell
+  app: Vestwell
+  partner: vestwell
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/vestwell
+  category: Payroll
+  partner_domain: vestwell.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Sling
+  app: Sling
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/sling
+  category: Labor
+  partner_domain: getsling.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: SERVPRO
+  app: SERVPRO
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/servpro
+  category: Services
+  partner_domain: crownworkspace.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: PourMyBeer
+  app: PourMyBeer
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/pourmybeer
+  category: Inventory
+  partner_domain: pourmybeer.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Olo
+  app: Olo
+  partner: olo
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/olo
+  category: Online Ordering
+  partner_domain: olo.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Como
+  app: Como
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/como
+  category: Marketing & CRM
+  partner_domain: como.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Marketing & CRM
+  - Loyalty
+- partner_name: Paytronix
+  app: Paytronix
+  partner: paytronix
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/paytronix
+  category: Loyalty
+  partner_domain: paytronix.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Loyalty
+  - Gift Cards
+- partner_name: Compeat
+  app: Compeat
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/compeat
+  category: Labor
+  partner_domain: compeat.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Labor
+  - Inventory
+  - Accounting
+- partner_name: Cohesion
+  app: Cohesion
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/cohesion
+  category: Accounting
+  partner_domain: cohesion4restaurants.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Accounting
+  - Payroll
+- partner_name: Hotschedules
+  app: Hotschedules
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/hotschedules
+  category: Labor
+  partner_domain: hotschedules.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Labor
+  - Payroll
+- partner_name: TapMango
+  app: TapMango
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/tapmango
+  category: Loyalty
+  partner_domain: tapmango.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: MonkeySoft Solutions Inc.
+  app: MonkeySoft Solutions Inc.
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/monkeymedia
+  category: null
+  partner_domain: monkeysoftsolutions.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: SwipeIt
+  app: SwipeIt
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/swipeit
+  category: Loyalty
+  partner_domain: swipeit.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Loyalty
+  - Gift Cards
+- partner_name: Smart Transaction Systems
+  app: Smart Transaction Systems
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/smart-transaction-systems
+  category: Loyalty
+  partner_domain: smarttransactions.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Loyalty
+  - Gift Cards
+- partner_name: SevenRooms
+  app: SevenRooms
+  partner: sevenrooms
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/sevenrooms
+  category: Reservations
+  partner_domain: sevenrooms.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Proliant
+  app: Proliant
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/proliant
+  category: Labor
+  partner_domain: proliant.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Labor
+  - Payroll
+- partner_name: LevelUp
+  app: LevelUp
+  partner: levelup
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/level-up
+  category: Loyalty
+  partner_domain: thelevelup.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+- partner_name: Harri
+  app: Harri
+  partner: harri
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/harri
+  category: Labor
+  partner_domain: harri.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Labor
+  - Payroll
+- partner_name: GraTrack
+  app: GraTrack
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/gratrack
+  category: Accounting
+  partner_domain: gratrack.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Accounting
+  - Payroll
+- partner_name: Dolce
+  app: Dolce
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/dolce
+  category: Labor
+  partner_domain: dolcesoftware.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-14'
+  categories:
+  - Labor
+  - Payroll
