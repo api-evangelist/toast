@@ -81,50 +81,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TimeRange'
-    OrderingSchedule:
-      type: object
-      description: 'A representation of an array of `servicePeriods` objects.
-
-        '
-      properties:
-        servicePeriods:
-          description: 'An array of `servicePeriods` objects that contain information about the days and times when the restaurant location accepts online orders.
-
-            '
-          type: array
-          items:
-            $ref: '#/components/schemas/ServicePeriod'
-        overrides:
-          description: 'An array of `override` objects that contain information about planned overrides. `Overrides` only affect online ordering.
-
-            '
-          type: array
-          items:
-            $ref: '#/components/schemas/DateOverride'
-        acceptScheduledOrders:
-          description: 'Indicates whether this restaurant location accepts scheduled orders (future orders).
-
-            '
-          type: boolean
-        scheduledOrderMaxDays:
-          description: 'Number of days an online order can be placed into the future.
-
-            '
-          type: integer
-        lastOrderConfiguration:
-          description: 'Allows guests to place online orders until the restaurant''s closing time or closing time minus prep time.
-
-            '
-          type: string
-          enum:
-          - UNTIL_CLOSING_TIME
-          - UNTIL_PREPTIME_CUTOFF
-        timeZoneId:
-          description: 'The time zone of the restaurant location. This is the same time zone used in the restaurant''s hours of operation.
-
-            '
-          type: string
-          example: America/New_York
     TimeRange:
       type: object
       description: 'The time range when the restaurant is accepting online orders.
@@ -178,6 +134,50 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OverrideTimeRanges'
+    OrderingSchedule:
+      type: object
+      description: 'A representation of an array of `servicePeriods` objects.
+
+        '
+      properties:
+        servicePeriods:
+          description: 'An array of `servicePeriods` objects that contain information about the days and times when the restaurant location accepts online orders.
+
+            '
+          type: array
+          items:
+            $ref: '#/components/schemas/ServicePeriod'
+        overrides:
+          description: 'An array of `override` objects that contain information about planned overrides. `Overrides` only affect online ordering.
+
+            '
+          type: array
+          items:
+            $ref: '#/components/schemas/DateOverride'
+        acceptScheduledOrders:
+          description: 'Indicates whether this restaurant location accepts scheduled orders (future orders).
+
+            '
+          type: boolean
+        scheduledOrderMaxDays:
+          description: 'Number of days an online order can be placed into the future.
+
+            '
+          type: integer
+        lastOrderConfiguration:
+          description: 'Allows guests to place online orders until the restaurant''s closing time or closing time minus prep time.
+
+            '
+          type: string
+          enum:
+          - UNTIL_CLOSING_TIME
+          - UNTIL_PREPTIME_CUTOFF
+        timeZoneId:
+          description: 'The time zone of the restaurant location. This is the same time zone used in the restaurant''s hours of operation.
+
+            '
+          type: string
+          example: America/New_York
   securitySchemes:
     oauth2:
       description: 'Access to Toast APIs, specific endpoints,

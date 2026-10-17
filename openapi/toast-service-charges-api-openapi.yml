@@ -133,6 +133,72 @@ paths:
         - config:read
 components:
   schemas:
+    ExternalReference:
+      type: object
+      allOf:
+      - $ref: '#/components/schemas/ToastReference'
+      - type: object
+        properties:
+          externalId:
+            description: External identifier string, prefixed by the naming authority.
+            type: string
+        description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID or a partner's identifier.
+    ServiceChargeCriteria:
+      description: Describes thresholds for when a service charge should be applied to a check.
+      properties:
+        minCheckAmount:
+          type: number
+          format: double
+          description: The service charge is only applicable if the pre-discount check is at least this amount.
+        delivery:
+          type: boolean
+          description: True if the service charge is only applicable for deliveries.
+        maxCheckAmount:
+          type: number
+          format: double
+          description: The service charge is waived if the pre-discount check amount is more than this amount. A `null` value means this criteria is inapplicable.
+        minDeliveryDistance:
+          type: number
+          format: double
+          description: The service charge is only applicable to deliveries that are at least this distance. A `null` value means this criteria is inapplicable.
+        takeout:
+          type: boolean
+          description: Indicates whether the service charge is automatically applied to orders that have the takeout dining option behavior.
+        dineIn:
+          type: boolean
+          description: Indicates whether the service charge is applied to orders that have the dine-in dining option behavior.
+    TaxTableRow:
+      type: object
+      description: A closed sale amount range that corresponds to a specific tax amount in a tax table.
+      properties:
+        start:
+          description: The start of a sale amount range that corresponds to a specific tax amount in a tax table.
+          type: number
+          format: currency
+        end:
+          description: The end of a sale amount range that corresponds to a specific tax amount in a tax table.
+          type: number
+          format: currency
+        tax:
+          description: The tax amount for the tax table row.
+          type: number
+          format: currency
+        pattern:
+          description: Specifies whether the price range is part of an incomplete set of ranges that establish an algorithm that you can use to calculate tax amounts.
+          type: boolean
+    ToastReference:
+      type: object
+      description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID.
+      required:
+      - guid
+      - entityType
+      properties:
+        guid:
+          description: The GUID maintained by the Toast POS.
+          type: string
+        entityType:
+          description: The type of object this is.
+          type: string
     ServiceCharge:
       type: object
       allOf:
@@ -208,72 +274,6 @@ components:
           taxProrated:
             type: boolean
             description: Supports future functionality.
-    ServiceChargeCriteria:
-      description: Describes thresholds for when a service charge should be applied to a check.
-      properties:
-        minCheckAmount:
-          type: number
-          format: double
-          description: The service charge is only applicable if the pre-discount check is at least this amount.
-        delivery:
-          type: boolean
-          description: True if the service charge is only applicable for deliveries.
-        maxCheckAmount:
-          type: number
-          format: double
-          description: The service charge is waived if the pre-discount check amount is more than this amount. A `null` value means this criteria is inapplicable.
-        minDeliveryDistance:
-          type: number
-          format: double
-          description: The service charge is only applicable to deliveries that are at least this distance. A `null` value means this criteria is inapplicable.
-        takeout:
-          type: boolean
-          description: Indicates whether the service charge is automatically applied to orders that have the takeout dining option behavior.
-        dineIn:
-          type: boolean
-          description: Indicates whether the service charge is applied to orders that have the dine-in dining option behavior.
-    ToastReference:
-      type: object
-      description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID.
-      required:
-      - guid
-      - entityType
-      properties:
-        guid:
-          description: The GUID maintained by the Toast POS.
-          type: string
-        entityType:
-          description: The type of object this is.
-          type: string
-    TaxTableRow:
-      type: object
-      description: A closed sale amount range that corresponds to a specific tax amount in a tax table.
-      properties:
-        start:
-          description: The start of a sale amount range that corresponds to a specific tax amount in a tax table.
-          type: number
-          format: currency
-        end:
-          description: The end of a sale amount range that corresponds to a specific tax amount in a tax table.
-          type: number
-          format: currency
-        tax:
-          description: The tax amount for the tax table row.
-          type: number
-          format: currency
-        pattern:
-          description: Specifies whether the price range is part of an incomplete set of ranges that establish an algorithm that you can use to calculate tax amounts.
-          type: boolean
-    ExternalReference:
-      type: object
-      allOf:
-      - $ref: '#/components/schemas/ToastReference'
-      - type: object
-        properties:
-          externalId:
-            description: External identifier string, prefixed by the naming authority.
-            type: string
-        description: A wrapper object with fields that allow reference to a Toast entity by Toast GUID or a partner's identifier.
     TaxRate:
       type: object
       allOf:

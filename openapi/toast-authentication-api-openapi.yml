@@ -61,30 +61,36 @@ paths:
         required: true
 components:
   schemas:
-    AuthenticationResponse:
+    AuthenticationRequest:
       type: object
-      description: 'A wrapper object for the response to a successful Toast API authentication
-
-        request.
+      description: 'Authentication credentials for your Toast API integration client software.
 
         '
       properties:
-        token:
-          description: 'An `AuthenticationToken` object containing information about a Toast
+        clientId:
+          description: 'The identifier string for your Toast API client. You receive the
 
-            platform API session, including an authentication token string that
-
-            your Toast API client software can present when using other Toast
-
-            platform APIs.
+            identifier string from the Toast integrations team.
 
             '
-          type: object
-          $ref: '#/components/schemas/AuthenticationToken'
-        status:
-          description: The value `SUCCESS` indicates that your authentication request was successful.
           type: string
-          example: SUCCESS
+          example: VKuhk4NaLedOcjZpJM8grvdrsFi3MlcM
+        clientSecret:
+          description: 'The secret string that corresponds to your Toast API client. You
+
+            receive the secret string from the Toast integrations team.
+
+            '
+          type: string
+          example: eS960aiKdvgbSDcLUCk68HR2CJKwwHNO2HKfgxjCWxoj27KIp6jFAi2XOOc_oCuv
+        userAccessType:
+          description: 'Always include the `userAccessType` value and set it to
+
+            `TOAST_MACHINE_CLIENT`.
+
+            '
+          type: string
+          example: TOAST_MACHINE_CLIENT
     ErrorMessage:
       type: object
       description: 'An object that contains information about one or more errors that the
@@ -203,36 +209,30 @@ components:
 
             '
           type: string
-    AuthenticationRequest:
+    AuthenticationResponse:
       type: object
-      description: 'Authentication credentials for your Toast API integration client software.
+      description: 'A wrapper object for the response to a successful Toast API authentication
+
+        request.
 
         '
       properties:
-        clientId:
-          description: 'The identifier string for your Toast API client. You receive the
+        token:
+          description: 'An `AuthenticationToken` object containing information about a Toast
 
-            identifier string from the Toast integrations team.
+            platform API session, including an authentication token string that
 
-            '
-          type: string
-          example: VKuhk4NaLedOcjZpJM8grvdrsFi3MlcM
-        clientSecret:
-          description: 'The secret string that corresponds to your Toast API client. You
+            your Toast API client software can present when using other Toast
 
-            receive the secret string from the Toast integrations team.
+            platform APIs.
 
             '
+          type: object
+          $ref: '#/components/schemas/AuthenticationToken'
+        status:
+          description: The value `SUCCESS` indicates that your authentication request was successful.
           type: string
-          example: eS960aiKdvgbSDcLUCk68HR2CJKwwHNO2HKfgxjCWxoj27KIp6jFAi2XOOc_oCuv
-        userAccessType:
-          description: 'Always include the `userAccessType` value and set it to
-
-            `TOAST_MACHINE_CLIENT`.
-
-            '
-          type: string
-          example: TOAST_MACHINE_CLIENT
+          example: SUCCESS
 externalDocs:
   description: Authentication developer guide
   url: https://doc.toasttab.com/doc/devguide/authentication.html
