@@ -2375,7 +2375,7 @@
     - connectors/applications/toast
     vendor_link: https://pos.toasttab.com/
     builder: Fivetran
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: toast-meltano
   label: Meltano
@@ -2404,5 +2404,5 @@
     quality:
     - unknown
     builder: 'community (Meltano Hub variant maintainers: lambtron)'
-  status: pending-partner-spec
+  status: not-a-workflow
   arazzo: null
