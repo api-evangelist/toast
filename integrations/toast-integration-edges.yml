@@ -1,11 +1,19 @@
-generated: '2026-10-14'
+generated: '2026-10-20'
 method: searched
+source:
+- guesty/integrations/guesty-integration-edges.yml
+- https://pos.toasttab.com/partners/directory
 checked:
 - guesty/integrations/guesty-integration-edges.yml
 - https://fivetran.com/docs-sitemap.xml
 - https://fivetran.com/docs/connectors/partner-built-program
 - https://github.com/meltano/hub
 - https://pos.toasttab.com/partners/directory
+- https://composio.dev/toolkits/toast
+- https://monid.ai/tools/toast
+- https://n8n.io/integrations/toast/
+- https://zapier.com/apps/toast/integrations
+summary: null
 marketplace_apps:
 - marketplace: own
   channel: partner-built
@@ -3478,5 +3486,4 @@ edges:
   categories:
   - Labor
   - Payroll
-source:
-- guesty/integrations/guesty-integration-edges.yml
+templates: []
