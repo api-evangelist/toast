@@ -13,6 +13,7 @@ checked:
 - https://monid.ai/tools/toast
 - https://n8n.io/integrations/toast/
 - https://zapier.com/apps/toast/integrations
+- https://listings.pcisecuritystandards.org/assessors_and_solutions
 summary: null
 marketplace_apps:
 - marketplace: own
@@ -3486,4 +3487,48 @@ edges:
   categories:
   - Labor
   - Payroll
+- partner_name: PCI Security Standards Council (program listings)
+  partner: null
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://listings.pcisecuritystandards.org/assessors_and_solutions/payment_software
+  category: Payment security validation
+  contract_reference:
+    register: PCI SSC program listings (listings.pcisecuritystandards.org / pcisecuritystandards.org)
+    spec_file: null
+    standard: PCI SSC
+    role: pci-validated-vendor
+    registered_name: Toast, Inc.
+    website: www.Pos.toasttab.com
+    matched_domain: toasttab.com
+    matched_by: domain
+    identity_source: the vendor website on the PCI SSC listing (no lookup)
+    certified_products:
+    - product: PCI Secure Software (Validated Secure Software)
+      lapsed: true
+      latest_expiry: '2026-07-24'
+      listed: 1
+    - product: PA-DSS Validated Payment Application
+      lapsed: true
+      latest_expiry: '2022-10-28'
+      listed: 4
+    - product: PCI PTS POI / HSM Approved Device
+      lapsed: false
+      latest_expiry: '2032-04-30'
+      listed: 1
+    - product: PCI Secure SLC Qualified Vendor
+      lapsed: true
+      latest_expiry: '2026-09-28'
+      listed: 1
+    signal_note: one certified_products entry per PCI SSC program (Secure Software, PA-DSS, P2PE solution / component
+      / application, 3DS SDK, SPoC, CPoC, MPoC, PTS device, Secure SLC); lapsed = every listed product in that program
+      is past its expiry / reassessment date or marked expired; `listed` is context only. List Access Agreement
+      accepted on Kin's instruction 2026-10-20
+    detected_by: sweep-compliance-assurance.py
+    detected: '2026-10-20'
+  detected_by: sweep-compliance-assurance.py
+  first_seen: '2026-10-20'
 templates: []

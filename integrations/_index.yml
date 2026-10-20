@@ -2443,3 +2443,47 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
+- slug: toast-pci-security-standards-council-program-listings
+  label: PCI Security Standards Council (program listings)
+  partner_name: PCI Security Standards Council (program listings)
+  category: Payment security validation
+  type: register
+  channel: standard-directory
+  evidence: https://listings.pcisecuritystandards.org/assessors_and_solutions/payment_software
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: PCI SSC program listings (listings.pcisecuritystandards.org / pcisecuritystandards.org)
+    spec_file: null
+    standard: PCI SSC
+    role: pci-validated-vendor
+    registered_name: Toast, Inc.
+    website: www.Pos.toasttab.com
+    matched_domain: toasttab.com
+    matched_by: domain
+    identity_source: the vendor website on the PCI SSC listing (no lookup)
+    certified_products:
+    - product: PCI Secure Software (Validated Secure Software)
+      lapsed: true
+      latest_expiry: '2026-07-24'
+      listed: 1
+    - product: PA-DSS Validated Payment Application
+      lapsed: true
+      latest_expiry: '2022-10-28'
+      listed: 4
+    - product: PCI PTS POI / HSM Approved Device
+      lapsed: false
+      latest_expiry: '2032-04-30'
+      listed: 1
+    - product: PCI Secure SLC Qualified Vendor
+      lapsed: true
+      latest_expiry: '2026-09-28'
+      listed: 1
+    signal_note: one certified_products entry per PCI SSC program (Secure Software, PA-DSS, P2PE solution / component
+      / application, 3DS SDK, SPoC, CPoC, MPoC, PTS device, Secure SLC); lapsed = every listed product in that program
+      is past its expiry / reassessment date or marked expired; `listed` is context only. List Access Agreement
+      accepted on Kin's instruction 2026-10-20
+    detected_by: sweep-compliance-assurance.py
+    detected: '2026-10-20'
+  status: not-a-workflow
+  arazzo: null
