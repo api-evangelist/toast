@@ -14,6 +14,7 @@ checked:
 - https://n8n.io/integrations/toast/
 - https://zapier.com/apps/toast/integrations
 - https://listings.pcisecuritystandards.org/assessors_and_solutions
+- https://www.emvco.com/approved-products-search/?type=approved-products&sub_type=acceptance_device
 summary: null
 marketplace_apps:
 - marketplace: own
@@ -3530,5 +3531,45 @@ edges:
     detected_by: sweep-compliance-assurance.py
     detected: '2026-10-20'
   detected_by: sweep-compliance-assurance.py
+  first_seen: '2026-10-20'
+- partner_name: 'EMVCo (Approved Products: acceptance devices)'
+  partner: null
+  partner_match: register-name
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://www.emvco.com/approved-products/tg310_ifm-version-rev1-00/
+  category: Card acceptance type approval
+  contract_reference:
+    register: EMVCo Approved Products, Acceptance Device (emvco.com/approved-products-search)
+    standard: EMVCo
+    spec_file: null
+    role: emvco-approved-acceptance-device-vendor
+    registered_name: Toast, Inc.
+    register_id: https://www.emvco.com/approved-products/tg310_ifm-version-rev1-00/
+    matched_domain: null
+    matched_by: register-name
+    identity_source: register-name
+    identity_note: register-name 'toast' = toast; wikidata P856 toasttab.com agrees or unheld
+    certified_products:
+    - product: EMVCo L1 Contact IFMs
+      approval_type: L1 Contact IFMs
+      lapsed: false
+      latest_valid_to: '2028-02-20'
+    - product: EMVCo L1 Contactless PCDs
+      approval_type: L1 Contactless PCDs
+      lapsed: false
+      latest_valid_to: '2030-02-27'
+    - product: EMVCo L2 Contact Kernels
+      approval_type: L2 Contact Kernels
+      lapsed: false
+      latest_valid_to: '2028-05-27'
+    signal_note: certified_products = one entry per EMVCo acceptance-device approval TYPE (L1 contact IFM, L1 contactless
+      PCD, L2 contact kernel, contactless product, C-8 kernel, terminal ESD); lapsed = every approval of that type
+      is past its valid-to date; approval / product / version counts are never recorded or counted
+    detected_by: sweep-emv-card-terminals.py
+    detected: '2026-10-20'
+  detected_by: sweep-emv-card-terminals.py
   first_seen: '2026-10-20'
 templates: []
