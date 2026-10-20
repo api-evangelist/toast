@@ -11,12 +11,141 @@ marketplace_apps:
   channel: partner-built
   app: toast
   url: https://pos.toasttab.com/partners/directory
-  app_count: 191
+  app_count: 194
   adapter: sweep-restaurant-pos.py:gatsby-page-data
-  listed: 191
-  source: https://d2a0efs422ycyj.cloudfront.net/main/1791996119283/public/page-data/partners/directory/page-data.json
+  listed: 194
+  source: https://d2a0efs422ycyj.cloudfront.net/main/1792433339659/public/page-data/partners/directory/page-data.json
   note: '5 Channel Partners (food-service distributors) counted, not written: resellers, not integrations'
 edges:
+- partner_name: Guesty (own)
+  partner: guesty
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.guesty.com/marketplace-items/toast/
+  mirror_of: guesty/integrations/guesty-integration-edges.yml
+  apps:
+  - Toast
+  listing_count: 1
+  detected: '2026-10-14'
+  detected_by: mirror-platform-listings.py
+- partner_name: Fivetran
+  partner: fivetran
+  partner_match: aggregator
+  type: marketplace
+  marketplace: fivetran-connectors
+  channel: elt-connector
+  relationship: ipaas-bridge
+  direction: third-party
+  evidence: https://fivetran.com/docs/connectors/applications/toast
+  category: null
+  contract_reference:
+    register: Fivetran connectors (fivetran.com/docs/connectors, docs-sitemap.xml + Partner-Built program)
+    spec_file: null
+    role: elt-connector:fivetran
+    registered_name: Toast
+    matched_domain: toasttab.com
+    matched_by: domain
+    detected_by: sweep-data-integration.py
+    detected: '2026-10-18'
+    signal_note: one edge per (provider, platform); connectors, streams, packages and usage are context, never read
+    connector_paths:
+    - connectors/applications/toast
+    vendor_link: https://pos.toasttab.com/
+    builder: Fivetran
+  detected_by: sweep-data-integration.py
+  first_seen: '2026-10-18'
+- partner_name: Meltano
+  partner: meltano
+  partner_match: aggregator
+  type: marketplace
+  marketplace: meltano-hub
+  channel: elt-connector
+  relationship: ipaas-bridge
+  direction: third-party
+  evidence: https://hub.meltano.com/extractors/tap-toast--lambtron
+  category: null
+  contract_reference:
+    register: Meltano Hub (github.com/meltano/hub _data/meltano extractors + loaders)
+    spec_file: null
+    role: elt-connector:meltano-hub
+    registered_name: Toast
+    matched_domain: toasttab.com
+    matched_by: domain
+    detected_by: sweep-data-integration.py
+    detected: '2026-10-18'
+    signal_note: one edge per (provider, platform); connectors, streams, packages and usage are context, never read
+    plugins:
+    - tap-toast--lambtron
+    maintenance_status:
+    - unknown
+    quality:
+    - unknown
+    builder: 'community (Meltano Hub variant maintainers: lambtron)'
+  detected_by: sweep-data-integration.py
+  first_seen: '2026-10-18'
+- partner_name: Birdeye
+  app: Birdeye
+  partner: birdeye
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/Birdeye
+  category: Marketing & CRM
+  partner_domain: birdeye.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-19'
+  categories:
+  - Marketing & CRM
+  - Analytics
+  - Menu Management
+  badges:
+  - Featured
+- partner_name: Maple
+  app: Maple
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/maple
+  category: Online Ordering
+  partner_domain: maple.inc
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-19'
+  categories:
+  - Online Ordering
+  - Reservations
+- partner_name: MilesCX
+  app: MilesCX
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  relationship: platform-app
+  direction: partner-built
+  evidence: https://pos.toasttab.com/partners/directory/milescx
+  category: Marketing & CRM
+  partner_domain: milescx.com
+  detected_by: sweep-restaurant-pos.py
+  detected: '2026-10-19'
+  categories:
+  - Marketing & CRM
+  - Mobile Pay
+  - Online Ordering
 - partner_name: eCard Systems
   app: eCard Systems
   partner: null
@@ -3349,76 +3478,5 @@ edges:
   categories:
   - Labor
   - Payroll
-- partner_name: Guesty (own)
-  partner: guesty
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://www.guesty.com/marketplace-items/toast/
-  mirror_of: guesty/integrations/guesty-integration-edges.yml
-  apps:
-  - Toast
-  listing_count: 1
-  detected: '2026-10-14'
-  detected_by: mirror-platform-listings.py
-- partner_name: Fivetran
-  partner: fivetran
-  partner_match: aggregator
-  type: marketplace
-  marketplace: fivetran-connectors
-  channel: elt-connector
-  relationship: ipaas-bridge
-  direction: third-party
-  evidence: https://fivetran.com/docs/connectors/applications/toast
-  category: null
-  contract_reference:
-    register: Fivetran connectors (fivetran.com/docs/connectors, docs-sitemap.xml + Partner-Built program)
-    spec_file: null
-    role: elt-connector:fivetran
-    registered_name: Toast
-    matched_domain: toasttab.com
-    matched_by: domain
-    detected_by: sweep-data-integration.py
-    detected: '2026-10-18'
-    signal_note: one edge per (provider, platform); connectors, streams, packages and usage are context, never read
-    connector_paths:
-    - connectors/applications/toast
-    vendor_link: https://pos.toasttab.com/
-    builder: Fivetran
-  detected_by: sweep-data-integration.py
-  first_seen: '2026-10-18'
-- partner_name: Meltano
-  partner: meltano
-  partner_match: aggregator
-  type: marketplace
-  marketplace: meltano-hub
-  channel: elt-connector
-  relationship: ipaas-bridge
-  direction: third-party
-  evidence: https://hub.meltano.com/extractors/tap-toast--lambtron
-  category: null
-  contract_reference:
-    register: Meltano Hub (github.com/meltano/hub _data/meltano extractors + loaders)
-    spec_file: null
-    role: elt-connector:meltano-hub
-    registered_name: Toast
-    matched_domain: toasttab.com
-    matched_by: domain
-    detected_by: sweep-data-integration.py
-    detected: '2026-10-18'
-    signal_note: one edge per (provider, platform); connectors, streams, packages and usage are context, never read
-    plugins:
-    - tap-toast--lambtron
-    maintenance_status:
-    - unknown
-    quality:
-    - unknown
-    builder: 'community (Meltano Hub variant maintainers: lambtron)'
-  detected_by: sweep-data-integration.py
-  first_seen: '2026-10-18'
 source:
 - guesty/integrations/guesty-integration-edges.yml
