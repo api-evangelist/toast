@@ -396,6 +396,12 @@ artifacts:
   front-door-ai/2026-09-17.yml:
     method: unknown
     evidence: no authorship recorded
+  integrations/_index.yml:
+    method: generated
+    evidence: carries an API Evangelist house phrase
+  integrations/toast-integration-edges.yml:
+    method: searched
+    evidence: declared in the artifact
   json-ld/toast-authentication-context.jsonld:
     method: unknown
     evidence: no authorship recorded
@@ -1083,127 +1089,7 @@ artifacts:
   json-structure/toast-structure.json:
     method: unknown
     evidence: no authorship recorded
-  kin/checks-2026-09-24T161608.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T125852.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T133943.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T143147.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-25T154045.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-26T215308.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T094438.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T103455.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T123021.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T132314.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-27T140727.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-28T221322.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T213958.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-29T230545.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T203505.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-30T220315.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-08-31T223420.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T063623.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T210448.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-01T222808.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-02T224043.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T161828.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-03T174231.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T062714.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T212454.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-04T224856.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T055819.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T072335.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T144739.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T195450.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-05T211839.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T011047.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T211804.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-06T224210.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T200636.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-07T213054.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T214843.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-08T232836.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T204815.yml:
-    method: generated
-    evidence: Kin Score snapshot written by score.rb
-  kin/score-2026-09-10T222408.yml:
+  kin/checks-2026-10-11T110117.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-12T062655.yml:
@@ -1287,6 +1173,21 @@ artifacts:
   kin/score-2026-09-24T161608.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T210408.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-09-25T232841.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T000835.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-03T024842.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-10-11T110117.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
   lifecycle/toast-lifecycle.yml:
     method: searched
     evidence: declared in the artifact
@@ -1350,8 +1251,8 @@ artifacts:
       to the provider's source is unverified
   openapi/_original/toast-orders-openapi.yaml:
     method: harvested
-    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
-      to the provider's source is unverified
+    evidence: the same operations as https://doc.toasttab.com/toast-api-specifications/toast-orders-api.yaml
+      (sha256 b18bcf7b919b, fetched 2026-10-04)
   openapi/_original/toast-packaging-openapi.yaml:
     method: harvested
     evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
@@ -1538,43 +1439,205 @@ artifacts:
   openapi/toast-yourendpointname-api-openapi.yml:
     method: derived
     evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+  overlays/toast-aggregated-sales-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-alternate-payment-types-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
   overlays/toast-analytics-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/toast-authentication-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-availability-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-break-types-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-cash-drawers-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/toast-cash-management-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/toast-check-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/toast-configuration-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/toast-connectedrestaurants-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/toast-credit-cards-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/toast-deposits-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-device-details-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/toast-device-details-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/toast-dining-options-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-discounts-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-employees-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-entries-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-export-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/toast-gift-cards-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/toast-groups-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-guest-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-jobs-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/toast-kitchen-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/toast-labor-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/toast-loyalty-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/toast-menu-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-menu-groups-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-menu-items-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-menus-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/toast-menus-v3-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/toast-merchants-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-metadata-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-modifier-groups-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-no-sale-reasons-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-ordering-schedule-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/toast-ordermgmt-configuration-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/toast-orders-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/toast-packaging-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/toast-payments-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-payout-by-payments-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-payout-by-sales-date-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-payout-by-settled-date-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-payout-reasons-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-pre-modifier-groups-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-pre-modifiers-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-price-groups-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-printers-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-published-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/toast-restaurant-availability-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/toast-restaurant-services-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-restaurants-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-restaurants-information-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-revenue-centers-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-sales-categories-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-service-areas-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-service-charges-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-shifts-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-stock-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-tables-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-tax-rates-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   overlays/toast-tender-overlay.yaml:
+    method: derived
+    evidence: an API Evangelist overlay (title) over the provider's contract
+  overlays/toast-time-entries-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-tip-withholding-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-void-reasons-api-phrasing-overlay.yaml:
+    method: generated
+    evidence: declared in the artifact
+  overlays/toast-yourendpointname-api-phrasing-overlay.yaml:
     method: generated
     evidence: declared in the artifact
   packages/toast-packages.yml:
