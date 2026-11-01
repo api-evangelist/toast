@@ -1,4 +1,4 @@
-# Toast (toast)
+# Toast
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,390 +66,369 @@
 
 Toast is a restaurant technology platform providing cloud-based point-of-sale, payment processing, and business management tools for the restaurant industry. The Toast platform exposes REST APIs enabling technology partners to build integrations for orders, menus, labor management, restaurant configuration, inventory/stock management, authentication, and partner ecosystem access. APIs use OAuth 2.0 client credentials authentication with GUIDs for resource identification. Toast serves 120,000+ restaurant locations and offers both partner integrations (requiring formal partnership) and custom integrations via the developer portal.
 
-**URL:** [https://doc.toasttab.com/doc/devguide/index.html](https://doc.toasttab.com/doc/devguide/index.html)
+**Areas:** Food Service · Point-of-Sale · Restaurant · Hospitality
+
+## Toast on APIs.io
+
+Everything profiled for Toast is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/toast/](https://apis.io/providers/toast/)** — or go straight to one of the APIs or properties below.
+
+### APIs (66)
+
+- [Toast Authentication API](https://apis.io/apis/toast/toast-authentication-api/) — The Authentication API from Toast — 1 operation(s) for authentication.
+- [Toast ConnectedRestaurants API](https://apis.io/apis/toast/toast-connectedrestaurants-api/) — The ConnectedRestaurants API from Toast — 1 operation(s) for connectedrestaurants.
+- [Toast Discounts API](https://apis.io/apis/toast/toast-discounts-api/) — Related to price reduction applied to restaurant orders. For example, a restaurant might apply a discount for a promotion.
+- [Toast Employees API](https://apis.io/apis/toast/toast-employees-api/) — The Employees API from Toast — 6 operation(s) for employees.
+- [Toast Groups API](https://apis.io/apis/toast/toast-groups-api/) — The Groups API from Toast — 1 operation(s) for groups.
+- [Toast Jobs API](https://apis.io/apis/toast/toast-jobs-api/) — The Jobs API from Toast — 3 operation(s) for jobs.
+- [Toast Menus API](https://apis.io/apis/toast/toast-menus-api/) — The Menus API from Toast — 1 operation(s) for menus.
+- [Toast Metadata API](https://apis.io/apis/toast/toast-metadata-api/) — The Metadata API from Toast — 1 operation(s) for metadata.
+- [Toast Orders API](https://apis.io/apis/toast/toast-orders-api/) — Related to orders made by restaurant guests. For example, a restaurant guest orders items from a menu. Toast platform orders include one or more guest check.
+- [Toast Payments API](https://apis.io/apis/toast/toast-payments-api/) — Related to guests' payments for restaurant orders. Toast platform payments apply to a check in an order.
+- [Toast Restaurants API](https://apis.io/apis/toast/toast-restaurants-api/) — The Restaurants API from Toast — 2 operation(s) for restaurants.
+- [Toast Shifts API](https://apis.io/apis/toast/toast-shifts-api/) — The Shifts API from Toast — 2 operation(s) for shifts.
+- [Toast Stock API](https://apis.io/apis/toast/toast-stock-api/) — The Stock API from Toast — 3 operation(s) for stock.
+- [Toast Time entries API](https://apis.io/apis/toast/toast-time-entries-api/) — The Time entries API from Toast — 2 operation(s) for time entries.
+- [Toast Aggregated sales API](https://apis.io/apis/toast/toast-aggregated-sales-api/) — The analytics API endpoints for aggregated sales reporting data covering sales and labor information.
+- [Toast Alternate Payment Types API](https://apis.io/apis/toast/toast-alternate-payment-types-api/) — The Alternate Payment Types API from Toast — 2 operation(s) for alternate payment types.
+- [Toast Availability API](https://apis.io/apis/toast/toast-availability-api/) — The availability API from Toast — 1 operation(s) for availability.
+- [Toast Break Types API](https://apis.io/apis/toast/toast-break-types-api/) — The Break Types API from Toast — 2 operation(s) for break types.
+- [Toast Cash Drawers API](https://apis.io/apis/toast/toast-cash-drawers-api/) — The Cash Drawers API from Toast — 2 operation(s) for cash drawers.
+- [Toast Check API](https://apis.io/apis/toast/toast-check-api/) — The analytics API endpoints for check reporting data.
+- [Toast Deposits API](https://apis.io/apis/toast/toast-deposits-api/) — The Deposits API from Toast — 1 operation(s) for deposits.
+- [Toast Device details API](https://apis.io/apis/toast/toast-device-details-api/) — The Device details API from Toast — 1 operation(s) for device details.
+- [Toast Dining Options API](https://apis.io/apis/toast/toast-dining-options-api/) — The Dining Options API from Toast — 2 operation(s) for dining options.
+- [Toast Entries API](https://apis.io/apis/toast/toast-entries-api/) — The Entries API from Toast — 1 operation(s) for entries.
+- [Toast Export API](https://apis.io/apis/toast/toast-export-api/) — The Export API from Toast — 1 operation(s) for export.
+- [Toast Guest API](https://apis.io/apis/toast/toast-guest-api/) — The analytics API endpoint for guest reporting data organized by payment.
+- [Toast Labor API](https://apis.io/apis/toast/toast-labor-api/) — The analytics API endpoints for labor reporting data. This only supports hourly job and employee data.
+- [Toast Menu API](https://apis.io/apis/toast/toast-menu-api/) — The analytics API endpoints for menu reporting data.
+- [Toast Menu Groups API](https://apis.io/apis/toast/toast-menu-groups-api/) — The Menu Groups API from Toast — 2 operation(s) for menu groups.
+- [Toast Menu Items API](https://apis.io/apis/toast/toast-menu-items-api/) — The Menu Items API from Toast — 2 operation(s) for menu items.
+- [Toast Merchants API](https://apis.io/apis/toast/toast-merchants-api/) — The Merchants API from Toast — 1 operation(s) for merchants.
+- [Toast Modifier Groups API](https://apis.io/apis/toast/toast-modifier-groups-api/) — The Modifier Groups API from Toast — 2 operation(s) for modifier groups.
+- [Toast No Sale Reasons API](https://apis.io/apis/toast/toast-no-sale-reasons-api/) — The No Sale Reasons API from Toast — 2 operation(s) for no sale reasons.
+- [Toast Ordering Schedule API](https://apis.io/apis/toast/toast-ordering-schedule-api/) — Operations related to online ordering schedules
+- [Toast Payout by payments API](https://apis.io/apis/toast/toast-payout-by-payments-api/) — The analytics API endpoint for payout reporting data organized by payments.
+- [Toast Payout by sales date API](https://apis.io/apis/toast/toast-payout-by-sales-date-api/) — The analytics API endpoint for payout reporting data organized by sales date.
+- [Toast Payout by settled date API](https://apis.io/apis/toast/toast-payout-by-settled-date-api/) — The analytics API endpoint for payout reporting data organized by settled date.
+- [Toast Payout Reasons API](https://apis.io/apis/toast/toast-payout-reasons-api/) — The Payout Reasons API from Toast — 2 operation(s) for payout reasons.
+- [Toast Pre Modifier Groups API](https://apis.io/apis/toast/toast-pre-modifier-groups-api/) — The Pre Modifier Groups API from Toast — 2 operation(s) for pre modifier groups.
+- [Toast Pre Modifiers API](https://apis.io/apis/toast/toast-pre-modifiers-api/) — The Pre Modifiers API from Toast — 2 operation(s) for pre modifiers.
+- [Toast Price Groups API](https://apis.io/apis/toast/toast-price-groups-api/) — The Price Groups API from Toast — 2 operation(s) for price groups.
+- [Toast Printers API](https://apis.io/apis/toast/toast-printers-api/) — The Printers API from Toast — 2 operation(s) for printers.
+- [Toast Published API](https://apis.io/apis/toast/toast-published-api/) — The Published API from Toast — 3 operation(s) for published.
+- [Toast Restaurant Services API](https://apis.io/apis/toast/toast-restaurant-services-api/) — The Restaurant Services API from Toast — 2 operation(s) for restaurant services.
+- [Toast Restaurants information API](https://apis.io/apis/toast/toast-restaurants-information-api/) — The analytics API endpoint for providing information about restaurants in a management group.
+- [Toast Revenue Centers API](https://apis.io/apis/toast/toast-revenue-centers-api/) — The Revenue Centers API from Toast — 2 operation(s) for revenue centers.
+- [Toast Sales Categories API](https://apis.io/apis/toast/toast-sales-categories-api/) — The Sales Categories API from Toast — 2 operation(s) for sales categories.
+- [Toast Service Areas API](https://apis.io/apis/toast/toast-service-areas-api/) — The Service Areas API from Toast — 2 operation(s) for service areas.
+- [Toast Service Charges API](https://apis.io/apis/toast/toast-service-charges-api/) — The Service Charges API from Toast — 2 operation(s) for service charges.
+- [Toast Tables API](https://apis.io/apis/toast/toast-tables-api/) — The Tables API from Toast — 2 operation(s) for tables.
+- [Toast Tax Rates API](https://apis.io/apis/toast/toast-tax-rates-api/) — The Tax Rates API from Toast — 2 operation(s) for tax rates.
+- [Toast Tip Withholding API](https://apis.io/apis/toast/toast-tip-withholding-api/) — The Tip Withholding API from Toast — 1 operation(s) for tip withholding.
+- [Toast Void Reasons API](https://apis.io/apis/toast/toast-void-reasons-api/) — The Void Reasons API from Toast — 2 operation(s) for void reasons.
+- [Toast Yourendpointname API](https://apis.io/apis/toast/toast-yourendpointname-api/) — The Yourendpointname API from Toast — 1 operation(s) for yourendpointname.
+- [Toast Configuration API](https://apis.io/apis/toast/toast-configuration-api/) — Read-access to a restaurant's configuration entities — menus, modifier groups, employees, jobs, dining options, service areas, revenue centers, sales…
+- [Toast Menus API (V3)](https://apis.io/apis/toast/toast-menus-v3-api/) — Next-generation read API for Toast menus, exposing the same menu / menu group / item / modifier / option model as V2 in a refreshed shape aligned with…
+- [Toast Order Management Configuration API](https://apis.io/apis/toast/toast-order-management-config-api/) — Read configuration that governs how orders flow through Toast — throttling, prep-time rules, surge controls, and order-management settings used by…
+- [Toast Restaurant Availability API](https://apis.io/apis/toast/toast-restaurant-availability-api/) — Returns whether a restaurant is currently accepting online orders, its expected prep times, and per-channel availability so ordering partners and delivery…
+- [Toast Credit Cards API](https://apis.io/apis/toast/toast-credit-cards-api/) — Read tokenized credit-card information attached to orders for receipts, returns, and reconciliation. Toast Payments handles acceptance natively; this API…
+- [Toast Cash Management API](https://apis.io/apis/toast/toast-cash-management-api/) — Records and retrieves cash entries — paid in, paid out, deposits, drawer counts — that flow into a restaurant's cash-management ledger and reconciliation…
+- [Toast Kitchen API](https://apis.io/apis/toast/toast-kitchen-api/) — Surfaces kitchen tickets, prep stations, ticket items, and ticket events to support kitchen-display integrations and out-of-band prep orchestration.
+- [Toast Packaging Configuration API](https://apis.io/apis/toast/toast-packaging-configuration-api/) — Read configuration about packaging — containers, lids, utensils, and packaging instructions — that off-premises orders and delivery handoff workflows must…
+- [Toast Analytics API](https://apis.io/apis/toast/toast-analytics-api/) — Analytics and reporting endpoints for Restaurant Management Suites Pro customers — sales, labor, productivity, and operational performance data exposed for…
+- [Toast Gift Cards Integration](https://apis.io/apis/toast/toast-gift-cards-integration/) — Specification for integrating third-party gift-card programs with Toast — Toast calls the partner's endpoints to look up balances, authorize, redeem, and…
+- [Toast Loyalty Integration](https://apis.io/apis/toast/toast-loyalty-integration/) — Specification for integrating third-party loyalty programs with Toast — discovery, lookup, accrual, and redemption callbacks that Toast invokes against…
+- [Toast Tender Integration](https://apis.io/apis/toast/toast-tender-integration/) — Specification for integrating alternative tender types into Toast — callback endpoints partners implement so Toast can validate, authorize, and reconcile…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Toast Webhooks](https://apis.io/asyncapis/toast/toast-webhooks/)
+
+#### GraphQL (1)
+
+GraphQL schemas.
+
+- [Moved to /providers/toast/](https://apis.io/graphqls/toast/toast-graphql/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Toast Agentic Access](https://apis.io/agentic-access/toast/toast-agentic-access/)
+
+#### JSON Schema (112)
+
+The data models the API reads and writes.
+
+- [AuthenticationRequest](https://apis.io/schemas/toast/authentication-authentication-request/)
+- [AuthenticationResponse](https://apis.io/schemas/toast/authentication-authentication-response/)
+- [AuthenticationToken](https://apis.io/schemas/toast/authentication-authentication-token/)
+- [Employee](https://apis.io/schemas/toast/labor-employee/)
+- [ExternalReference](https://apis.io/schemas/toast/labor-external-reference/)
+- [Job](https://apis.io/schemas/toast/labor-job/)
+- [JobWageOverride](https://apis.io/schemas/toast/labor-job-wage-override/)
+- [ScheduleConfig](https://apis.io/schemas/toast/labor-schedule-config/)
+- [Shift](https://apis.io/schemas/toast/labor-shift/)
+- [TimeEntry](https://apis.io/schemas/toast/labor-time-entry/)
+- [TimeEntryBreak](https://apis.io/schemas/toast/labor-time-entry-break/)
+- [ToastReference](https://apis.io/schemas/toast/labor-toast-reference/)
+- [Alcohol](https://apis.io/schemas/toast/menus-alcohol/)
+- [AllergenItem](https://apis.io/schemas/toast/menus-allergen-item/)
+- [Availability](https://apis.io/schemas/toast/menus-availability/)
+- [CatalogProduct](https://apis.io/schemas/toast/menus-catalog-product/)
+- [CatalogProductInfo](https://apis.io/schemas/toast/menus-catalog-product-info/)
+- [CatalogProductOption](https://apis.io/schemas/toast/menus-catalog-product-option/)
+- [CatalogProductOptionValue](https://apis.io/schemas/toast/menus-catalog-product-option-value/)
+- [CatalogProductVariant](https://apis.io/schemas/toast/menus-catalog-product-variant/)
+- [CatalogProductVariantOption](https://apis.io/schemas/toast/menus-catalog-product-variant-option/)
+- [ContentAdvisories](https://apis.io/schemas/toast/menus-content-advisories/)
+- [DimensionUnitOfMeasure](https://apis.io/schemas/toast/menus-dimension-unit-of-measure/)
+- [GuestCount](https://apis.io/schemas/toast/menus-guest-count/)
+- [Height](https://apis.io/schemas/toast/menus-height/)
+- …and 87 more published on APIs.io
+
+#### JSON Structure (110)
+
+Data models expressed in JSON Structure.
+
+- [Authentication Authentication Request Structure](https://apis.io/json-structure/toast/authentication-authentication-request-structure/)
+- [Authentication Authentication Response Structure](https://apis.io/json-structure/toast/authentication-authentication-response-structure/)
+- [Authentication Authentication Token Structure](https://apis.io/json-structure/toast/authentication-authentication-token-structure/)
+- [Labor Employee Structure](https://apis.io/json-structure/toast/labor-employee-structure/)
+- [Labor External Reference Structure](https://apis.io/json-structure/toast/labor-external-reference-structure/)
+- [Labor Job Structure](https://apis.io/json-structure/toast/labor-job-structure/)
+- [Labor Job Wage Override Structure](https://apis.io/json-structure/toast/labor-job-wage-override-structure/)
+- [Labor Schedule Config Structure](https://apis.io/json-structure/toast/labor-schedule-config-structure/)
+- [Labor Shift Structure](https://apis.io/json-structure/toast/labor-shift-structure/)
+- [Labor Time Entry Break Structure](https://apis.io/json-structure/toast/labor-time-entry-break-structure/)
+- [Labor Time Entry Structure](https://apis.io/json-structure/toast/labor-time-entry-structure/)
+- [Labor Toast Reference Structure](https://apis.io/json-structure/toast/labor-toast-reference-structure/)
+- [Menus Alcohol Structure](https://apis.io/json-structure/toast/menus-alcohol-structure/)
+- [Menus Allergen Item Structure](https://apis.io/json-structure/toast/menus-allergen-item-structure/)
+- [Menus Availability Structure](https://apis.io/json-structure/toast/menus-availability-structure/)
+- [Menus Catalog Product Info Structure](https://apis.io/json-structure/toast/menus-catalog-product-info-structure/)
+- [Menus Catalog Product Option Structure](https://apis.io/json-structure/toast/menus-catalog-product-option-structure/)
+- [Menus Catalog Product Option Value Structure](https://apis.io/json-structure/toast/menus-catalog-product-option-value-structure/)
+- [Menus Catalog Product Structure](https://apis.io/json-structure/toast/menus-catalog-product-structure/)
+- [Menus Catalog Product Variant Option Structure](https://apis.io/json-structure/toast/menus-catalog-product-variant-option-structure/)
+- [Menus Catalog Product Variant Structure](https://apis.io/json-structure/toast/menus-catalog-product-variant-structure/)
+- [Menus Content Advisories Structure](https://apis.io/json-structure/toast/menus-content-advisories-structure/)
+- [Menus Dimension Unit Of Measure Structure](https://apis.io/json-structure/toast/menus-dimension-unit-of-measure-structure/)
+- [Menus Guest Count Structure](https://apis.io/json-structure/toast/menus-guest-count-structure/)
+- [Menus Height Structure](https://apis.io/json-structure/toast/menus-height-structure/)
+- …and 85 more published on APIs.io
+
+#### JSON-LD (7)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Toast Authentication Context](https://apis.io/jsonld/toast/toast-authentication-context/)
+- [Toast Labor Context](https://apis.io/jsonld/toast/toast-labor-context/)
+- [Toast Menus Context](https://apis.io/jsonld/toast/toast-menus-context/)
+- [Toast Orders Context](https://apis.io/jsonld/toast/toast-orders-context/)
+- [Toast Partners Context](https://apis.io/jsonld/toast/toast-partners-context/)
+- [Toast Restaurants Context](https://apis.io/jsonld/toast/toast-restaurants-context/)
+- [Toast Stock Context](https://apis.io/jsonld/toast/toast-stock-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Toast Vocabulary](https://apis.io/vocabularies/toast/toast-vocabulary/)
+
+#### Examples (91)
+
+Example requests and responses.
+
+- [Authentication Authentication Request Example](https://apis.io/examples/toast/authentication-authentication-request-example/)
+- [Authentication Authentication Response Example](https://apis.io/examples/toast/authentication-authentication-response-example/)
+- [Authentication Authentication Token Example](https://apis.io/examples/toast/authentication-authentication-token-example/)
+- [Labor Employee Example](https://apis.io/examples/toast/labor-employee-example/)
+- [Labor External Reference Example](https://apis.io/examples/toast/labor-external-reference-example/)
+- [Labor Job Example](https://apis.io/examples/toast/labor-job-example/)
+- [Labor Job Wage Override Example](https://apis.io/examples/toast/labor-job-wage-override-example/)
+- [Labor Schedule Config Example](https://apis.io/examples/toast/labor-schedule-config-example/)
+- [Labor Shift Example](https://apis.io/examples/toast/labor-shift-example/)
+- [Labor Time Entry Break Example](https://apis.io/examples/toast/labor-time-entry-break-example/)
+- [Labor Time Entry Example](https://apis.io/examples/toast/labor-time-entry-example/)
+- [Labor Toast Reference Example](https://apis.io/examples/toast/labor-toast-reference-example/)
+- [Menus Alcohol Example](https://apis.io/examples/toast/menus-alcohol-example/)
+- [Menus Allergen Item Example](https://apis.io/examples/toast/menus-allergen-item-example/)
+- [Menus Availability Example](https://apis.io/examples/toast/menus-availability-example/)
+- [Menus Catalog Product Example](https://apis.io/examples/toast/menus-catalog-product-example/)
+- [Menus Catalog Product Option Example](https://apis.io/examples/toast/menus-catalog-product-option-example/)
+- [Menus Catalog Product Option Value Example](https://apis.io/examples/toast/menus-catalog-product-option-value-example/)
+- [Menus Catalog Product Variant Example](https://apis.io/examples/toast/menus-catalog-product-variant-example/)
+- [Menus Catalog Product Variant Option Example](https://apis.io/examples/toast/menus-catalog-product-variant-option-example/)
+- [Menus Item Tag Example](https://apis.io/examples/toast/menus-item-tag-example/)
+- [Menus Menu Example](https://apis.io/examples/toast/menus-menu-example/)
+- [Menus Menu Group Example](https://apis.io/examples/toast/menus-menu-group-example/)
+- [Menus Menu Item Example](https://apis.io/examples/toast/menus-menu-item-example/)
+- [Menus Metadata Example](https://apis.io/examples/toast/menus-metadata-example/)
+- …and 66 more published on APIs.io
+
+#### Collections (14)
+
+Postman and Open Collection request collections.
+
+- [Toast Authentication API](https://apis.io/collections/toast/open-toast-authentication-api/)
+- [Toast Authentication ConnectedRestaurants API](https://apis.io/collections/toast/open-toast-connectedrestaurants-api/)
+- [Toast Authentication Discounts API](https://apis.io/collections/toast/open-toast-discounts-api/)
+- [Toast Authentication Employees API](https://apis.io/collections/toast/open-toast-employees-api/)
+- [Toast Authentication Groups API](https://apis.io/collections/toast/open-toast-groups-api/)
+- [Toast Authentication Jobs API](https://apis.io/collections/toast/open-toast-jobs-api/)
+- [Toast Authentication Menus API](https://apis.io/collections/toast/open-toast-menus-api/)
+- [Toast Authentication Metadata API](https://apis.io/collections/toast/open-toast-metadata-api/)
+- [Toast Authentication Orders API](https://apis.io/collections/toast/open-toast-orders-api/)
+- [Toast Authentication Payments API](https://apis.io/collections/toast/open-toast-payments-api/)
+- [Toast Authentication Restaurants API](https://apis.io/collections/toast/open-toast-restaurants-api/)
+- [Toast Authentication Shifts API](https://apis.io/collections/toast/open-toast-shifts-api/)
+- [Toast Authentication Stock API](https://apis.io/collections/toast/open-toast-stock-api/)
+- [Toast Authentication Time entries API](https://apis.io/collections/toast/open-toast-time-entries-api/)
+
+#### Overlays (67)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Toast Aggregated Sales Api Phrasing Overlay](https://apis.io/overlays/toast/toast-aggregated-sales-api-phrasing-overlay/)
+- [Toast Alternate Payment Types Api Phrasing Overlay](https://apis.io/overlays/toast/toast-alternate-payment-types-api-phrasing-overlay/)
+- [Toast Analytics Overlay](https://apis.io/overlays/toast/toast-analytics-overlay/)
+- [Toast Authentication Api Phrasing Overlay](https://apis.io/overlays/toast/toast-authentication-api-phrasing-overlay/)
+- [Toast Availability Api Phrasing Overlay](https://apis.io/overlays/toast/toast-availability-api-phrasing-overlay/)
+- [Toast Break Types Api Phrasing Overlay](https://apis.io/overlays/toast/toast-break-types-api-phrasing-overlay/)
+- [Toast Cash Drawers Api Phrasing Overlay](https://apis.io/overlays/toast/toast-cash-drawers-api-phrasing-overlay/)
+- [Toast Cash Management Overlay](https://apis.io/overlays/toast/toast-cash-management-overlay/)
+- [Toast Check Api Phrasing Overlay](https://apis.io/overlays/toast/toast-check-api-phrasing-overlay/)
+- [Toast Configuration Overlay](https://apis.io/overlays/toast/toast-configuration-overlay/)
+- [Toast Connectedrestaurants Api Phrasing Overlay](https://apis.io/overlays/toast/toast-connectedrestaurants-api-phrasing-overlay/)
+- [Toast Credit Cards Overlay](https://apis.io/overlays/toast/toast-credit-cards-overlay/)
+- [Toast Deposits Api Phrasing Overlay](https://apis.io/overlays/toast/toast-deposits-api-phrasing-overlay/)
+- [Toast Device Details Api Phrasing Overlay](https://apis.io/overlays/toast/toast-device-details-api-phrasing-overlay/)
+- [Toast Device Details Overlay](https://apis.io/overlays/toast/toast-device-details-overlay/)
+- [Toast Dining Options Api Phrasing Overlay](https://apis.io/overlays/toast/toast-dining-options-api-phrasing-overlay/)
+- [Toast Discounts Api Phrasing Overlay](https://apis.io/overlays/toast/toast-discounts-api-phrasing-overlay/)
+- [Toast Employees Api Phrasing Overlay](https://apis.io/overlays/toast/toast-employees-api-phrasing-overlay/)
+- [Toast Entries Api Phrasing Overlay](https://apis.io/overlays/toast/toast-entries-api-phrasing-overlay/)
+- [Toast Export Api Phrasing Overlay](https://apis.io/overlays/toast/toast-export-api-phrasing-overlay/)
+- [Toast Gift Cards Overlay](https://apis.io/overlays/toast/toast-gift-cards-overlay/)
+- [Toast Groups Api Phrasing Overlay](https://apis.io/overlays/toast/toast-groups-api-phrasing-overlay/)
+- [Toast Guest Api Phrasing Overlay](https://apis.io/overlays/toast/toast-guest-api-phrasing-overlay/)
+- [Toast Jobs Api Phrasing Overlay](https://apis.io/overlays/toast/toast-jobs-api-phrasing-overlay/)
+- [Toast Kitchen Overlay](https://apis.io/overlays/toast/toast-kitchen-overlay/)
+- …and 42 more published on APIs.io
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [Toast — jsonschema rules](https://apis.io/rules/toast/toast-jsonschema-spectral-rules/)
+- [Toast API Rules](https://apis.io/rules/toast/toast-spectral-rules/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Toast Authentication](https://apis.io/security/toast/toast-authentication/)
+- [Toast Domain Security](https://apis.io/security/toast/toast-domain-security/)
+- [Toast Vulnerability Disclosure](https://apis.io/security/toast/toast-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Toast Scopes](https://apis.io/scopes/toast/toast-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Toast Plans Pricing](https://apis.io/plans/toast/toast-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Toast Rate Limits](https://apis.io/rate-limits/toast/toast-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Toast Finops](https://apis.io/finops/toast/toast-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-**Run:** [Capabilities Using Naftiko](https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=company-api-evangelist&utm_content=repo)
-
-## Tags:
-
- - Food Service, Point of Sale, Restaurants, Hospitality
-
-## Timestamps
-
-- **Created:** 2025-02-08
-- **Modified:** 2026-06-03
-
-## APIs
-
-### Toast Orders API
-The Toast Orders API enables retrieval of restaurant orders, checks, and payment information. Supports bulk order queries by date range and individual order retrieval by GUID. Used for building order management, reporting, and delivery integrations.
-
-**Human URL:** [https://doc.toasttab.com/openapi/orders/overview/](https://doc.toasttab.com/openapi/orders/overview/)
-
-#### Tags:
-
- - Orders, Payments, Point of Sale
-
-#### Properties
-
-- [Documentation](https://doc.toasttab.com/openapi/orders/overview/)
-- [OpenAPI](openapi/toast-orders-openapi.yaml)
-- [NaftikoCapability](capabilities/orders-discounts.yaml)
-- [NaftikoCapability](capabilities/orders-orders.yaml)
-- [NaftikoCapability](capabilities/orders-payments.yaml)
-
-### Toast Menus API
-The Toast Menus API provides complete menu data retrieval including items, modifiers, prices, and availability. Enables POS-synchronized menu display for online ordering and third-party menu management integrations.
-
-**Human URL:** [https://doc.toasttab.com/openapi/menus/overview/](https://doc.toasttab.com/openapi/menus/overview/)
-
-#### Tags:
-
- - Menus, Food Service
-
-#### Properties
-
-- [Documentation](https://doc.toasttab.com/openapi/menus/overview/)
-- [OpenAPI](openapi/toast-menus-openapi.yaml)
-- [NaftikoCapability](capabilities/menus-general.yaml)
-
-### Toast Labor API
-The Toast Labor API manages employee records, schedules, and shift data for restaurant locations. Supports employee CRUD operations, time entry management, and payroll integration workflows.
-
-**Human URL:** [https://doc.toasttab.com/openapi/labor/overview/](https://doc.toasttab.com/openapi/labor/overview/)
-
-#### Tags:
-
- - Labor, Employees, Scheduling
-
-#### Properties
-
-- [Documentation](https://doc.toasttab.com/openapi/labor/overview/)
-- [OpenAPI](openapi/toast-labor-openapi.yaml)
-- [NaftikoCapability](capabilities/labor-employees.yaml)
-- [NaftikoCapability](capabilities/labor-jobs.yaml)
-- [NaftikoCapability](capabilities/labor-shifts.yaml)
-- [NaftikoCapability](capabilities/labor-time-entries.yaml)
-
-### Toast Restaurants API
-The Toast Restaurants API provides location configuration data including restaurant settings, hours, payment options, and management group restaurant discovery for multi-location operations.
-
-**Human URL:** [https://doc.toasttab.com/openapi/restaurants/overview/](https://doc.toasttab.com/openapi/restaurants/overview/)
-
-#### Tags:
-
- - Restaurants, Configuration
-
-#### Properties
-
-- [Documentation](https://doc.toasttab.com/openapi/restaurants/overview/)
-- [OpenAPI](openapi/toast-restaurants-openapi.yaml)
-- [NaftikoCapability](capabilities/restaurants-general.yaml)
-
-### Toast Stock API
-The Toast Stock API manages inventory for menu items and modifiers, allowing integration with inventory management systems to track stock levels and trigger restocking alerts for restaurant operations.
-
-**Human URL:** [https://doc.toasttab.com/openapi/stock/overview/](https://doc.toasttab.com/openapi/stock/overview/)
-
-#### Tags:
-
- - Stock, Inventory
-
-#### Properties
-
-- [Documentation](https://doc.toasttab.com/openapi/stock/overview/)
-- [OpenAPI](openapi/toast-stock-openapi.yaml)
-- [NaftikoCapability](capabilities/stock-stock.yaml)
-
-### Toast Partners API
-The Toast Partners API provides partner accounts with access to list connected restaurants, enabling multi-restaurant management and partner-level operations across restaurant locations.
-
-**Human URL:** [https://doc.toasttab.com/openapi/partners/overview/](https://doc.toasttab.com/openapi/partners/overview/)
-
-#### Tags:
-
- - Partners, Multi-Location
-
-#### Properties
-
-- [Documentation](https://doc.toasttab.com/openapi/partners/overview/)
-- [OpenAPI](openapi/toast-partners-openapi.yaml)
-- [NaftikoCapability](capabilities/partners-general.yaml)
-
-### Toast Authentication API
-The Toast Authentication API implements OAuth 2.0 client credentials flow for obtaining access tokens used across all Toast platform APIs. Tokens are scoped to restaurant GUIDs and expire after a configurable period.
-
-**Human URL:** [https://doc.toasttab.com/openapi/authentication/overview/](https://doc.toasttab.com/openapi/authentication/overview/)
-
-#### Tags:
-
- - Authentication, OAuth
-
-#### Properties
-
-- [Documentation](https://doc.toasttab.com/openapi/authentication/overview/)
-- [OpenAPI](openapi/toast-authentication-openapi.yaml)
-- [NaftikoCapability](capabilities/authentication-authentication.yaml)
-
-### Toast Configuration API
-The Toast Configuration API returns information about the configuration of a restaurant and its menus, such as menu items and alternate payment types, plus physical configuration including cash drawers, dining options, revenue centers, service areas, tables, and tax rates. Archived or removed entities are excluded from results.
-
-**Human URL:** [https://doc.toasttab.com/openapi/configuration/overview/](https://doc.toasttab.com/openapi/configuration/overview/)
-
-#### Tags:
-
- - Configuration, Restaurants
-
-#### Properties
-
-- [Documentation](https://doc.toasttab.com/openapi/configuration/overview/)
-
-### Toast Analytics API
-The Toast Analytics API provides an enterprise reporting and analytics service with operations that retrieve data for all or a subset of restaurants in a management group, create requests for reporting data, and retrieve the results. Reporting data includes aggregated sales, check, labor, and guest reporting data.
-
-**Human URL:** [https://doc.toasttab.com/openapi/analytics/overview/](https://doc.toasttab.com/openapi/analytics/overview/)
-
-#### Tags:
-
- - Analytics, Reporting
-
-#### Properties
-
-- [Documentation](https://doc.toasttab.com/openapi/analytics/overview/)
-
-### Toast Cash Management API
-The Toast Cash Management API provides information about cash operations that add cash to or remove cash from a restaurant cash drawer, separately from cash transaction payments.
-
-**Human URL:** [https://doc.toasttab.com/openapi/cashmanagement/overview/](https://doc.toasttab.com/openapi/cashmanagement/overview/)
-
-#### Tags:
-
- - Cash Management, Payments
-
-#### Properties
-
-- [Documentation](https://doc.toasttab.com/openapi/cashmanagement/overview/)
-
-### Toast Kitchen API
-The Toast Kitchen API returns information about kitchen operations for a restaurant, supporting kitchen display and fulfillment workflow integrations.
-
-**Human URL:** [https://doc.toasttab.com/openapi/kitchen/overview/](https://doc.toasttab.com/openapi/kitchen/overview/)
-
-#### Tags:
-
- - Kitchen, Food Service
-
-#### Properties
-
-- [Documentation](https://doc.toasttab.com/openapi/kitchen/overview/)
-
-### Toast Credit Cards API
-The Toast Credit Cards API is a simple, single-request, synchronous API to authorize credit card transactions associated with a Toast Orders API order.
-
-**Human URL:** [https://doc.toasttab.com/openapi/creditcards/overview/](https://doc.toasttab.com/openapi/creditcards/overview/)
-
-#### Tags:
-
- - Credit Cards, Payments
-
-#### Properties
-
-- [Documentation](https://doc.toasttab.com/openapi/creditcards/overview/)
-
-### Toast Menus V3 API
-The Toast Menus V3 API is the next-generation menu retrieval API, returning structured menu, item, modifier, and pricing data for a restaurant in an updated catalog-oriented model alongside the existing Menus V2 surface.
-
-**Human URL:** [https://doc.toasttab.com/openapi/menusv3/overview/](https://doc.toasttab.com/openapi/menusv3/overview/)
-
-#### Tags:
-
- - Menus, Food Service
-
-#### Properties
-
-- [Documentation](https://doc.toasttab.com/openapi/menusv3/overview/)
-
-### Toast Gift Cards Integration API
-The Toast Gift Cards integration specification is an outbound API. The partner hosts an HTTPS endpoint that accepts POST requests from the Toast platform to process gift card transactions (balance inquiry, activation, redemption, reload) for restaurants using a third-party gift card provider.
-
-**Human URL:** [https://doc.toasttab.com/openapi/giftcards/overview/](https://doc.toasttab.com/openapi/giftcards/overview/)
-
-#### Tags:
-
- - Gift Cards, Webhooks
-
-#### Properties
-
-- [Documentation](https://doc.toasttab.com/openapi/giftcards/overview/)
-
-### Toast Loyalty Integration API
-The Toast Loyalty integration specification is an outbound API. The partner hosts an HTTPS endpoint that accepts POST requests from the Toast platform to handle loyalty program transactions (accrual, redemption, inquiry) for restaurants using a third-party loyalty provider.
-
-**Human URL:** [https://doc.toasttab.com/openapi/loyalty/overview/](https://doc.toasttab.com/openapi/loyalty/overview/)
-
-#### Tags:
-
- - Loyalty, Webhooks
-
-#### Properties
-
-- [Documentation](https://doc.toasttab.com/openapi/loyalty/overview/)
-
-### Toast Tender Integration API
-The Toast Tender integration specification is an outbound API. The partner hosts an HTTPS endpoint that accepts POST requests from the Toast platform to receive tender transaction data for alternate or third-party payment tender types processed at the restaurant.
-
-**Human URL:** [https://doc.toasttab.com/openapi/tender/overview/](https://doc.toasttab.com/openapi/tender/overview/)
-
-#### Tags:
-
- - Tender, Payments, Webhooks
-
-#### Properties
-
-- [Documentation](https://doc.toasttab.com/openapi/tender/overview/)
-
-## Common Properties
-
-- [LinkedIn](https://www.linkedin.com/company/toast-inc)
 - [Website](https://pos.toasttab.com/)
 - [Documentation](https://doc.toasttab.com/doc/devguide/index.html)
-- [Portal](https://doc.toasttab.com/openapi/)
-- [SignUp](https://developers.toasttab.com/)
-- [GitHubOrganization](https://github.com/toasttab)
-- [SpectralRules](rules/toast-spectral-rules.yml)
-- [Vocabulary](vocabulary/toast-vocabulary.yaml)
+- [Getting started](https://doc.toasttab.com/doc/devguide/portalHowToBuildAToastIntegration.html)
+- [API reference](https://doc.toasttab.com/openapi/)
+- [Pricing](https://doc.toasttab.com/doc/devguide/apiIntegrationTypes.html)
+- [Support](https://doc.toasttab.com/doc/devguide/apiSupport.html)
+- [Changelog](https://api-updates.toasttab.com/)
+- [Terms of service](https://pos.toasttab.com/api-terms-of-use)
+- [GitHub](https://github.com/toasttab)
+- [Status](https://status.toasttab.com/)
 
-## Features
+## API Evangelist rating
 
-| Name | Description |
-|------|-------------|
-| Orders API | Retrieve restaurant orders, checks, and payment data by GUID or bulk date queries. |
-| Menus API | Full menu data retrieval including items, modifiers, prices, and availability. |
-| Labor Management API | Employee CRUD operations, shift management, and payroll integration support. |
-| Restaurant Configuration API | Location settings, payment options, and management group restaurant discovery. |
-| Stock and Inventory API | Inventory management for menu items and modifiers with stock level tracking. |
-| OAuth 2.0 Authentication | Client credentials OAuth flow with GUID-scoped tokens for secure API access. |
-| Partner Integration Program | Formal partner program enabling multi-restaurant access and ecosystem integrations. |
-| Webhook Support | Outbound integration webhooks for real-time event delivery (gift cards, loyalty, tender). |
+**Kin Score 69.5** — exemplar · rubric 0.25.0 · scored 2026-10-23
 
-## Use Cases
+| Facet | Score |
+|---|---|
+| Discoverability | 60.7 |
+| Contract quality | 66.0 |
+| Contract governance | 31.8 |
+| Operational transparency | 92.1 |
+| Developer ergonomics | 63.7 |
+| Access clarity | 65.8 |
 
-| Name | Description |
-|------|-------------|
-| Online Ordering Integration | Connect third-party online ordering platforms to Toast POS for order injection and menu sync. |
-| Payroll and Labor Integration | Sync Toast employee and shift data with payroll systems using the Labor API. |
-| Reporting and Analytics | Pull order and payment data via bulk orders API for custom reporting and business intelligence. |
-| Inventory Management | Integrate restaurant inventory systems with Toast Stock API for real-time stock tracking. |
-| Loyalty and Gift Cards | Build loyalty program and gift card integrations using Toast outbound webhook APIs. |
-| Multi-Location Management | Partner integrations managing hundreds of restaurant locations via Partners API. |
+**Agent readiness 39.6** — agent-ready (gated down from agent-native)
 
-## Integrations
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | negotiable (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | partial |
+| Operation Distinctiveness | distinct |
 
-| Name | Description |
-|------|-------------|
-| DoorDash | Third-party delivery platform integrated with Toast for order injection. |
-| UberEats | Delivery platform integration for menu sync and order management. |
-| QuickBooks | Accounting integration for restaurant financial data via Toast reporting APIs. |
-| ADP | Payroll platform integration using Toast Labor API data. |
-| OpenTable | Reservation system integration with Toast for guest management. |
+**Regulatory alignment 36.3** — Horizontal (data, software, accessibility, platform)
 
-## Artifacts
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/toast/](https://apis.io/providers/toast/).
 
-Machine-readable API specifications organized by format.
+## How this profile is made
 
-### OpenAPI
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
 
-- [Toast Authentication API](openapi/toast-authentication-openapi.yaml)
-- [Toast Labor API](openapi/toast-labor-openapi.yaml)
-- [Toast Menus API](openapi/toast-menus-openapi.yaml)
-- [Toast Orders API](openapi/toast-orders-openapi.yaml)
-- [Toast Partners API](openapi/toast-partners-openapi.yaml)
-- [Toast Restaurants API](openapi/toast-restaurants-openapi.yaml)
-- [Toast Stock API](openapi/toast-stock-openapi.yaml)
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Toast: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
 
-### JSON Schema
+## Open an issue
 
-112 JSON Schema files defining Toast request, response, and entity structures across all seven specified APIs. See [`json-schema/`](json-schema/).
-
-### JSON Structure
-
-110 JSON Structure files documenting the shape of Toast entities. See [`json-structure/`](json-structure/).
-
-### JSON-LD
-
-Linked-data context files mapping each API's vocabulary.
-
-- [Toast Authentication Context](json-ld/toast-authentication-context.jsonld)
-- [Toast Labor Context](json-ld/toast-labor-context.jsonld)
-- [Toast Menus Context](json-ld/toast-menus-context.jsonld)
-- [Toast Orders Context](json-ld/toast-orders-context.jsonld)
-- [Toast Partners Context](json-ld/toast-partners-context.jsonld)
-- [Toast Restaurants Context](json-ld/toast-restaurants-context.jsonld)
-- [Toast Stock Context](json-ld/toast-stock-context.jsonld)
-
-### Examples
-
-91 example request/response payloads covering Toast entities and operations. See [`examples/`](examples/).
-
-## Capabilities
-
-Self-contained Naftiko capabilities, one per business surface (OpenAPI tag), each inlining its `consumes` block plus REST and MCP exposers. Grouped below under their owning API.
-
-### Toast Orders API
-
-- [Orders](capabilities/orders-orders.yaml) — 8 operations
-- [Payments](capabilities/orders-payments.yaml) — 4 operations
-- [Discounts](capabilities/orders-discounts.yaml) — 3 operations
-
-### Toast Labor API
-
-- [Employees](capabilities/labor-employees.yaml) — 10 operations
-- [Shifts](capabilities/labor-shifts.yaml) — 5 operations
-- [Jobs](capabilities/labor-jobs.yaml) — 4 operations
-- [Time Entries](capabilities/labor-time-entries.yaml) — 2 operations
-
-### Toast Menus API
-
-- [General](capabilities/menus-general.yaml) — 2 operations
-
-### Toast Restaurants API
-
-- [General](capabilities/restaurants-general.yaml) — 2 operations
-
-### Toast Stock API
-
-- [Stock](capabilities/stock-stock.yaml) — 3 operations
-
-### Toast Partners API
-
-- [General](capabilities/partners-general.yaml) — 2 operations
-
-### Toast Authentication API
-
-- [Authentication](capabilities/authentication-authentication.yaml) — 1 operation
-
-## Vocabulary
-
-- [Toast Vocabulary](vocabulary/toast-vocabulary.yaml) — Unified taxonomy mapping 7 resources, 5 actions, 1 workflow, and 3 personas across operational (OpenAPI) and capability (Naftiko) dimensions
-
-## Plans & Pricing
-
-- [Toast Plans & Pricing](plans/toast-plans-pricing.yml) — Commercial offering described with API Commons Plans 0.1
-
-## Rate Limits
-
-- [Toast Rate Limits](rate-limits/toast-rate-limits.yml) — Request-rate, concurrency, and quota policies described with API Commons Rate Limits 0.1
-
-## FinOps
-
-- [Toast FinOps](finops/toast-finops.yml) — Billing surface aligned to the FinOps Framework / FOCUS data spec
-
-## Rules
-
-- [Toast Spectral Rules](rules/toast-spectral-rules.yml) — 29 rules enforcing Toast API conventions
-
-## Maintainers
-
-**FN:** Kin Lane
-
-**Email:** kin@apievangelist.com
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/toast/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
